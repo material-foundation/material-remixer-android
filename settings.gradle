@@ -1,1 +1,1 @@
-include ':remixer_core'
+include ':remixer_core', ':remixer_ui'

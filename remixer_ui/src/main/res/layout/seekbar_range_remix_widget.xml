@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.libraries.remixer.widget.SeekBarRangeRemixWidget
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:padding="@dimen/default_padding">
+
+  <TextView
+    android:id="@+id/rangeRemixName"
+    style="@style/RemixName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"/>
+
+  <TextView
+    android:id="@+id/rangeRemixCurrentValue"
+    style="@style/RemixExtra"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:layout_gravity="end"
+    android:layout_toEndOf="@id/rangeRemixName"
+    android:layout_toRightOf="@id/rangeRemixName"
+    android:textAlignment="viewEnd"
+    tools:ignore="UnusedAttribute"/>
+
+  <SeekBar
+    android:id="@+id/rangeRemixSeekBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/rangeRemixName"
+    android:padding="8dp"/>
+</com.google.android.libraries.remixer.widget.SeekBarRangeRemixWidget>

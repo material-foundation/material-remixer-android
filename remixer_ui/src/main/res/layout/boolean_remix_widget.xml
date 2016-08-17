@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.libraries.remixer.widget.BooleanRemixWidget
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:padding="@dimen/default_padding">
+
+  <TextView
+    android:id="@+id/booleanRemixName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    style="@style/RemixName"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
+
+  <Switch
+    android:id="@+id/booleanRemixSwitch"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_toRightOf="@id/booleanRemixName"
+    android:layout_toEndOf="@id/booleanRemixName"
+    android:padding="8dp"
+    android:maxLines="3" />
+
+</com.google.android.libraries.remixer.widget.BooleanRemixWidget>
