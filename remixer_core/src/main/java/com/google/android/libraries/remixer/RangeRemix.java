@@ -67,8 +67,12 @@ public class RangeRemix extends Remix<Integer> {
   private void checkRange() {
     if (minValue > maxValue) {
       throw new IllegalArgumentException(
-          String.format(Locale.getDefault(), "Invalid range for Remix %s min: %d, max: %d",
-              getTitle(), minValue, maxValue));
+          String.format(
+              Locale.getDefault(),
+              "Invalid range for Remix %s min: %d, max: %d",
+              getTitle(),
+              minValue,
+              maxValue));
     }
   }
 
