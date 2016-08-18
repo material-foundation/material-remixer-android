@@ -17,9 +17,7 @@ import com.google.android.libraries.remixer.widget.RemixWidget;
 import java.util.List;
 
 /**
- * This class is a view that represents a StringRemix. This allows a user to locally change values.
- *
- * <p>This is the class that is used to display StringRemixes that have a list of possible values.
+ * Displays an ItemListRemix as a Spinner. The list uses item.toString() to display it as text.
  */
 public class ItemListRemixWidget extends RelativeLayout
     implements RemixWidget<ItemListRemix<?>> {
@@ -58,6 +56,7 @@ public class ItemListRemixWidget extends RelativeLayout
     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
       @Override
+      @SuppressWarnings("unchecked")
       public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         remix.setValue(values.get(pos));
       }

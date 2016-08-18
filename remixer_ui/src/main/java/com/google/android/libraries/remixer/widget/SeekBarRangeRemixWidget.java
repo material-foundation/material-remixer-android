@@ -12,7 +12,7 @@ import com.google.android.libraries.remixer.RangeRemix;
 import com.google.android.libraries.remixer.widget.RemixWidget;
 
 /**
- * Displays a {@link RangeRemix} as a SeekBar. Notifies the RangeRemix of all changes.
+ * Displays a {@link RangeRemix} as a SeekBar.
  */
 public class SeekBarRangeRemixWidget extends RelativeLayout implements RemixWidget<RangeRemix> {
 
