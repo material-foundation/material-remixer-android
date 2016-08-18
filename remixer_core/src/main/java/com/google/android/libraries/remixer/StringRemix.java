@@ -35,8 +35,6 @@ public class StringRemix extends Remix<String> {
    * @param callback Callback to run once the value is set. Can be null.
    * @param controlViewResourceId a layout id that renders this control on screen. Its root element
    *     must implement {@code com.google.android.libraries.remixer.view.RemixView<StringRemix>}.
-   * @throws IllegalArgumentException if a list of valid values has been passed and the defaultValue
-   *     is not in it.
    */
   public StringRemix(
       String title,

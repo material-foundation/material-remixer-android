@@ -77,9 +77,13 @@ public class RangeRemix extends Remix<Integer> {
     // TODO(miguely): Check for correct stepping if specified.
     if (newValue < minValue || newValue > maxValue) {
       throw new IllegalArgumentException(
-          String.format(Locale.getDefault(),
+          String.format(
+              Locale.getDefault(),
               "%d is out of bounds for Remix %s: min: %d, max: %d",
-              newValue, getTitle(), minValue, maxValue));
+              newValue,
+              getTitle(),
+              minValue,
+              maxValue));
     }
   }
 
