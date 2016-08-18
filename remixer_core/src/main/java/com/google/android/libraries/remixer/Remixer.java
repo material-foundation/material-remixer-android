@@ -34,9 +34,9 @@ public class Remixer {
   }
 
   /**
-   * This adds a remix to be tracked and displayed to the user
+   * This adds a remix to be tracked and displayed to the user.
    *
-   * @param remix The remix to be added
+   * @param remix The remix to be added.
    * @throws DuplicateRemixKeyException In case the remix has a key that has already been used.
    */
   public void addRemix(Remix remix) {

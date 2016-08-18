@@ -43,11 +43,10 @@ public class RangeRemix extends Remix<Integer> {
    * @param minValue The minimum value for this remix.
    * @param maxValue The maximum value for this remix.
    * @param callback A callback to run when successfully initialized and when the value changes. Can
-   * be null.
-   * @param controlViewResourceId a layout id that renders this control on screen. Its root element
-   * must implement {@code com.google.android.libraries.remixer.view.RemixView<RangeRemix>}
-   * @throws IllegalArgumentException if {@code minValue > maxValue} or {@code defaultValue <
-   * minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
+   *     be null.
+   * @param controlViewResourceId A layout id that renders this control on screen.
+   * @throws IllegalArgumentException {@code minValue > maxValue} or {@code defaultValue <
+   *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
    */
   public RangeRemix(
       String title,
