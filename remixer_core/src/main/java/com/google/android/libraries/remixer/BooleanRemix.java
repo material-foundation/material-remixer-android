@@ -40,7 +40,10 @@ public class BooleanRemix extends Remix<Boolean> {
    * #checkValue(Object)}.
    */
   public BooleanRemix(
-      String title, String key, Boolean defaultValue, @Nullable RemixCallback callback,
+      String title,
+      String key,
+      Boolean defaultValue,
+      @Nullable RemixCallback callback,
       @LayoutRes int controlViewResourceId) {
     super(title, key, defaultValue, callback, controlViewResourceId);
     runCallback();
@@ -49,6 +52,5 @@ public class BooleanRemix extends Remix<Boolean> {
   @Override
   protected void checkValue(Boolean value) {
     // There are only two possible values, it doesn't make sense to check them. :)
-    return;
   }
 }
