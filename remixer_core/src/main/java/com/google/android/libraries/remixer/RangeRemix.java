@@ -59,17 +59,17 @@ public class RangeRemix extends Remix<Integer> {
     super(title, key, defaultValue, callback, controlViewResourceId);
     this.minValue = minValue;
     this.maxValue = maxValue;
-    init(defaultValue);
+    checkRange();
+    checkValue(defaultValue);
+    runCallback();
   }
 
-  private void init(int defaultValue) {
+  private void checkRange() {
     if (minValue > maxValue) {
       throw new IllegalArgumentException(
           String.format(Locale.getDefault(), "Invalid range for Remix %s min: %d, max: %d",
               getTitle(), minValue, maxValue));
     }
-    checkValue(defaultValue);
-    runCallback();
   }
 
   @Override
