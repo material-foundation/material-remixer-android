@@ -125,7 +125,6 @@ public abstract class Remix<T> {
     return controlViewResourceId;
   }
 
-
   protected void runCallback() {
     if (callback != null) {
       callback.onValueSet(this);

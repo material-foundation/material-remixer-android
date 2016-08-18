@@ -29,6 +29,7 @@ import java.util.Locale;
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
 public class RangeRemix extends Remix<Integer> {
+
   private final int minValue;
   private final int maxValue;
 

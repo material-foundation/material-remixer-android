@@ -20,6 +20,7 @@ package com.google.android.libraries.remixer;
  * This object is a callback for when the value is set.
  */
 public interface RemixCallback<T> {
+
   /**
    * This method will be called when the value is set, even during the initial set up.
    *

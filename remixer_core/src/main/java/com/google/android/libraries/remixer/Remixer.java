@@ -24,6 +24,7 @@ import java.util.List;
  * Contains a list of {@link Remix}es.
  */
 public class Remixer {
+
   private HashMap<String, Remix<?>> remixMap;
   private List<Remix<?>> remixList;
 

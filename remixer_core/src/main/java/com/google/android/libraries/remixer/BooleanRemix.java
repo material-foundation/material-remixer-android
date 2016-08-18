@@ -26,7 +26,6 @@ import android.support.annotation.Nullable;
  */
 public class BooleanRemix extends Remix<Boolean> {
 
-
   /**
    * Creates a new Boolean Remix and runs its callback.
    *
@@ -46,8 +45,6 @@ public class BooleanRemix extends Remix<Boolean> {
     super(title, key, defaultValue, callback, controlViewResourceId);
     runCallback();
   }
-
-
 
   @Override
   protected void checkValue(Boolean value) {
