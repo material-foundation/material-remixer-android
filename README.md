@@ -15,7 +15,6 @@ The project is defined as a gradle project with submodules.
     * `com.google.android.libraries.remixer.widget` is a family of widgets that can display each individual Remix.
     * `com.google.android.libraries.remixer.widget.RemixWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
   * tests: JUnit/Robolectric tests
-    
 
 ## Building
 

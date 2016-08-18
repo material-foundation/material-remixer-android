@@ -29,6 +29,7 @@ import java.util.Locale;
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
 public class RangeRemix extends Remix<Integer> {
+
   private final int minValue;
   private final int maxValue;
 
@@ -42,11 +43,10 @@ public class RangeRemix extends Remix<Integer> {
    * @param minValue The minimum value for this remix.
    * @param maxValue The maximum value for this remix.
    * @param callback A callback to run when successfully initialized and when the value changes. Can
-   * be null.
-   * @param controlViewResourceId a layout id that renders this control on screen. Its root element
-   * must implement {@code com.google.android.libraries.remixer.view.RemixView<RangeRemix>}
-   * @throws IllegalArgumentException if {@code minValue > maxValue} or {@code defaultValue <
-   * minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
+   *     be null.
+   * @param controlViewResourceId A layout id that renders this control on screen.
+   * @throws IllegalArgumentException {@code minValue > maxValue} or {@code defaultValue <
+   *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
    */
   public RangeRemix(
       String title,
@@ -59,17 +59,21 @@ public class RangeRemix extends Remix<Integer> {
     super(title, key, defaultValue, callback, controlViewResourceId);
     this.minValue = minValue;
     this.maxValue = maxValue;
-    init(defaultValue);
-  }
-
-  private void init(int defaultValue) {
-    if (minValue > maxValue) {
-      throw new IllegalArgumentException(
-          String.format(Locale.getDefault(), "Invalid range for Remix %s min: %d, max: %d",
-              getTitle(), minValue, maxValue));
-    }
+    checkRange();
     checkValue(defaultValue);
     runCallback();
+  }
+
+  private void checkRange() {
+    if (minValue > maxValue) {
+      throw new IllegalArgumentException(
+          String.format(
+              Locale.getDefault(),
+              "Invalid range for Remix %s min: %d, max: %d",
+              getTitle(),
+              minValue,
+              maxValue));
+    }
   }
 
   @Override
@@ -77,9 +81,13 @@ public class RangeRemix extends Remix<Integer> {
     // TODO(miguely): Check for correct stepping if specified.
     if (newValue < minValue || newValue > maxValue) {
       throw new IllegalArgumentException(
-          String.format(Locale.getDefault(),
+          String.format(
+              Locale.getDefault(),
               "%d is out of bounds for Remix %s: min: %d, max: %d",
-              newValue, getTitle(), minValue, maxValue));
+              newValue,
+              getTitle(),
+              minValue,
+              maxValue));
     }
   }
 

@@ -53,14 +53,13 @@ public abstract class Remix<T> {
    * Creates a new Remix.
    *
    * @param key The key to use to save to SharedPreferences. This needs to be unique across all
-   * Remixes.
-   * @param title The name to display in the UI
+   *     Remixes.
+   * @param title The name to display in the UI.
    * @param defaultValue The default value for this Remix.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
-   * @param controlViewResourceId a layout to inflate when displaying this Remix in the UI. The root
-   * view in this layout must implement RemixView.
+   * @param controlViewResourceId A layout to inflate when displaying this Remix in the UI.
    * @throws IllegalArgumentException defaultValue is invalid for this Remix. See {@link
-   * #checkValue(Object)}.
+   *     #checkValue(Object)}.
    */
   // TODO(miguely): Add default value semantics to the defaultValue, currently it behaves mostly
   // as an initial value. It should be used in cases when the value is set to an invalid value from
@@ -106,7 +105,7 @@ public abstract class Remix<T> {
    * an IllegalArgumentException if the value is invalid.
    *
    * @param newValue Value to set.
-   * @throws IllegalArgumentException newValue is an invalid value for this Remix.
+   * @throws IllegalArgumentException {@code newValue} is an invalid value for this Remix.
    */
   public void setValue(T newValue) {
     checkValue(newValue);
@@ -116,15 +115,11 @@ public abstract class Remix<T> {
 
   /**
    * Returns the layout id to inflate when displaying this Remix.
-   *
-   * <p>The root element of the provided layout must implement {@link
-   * RemixView}.
    */
   @LayoutRes
   public int getControlViewResourceId() {
     return controlViewResourceId;
   }
-
 
   protected void runCallback() {
     if (callback != null) {
