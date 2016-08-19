@@ -8,7 +8,13 @@ The project is defined as a gradle project with submodules.
 
 * remixer_core: The core framework code, has no dependencies on the android framework and contains the core logic to run callbacks on changes to a Remix, etc. Most of the base classes are here
   * main: The code for the core framework
-  * tests: JUnit tests for the Remixer code.    
+  * tests: JUnit tests for the Remixer code.
+* remixer_ui: The code that shows remixes in the UI.
+  * main
+    * `com.google.android.libraries.remixer.view` is  the code to display the UI as a BottomSheetFragmentDialog
+    * `com.google.android.libraries.remixer.widget` is a family of widgets that can display each individual Remix.
+    * `com.google.android.libraries.remixer.widget.RemixWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
+  * tests: JUnit/Robolectric tests
 
 ## Building
 

@@ -15,3 +15,4 @@ trim_trailing_whitespace = true
 
 [*.java]
 max_line_length = 100
+continuation_indent_size = 4
