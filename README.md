@@ -15,6 +15,8 @@ The project is defined as a gradle project with submodules.
     * `com.google.android.libraries.remixer.widget` is a family of widgets that can display each individual Remix.
     * `com.google.android.libraries.remixer.widget.RemixWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
   * tests: JUnit/Robolectric tests
+* remixer_example: This is an example app.
+  * main: the code for the example app
 
 ## Building
 
@@ -23,3 +25,9 @@ The project is defined as a gradle project with submodules.
 2. You have two options here:
   1. Open it on Android Studio and build from there.
   2. run `./gradlew build`  on your terminal (`gradlew.bat build` on Windows).
+
+## Installing the example app
+
+If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
+
+```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```
