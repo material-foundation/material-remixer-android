@@ -16,5 +16,8 @@
 
 <resources>
   <!-- Default screen margins, per the Android Design guidelines. -->
-  <dimen name="default_padding">16dp</dimen>
+  <dimen name="defaultPadding">16dp</dimen>
+  <dimen name="secondaryPadding">8dp</dimen>
+  <dimen name="remixerTextSize">14dp</dimen>
+  <dimen name="remixerSecondaryTextSize">13dp</dimen>
 </resources>

@@ -19,24 +19,23 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/default_padding">
+  android:padding="@dimen/defaultPadding">
 
   <TextView
     android:id="@+id/booleanRemixName"
+    style="@style/RemixName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
-    style="@style/RemixName"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
+    android:layout_alignParentStart="true"
+    android:layout_centerVertical="true"/>
 
   <Switch
     android:id="@+id/booleanRemixSwitch"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_toRightOf="@id/booleanRemixName"
     android:layout_toEndOf="@id/booleanRemixName"
-    android:padding="8dp"
-    android:maxLines="3" />
+    android:layout_toRightOf="@id/booleanRemixName"
+    android:padding="@dimen/secondaryPadding"/>
 
 </com.google.android.libraries.remixer.widget.BooleanRemixWidget>

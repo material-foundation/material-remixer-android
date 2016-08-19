@@ -14,8 +14,7 @@ import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.widget.RemixWidget;
 
 /**
- * Displays a {@link StringRemix} in an EditText and lets you edit its value. The StringRemix must
- * not have a list of possible values to use this View.
+ * Displays a {@link StringRemix} in an EditText and lets you edit its value.
  */
 public class StringRemixWidget extends RelativeLayout implements RemixWidget<StringRemix> {
 
