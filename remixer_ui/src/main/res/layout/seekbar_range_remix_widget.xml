@@ -20,7 +20,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/default_padding">
+  android:padding="@dimen/defaultPadding">
 
   <TextView
     android:id="@+id/rangeRemixName"
@@ -48,5 +48,5 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/rangeRemixName"
-    android:padding="8dp"/>
+    android:padding="@dimen/secondaryPadding"/>
 </com.google.android.libraries.remixer.widget.SeekBarRangeRemixWidget>

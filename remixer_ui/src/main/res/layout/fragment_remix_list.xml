@@ -23,7 +23,7 @@
   android:name="com.google.android.libraries.remixer.view.RemixerFragment"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:layout_marginLeft="16dp"
-  android:layout_marginRight="16dp"
+  android:layout_marginLeft="@dimen/defaultPadding"
+  android:layout_marginRight="@dimen/defaultPadding"
   app:layoutManager="LinearLayoutManager"
   tools:context="com.google.android.libraries.remixer.view.RemixerFragment"/>

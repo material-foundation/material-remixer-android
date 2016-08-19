@@ -19,7 +19,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/default_padding">
+  android:padding="@dimen/defaultPadding">
 
   <TextView
     android:id="@+id/booleanRemixName"
@@ -36,7 +36,6 @@
     android:layout_height="wrap_content"
     android:layout_toEndOf="@id/booleanRemixName"
     android:layout_toRightOf="@id/booleanRemixName"
-    android:maxLines="3"
-    android:padding="8dp"/>
+    android:padding="@dimen/secondaryPadding"/>
 
 </com.google.android.libraries.remixer.widget.BooleanRemixWidget>
