@@ -17,7 +17,6 @@ The project is defined as a gradle project with submodules.
   * tests: JUnit/Robolectric tests
 * remixer_example: This is an example app.
   * main: the code for the example app
-    
 
 ## Building
 
@@ -26,11 +25,9 @@ The project is defined as a gradle project with submodules.
 2. You have two options here:
   1. Open it on Android Studio and build from there.
   2. run `./gradlew build`  on your terminal (`gradlew.bat build` on Windows).
-   
+
 ## Installing the example app
 
 If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
 
-```adb install -r remixer_example/build/outputs/apk/app-debug.apk```
-
-
+```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```

@@ -19,23 +19,23 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/default_padding">
+  android:padding="@dimen/defaultPadding">
 
   <TextView
     android:id="@+id/stringRemixName"
+    style="@style/RemixName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    style="@style/RemixName"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
+    android:layout_alignParentStart="true"/>
 
   <EditText
     android:id="@+id/stringRemixText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/stringRemixName"
-    android:padding="8dp"
     android:inputType="textMultiLine"
-    android:maxLines="3" />
+    android:maxLines="3"
+    android:padding="@dimen/secondaryPadding"/>
 
 </com.google.android.libraries.remixer.widget.StringRemixWidget>

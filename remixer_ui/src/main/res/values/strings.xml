@@ -15,5 +15,5 @@
   -->
 
 <resources>
-    <string name="app_name">Remixer</string>
+  <string name="app_name">Remixer</string>
 </resources>

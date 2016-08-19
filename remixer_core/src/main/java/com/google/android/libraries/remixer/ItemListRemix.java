@@ -35,15 +35,14 @@ public class ItemListRemix<T> extends Remix<T> {
    * Creates a new ItemListRemix, checks its default value and runs the callback if the value is
    * valid.
    *
-   * @param title Displayable name for this Remix
-   * @param key The key used to store this Remix
+   * @param title Displayable name for this Remix.
+   * @param key The key used to store this Remix.
    * @param defaultValue The default value to use if none has been set.
-   * @param values list of valid values.
+   * @param values List of valid values.
    * @param callback Callback to run once the value is set. Can be null.
-   * @param controlViewResourceId a layout id that renders this control on screen. Its root element
-   * must implement {@code com.google.android.libraries.remixer.view.RemixView<ItemListRemixView<?>>}
-   * @throws IllegalArgumentException if a list of valid values has been passed and the defaultValue
-   * is not in it.
+   * @param controlViewResourceId A layout id that renders this control on screen.
+   * @throws IllegalArgumentException A list of valid values has been passed and the defaultValue
+   *     is not in it.
    */
   public ItemListRemix(
       String title,
