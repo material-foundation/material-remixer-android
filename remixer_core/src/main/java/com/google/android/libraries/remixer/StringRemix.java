@@ -16,9 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-
 /**
  * A freeform string value that can be changed.
  *
@@ -39,9 +36,9 @@ public class StringRemix extends Remix<String> {
   public StringRemix(
       String title,
       String key,
-      @Nullable String defaultValue,
-      @Nullable RemixCallback<String> callback,
-      @LayoutRes int controlViewResourceId) {
+      String defaultValue,
+      RemixCallback<String> callback,
+      int controlViewResourceId) {
     super(title, key, defaultValue, callback, controlViewResourceId);
     runCallback();
   }

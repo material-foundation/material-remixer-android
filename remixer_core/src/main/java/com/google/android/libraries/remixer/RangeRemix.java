@@ -16,9 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-
 import java.util.Locale;
 
 /**
@@ -54,8 +51,8 @@ public class RangeRemix extends Remix<Integer> {
       int defaultValue,
       int minValue,
       int maxValue,
-      @Nullable RemixCallback<Integer> callback,
-      @LayoutRes int controlViewResourceId) {
+      RemixCallback<Integer> callback,
+      int controlViewResourceId) {
     super(title, key, defaultValue, callback, controlViewResourceId);
     this.minValue = minValue;
     this.maxValue = maxValue;

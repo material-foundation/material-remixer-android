@@ -16,10 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import java.util.List;
 
 /**
@@ -48,9 +44,9 @@ public class ItemListRemix<T> extends Remix<T> {
       String title,
       String key,
       T defaultValue,
-      @NonNull List<T> values,
-      @Nullable RemixCallback<String> callback,
-      @LayoutRes int controlViewResourceId) {
+      List<T> values,
+      RemixCallback<String> callback,
+      int controlViewResourceId) {
     super(title, key, defaultValue, callback, controlViewResourceId);
     this.valueList = values;
     checkValue(defaultValue);

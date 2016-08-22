@@ -23,6 +23,16 @@ This repository follows a file layout convention that ensures consistency and
 predictability across all of our components. The conventions are described in
 the [material-foundation-conventions-android](https://github.com/material-foundation/material-foundation-conventions-android) repository.
 
+### Restrictions
+
+Because this project has to build both with gradle and with Google's
+internal tools, we have to place a few restrictions:
+
+- Mockito has to remain at version 1.9.5.
+- All tests need to be annotated with @RunWith
+- Module remixer_core cannot depend on any android dependencies (not
+even support annotations)
+
 ### Before you contribute
 
 Before we can use your code, you must sign the
