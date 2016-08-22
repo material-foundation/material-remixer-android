@@ -1,0 +1,20 @@
+{
+  "linters": {
+    "chmod": {
+      "type": "chmod"
+    },
+    "text": {
+      "type": "text",
+      "include": "(\\.(java|xml)$)",
+      "exclude": [],
+      "severity": {
+        "3": "disabled",
+        "5": "disabled"
+      }
+    },
+    "spelling": {
+      "type": "spelling",
+      "include": "(\\.(md)$)"
+    }
+  }
+}
