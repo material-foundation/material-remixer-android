@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.RemixCallback;
-import com.google.android.libraries.remixer.ui.BuildConfig;
 import com.google.android.libraries.remixer.ui.R;
 
 import org.junit.Before;
@@ -40,10 +39,9 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(
-    constants = BuildConfig.class,
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
-    packageName = "com.google.android.libraries.remixer")
+    packageName = "com.google.android.libraries.remixer.ui")
 public class BooleanRemixWidgetTest {
   private static final String TITLE = "Some boolean";
   private static final String KEY = "theboolean";

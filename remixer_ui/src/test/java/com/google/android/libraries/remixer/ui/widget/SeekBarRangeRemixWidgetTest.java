@@ -40,10 +40,9 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(
-    constants = BuildConfig.class,
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
-    packageName = "com.google.android.libraries.remixer")
+    packageName = "com.google.android.libraries.remixer.ui")
 public class SeekBarRangeRemixWidgetTest {
   private static final String TITLE = "Padding for buttons in dp";
   private static final String KEY = "button_padding";
