@@ -40,7 +40,6 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(
-    constants = BuildConfig.class,
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
     packageName = "com.google.android.libraries.remixer")

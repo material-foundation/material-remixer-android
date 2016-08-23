@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.google.android.libraries.remixer.ItemListRemix;
 import com.google.android.libraries.remixer.RemixCallback;
-import com.google.android.libraries.remixer.ui.BuildConfig;
 import com.google.android.libraries.remixer.ui.R;
 
 import org.junit.Before;
@@ -42,7 +41,6 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(
-    constants = BuildConfig.class,
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
     packageName = "com.google.android.libraries.remixer")
