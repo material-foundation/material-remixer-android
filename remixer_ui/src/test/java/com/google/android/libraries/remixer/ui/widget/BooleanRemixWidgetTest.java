@@ -41,7 +41,7 @@ import static org.mockito.Mockito.verify;
 @Config(
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
-    packageName = "com.google.android.libraries.remixer")
+    packageName = "com.google.android.libraries.remixer.ui")
 public class BooleanRemixWidgetTest {
   private static final String TITLE = "Some boolean";
   private static final String KEY = "theboolean";

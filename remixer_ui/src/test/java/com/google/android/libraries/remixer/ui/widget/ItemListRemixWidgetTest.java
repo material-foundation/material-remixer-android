@@ -43,7 +43,7 @@ import static org.mockito.Mockito.verify;
 @Config(
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
-    packageName = "com.google.android.libraries.remixer")
+    packageName = "com.google.android.libraries.remixer.ui")
 public class ItemListRemixWidgetTest {
   private static final String TITLE = "Color";
   private static final String KEY = "color";
