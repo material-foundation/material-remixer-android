@@ -26,4 +26,4 @@
   android:layout_marginLeft="@dimen/defaultPadding"
   android:layout_marginRight="@dimen/defaultPadding"
   app:layoutManager="LinearLayoutManager"
-  tools:context="com.google.android.libraries.remixer.view.RemixerFragment"/>
+  tools:context="com.google.android.libraries.remixer.ui.view.RemixerFragment"/>

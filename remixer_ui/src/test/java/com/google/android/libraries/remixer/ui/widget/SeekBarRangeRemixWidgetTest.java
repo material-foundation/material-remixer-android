@@ -1,21 +1,35 @@
-package com.google.android.libraries.remixer.widget;
+/*
+ * Copyright 2016 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.android.libraries.remixer.ui.widget;
 
 import android.view.LayoutInflater;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.google.android.libraries.remixer.BuildConfig;
-import com.google.android.libraries.remixer.R;
-import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.RangeRemix;
+import com.google.android.libraries.remixer.RemixCallback;
+import com.google.android.libraries.remixer.ui.BuildConfig;
+import com.google.android.libraries.remixer.ui.R;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -40,9 +54,6 @@ public class SeekBarRangeRemixWidgetTest {
   @Mock
   RemixCallback<Integer> mockCallback;
 
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
-
   private RangeRemix remix;
   private SeekBarRangeRemixWidget view;
   private TextView name;
@@ -51,6 +62,7 @@ public class SeekBarRangeRemixWidgetTest {
 
   @Before
   public void setUp() {
+    MockitoAnnotations.initMocks(this);
     remix = new RangeRemix(
         TITLE,
         KEY,

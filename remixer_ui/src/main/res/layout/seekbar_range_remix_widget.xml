@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 
-<com.google.android.libraries.remixer.widget.SeekBarRangeRemixWidget
+<com.google.android.libraries.remixer.ui.widget.SeekBarRangeRemixWidget
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
@@ -49,4 +49,4 @@
     android:layout_height="wrap_content"
     android:layout_below="@id/rangeRemixName"
     android:padding="@dimen/secondaryPadding"/>
-</com.google.android.libraries.remixer.widget.SeekBarRangeRemixWidget>
+</com.google.android.libraries.remixer.ui.widget.SeekBarRangeRemixWidget>
