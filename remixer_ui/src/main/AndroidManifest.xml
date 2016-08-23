@@ -17,7 +17,7 @@
 <manifest
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  package="com.google.android.libraries.remixer">
+  package="com.google.android.libraries.remixer.ui">
   <!--
   The uses-sdk element is unnecessary while building with Gradle but necessary if using Bazel.
   Furthermore it is necessary when using Robolectric.

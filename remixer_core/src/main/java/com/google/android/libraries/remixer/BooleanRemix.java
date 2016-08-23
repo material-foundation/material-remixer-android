@@ -16,9 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-
 /**
  * A Remix for toggling a boolean value.
  *
@@ -42,8 +39,8 @@ public class BooleanRemix extends Remix<Boolean> {
       String title,
       String key,
       Boolean defaultValue,
-      @Nullable RemixCallback callback,
-      @LayoutRes int controlViewResourceId) {
+      RemixCallback callback,
+      int controlViewResourceId) {
     super(title, key, defaultValue, callback, controlViewResourceId);
     runCallback();
   }

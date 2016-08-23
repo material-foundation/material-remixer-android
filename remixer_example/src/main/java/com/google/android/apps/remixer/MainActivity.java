@@ -15,8 +15,8 @@ import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringRemix;
-import com.google.android.libraries.remixer.view.RemixerActivity;
-import com.google.android.libraries.remixer.view.RemixerFragment;
+import com.google.android.libraries.remixer.ui.view.RemixerActivity;
+import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 import java.util.Arrays;
 

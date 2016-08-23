@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
+package com.google.android.libraries.remixer.ui.view;
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+import com.google.android.libraries.remixer.Remixer;
 
-dependencies {
-  testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:1.9.5'
+/**
+ * Interface that all activities that use Remixer must implement.
+ *
+ * <p>This interface allows {@link RemixerFragment} to interact with the host activity and set
+ * itself up with the Activity's {@link Remixer}.
+ */
+public interface RemixerActivity {
+  Remixer getRemixer();
 }

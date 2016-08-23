@@ -16,26 +16,26 @@
 
 package com.google.android.libraries.remixer;
 
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
+@RunWith(JUnit4.class)
 public class ItemListRemixTest {
 
   @Mock
   RemixCallback<String> mockCallback;
 
-  @Rule
-  public MockitoRule mockitoRule = MockitoJUnit.rule();
-
+  @Before
+  public void setUp() {
+    MockitoAnnotations.initMocks(this);
+  }
   @Test(expected = IllegalArgumentException.class)
   public void failsOnDefaultValueNotInList() {
     ItemListRemix<String> remix =

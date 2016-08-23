@@ -16,9 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-
 /**
  * Base class for all Remix controls. This class implements calling the callback when necessary,
  * value checking, etc.
@@ -42,7 +39,6 @@ public abstract class Remix<T> {
   /**
    * The layout to inflate to display this remix
    */
-  @LayoutRes
   private final int controlViewResourceId;
   /**
    * The currently selected value.
@@ -68,8 +64,8 @@ public abstract class Remix<T> {
       String title,
       String key,
       T defaultValue,
-      @Nullable RemixCallback callback,
-      @LayoutRes int controlViewResourceId) {
+      RemixCallback callback,
+      int controlViewResourceId) {
     this.key = key;
     this.title = title;
     // TODO(miguely): pull this out of SharedPreferences.
@@ -116,7 +112,6 @@ public abstract class Remix<T> {
   /**
    * Returns the layout id to inflate when displaying this Remix.
    */
-  @LayoutRes
   public int getControlViewResourceId() {
     return controlViewResourceId;
   }
