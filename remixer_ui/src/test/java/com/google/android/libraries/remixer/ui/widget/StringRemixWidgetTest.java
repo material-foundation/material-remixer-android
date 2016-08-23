@@ -20,10 +20,9 @@ import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.libraries.remixer.ui.BuildConfig;
-import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.StringRemix;
+import com.google.android.libraries.remixer.ui.R;
 
 import org.junit.Before;
 import org.junit.Test;

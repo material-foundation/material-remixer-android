@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.google.android.libraries.remixer.RangeRemix;
 import com.google.android.libraries.remixer.RemixCallback;
-import com.google.android.libraries.remixer.ui.BuildConfig;
 import com.google.android.libraries.remixer.ui.R;
 
 import org.junit.Before;
