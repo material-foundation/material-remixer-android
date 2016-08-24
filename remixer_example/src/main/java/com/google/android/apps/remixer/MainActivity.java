@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
           public void onValueSet(Remix<Integer> remix) {
             boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
           }
-        },
-        R.layout.seekbar_range_remix_widget);
+        });
     remixer.addRemix(fontSizeRangeRemix);
 
     // Create an ItemListRemix<String> that updates boundedText's contents from a list of options
@@ -70,9 +69,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
           public void onValueSet(Remix<String> remix) {
             boundedText.setText(remix.getSelectedValue());
           }
-        },
-        R.layout.item_list_remix_widget
-    );
+        });
     remixer.addRemix(itemListRemix);
 
     // Create a BooleanRemix that controls whether freeformText is visible or not.
@@ -85,8 +82,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
           public void onValueSet(Remix<Boolean> remix) {
             freeformText.setVisibility(remix.getSelectedValue() ? View.VISIBLE : View.GONE);
           }
-        },
-        R.layout.boolean_remix_widget);
+        });
     remixer.addRemix(booleanRemix);
 
     // Create a StringRemix that lets you set freeformText's content freely.
@@ -100,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
           public void onValueSet(Remix<String> remix) {
             freeformText.setText(remix.getSelectedValue());
           }
-        },
-        R.layout.string_remix_widget);
+        });
     remixer.addRemix(freeformStringRemix);
 
     // Add a callback to open the Remixer UI when the button is clicked.

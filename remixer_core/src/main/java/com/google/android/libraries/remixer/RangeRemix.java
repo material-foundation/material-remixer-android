@@ -32,6 +32,30 @@ public class RangeRemix extends Remix<Integer> {
 
   /**
    * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
+   * {@code callback}. This uses the default layout to display this remix on-screen.
+   *
+   * @param title The name of this remix to be displayed in the UI.
+   * @param key The key to store in SharedPreferences.
+   * @param defaultValue The default value in case there is none in SharedPreferences.
+   * @param minValue The minimum value for this remix.
+   * @param maxValue The maximum value for this remix.
+   * @param callback A callback to run when successfully initialized and when the value changes. Can
+   *     be null.
+   * @throws IllegalArgumentException {@code minValue > maxValue} or {@code defaultValue <
+   *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
+   */
+  public RangeRemix(
+      String title,
+      String key,
+      int defaultValue,
+      int minValue,
+      int maxValue,
+      RemixCallback<Integer> callback) {
+    this(title, key, defaultValue, minValue, maxValue, callback, 0);
+  }
+
+  /**
+   * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
    * {@code callback}.
    *
    * @param title The name of this remix to be displayed in the UI.

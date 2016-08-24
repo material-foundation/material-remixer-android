@@ -24,6 +24,26 @@ package com.google.android.libraries.remixer;
 public class BooleanRemix extends Remix<Boolean> {
 
   /**
+   * Creates a new Boolean Remix and runs its callback. This uses the default layout to display the
+   * remix on screen.
+   *
+   * @param title The name to display in the UI.
+   * @param key The key to use to save to SharedPreferences. This needs to be unique across all
+   *     Remixes.
+   * @param defaultValue The default value for this Remix.
+   * @param callback A callback to execute when the value is updated. Can be {@code null}.
+   * @throws IllegalArgumentException {@code defaultValue} is invalid for this Remix. See {@link
+   *     #checkValue(Object)}.
+   */
+  public BooleanRemix(
+      String title,
+      String key,
+      Boolean defaultValue,
+      RemixCallback callback) {
+    this(title, key, defaultValue, callback, 0);
+  }
+
+  /**
    * Creates a new Boolean Remix and runs its callback.
    *
    * @param title The name to display in the UI.

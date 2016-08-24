@@ -37,7 +37,8 @@ public abstract class Remix<T> {
    */
   private final RemixCallback callback;
   /**
-   * The layout to inflate to display this remix
+   * The layout to inflate to display this remix. If set to 0, the default layout associated with
+   * the remix type will be used.
    */
   private final int controlViewResourceId;
   /**

@@ -24,6 +24,23 @@ package com.google.android.libraries.remixer;
 public class StringRemix extends Remix<String> {
 
   /**
+   * Creates a new StringRemix and runs the callback. This uses the default layout to display the
+   * Remix on screen.
+   *
+   * @param title Displayable name for this Remix.
+   * @param key The key used to store this Remix.
+   * @param defaultValue The default value to use if none has been set.
+   * @param callback Callback to run once the value is set. Can be null.
+   */
+  public StringRemix(
+      String title,
+      String key,
+      String defaultValue,
+      RemixCallback<String> callback) {
+    this(title, key, defaultValue, callback, 0);
+  }
+
+  /**
    * Creates a new StringRemix and runs the callback.
    *
    * @param title Displayable name for this Remix.

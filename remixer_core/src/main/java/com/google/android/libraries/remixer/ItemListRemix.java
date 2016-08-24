@@ -29,6 +29,27 @@ public class ItemListRemix<T> extends Remix<T> {
 
   /**
    * Creates a new ItemListRemix, checks its default value and runs the callback if the value is
+   * valid. This uses the default layout id to display this control on screen.
+   *
+   * @param title Displayable name for this Remix.
+   * @param key The key used to store this Remix.
+   * @param defaultValue The default value to use if none has been set.
+   * @param values List of valid values.
+   * @param callback Callback to run once the value is set. Can be null.
+   * @throws IllegalArgumentException A list of valid values has been passed and the defaultValue
+   *     is not in it.
+   */
+  public ItemListRemix(
+      String title,
+      String key,
+      T defaultValue,
+      List<T> values,
+      RemixCallback<String> callback) {
+    this(title, key, defaultValue, values, callback, 0);
+  }
+
+  /**
+   * Creates a new ItemListRemix, checks its default value and runs the callback if the value is
    * valid.
    *
    * @param title Displayable name for this Remix.

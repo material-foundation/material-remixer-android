@@ -53,7 +53,7 @@ class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
   @Override
   public int getItemViewType(int position) {
-    return remixes.get(position).getControlViewResourceId();
+    return RemixWidgetHelper.getLayoutId(remixes.get(position));
   }
 
   @Override
