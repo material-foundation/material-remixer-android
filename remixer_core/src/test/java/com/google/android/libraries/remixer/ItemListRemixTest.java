@@ -36,6 +36,7 @@ public class ItemListRemixTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
   }
+
   @Test(expected = IllegalArgumentException.class)
   public void failsOnDefaultValueNotInList() {
     ItemListRemix<String> remix =

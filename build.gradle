@@ -15,18 +15,32 @@
  * limitations under the License.
  */
 
+apply plugin: "checkstyle"
+
 buildscript {
   repositories {
     jcenter()
   }
+
   dependencies {
     classpath 'com.android.tools.build:gradle:2.1.2'
+    classpath 'com.puppycrawl.tools:checkstyle:7.1'
   }
 }
 
 allprojects {
   repositories {
 	  jcenter()
+  }
+}
+
+subprojects {
+  apply plugin: 'checkstyle'
+  apply plugin: 'pmd'
+
+  checkstyle {
+    configFile = rootProject.file('checkstyle.xml')
+    toolVersion = '7.1'
   }
 }
 
