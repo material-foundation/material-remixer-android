@@ -14,4 +14,17 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package somepackage;
+
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+import com.google.android.libraries.remixer.annotation.StringRemixMethod;
+
+public class Correct {
+
+  @RemixerInstance
+  public Remixer remixer;
+
+  @StringRemixMethod
+  public void correct(String i){}
+}

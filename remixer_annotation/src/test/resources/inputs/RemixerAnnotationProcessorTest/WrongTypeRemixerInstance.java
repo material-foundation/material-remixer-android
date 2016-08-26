@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+
+
+public class WrongTypeRemixerInstance {
+
+  /**
+   * This must be of type Remixer, should fail.
+   */
+  @RemixerInstance
+  public Integer remixer;
+}

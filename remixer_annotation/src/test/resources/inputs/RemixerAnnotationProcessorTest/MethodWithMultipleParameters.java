@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package somepackage;
+
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+
+public class MethodWithMultipleParameters {
+
+  @RemixerInstance
+  public Remixer remixer;
+
+  /**
+   * Remix methods should only have one parameter, this should fail.
+   */
+  @RangeRemixMethod(key = "myKey")
+  public void fail(Integer i, Integer i2){}
+}

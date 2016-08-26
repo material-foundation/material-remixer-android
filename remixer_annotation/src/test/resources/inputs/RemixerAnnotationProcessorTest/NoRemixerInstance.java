@@ -14,4 +14,13 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+
+/**
+ * This class needs a RemixerInstance to use RemixMethod annotations.
+ */
+public class NoRemixerInstance {
+
+  @RangeRemixMethod(key = "myKey")
+  public void setInt(Integer i) {}
+}

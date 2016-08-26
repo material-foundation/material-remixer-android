@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+/**
+ * Contains the annotation processing code for remixer.
+ *
+ * <p>There is only one annotation processor
+ * {@link com.google.android.libraries.remixer.annotation.processor.RemixerAnnotationProcessor}
+ * that relies on {@link com.google.android.libraries.remixer.annotation.processor.AnnotatedClass}
+ * and subclasses of
+ * {@link com.google.android.libraries.remixer.annotation.processor.MethodAnnotation} to generate
+ * all the boilerplate code to set up remixes.
+ */
+package com.google.android.libraries.remixer.annotation.processor;

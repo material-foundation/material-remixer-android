@@ -14,4 +14,21 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package somepackage;
+
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+
+public class ExplicitWrongDefault {
+
+  @RemixerInstance
+  public Remixer remixer;
+
+  /**
+   * Default value is explicitly out of range, should fail.
+   */
+  @StringListRemixMethod(defaultValue = "adfjuh", possibleValues = {"hello", "world"})
+  public void wrongDefault(String i){}
+}

@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package somepackage;
+
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+
+public class FixesDefaultValue {
+
+  @RemixerInstance
+  public Remixer remixer;
+
+  /**
+   * Default value is implicitly "", this has to move to "hello"
+   */
+  @StringListRemixMethod(possibleValues = {"hello", "world"})
+  public void fixValue(String i){}
+}

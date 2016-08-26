@@ -20,11 +20,12 @@ apply plugin: "checkstyle"
 buildscript {
   repositories {
     jcenter()
+    mavenCentral()
   }
 
   dependencies {
     classpath 'com.android.tools.build:gradle:2.1.2'
-    classpath 'com.puppycrawl.tools:checkstyle:7.1'
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
   }
 }
 
@@ -47,3 +48,4 @@ subprojects {
 task clean(type: Delete) {
   delete rootProject.buildDir
 }
+

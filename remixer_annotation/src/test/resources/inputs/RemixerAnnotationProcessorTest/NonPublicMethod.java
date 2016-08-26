@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+
+public class NonPublicMethod {
+
+  /**
+   * Remix annotations don't work on private/protected methods, should fail
+   */
+  @RangeRemixMethod(key = "myKey")
+  private void fail(Integer i){}
+
+  @RemixerInstance
+  public Remixer remixer;
+}

@@ -14,4 +14,28 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package com.google.android.libraries.remixer.annotation.processor;
+
+/**
+ * Utility class that checks that a key is valid.
+ */
+public class KeyChecker {
+
+  /**
+   * Checks whether the given key is a valid Java Identifier Name.
+   */
+  public static boolean isValidKey(String key) {
+    if (key.length() == 0) {
+      return false;
+    }
+    if (!Character.isJavaIdentifierStart(key.charAt(0))) {
+      return false;
+    }
+    for (int i = 0; i < key.length(); i++) {
+      if (!Character.isJavaIdentifierStart(key.charAt(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+}

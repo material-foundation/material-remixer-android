@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+
+public class NonPublicRemixerInstance {
+
+  /**
+   * Remixer instance annotations cannot be applied to private/protected fields, should fail.
+   */
+  @RemixerInstance
+  private Remixer remixer;
+}

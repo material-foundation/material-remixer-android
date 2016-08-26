@@ -14,4 +14,21 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package somepackage;
+
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+
+public class MethodWithWrongParameter {
+
+  @RemixerInstance
+  public Remixer remixer;
+
+  /**
+   * This method should take a string parameter, fail
+   */
+  @StringListRemixMethod(possibleValues = {"hello","world"})
+  public void fail(Integer i){}
+}

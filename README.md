@@ -15,6 +15,9 @@ The project is defined as a gradle project with submodules.
     * `com.google.android.libraries.remixer.widget` is a family of widgets that can display each individual Remix.
     * `com.google.android.libraries.remixer.widget.RemixWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
   * tests: JUnit/Robolectric tests
+* remixer_annotation: An annotation processor to make it easier to add remixes to your code.
+  * main: The annotation processing code.
+  * tests: JUnit tests based on actual classes to compile.
 * remixer_example: This is an example app.
   * main: the code for the example app
 
@@ -29,5 +32,4 @@ The project is defined as a gradle project with submodules.
 ## Installing the example app
 
 If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
-
 ```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```

@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package somepackage;
+
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+
+public class EmptyList {
+
+  @RemixerInstance
+  public Remixer remixer;
+
+  /**
+   * List is empty explicitly! Fail
+   */
+  @StringListRemixMethod(possibleValues = {})
+  public void fail(String i){}
+}

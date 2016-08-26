@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package somepackage;
+
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RemixerInstance;
+
+public class FixesDefaultValue {
+
+  @RemixerInstance
+  public Remixer remixer;
+
+  /**
+   * Default value is implicitly 0, this has to move to 15 with minValue.
+   */
+  @RangeRemixMethod(minValue = 15)
+  public void fixValue(Integer i){}
+}

@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package com.google.android.libraries.remixer.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * Annotation to apply to a Remixer field in an activity. It automatically generates code to make
+ * the activity a RemixerActivity using this field as the Remixer instance.
+ */
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.CLASS)
+public @interface RemixerInstance {
+}

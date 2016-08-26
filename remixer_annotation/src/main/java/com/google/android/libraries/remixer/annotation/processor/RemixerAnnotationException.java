@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example'
+package com.google.android.libraries.remixer.annotation.processor;
+
+import javax.lang.model.element.Element;
+
+/**
+ * An exception to throw when there is an error processing annotations, this will cause the
+ * processor to report and error and fail.
+ */
+public class RemixerAnnotationException extends Exception {
+  private final Element element;
+
+  public RemixerAnnotationException(Element element, String message) {
+    super(message);
+    this.element = element;
+  }
+
+  public Element getElement() {
+    return element;
+  }
+}
