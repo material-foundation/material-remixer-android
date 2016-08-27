@@ -36,7 +36,6 @@ import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
@@ -55,13 +54,6 @@ import javax.lang.model.util.Types;
  * support them.
  */
 @AutoService(Processor.class)
-@SupportedAnnotationTypes({
-    "com.google.android.libraries.remixer.annotation.BooleanRemixMethod",
-    "com.google.android.libraries.remixer.annotation.RangeRemixMethod",
-    "com.google.android.libraries.remixer.annotation.StringListRemixMethod",
-    "com.google.android.libraries.remixer.annotation.StringRemixMethod",
-    "com.google.android.libraries.remixer.annotation.RemixerInstance"
-    })
 @SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class RemixerAnnotationProcessor extends AbstractProcessor {
 
@@ -70,7 +62,6 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
   private Filer filer;
   private Types typeUtils;
 
-  private Map<String, AnnotatedClass> annotatedClasses;
   private Map<Class<? extends Annotation>, Class<?>> annotationToParameter;
   private Set<String> alreadyProcessedClasses = new HashSet<>();
 
@@ -87,15 +78,25 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
     errorReporter = new ErrorReporter(processingEnv);
     filer = processingEnv.getFiler();
     typeUtils = processingEnv.getTypeUtils();
-    annotatedClasses = new HashMap<>();
+  }
+
+  @Override
+  public Set<String> getSupportedAnnotationTypes() {
+    Set<String> set = new HashSet<>();
+    set.add(RemixerInstance.class.getCanonicalName());
+    for (SupportedMethodAnnotation annotation : SupportedMethodAnnotation.values()) {
+      set.add(annotation.getAnnotationType().getCanonicalName());
+    }
+    return set;
   }
 
   @Override
   public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
     try {
+      Map<String, AnnotatedClass> annotatedClasses = new HashMap<>();
       // First process RemixerInstance annotations.
-      findRemixerInstances(roundEnv);
-      findRemixAnnotations(roundEnv);
+      findRemixerInstances(roundEnv, annotatedClasses);
+      findRemixAnnotations(roundEnv, annotatedClasses);
       for (Map.Entry<String, AnnotatedClass> classEntry: annotatedClasses.entrySet()) {
         if (!alreadyProcessedClasses.contains(classEntry.getKey())) {
           JavaFile file = classEntry.getValue().generateJavaFile();
@@ -118,7 +119,9 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
    * Makes sure that there is only one of those per class and that they are applied to the right
    * field (public/default access of type {@link Remixer}.
    */
-  private void findRemixerInstances(RoundEnvironment roundEnv) throws RemixerAnnotationException {
+  private void findRemixerInstances(
+      RoundEnvironment roundEnv, Map<String, AnnotatedClass> annotatedClasses)
+      throws RemixerAnnotationException {
     for (Element instance : roundEnv.getElementsAnnotatedWith(RemixerInstance.class)) {
       // We know these are field elements since RemixerInstances only apply to those.
       checkPublicOrDefault(instance);
@@ -141,15 +144,17 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
    * <p>Makes sure that they are applied to the right method (non-constructor, non-static,
    * public/default access, and that only take one parameter of the right type).
    */
-  private void findRemixAnnotations(RoundEnvironment roundEnv) throws RemixerAnnotationException {
-    for (Map.Entry<Class<? extends Annotation>, Class<?>> mapping :
-        annotationToParameter.entrySet()) {
-      for (Element element : roundEnv.getElementsAnnotatedWith(mapping.getKey())) {
+  private void findRemixAnnotations(
+      RoundEnvironment roundEnv, Map<String, AnnotatedClass> annotatedClasses)
+      throws RemixerAnnotationException {
+    for (SupportedMethodAnnotation annotationType : SupportedMethodAnnotation.values()) {
+      for (Element element :
+          roundEnv.getElementsAnnotatedWith(annotationType.getAnnotationType())) {
         // We know these are Executable elements since RemixerInstances only apply to those.
         ExecutableElement method = (ExecutableElement) element;
         checkPublicOrDefault(method);
         checkMethod(method);
-        checkParameter(method, mapping.getValue());
+        checkParameter(method, annotationType.getParameterClass());
         TypeElement clazz = (TypeElement) method.getEnclosingElement();
         String className = clazz.getQualifiedName().toString();
         if (!annotatedClasses.containsKey(className)) {
@@ -157,35 +162,11 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
               element,
               "Remix annotations REQUIRE a @RemixerInstance annotated field in the same class");
         }
-        Annotation annotation = method.getAnnotation(mapping.getKey());
+        Annotation annotation = method.getAnnotation(annotationType.getAnnotationType());
         annotatedClasses.get(className)
-            .addMethod(getMethodAnnotation(clazz, method, annotation));
+            .addMethod(annotationType.getMethodAnnotation(clazz, method, annotation));
       }
     }
-  }
-
-  /**
-   * Returns a {@link MethodAnnotation} object that represents one single MethodAnnotation found in
-   * the code. This is used later to generate the code.
-   * @throws RemixerAnnotationException Any semantic error or usage of an unimplemented annotation.
-   */
-  private MethodAnnotation getMethodAnnotation(
-      TypeElement clazz, ExecutableElement method, Annotation annotation)
-      throws RemixerAnnotationException {
-    if (annotation instanceof BooleanRemixMethod) {
-      return new BooleanRemixMethodAnnotation(clazz, method, (BooleanRemixMethod) annotation);
-    }
-    if (annotation instanceof RangeRemixMethod) {
-      return new RangeRemixMethodAnnotation(clazz, method, (RangeRemixMethod) annotation);
-    }
-    if (annotation instanceof StringListRemixMethod) {
-      return new StringListRemixMethodAnnotation(clazz, method, (StringListRemixMethod) annotation);
-    }
-    if (annotation instanceof StringRemixMethod) {
-      return new StringRemixMethodAnnotation(clazz, method, (StringRemixMethod) annotation);
-    }
-    throw new RemixerAnnotationException(method,
-        "Using an unimplemented Method annotation. Should never happen!");
   }
 
   /**

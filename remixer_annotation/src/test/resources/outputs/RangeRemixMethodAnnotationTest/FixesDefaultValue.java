@@ -35,16 +35,16 @@ class FixesDefaultValue_RemixerBinder extends RemixerBinder.Binder<FixesDefaultV
     } else {
       remixer = activity.remixer;
     }
-    FixesDefaultValue_fixValue_fixValue fixValue_callback = new FixesDefaultValue_fixValue_fixValue(activity);
+    Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
     RangeRemix fixValue_remix = new RangeRemix("fixValue", "fixValue", 15, 15, 100, fixValue_callback, 0);
     remixer.addRemix(fixValue_remix);
     activity.remixer = remixer;
   }
 
-  static class FixesDefaultValue_fixValue_fixValue implements RemixCallback<Integer> {
+  static class Generated_fixValue implements RemixCallback<Integer> {
     private final FixesDefaultValue activity;
 
-    FixesDefaultValue_fixValue_fixValue(FixesDefaultValue activity) {
+    Generated_fixValue(FixesDefaultValue activity) {
       this.activity = activity;
     }
 

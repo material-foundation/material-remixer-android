@@ -31,8 +31,8 @@ public class KeyChecker {
     if (!Character.isJavaIdentifierStart(key.charAt(0))) {
       return false;
     }
-    for (int i = 0; i < key.length(); i++) {
-      if (!Character.isJavaIdentifierStart(key.charAt(i))) {
+    for (int i = 1; i < key.length(); i++) {
+      if (!Character.isJavaIdentifierPart(key.charAt(i))) {
         return false;
       }
     }

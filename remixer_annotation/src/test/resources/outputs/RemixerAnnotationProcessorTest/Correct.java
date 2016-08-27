@@ -41,28 +41,28 @@ class Correct_RemixerBinder extends RemixerBinder.Binder<Correct> {
     } else {
       remixer = activity.remixer;
     }
-    Correct_setBoolean_setBoolean setBoolean_callback = new Correct_setBoolean_setBoolean(activity);
+    Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
     BooleanRemix setBoolean_remix = new BooleanRemix("setBoolean", "setBoolean", false, setBoolean_callback, 0);
     remixer.addRemix(setBoolean_remix);
-    Correct_setInt_setInt setInt_callback = new Correct_setInt_setInt(activity);
+    Generated_setInt setInt_callback = new Generated_setInt(activity);
     RangeRemix setInt_remix = new RangeRemix("setInt", "setInt", 0, 0, 100, setInt_callback, 0);
     remixer.addRemix(setInt_remix);
-    Correct_setString_setString setString_callback = new Correct_setString_setString(activity);
+    Generated_setString setString_callback = new Generated_setString(activity);
     StringRemix setString_remix = new StringRemix("setString", "setString", "", setString_callback, 0);
     remixer.addRemix(setString_remix);
     ArrayList<String> setStringList_remix_list = new ArrayList<String>();
     setStringList_remix_list.add("hello");
     setStringList_remix_list.add("world");
-    Correct_setStringList_setStringList setStringList_callback = new Correct_setStringList_setStringList(activity);
+    Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
     ItemListRemix<String> setStringList_remix = new ItemListRemix<String>("setStringList", "setStringList", "hello", setStringList_remix_list, setStringList_callback, 0);
     remixer.addRemix(setStringList_remix);
     activity.remixer = remixer;
   }
 
-  static class Correct_setBoolean_setBoolean implements RemixCallback<Boolean> {
+  static class Generated_setBoolean implements RemixCallback<Boolean> {
     private final Correct activity;
 
-    Correct_setBoolean_setBoolean(Correct activity) {
+    Generated_setBoolean(Correct activity) {
       this.activity = activity;
     }
 
@@ -72,10 +72,10 @@ class Correct_RemixerBinder extends RemixerBinder.Binder<Correct> {
     }
   }
 
-  static class Correct_setInt_setInt implements RemixCallback<Integer> {
+  static class Generated_setInt implements RemixCallback<Integer> {
     private final Correct activity;
 
-    Correct_setInt_setInt(Correct activity) {
+    Generated_setInt(Correct activity) {
       this.activity = activity;
     }
 
@@ -85,10 +85,10 @@ class Correct_RemixerBinder extends RemixerBinder.Binder<Correct> {
     }
   }
 
-  static class Correct_setString_setString implements RemixCallback<String> {
+  static class Generated_setString implements RemixCallback<String> {
     private final Correct activity;
 
-    Correct_setString_setString(Correct activity) {
+    Generated_setString(Correct activity) {
       this.activity = activity;
     }
 
@@ -98,10 +98,10 @@ class Correct_RemixerBinder extends RemixerBinder.Binder<Correct> {
     }
   }
 
-  static class Correct_setStringList_setStringList implements RemixCallback<String> {
+  static class Generated_setStringList implements RemixCallback<String> {
     private final Correct activity;
 
-    Correct_setStringList_setStringList(Correct activity) {
+    Generated_setStringList(Correct activity) {
       this.activity = activity;
     }
 

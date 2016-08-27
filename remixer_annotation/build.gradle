@@ -26,7 +26,7 @@ repositories {
   mavenCentral()
 }
 
-// This is required to run tests that depend on rest resources.
+// This is required to run tests that depend on test resources.
 task copyTestResources(type: Copy) {
   from "${projectDir}/src/test/resources"
   into "${buildDir}/classes/test"

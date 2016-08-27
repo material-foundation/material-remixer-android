@@ -35,7 +35,7 @@ public class BooleanRemixMethodAnnotation extends MethodAnnotation {
    * <p>Would expand to {@code BooleanRemix remixName = new BooleanRemix(title, key,
    * defaultValue, callback, layoutId)}.
    */
-  protected static final String NEW_REMIX_STATEMENT =
+  private static final String NEW_BOOLEAN_REMIX_STATEMENT =
       "$T $L = new $T($S, $S, $L, $L, $L)";
 
   private final boolean defaultValue;
@@ -56,7 +56,7 @@ public class BooleanRemixMethodAnnotation extends MethodAnnotation {
             NEW_CALLBACK_STATEMENT,
             generatedClassName, callbackVariable, generatedClassName)
         .addStatement(
-            NEW_REMIX_STATEMENT,
+            NEW_BOOLEAN_REMIX_STATEMENT,
             BooleanRemix.class,
             remixVariable,
             BooleanRemix.class,

@@ -35,16 +35,16 @@ class Correct_RemixerBinder extends RemixerBinder.Binder<Correct> {
     } else {
       remixer = activity.remixer;
     }
-    Correct_correct_correct correct_callback = new Correct_correct_correct(activity);
+    Generated_correct correct_callback = new Generated_correct(activity);
     BooleanRemix correct_remix = new BooleanRemix("correct", "correct", false, correct_callback, 0);
     remixer.addRemix(correct_remix);
     activity.remixer = remixer;
   }
 
-  static class Correct_correct_correct implements RemixCallback<Boolean> {
+  static class Generated_correct implements RemixCallback<Boolean> {
     private final Correct activity;
 
-    Correct_correct_correct(Correct activity) {
+    Generated_correct(Correct activity) {
       this.activity = activity;
     }
 

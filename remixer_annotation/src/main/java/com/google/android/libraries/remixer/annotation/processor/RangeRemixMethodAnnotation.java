@@ -35,7 +35,7 @@ public class RangeRemixMethodAnnotation extends MethodAnnotation {
    * <p>Would expand to {@code RangeRemix remixName = new RangeRemix(title, key,
    * defaultValue, minValue, maxValue, callback, layoutId)}.
    */
-  protected static final String NEW_REMIX_STATEMENT =
+  private static final String NEW_RANGE_REMIX_STATEMENT =
       "$T $L = new $T($S, $S, $L, $L, $L, $L, $L)";
 
   private final int minValue;
@@ -71,7 +71,7 @@ public class RangeRemixMethodAnnotation extends MethodAnnotation {
             NEW_CALLBACK_STATEMENT,
             generatedClassName, callbackVariable, generatedClassName)
         .addStatement(
-            NEW_REMIX_STATEMENT,
+            NEW_RANGE_REMIX_STATEMENT,
             RangeRemix.class,
             remixVariable,
             RangeRemix.class,

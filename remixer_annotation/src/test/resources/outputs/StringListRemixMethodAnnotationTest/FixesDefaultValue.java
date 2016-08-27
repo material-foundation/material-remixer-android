@@ -39,16 +39,16 @@ class FixesDefaultValue_RemixerBinder extends RemixerBinder.Binder<FixesDefaultV
     ArrayList<String> fixValue_remix_list = new ArrayList<String>();
     fixValue_remix_list.add("hello");
     fixValue_remix_list.add("world");
-    FixesDefaultValue_fixValue_fixValue fixValue_callback = new FixesDefaultValue_fixValue_fixValue(activity);
+    Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
     ItemListRemix<String> fixValue_remix = new ItemListRemix<String>("fixValue", "fixValue", "hello", fixValue_remix_list, fixValue_callback, 0);
     remixer.addRemix(fixValue_remix);
     activity.remixer = remixer;
   }
 
-  static class FixesDefaultValue_fixValue_fixValue implements RemixCallback<String> {
+  static class Generated_fixValue implements RemixCallback<String> {
     private final FixesDefaultValue activity;
 
-    FixesDefaultValue_fixValue_fixValue(FixesDefaultValue activity) {
+    Generated_fixValue(FixesDefaultValue activity) {
       this.activity = activity;
     }
 

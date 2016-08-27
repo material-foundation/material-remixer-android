@@ -18,6 +18,9 @@
  * Contains the Remixer annotations that you can use to generate all the boilerplate required to
  * initialize Remixes.
  *
+ * These annotations can only be used inside a public or default-access top-level class (No nested
+ * classes) that extend android.app.Activity.
+ *
  * If you decide to use Remixer Annotations in any class you must use @RemixerInstance to annotate
  * an instance of {@link com.google.android.libraries.remixer.Remixer}, and call {@link
  * com.google.android.libraries.remixer.annotation.RemixerBinder#bind(java.lang.Object)} from your

@@ -35,7 +35,7 @@ public class StringRemixMethodAnnotation extends MethodAnnotation {
    * <p>Would expand to {@code StringRemix remixName = new StringRemix(title, key, defaultValue,
    * callback, layoutId)}.
    */
-  protected static final String NEW_REMIX_STATEMENT = "$T $L = new $T($S, $S, $S, $L, $L)";
+  private static final String NEW_STRING_REMIX_STATEMENT = "$T $L = new $T($S, $S, $S, $L, $L)";
   private final String defaultValue;
 
   public StringRemixMethodAnnotation(
@@ -54,7 +54,7 @@ public class StringRemixMethodAnnotation extends MethodAnnotation {
             NEW_CALLBACK_STATEMENT,
             generatedClassName, callbackVariable, generatedClassName)
         .addStatement(
-            NEW_REMIX_STATEMENT,
+            NEW_STRING_REMIX_STATEMENT,
             StringRemix.class,
             remixVariable,
             StringRemix.class,

@@ -65,11 +65,6 @@ public class AnnotatedClass {
    */
   private final TypeName sourceClassName;
   /**
-   * A list of {@link MethodAnnotation} objects that represent all methods annotated with Remixer
-   * annotations.
-   */
-  private final Collection<MethodAnnotation> annotatedMethods;
-  /**
    * The name of the class that to generate to contain all the code related to Remixer annotations.
    */
   private final String generatedClassName;
@@ -105,7 +100,6 @@ public class AnnotatedClass {
     remixerName = remixerInstance.getSimpleName();
     packageName =
         ((PackageElement) sourceClass.getEnclosingElement()).getQualifiedName().toString();
-    annotatedMethods = new ArrayList<>();
     methodMap = new HashMap<>();
     remixKeys = new HashSet<>();
   }
@@ -116,6 +110,10 @@ public class AnnotatedClass {
    *     class.
    */
   public void addMethod(MethodAnnotation method) throws RemixerAnnotationException {
+    if (!method.getSourceClass().equals(sourceClass)) {
+      throw new RemixerAnnotationException(method.getSourceMethod(),
+          "Adding a method annotation to the wrong class, shouldn't happen. File a bug.");
+    }
     if (remixKeys.contains(method.getKey())) {
       throw new RemixerAnnotationException(method.getSourceMethod(),
           "Repeated Remix key, there can only be one with the same name in the same class");
@@ -133,7 +131,7 @@ public class AnnotatedClass {
    * Generates a Java file with the code corresponding to all Remixer annotations in this class.
    */
   public JavaFile generateJavaFile() throws RemixerAnnotationException {
-    sortMethods();
+    Collection<MethodAnnotation> annotatedMethods = sortMethods();
     TypeSpec.Builder classBuilder = TypeSpec.classBuilder(generatedClassName);
     ParameterizedTypeName superclass =
         ParameterizedTypeName.get(REMIXER_BINDER_CLASS_NAME, sourceClassName);
@@ -158,7 +156,7 @@ public class AnnotatedClass {
         .endControlFlow();
     for (MethodAnnotation method : annotatedMethods) {
       // Create all of the internal callback classes
-      classBuilder.addType(method.getCallbackClass());
+      classBuilder.addType(method.generateCallbackClass());
       // Add them to the bind method.
       method.addSetupStatements(bindMethodBuilder);
     }
@@ -175,7 +173,8 @@ public class AnnotatedClass {
    * <p>Not only this generates predictable output for tests, but this is necessary for the user to
    * have any control over the order of remixes being added.
    */
-  private void sortMethods() throws RemixerAnnotationException {
+  private Collection<MethodAnnotation> sortMethods() throws RemixerAnnotationException {
+    List<MethodAnnotation> annotatedMethods = new ArrayList<>();
     List<? extends Element> enclosedElements = sourceClass.getEnclosedElements();
     for (Element element : enclosedElements) {
       if (element instanceof ExecutableElement) {
@@ -185,10 +184,6 @@ public class AnnotatedClass {
         }
       }
     }
-    if (annotatedMethods.size() < methodMap.size()) {
-      throw new RemixerAnnotationException(sourceClass,
-          "Cannot find all the annotated methods in the source class. Should never happen ™. "
-          + "File a bug if you see this.");
-    }
+    return annotatedMethods;
   }
 }
