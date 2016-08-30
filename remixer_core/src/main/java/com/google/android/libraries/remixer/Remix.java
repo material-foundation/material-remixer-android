@@ -40,7 +40,7 @@ public abstract class Remix<T> {
    * The layout to inflate to display this remix. If set to 0, the default layout associated with
    * the remix type will be used.
    */
-  private final int controlViewResourceId;
+  private final int layoutId;
   /**
    * The currently selected value.
    */
@@ -54,7 +54,7 @@ public abstract class Remix<T> {
    * @param title The name to display in the UI.
    * @param defaultValue The default value for this Remix.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
-   * @param controlViewResourceId A layout to inflate when displaying this Remix in the UI.
+   * @param layoutId A layout to inflate when displaying this Remix in the UI.
    * @throws IllegalArgumentException defaultValue is invalid for this Remix. See {@link
    *     #checkValue(Object)}.
    */
@@ -66,13 +66,13 @@ public abstract class Remix<T> {
       String key,
       T defaultValue,
       RemixCallback callback,
-      int controlViewResourceId) {
+      int layoutId) {
     this.key = key;
     this.title = title;
     // TODO(miguely): pull this out of SharedPreferences.
     this.selectedValue = defaultValue;
     this.callback = callback;
-    this.controlViewResourceId = controlViewResourceId;
+    this.layoutId = layoutId;
   }
 
   public String getTitle() {
@@ -113,8 +113,8 @@ public abstract class Remix<T> {
   /**
    * Returns the layout id to inflate when displaying this Remix.
    */
-  public int getControlViewResourceId() {
-    return controlViewResourceId;
+  public int getlayoutId() {
+    return layoutId;
   }
 
   protected void runCallback() {

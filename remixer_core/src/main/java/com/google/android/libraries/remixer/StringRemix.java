@@ -24,30 +24,13 @@ package com.google.android.libraries.remixer;
 public class StringRemix extends Remix<String> {
 
   /**
-   * Creates a new StringRemix and runs the callback. This uses the default layout to display the
-   * Remix on screen.
-   *
-   * @param title Displayable name for this Remix.
-   * @param key The key used to store this Remix.
-   * @param defaultValue The default value to use if none has been set.
-   * @param callback Callback to run once the value is set. Can be null.
-   */
-  public StringRemix(
-      String title,
-      String key,
-      String defaultValue,
-      RemixCallback<String> callback) {
-    this(title, key, defaultValue, callback, 0);
-  }
-
-  /**
    * Creates a new StringRemix and runs the callback.
    *
    * @param title Displayable name for this Remix.
    * @param key The key used to store this Remix.
    * @param defaultValue The default value to use if none has been set.
    * @param callback Callback to run once the value is set. Can be null.
-   * @param controlViewResourceId a layout id that renders this control on screen. Its root element
+   * @param layoutId a layout id that renders this control on screen. Its root element
    *     must implement {@code com.google.android.libraries.remixer.view.RemixView<StringRemix>}.
    */
   public StringRemix(
@@ -55,13 +38,77 @@ public class StringRemix extends Remix<String> {
       String key,
       String defaultValue,
       RemixCallback<String> callback,
-      int controlViewResourceId) {
-    super(title, key, defaultValue, callback, controlViewResourceId);
+      int layoutId) {
+    super(title, key, defaultValue, callback, layoutId);
     runCallback();
   }
 
   @Override
   protected void checkValue(String value) {
     // Empty implementation, all values are accepted.
+  }
+
+  /**
+   * Convenience builder for StringRemix.
+   *
+   * <p>This builder assumes a few things for your convenience:
+   * <ul>
+   * <li>If the default value is not set, the empty string will be used as the default value.
+   * <li>If the layout id is not set, the default layout will be used.
+   * <li>If the title is not set, the key will be used as title
+   * </ul>
+   *
+   * <p>On the other hand: key is mandatory. If it's missing, an {@link IllegalArgumentException}
+   * will be thrown.
+   */
+  public static class Builder {
+
+    private String key;
+    private String title;
+    private String defaultValue = "";
+    private RemixCallback<String> callback;
+    private int layoutId = 0;
+
+    public Builder() {}
+
+    public Builder setKey(String key) {
+      this.key = key;
+      return this;
+    }
+
+    public Builder setTitle(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder setDefaultValue(String defaultValue) {
+      this.defaultValue = defaultValue;
+      return this;
+    }
+
+    public Builder setCallback(RemixCallback<String> callback) {
+      this.callback = callback;
+      return this;
+    }
+
+    public Builder setLayoutId(int layoutId) {
+      this.layoutId = layoutId;
+      return this;
+    }
+
+    /**
+     * Returns a new StringRemix created with the configuration stored in this builder instance.
+     *
+     * @throws IllegalArgumentException If key is missing
+     */
+    public StringRemix build() {
+      if (key == null) {
+        throw new IllegalArgumentException("key cannot be unset for StringRemix");
+      }
+      if (title == null) {
+        title = key;
+      }
+      return new StringRemix(title, key, defaultValue, callback, layoutId);
+    }
   }
 }

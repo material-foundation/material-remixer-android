@@ -44,60 +44,54 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     remixer = new Remixer();
 
     // Create a RangeRemix that updates boundedText's size between 10 and 48 sp.
-    RangeRemix fontSizeRangeRemix = new RangeRemix(
-        "Font size in sp",
-        "font_size",
-        16 /* defaultValue */,
-        10 /* minValue */,
-        48 /* maxValue */,
-        new RemixCallback<Integer>() {
-          @Override
-          public void onValueSet(Remix<Integer> remix) {
-            boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
-          }
-        });
-    remixer.addRemix(fontSizeRangeRemix);
+    RangeRemix.Builder fontSizeRangeRemix = new RangeRemix.Builder()
+            .setKey("font_size")
+            .setMinValue(16)
+            .setMaxValue(72)
+            .setCallback(new RemixCallback<Integer>() {
+              @Override
+              public void onValueSet(Remix<Integer> remix) {
+                boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
+              }
+            });
+    remixer.addRemix(fontSizeRangeRemix.build());
 
     // Create an ItemListRemix<String> that updates boundedText's contents from a list of options
-    ItemListRemix<String> itemListRemix = new ItemListRemix<String>(
-        "Text",
-        "text",
-        "Hello World!",
-        Arrays.asList("Hello World!", "Foo", "Bar", "Foobar"),
+    ItemListRemix.Builder<String> itemListRemix = new ItemListRemix.Builder<String>()
+        .setKey("boundedText")
+        .setPossibleValues("Hello world", "Foo", "Bar", "May the force be with you")
+        .setCallback(
         new RemixCallback<String>() {
           @Override
           public void onValueSet(Remix<String> remix) {
             boundedText.setText(remix.getSelectedValue());
           }
         });
-    remixer.addRemix(itemListRemix);
+    remixer.addRemix(itemListRemix.build());
 
     // Create a BooleanRemix that controls whether freeformText is visible or not.
-    BooleanRemix booleanRemix = new BooleanRemix(
-        "Show Freeform Text",
-        "freeformTextDisplay",
-        false,
-        new RemixCallback<Boolean>() {
+    BooleanRemix.Builder booleanRemix = new BooleanRemix.Builder()
+        .setKey("freeformTextDisplay")
+        .setCallback(new RemixCallback<Boolean>() {
           @Override
           public void onValueSet(Remix<Boolean> remix) {
             freeformText.setVisibility(remix.getSelectedValue() ? View.VISIBLE : View.GONE);
           }
         });
-    remixer.addRemix(booleanRemix);
+    remixer.addRemix(booleanRemix.build());
 
     // Create a StringRemix that lets you set freeformText's content freely.
-    StringRemix freeformStringRemix = new StringRemix(
-        "Free form text",
-        "freeformText",
-        "You can change this string",
-        new RemixCallback<String>() {
+    StringRemix.Builder freeformStringRemix = new StringRemix.Builder()
+        .setKey("freeformText")
+        .setDefaultValue("Change me!")
+        .setCallback(new RemixCallback<String>() {
 
           @Override
           public void onValueSet(Remix<String> remix) {
             freeformText.setText(remix.getSelectedValue());
           }
         });
-    remixer.addRemix(freeformStringRemix);
+    remixer.addRemix(freeformStringRemix.build());
 
     // Add a callback to open the Remixer UI when the button is clicked.
     remixerButton.setOnClickListener(new View.OnClickListener() {

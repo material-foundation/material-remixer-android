@@ -56,7 +56,7 @@ public final class RemixWidgetHelper {
    *     it and it is relying on a default.
    */
   public static int getLayoutId(Remix<?> instance) {
-    int layoutId = instance.getControlViewResourceId();
+    int layoutId = instance.getlayoutId();
     if (layoutId != 0) {
       // This instance has a preferred layout.
       return layoutId;

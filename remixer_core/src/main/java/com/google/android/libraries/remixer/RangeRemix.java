@@ -32,30 +32,6 @@ public class RangeRemix extends Remix<Integer> {
 
   /**
    * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
-   * {@code callback}. This uses the default layout to display this remix on-screen.
-   *
-   * @param title The name of this remix to be displayed in the UI.
-   * @param key The key to store in SharedPreferences.
-   * @param defaultValue The default value in case there is none in SharedPreferences.
-   * @param minValue The minimum value for this remix.
-   * @param maxValue The maximum value for this remix.
-   * @param callback A callback to run when successfully initialized and when the value changes. Can
-   *     be null.
-   * @throws IllegalArgumentException {@code minValue > maxValue} or {@code defaultValue <
-   *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
-   */
-  public RangeRemix(
-      String title,
-      String key,
-      int defaultValue,
-      int minValue,
-      int maxValue,
-      RemixCallback<Integer> callback) {
-    this(title, key, defaultValue, minValue, maxValue, callback, 0);
-  }
-
-  /**
-   * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
    * {@code callback}.
    *
    * @param title The name of this remix to be displayed in the UI.
@@ -65,7 +41,7 @@ public class RangeRemix extends Remix<Integer> {
    * @param maxValue The maximum value for this remix.
    * @param callback A callback to run when successfully initialized and when the value changes. Can
    *     be null.
-   * @param controlViewResourceId A layout id that renders this control on screen.
+   * @param layoutId A layout id that renders this control on screen.
    * @throws IllegalArgumentException {@code minValue > maxValue} or {@code defaultValue <
    *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
    */
@@ -76,8 +52,8 @@ public class RangeRemix extends Remix<Integer> {
       int minValue,
       int maxValue,
       RemixCallback<Integer> callback,
-      int controlViewResourceId) {
-    super(title, key, defaultValue, callback, controlViewResourceId);
+      int layoutId) {
+    super(title, key, defaultValue, callback, layoutId);
     this.minValue = minValue;
     this.maxValue = maxValue;
     checkRange();
@@ -118,5 +94,89 @@ public class RangeRemix extends Remix<Integer> {
 
   public int getMaxValue() {
     return maxValue;
+  }
+
+  /**
+   * Convenience builder for RangeRemix, the number of arguments for the constructor is too large.
+   *
+   * <p>This builder assumes a few things for your convenience:
+   * <ul>
+   * <li>If the default value is not set, minValue will be used as the default value.
+   * <li>If the layout id is not set, the default layout will be used.
+   * <li>If the title is not set, the key will be used as title
+   * </ul>
+   *
+   * <p>On the other hand: key, minValue and maxValue are mandatory. If any of these are missing or
+   * the settings are incorrect according to the logic of {@link RangeRemix} an
+   * {@link IllegalArgumentException} will be thrown.
+   */
+  public static class Builder {
+
+    private String key;
+    private String title;
+    private Integer defaultValue;
+    private Integer minValue;
+    private Integer maxValue;
+    private RemixCallback<Integer> callback;
+    private int layoutId = 0;
+
+    public Builder() {}
+
+    public Builder setKey(String key) {
+      this.key = key;
+      return this;
+    }
+
+    public Builder setTitle(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder setMinValue(int minValue) {
+      this.minValue = minValue;
+      return this;
+    }
+
+    public Builder setMaxValue(int maxValue) {
+      this.maxValue = maxValue;
+      return this;
+    }
+
+    public Builder setDefaultValue(int defaultValue) {
+      this.defaultValue = defaultValue;
+      return this;
+    }
+
+    public Builder setCallback(RemixCallback<Integer> callback) {
+      this.callback = callback;
+      return this;
+    }
+
+    public Builder setLayoutId(int layoutId) {
+      this.layoutId = layoutId;
+      return this;
+    }
+
+    /**
+     * Returns a new RangeRemix created with the configuration stored in this builder instance.
+     *
+     * @throws IllegalArgumentException If key, minValue or maxValue are missing, or if these
+     *     settings are incorrect for {@link RangeRemix}
+     */
+    public RangeRemix build() {
+      if (minValue == null || maxValue == null) {
+        throw new IllegalArgumentException("minValue and maxValue must not be null");
+      }
+      if (defaultValue == null) {
+        defaultValue = minValue;
+      }
+      if (key == null) {
+        throw new IllegalArgumentException("key cannot be unset for RangeRemix");
+      }
+      if (title == null) {
+        title = key;
+      }
+      return new RangeRemix(title, key, defaultValue, minValue, maxValue, callback, layoutId);
+    }
   }
 }
