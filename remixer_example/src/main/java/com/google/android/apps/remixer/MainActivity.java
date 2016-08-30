@@ -18,8 +18,6 @@ import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
-import java.util.Arrays;
-
 // Implementing RemixerActivity is necessary to use RemixerFragment
 public class MainActivity extends AppCompatActivity implements RemixerActivity {
 
@@ -48,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
             .setKey("font_size")
             .setMinValue(16)
             .setMaxValue(72)
+            .setIncrement(4)
             .setCallback(new RemixCallback<Integer>() {
               @Override
               public void onValueSet(Remix<Integer> remix) {

@@ -28,56 +28,83 @@ import org.mockito.MockitoAnnotations;
 public class RangeRemixTest {
 
   @Mock
-  RemixCallback<Integer> mockCallback;
+  RemixCallback<Integer> singleIncrementsCallback;
+  @Mock
+  RemixCallback<Integer> increments5Callback;
+
+  RangeRemix singleIncrements;
+  RangeRemix increments5;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
+    singleIncrements = new RangeRemix("name", "key", 15, 0, 20, 1, singleIncrementsCallback, 0);
+    increments5 = new RangeRemix("name", "key", 15, 0, 20, 5, increments5Callback, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptDefaultValueGreaterThanMax() {
-    new RangeRemix("name", "key", 15, 0, 10, null, 0);
+    new RangeRemix("name", "key", 15, 0, 10, 1, null, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptDefaultValueLessThanMin() {
-    new RangeRemix("name", "key", 15, 20, 30, null, 0);
+    new RangeRemix("name", "key", 15, 20, 30, 1, null, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptInvalidRanges() {
-    new RangeRemix("name", "key", 15, 50, 10, null, 0);
+    new RangeRemix("name", "key", 15, 50, 20, 1, null, 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void constructorDoesNotAcceptNegativeStepping() {
+    new RangeRemix("name", "key", 15, 50, 20, -1, null, 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void constructorDoesNotAcceptInvalidStepping() {
+    // Stepping is invalid because maxValue 52 cannot be reached from 15 in steps of 5
+    new RangeRemix("name", "key", 15, 0, 52, 5, null, 0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void constructorDoesNotAcceptInvalidSteppingToDefaultValue() {
+    // Stepping is invalid because defaultValue 22 cannot be reached from 15 in steps of 5
+    new RangeRemix("name", "key", 22, 0, 50, 5, null, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void setValueRejectsValueLessThanMin() {
-    RangeRemix remix = new RangeRemix("name", "key", 15, 0, 20, null, 0);
-    remix.setValue(-1);
+    singleIncrements.setValue(-1);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void setValueRejectsValueGreaterThanMax() {
-    RangeRemix remix = new RangeRemix("name", "key", 15, 0, 20, null, 0);
-    remix.setValue(100);
+    singleIncrements.setValue(100);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void setValueRejectsInvalidValueForStepping() {
+    increments5.setValue(12);
   }
 
   @Test
   public void callbackIsCalledOnConstructor() {
-    RangeRemix remix = new RangeRemix("name", "key", 15, 0, 20, mockCallback, 0);
-    Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(remix);
+    Mockito.verify(singleIncrementsCallback, Mockito.times(1)).onValueSet(singleIncrements);
   }
 
   @Test
   public void callbackIsCalledAfterValueSet() {
-    RangeRemix remix = new RangeRemix("name", "key", 15, 0, 20, mockCallback, 0);
-    remix.setValue(18);
-    Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(remix);
+    singleIncrements.setValue(18);
+    Mockito.verify(singleIncrementsCallback, Mockito.times(2)).onValueSet(singleIncrements);
+    increments5.setValue(5);
+    Mockito.verify(increments5Callback, Mockito.times(2)).onValueSet(increments5);
   }
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    RangeRemix remix = new RangeRemix("name", "key", 15, 0, 20, mockCallback, 0);
+    RangeRemix remix = new RangeRemix("name", "key", 15, 0, 20, 1, null, 0);
     remix.setValue(18);
   }
 }

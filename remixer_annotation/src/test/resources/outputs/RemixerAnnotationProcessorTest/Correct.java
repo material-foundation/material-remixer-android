@@ -45,7 +45,7 @@ class Correct_RemixerBinder extends RemixerBinder.Binder<Correct> {
     BooleanRemix setBoolean_remix = new BooleanRemix("setBoolean", "setBoolean", false, setBoolean_callback, 0);
     remixer.addRemix(setBoolean_remix);
     Generated_setInt setInt_callback = new Generated_setInt(activity);
-    RangeRemix setInt_remix = new RangeRemix("setInt", "setInt", 0, 0, 100, setInt_callback, 0);
+    RangeRemix setInt_remix = new RangeRemix("setInt", "setInt", 0, 0, 100, 1, setInt_callback, 0);
     remixer.addRemix(setInt_remix);
     Generated_setString setString_callback = new Generated_setString(activity);
     StringRemix setString_remix = new StringRemix("setString", "setString", "", setString_callback, 0);

@@ -66,6 +66,14 @@ public @interface RangeRemixMethod {
   int maxValue() default 100;
 
   /**
+   * The number to step between value, can only be a positive integer.
+   *
+   * <p>If, for example, {@code minValue = 0 && maxValue = 12 && increment = 4} the only valid
+   * values for this remix would be {@code 0, 4, 8, 12}.
+   */
+  int increment() default 1;
+
+  /**
    * The layout id to inflate when displaying this Remix. If not specified a default will be used.
    *
    * <p>Its root element must implement {@code RemixWidget<Integer>}.

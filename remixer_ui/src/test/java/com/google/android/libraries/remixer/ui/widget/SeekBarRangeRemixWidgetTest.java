@@ -48,6 +48,7 @@ public class SeekBarRangeRemixWidgetTest {
   private static final int MIN = 4;
   private static final int MAX = 20;
   private static final int DEFAULT_VALUE = 8;
+  private static final int STEPPING = 1;
 
   @Mock
   RemixCallback<Integer> mockCallback;
@@ -67,6 +68,7 @@ public class SeekBarRangeRemixWidgetTest {
         DEFAULT_VALUE,
         MIN,
         MAX,
+        STEPPING,
         mockCallback,
         R.layout.seekbar_range_remix_widget);
     view = (SeekBarRangeRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)

@@ -36,7 +36,7 @@ class FixesDefaultValue_RemixerBinder extends RemixerBinder.Binder<FixesDefaultV
       remixer = activity.remixer;
     }
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
-    RangeRemix fixValue_remix = new RangeRemix("fixValue", "fixValue", 15, 15, 100, fixValue_callback, 0);
+    RangeRemix fixValue_remix = new RangeRemix("fixValue", "fixValue", 15, 15, 100, 1, fixValue_callback, 0);
     remixer.addRemix(fixValue_remix);
     activity.remixer = remixer;
   }

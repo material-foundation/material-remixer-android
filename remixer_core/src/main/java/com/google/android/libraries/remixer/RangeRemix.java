@@ -27,8 +27,18 @@ import java.util.Locale;
  */
 public class RangeRemix extends Remix<Integer> {
 
+  protected static final String INVALID_RANGE_ERROR_FORMAT =
+      "Invalid range for Remix %s min: %d, max: %d";
+  protected static final String NEGATIVE_STEPPING_ERROR_FORMAT =
+      "Stepping must be >= 1, Remix %s has increment %d";
+  protected static final String STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT =
+      "Remix %s: incorrect increment, can't get to %s %d from minValue %d using"
+          + " increment %d";
+  protected static final String NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT =
+      "%d is out of bounds for Remix %s: min: %d, max: %d";
   private final int minValue;
   private final int maxValue;
+  private final int increment;
 
   /**
    * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
@@ -39,11 +49,16 @@ public class RangeRemix extends Remix<Integer> {
    * @param defaultValue The default value in case there is none in SharedPreferences.
    * @param minValue The minimum value for this remix.
    * @param maxValue The maximum value for this remix.
+   * @param increment A value that defines each step. Must be a positive integer. So if you have
+   *     {@code minValue = 0 && maxValue = 12 && increment = 4}, only 0, 4, 8, 12 are possible
+   *     values.
    * @param callback A callback to run when successfully initialized and when the value changes. Can
    *     be null.
    * @param layoutId A layout id that renders this control on screen.
    * @throws IllegalArgumentException {@code minValue > maxValue} or {@code defaultValue <
-   *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range.
+   *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range. Also
+   *     thrown when {@code increment < 1} or {@code (maxValue - minValue) % increment != 0}
+   *     which means the current increment setting can't possibly get from minValue to maxValue.
    */
   public RangeRemix(
       String title,
@@ -51,12 +66,16 @@ public class RangeRemix extends Remix<Integer> {
       int defaultValue,
       int minValue,
       int maxValue,
+      int increment,
       RemixCallback<Integer> callback,
       int layoutId) {
     super(title, key, defaultValue, callback, layoutId);
     this.minValue = minValue;
     this.maxValue = maxValue;
+    this.increment = increment;
+
     checkRange();
+    checkStepIncrement();
     checkValue(defaultValue);
     runCallback();
   }
@@ -66,26 +85,52 @@ public class RangeRemix extends Remix<Integer> {
       throw new IllegalArgumentException(
           String.format(
               Locale.getDefault(),
-              "Invalid range for Remix %s min: %d, max: %d",
+              INVALID_RANGE_ERROR_FORMAT,
               getTitle(),
               minValue,
               maxValue));
     }
   }
 
+  private void checkStepIncrement() {
+    if (increment < 1) {
+      throw new IllegalArgumentException(
+          String.format(
+              Locale.getDefault(),
+              NEGATIVE_STEPPING_ERROR_FORMAT,
+              getTitle(),
+              increment));
+    }
+    checkValueAndStep(maxValue, "maxValue");
+  }
+
+  private void checkValueAndStep(int value, String valueName) {
+    if ((value - minValue) % increment != 0) {
+      throw new IllegalArgumentException(
+          String.format(
+              Locale.getDefault(),
+              STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT,
+              getTitle(),
+              valueName,
+              value,
+              minValue,
+              increment));
+    }
+  }
+
   @Override
   protected void checkValue(Integer newValue) {
-    // TODO(miguely): Check for correct stepping if specified.
     if (newValue < minValue || newValue > maxValue) {
       throw new IllegalArgumentException(
           String.format(
               Locale.getDefault(),
-              "%d is out of bounds for Remix %s: min: %d, max: %d",
+              NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT,
               newValue,
               getTitle(),
               minValue,
               maxValue));
     }
+    checkValueAndStep(newValue, "newValue");
   }
 
   public int getMinValue() {
@@ -96,12 +141,17 @@ public class RangeRemix extends Remix<Integer> {
     return maxValue;
   }
 
+  public int getIncrement() {
+    return increment;
+  }
+
   /**
    * Convenience builder for RangeRemix, the number of arguments for the constructor is too large.
    *
    * <p>This builder assumes a few things for your convenience:
    * <ul>
    * <li>If the default value is not set, minValue will be used as the default value.
+   * <li>If the increment is not set, 1 will be used.
    * <li>If the layout id is not set, the default layout will be used.
    * <li>If the title is not set, the key will be used as title
    * </ul>
@@ -117,6 +167,7 @@ public class RangeRemix extends Remix<Integer> {
     private Integer defaultValue;
     private Integer minValue;
     private Integer maxValue;
+    private int increment = 1;
     private RemixCallback<Integer> callback;
     private int layoutId = 0;
 
@@ -139,6 +190,11 @@ public class RangeRemix extends Remix<Integer> {
 
     public Builder setMaxValue(int maxValue) {
       this.maxValue = maxValue;
+      return this;
+    }
+
+    public Builder setIncrement(int increment) {
+      this.increment = increment;
       return this;
     }
 
@@ -176,7 +232,8 @@ public class RangeRemix extends Remix<Integer> {
       if (title == null) {
         title = key;
       }
-      return new RangeRemix(title, key, defaultValue, minValue, maxValue, callback, layoutId);
+      return new RangeRemix(
+          title, key, defaultValue, minValue, maxValue, increment, callback, layoutId);
     }
   }
 }

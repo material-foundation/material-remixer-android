@@ -36,10 +36,11 @@ public class RangeRemixMethodAnnotation extends MethodAnnotation {
    * defaultValue, minValue, maxValue, callback, layoutId)}.
    */
   private static final String NEW_RANGE_REMIX_STATEMENT =
-      "$T $L = new $T($S, $S, $L, $L, $L, $L, $L)";
+      "$T $L = new $T($S, $S, $L, $L, $L, $L, $L, $L)";
 
   private final int minValue;
   private int defaultValue;
+  private final int increment;
   private final int maxValue;
 
   protected RangeRemixMethodAnnotation(
@@ -48,6 +49,7 @@ public class RangeRemixMethodAnnotation extends MethodAnnotation {
     super(sourceClass, sourceMethod, annotation.key(), annotation.title(), annotation.layoutId());
     minValue = annotation.minValue();
     maxValue = annotation.maxValue();
+    increment = annotation.increment();
     if (minValue > maxValue) {
       throw new RemixerAnnotationException(sourceMethod,
           "minValue cannot be greater than maxValue");
@@ -80,6 +82,7 @@ public class RangeRemixMethodAnnotation extends MethodAnnotation {
             defaultValue,
             minValue,
             maxValue,
+            increment,
             callbackVariable,
             layoutId)
         .addStatement(ADD_REMIX_STATEMENT, remixVariable);

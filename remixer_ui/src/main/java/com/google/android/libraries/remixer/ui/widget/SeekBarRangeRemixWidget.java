@@ -34,6 +34,7 @@ public class SeekBarRangeRemixWidget extends RelativeLayout implements RemixWidg
   private SeekBar seekBar;
   private TextView nameText;
   private TextView currentValueText;
+  private RangeRemix remix;
 
   public SeekBarRangeRemixWidget(Context context) {
     super(context);
@@ -57,17 +58,20 @@ public class SeekBarRangeRemixWidget extends RelativeLayout implements RemixWidg
 
   @Override
   public void bindRemix(@NonNull final RangeRemix remix) {
+    this.remix = remix;
     nameText.setText(remix.getTitle());
-    seekBar.setMax(remix.getMaxValue() - remix.getMinValue());
+    int maxProgress = remix.getMaxValue() - remix.getMinValue();
+    maxProgress /= remix.getIncrement();
+    seekBar.setMax(maxProgress);
     int progress = remix.getSelectedValue() - remix.getMinValue();
-    seekBar.setProgress(remix.getSelectedValue() - remix.getMinValue());
-    updateCurrentValue(remix, progress);
+    progress /= remix.getIncrement();
+    seekBar.setProgress(progress);
+    updateCurrentValue(progress);
     seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
       @Override
       public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        updateCurrentValue(remix, progress);
-        remix.setValue(remix.getMinValue() + progress);
+        updateCurrentValue(progress);
       }
 
       @Override
@@ -80,8 +84,11 @@ public class SeekBarRangeRemixWidget extends RelativeLayout implements RemixWidg
     });
   }
 
-  private void updateCurrentValue(@NonNull final RangeRemix remix, int progress) {
-    int value = remix.getMinValue() + progress;
+  private void updateCurrentValue(int progress) {
+    int value = remix.getMinValue() + progress * remix.getIncrement();
     currentValueText.setText(String.valueOf(value));
+    if (remix.getSelectedValue() != value) {
+      remix.setValue(value);
+    }
   }
 }

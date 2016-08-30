@@ -58,7 +58,7 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
     });
   }
 
-  @RangeRemixMethod(minValue = 10, maxValue = 72)
+  @RangeRemixMethod(minValue = 16, maxValue = 72, increment = 4)
   void setTextSize(Integer size) {
     boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
   }

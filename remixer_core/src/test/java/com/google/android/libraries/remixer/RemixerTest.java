@@ -32,8 +32,8 @@ public class RemixerTest {
 
   @Before
   public void setUp() {
-    remix = new RangeRemix("name", "key", 5, 0, 10, null, 0);
-    remix2 = new RangeRemix("name2", "key2", 5, 0, 10, null, 0);
+    remix = new StringRemix("name", "key", "", null, 0);
+    remix2 = new StringRemix("name2", "key2", "", null, 0);
     remixer = new Remixer();
   }
 
