@@ -18,7 +18,11 @@ import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
-// Implementing RemixerActivity is necessary to use RemixerFragment
+/**
+ * Main activity with explicit instantiation or Remixer Objects.
+ *
+ * <p>Notice implementing RemixerActivity is necessary to use RemixerFragment.
+ */
 public class MainActivity extends AppCompatActivity implements RemixerActivity {
 
   // A text view whose text is updated by an ItemListRemix<String> and font size by a RangeRemix
@@ -43,16 +47,16 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
 
     // Create a RangeRemix that updates boundedText's size between 10 and 48 sp.
     RangeRemix.Builder fontSizeRangeRemix = new RangeRemix.Builder()
-            .setKey("font_size")
-            .setMinValue(16)
-            .setMaxValue(72)
-            .setIncrement(4)
-            .setCallback(new RemixCallback<Integer>() {
-              @Override
-              public void onValueSet(Remix<Integer> remix) {
-                boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
-              }
-            });
+        .setKey("font_size")
+        .setMinValue(16)
+        .setMaxValue(72)
+        .setIncrement(4)
+        .setCallback(new RemixCallback<Integer>() {
+          @Override
+          public void onValueSet(Remix<Integer> remix) {
+            boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
+          }
+        });
     remixer.addRemix(fontSizeRangeRemix.build());
 
     // Create an ItemListRemix<String> that updates boundedText's contents from a list of options
@@ -60,12 +64,12 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
         .setKey("boundedText")
         .setPossibleValues("Hello world", "Foo", "Bar", "May the force be with you")
         .setCallback(
-        new RemixCallback<String>() {
-          @Override
-          public void onValueSet(Remix<String> remix) {
-            boundedText.setText(remix.getSelectedValue());
-          }
-        });
+            new RemixCallback<String>() {
+              @Override
+              public void onValueSet(Remix<String> remix) {
+                boundedText.setText(remix.getSelectedValue());
+              }
+            });
     remixer.addRemix(itemListRemix.build());
 
     // Create a BooleanRemix that controls whether freeformText is visible or not.

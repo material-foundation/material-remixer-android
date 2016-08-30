@@ -32,6 +32,11 @@ import com.google.android.libraries.remixer.annotation.StringRemixMethod;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
+/**
+ * Annotated version of the MainActivity.
+ *
+ * <p>Notice implementing RemixerActivity is necessary to use RemixerFragment.
+ */
 public class MainActivityAnnotated extends AppCompatActivity implements RemixerActivity {
 
   TextView boundedText;

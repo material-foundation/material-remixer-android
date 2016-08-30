@@ -97,7 +97,7 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
       // First process RemixerInstance annotations.
       findRemixerInstances(roundEnv, annotatedClasses);
       findRemixAnnotations(roundEnv, annotatedClasses);
-      for (Map.Entry<String, AnnotatedClass> classEntry: annotatedClasses.entrySet()) {
+      for (Map.Entry<String, AnnotatedClass> classEntry : annotatedClasses.entrySet()) {
         if (!alreadyProcessedClasses.contains(classEntry.getKey())) {
           JavaFile file = classEntry.getValue().generateJavaFile();
           file.writeTo(filer);

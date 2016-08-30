@@ -19,14 +19,11 @@ package com.google.android.libraries.remixer.annotation.processor;
 import com.google.common.truth.Truth;
 import com.google.testing.compile.JavaFileObjects;
 import com.google.testing.compile.JavaSourceSubjectFactory;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
-
 import javax.annotation.processing.Processor;
 import javax.tools.JavaFileObject;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 

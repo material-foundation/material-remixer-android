@@ -38,8 +38,7 @@ public class ItemListRemixTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void failsOnDefaultValueNotInList() {
-    ItemListRemix<String> remix =
-        new ItemListRemix<String>("name", "key", "None", Arrays.asList("Something else"), null, 0);
+    new ItemListRemix<String>("name", "key", "None", Arrays.asList("Something else"), null, 0);
   }
 
   @Test(expected = IllegalArgumentException.class)
