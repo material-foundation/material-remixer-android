@@ -22,7 +22,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
 import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
@@ -33,14 +32,11 @@ import com.google.android.libraries.remixer.annotation.StringRemixMethod;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class MainActivityAnnotated extends AppCompatActivity implements RemixerActivity {
 
-  @BindView(R.id.boundedText) TextView boundedText;
-  @BindView(R.id.freeformText) TextView freeformText;
-  @BindView(R.id.button) Button remixerButton;
+  TextView boundedText;
+  TextView freeformText;
+  Button remixerButton;
   private RemixerFragment remixerFragment;
 
   @RemixerInstance Remixer remixer;
@@ -49,7 +45,9 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
+    boundedText = (TextView) findViewById(R.id.boundedText);
+    freeformText = (TextView) findViewById(R.id.freeformText);
+    remixerButton = (Button) findViewById(R.id.button);
     RemixerBinder.bind(this);
     remixerButton.setOnClickListener(new View.OnClickListener() {
 
