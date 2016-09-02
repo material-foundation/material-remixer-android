@@ -31,7 +31,7 @@ import com.google.android.libraries.remixer.ui.R;
 /**
  * Displays a {@link StringRemix} in an EditText and lets you edit its value.
  */
-public class StringRemixWidget extends RelativeLayout implements RemixWidget<StringRemix> {
+public class StringRemixWidget extends RelativeLayout implements RemixerItemWidget<StringRemix> {
 
   private TextView nameText;
   private EditText text;
@@ -56,7 +56,7 @@ public class StringRemixWidget extends RelativeLayout implements RemixWidget<Str
   }
 
   @Override
-  public void bindRemix(@NonNull final StringRemix remix) {
+  public void bindRemixerItem(@NonNull final StringRemix remix) {
     nameText.setText(remix.getTitle());
     text.setText(remix.getSelectedValue());
     text.addTextChangedListener(new TextWatcher() {

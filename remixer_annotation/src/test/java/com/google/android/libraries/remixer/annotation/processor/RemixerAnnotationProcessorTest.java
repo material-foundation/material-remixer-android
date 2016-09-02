@@ -35,7 +35,7 @@ public class RemixerAnnotationProcessorTest {
   @Before
   public void setUpClass() {
     allProcessors = new ArrayList<>();
-    allProcessors.add(new com.google.android.libraries.remixer.annotation.processor.RemixerAnnotationProcessor());
+    allProcessors.add(new RemixerAnnotationProcessor());
   }
 
   @Test
@@ -94,7 +94,7 @@ public class RemixerAnnotationProcessorTest {
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("one parameter")
+        .withErrorContaining("This method must have exactly 1 parameter(s)")
         .in(file);
   }
 

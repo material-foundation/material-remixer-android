@@ -16,39 +16,35 @@
 
 package com.google.android.libraries.remixer;
 
-import java.util.List;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 @RunWith(JUnit4.class)
-public class RemixerTest {
+public class TriggerTest {
 
-  private Remixer remixer;
-  private Remix remix;
-  private Remix remix2;
+  @Mock
+  Runnable mockCallback;
 
   @Before
   public void setUp() {
-    remix = new StringRemix("name", "key", "", null, 0);
-    remix2 = new StringRemix("name2", "key2", "", null, 0);
-    remixer = new Remixer();
-  }
-
-  @Test(expected = DuplicateRemixKeyException.class)
-  public void remixerRejectsDuplicates() {
-    remixer.addItem(remix);
-    remixer.addItem(remix);
+    MockitoAnnotations.initMocks(this);
   }
 
   @Test
-  public void remixerReturnsListInOrder() {
-    remixer.addItem(remix);
-    remixer.addItem(remix2);
-    List<RemixerItem> remixList = remixer.getRemixerItems();
-    Assert.assertEquals(remix, remixList.get(0));
-    Assert.assertEquals(remix2, remixList.get(1));
+  public void triggerCallsCallback() {
+    Trigger trigger = new Trigger("name", "key", mockCallback, 0);
+    trigger.trigger();
+    Mockito.verify(mockCallback, Mockito.times(1)).run();
+  }
+
+  @Test
+  public void doesNotCrashOnNullCallback() {
+    Trigger trigger = new Trigger("name", "key", null, 0);
+    trigger.trigger();
   }
 }

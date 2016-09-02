@@ -16,14 +16,18 @@
 
 package com.google.android.libraries.remixer.ui.widget;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import android.view.LayoutInflater;
-import android.widget.Switch;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-
-import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.RemixCallback;
+import com.google.android.libraries.remixer.StringRemix;
+import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.R;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,56 +37,43 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 @RunWith(RobolectricTestRunner.class)
 @Config(
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
     packageName = "com.google.android.libraries.remixer.ui")
-public class BooleanRemixWidgetTest {
-  private static final String TITLE = "Some boolean";
-  private static final String KEY = "theboolean";
-  private static final boolean DEFAULT_VALUE = false;
+public class TriggerWidgetTest {
+  private static final String TITLE = "Trigger";
+  private static final String KEY = "trigger";
 
   @Mock
-  RemixCallback<Boolean> mockCallback;
+  Runnable mockCallback;
 
-  private BooleanRemix remix;
-  private BooleanRemixWidget view;
-  private TextView name;
-  private Switch remixSwitch;
+  private Button button;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    remix = new BooleanRemix(
+    Trigger trigger = new Trigger(
         TITLE,
         KEY,
-        DEFAULT_VALUE,
         mockCallback,
-        R.layout.boolean_remix_widget);
-    view = (BooleanRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
-        .inflate(R.layout.boolean_remix_widget, null);
-    view.bindRemixerItem(remix);
-    remixSwitch = (Switch) view.findViewById(R.id.booleanRemixSwitch);
-    name = (TextView) view.findViewById(R.id.booleanRemixName);
+        R.layout.string_remix_widget);
+    TriggerWidget view = (TriggerWidget) LayoutInflater.from(RuntimeEnvironment.application)
+        .inflate(R.layout.trigger_widget, null);
+    view.bindRemixerItem(trigger);
+    button = (Button) view.findViewById(R.id.triggerButton);
   }
 
   @Test
   public void defaultIsShown() {
-    assertEquals(TITLE, name.getText());
-    assertEquals(DEFAULT_VALUE, remixSwitch.isChecked());
+    assertEquals(TITLE, button.getText().toString());
   }
 
   @Test
   public void callbackIsCalled() {
-    // Check that the callback  was called. This should've happened during setUp()
-    verify(mockCallback, times(1)).onValueSet(remix);
-    remixSwitch.toggle();
-    // After changing the text, check that the callback was called once again
-    verify(mockCallback, times(2)).onValueSet(remix);
+    button.callOnClick();
+    // After clicking, check that the callback was called.
+    verify(mockCallback, times(1)).run();
   }
 }

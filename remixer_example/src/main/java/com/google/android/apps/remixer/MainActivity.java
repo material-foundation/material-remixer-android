@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.ItemListRemix;
 import com.google.android.libraries.remixer.RangeRemix;
@@ -15,6 +16,7 @@ import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringRemix;
+import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
 
   // A text view whose text is updated by an ItemListRemix<String> and font size by a RangeRemix
   private TextView boundedText;
-  // A text view whose text is updated by a StringRemix and is visible depending on a BoleanRemix
+  // A text view whose text is updated by a StringRemix and is visible depending on a BooleanRemix
   private TextView freeformText;
   // The remixer instance
   private Remixer remixer;
@@ -57,20 +59,20 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
             boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
           }
         });
-    remixer.addRemix(fontSizeRangeRemix.build());
+    remixer.addItem(fontSizeRangeRemix.build());
 
     // Create an ItemListRemix<String> that updates boundedText's contents from a list of options
     ItemListRemix.Builder<String> itemListRemix = new ItemListRemix.Builder<String>()
         .setKey("boundedText")
         .setPossibleValues("Hello world", "Foo", "Bar", "May the force be with you")
         .setCallback(
-            new RemixCallback<String>() {
-              @Override
-              public void onValueSet(Remix<String> remix) {
-                boundedText.setText(remix.getSelectedValue());
-              }
-            });
-    remixer.addRemix(itemListRemix.build());
+        new RemixCallback<String>() {
+          @Override
+          public void onValueSet(Remix<String> remix) {
+            boundedText.setText(remix.getSelectedValue());
+          }
+        });
+    remixer.addItem(itemListRemix.build());
 
     // Create a BooleanRemix that controls whether freeformText is visible or not.
     BooleanRemix.Builder booleanRemix = new BooleanRemix.Builder()
@@ -81,20 +83,28 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
             freeformText.setVisibility(remix.getSelectedValue() ? View.VISIBLE : View.GONE);
           }
         });
-    remixer.addRemix(booleanRemix.build());
+    remixer.addItem(booleanRemix.build());
 
     // Create a StringRemix that lets you set freeformText's content freely.
     StringRemix.Builder freeformStringRemix = new StringRemix.Builder()
         .setKey("freeformText")
         .setDefaultValue("Change me!")
         .setCallback(new RemixCallback<String>() {
-
           @Override
           public void onValueSet(Remix<String> remix) {
             freeformText.setText(remix.getSelectedValue());
           }
         });
-    remixer.addRemix(freeformStringRemix.build());
+    remixer.addItem(freeformStringRemix.build());
+
+    Trigger trigger = new Trigger("Toast", "toast", new Runnable() {
+      @Override
+      public void run() {
+        String value = freeformText.getText().toString();
+        Toast.makeText(MainActivity.this, value, Toast.LENGTH_SHORT).show();
+      }
+    });
+    remixer.addItem(trigger);
 
     // Add a callback to open the Remixer UI when the button is clicked.
     remixerButton.setOnClickListener(new View.OnClickListener() {

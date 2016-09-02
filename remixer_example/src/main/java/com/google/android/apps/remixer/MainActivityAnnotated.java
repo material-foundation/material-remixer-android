@@ -22,6 +22,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
 import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
@@ -29,6 +30,7 @@ import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
 import com.google.android.libraries.remixer.annotation.StringRemixMethod;
+import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
@@ -82,6 +84,11 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
   @StringRemixMethod(defaultValue = "Change me!")
   void setFreeformText(String text) {
     freeformText.setText(text);
+  }
+
+  @TriggerMethod
+  void toast() {
+    Toast.makeText(this, freeformText.getText(), Toast.LENGTH_SHORT).show();
   }
 
   @Override

@@ -29,7 +29,8 @@ import com.google.android.libraries.remixer.ui.R;
 /**
  * Displays a {@link RangeRemix} as a SeekBar.
  */
-public class SeekBarRangeRemixWidget extends RelativeLayout implements RemixWidget<RangeRemix> {
+public class SeekBarRangeRemixWidget
+    extends RelativeLayout implements RemixerItemWidget<RangeRemix> {
 
   private SeekBar seekBar;
   private TextView nameText;
@@ -57,7 +58,7 @@ public class SeekBarRangeRemixWidget extends RelativeLayout implements RemixWidg
   }
 
   @Override
-  public void bindRemix(@NonNull final RangeRemix remix) {
+  public void bindRemixerItem(@NonNull final RangeRemix remix) {
     this.remix = remix;
     nameText.setText(remix.getTitle());
     int maxProgress = remix.getMaxValue() - remix.getMinValue();

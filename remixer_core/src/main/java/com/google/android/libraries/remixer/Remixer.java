@@ -25,35 +25,38 @@ import java.util.List;
  */
 public class Remixer {
 
-  private HashMap<String, Remix<?>> remixMap;
-  private List<Remix<?>> remixList;
+  private HashMap<String, RemixerItem> keyMap;
+  private List<RemixerItem> remixerItems;
 
   public Remixer() {
-    remixMap = new HashMap<>();
-    remixList = new ArrayList<>();
+    keyMap = new HashMap<>();
+    remixerItems = new ArrayList<>();
   }
 
   /**
-   * This adds a remix to be tracked and displayed to the user.
+   * This adds a remixer item ({@link Remix} or {@link Trigger}) to be tracked and displayed.
    *
-   * @param remix The remix to be added.
+   * @param remixerItem The remixer item to be added.
    * @throws DuplicateRemixKeyException In case the remix has a key that has already been used.
    */
-  public void addRemix(Remix remix) {
-    String key = remix.getKey();
-    if (remixMap.containsKey(key)) {
-      throw new DuplicateRemixKeyException(
-          String.format(
-              "Trying to add a %s as remix key %s but a %s already has that key",
-              remix.getClass().getName(),
-              key,
-              remixMap.get(key).getClass().getName()));
-    }
-    remixMap.put(key, remix);
-    remixList.add(remix);
+  public void addItem(RemixerItem remixerItem) {
+    checkUniqueKey(remixerItem.getKey(), remixerItem);
+    remixerItems.add(remixerItem);
   }
 
-  public List<Remix<?>> getRemixList() {
-    return remixList;
+  private void checkUniqueKey(String key, RemixerItem remixerItem) {
+    if (keyMap.containsKey(key)) {
+      throw new DuplicateRemixKeyException(
+        String.format(
+          "Trying to add a %s as Remixer key %s but a %s already has that key",
+          remixerItem.getClass().getName(),
+          key,
+          keyMap.get(key).getClass().getName()));
+    }
+    keyMap.put(key, remixerItem);
+  }
+
+  public List<RemixerItem> getRemixerItems() {
+    return remixerItems;
   }
 }

@@ -15,34 +15,19 @@
  */
 
 package somepackage;
+
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 
-/**
- * This ends up testing defaults for all remixes, and that sorting works.
- */
-public class Correct {
+public class MethodWithParameter {
 
   @RemixerInstance
-  Remixer remixer;
+  public Remixer remixer;
 
-  @BooleanRemixMethod
-  public void setBoolean(Boolean i) {}
-
-  @RangeRemixMethod
-  public void setInt(Integer i) {}
-
-  @StringRemixMethod
-  public void setString(String i) {}
-
-  @StringListRemixMethod(possibleValues = {"hello", "world"})
-  public void setStringList(String i) {}
-
-  @TriggerMethod
-  public void pullTrigger() {}
+  /**
+   * This method should not take any parameters, fail.
+   */
+  @TriggerMethod()
+  public void fail(Integer i){}
 }

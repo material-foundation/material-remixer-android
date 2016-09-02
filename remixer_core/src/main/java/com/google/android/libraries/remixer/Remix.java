@@ -22,29 +22,12 @@ package com.google.android.libraries.remixer;
  *
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
-public abstract class Remix<T> {
+public abstract class Remix<T> extends RemixerItem {
 
-  /**
-   * The name to display in the UI for this remix.
-   */
-  private final String title;
-  /**
-   * The key to use to save to SharedPreferences. This needs to be unique across all remixes.
-   */
-  private final String key;
   /**
    * The callback to be executed when the value is updated.
    */
   private final RemixCallback callback;
-  /**
-   * The layout to inflate to display this remix. If set to 0, the default layout associated with
-   * the remix type will be used.
-   */
-  private final int layoutId;
-  /**
-   * The currently selected value.
-   */
-  private T selectedValue;
 
   /**
    * Creates a new Remix.
@@ -67,21 +50,16 @@ public abstract class Remix<T> {
       T defaultValue,
       RemixCallback callback,
       int layoutId) {
-    this.key = key;
-    this.title = title;
+    super(title, key, layoutId);
     // TODO(miguely): pull this out of SharedPreferences.
     this.selectedValue = defaultValue;
     this.callback = callback;
-    this.layoutId = layoutId;
   }
 
-  public String getTitle() {
-    return title;
-  }
-
-  public String getKey() {
-    return key;
-  }
+  /**
+   * The currently selected value.
+   */
+  private T selectedValue;
 
   public T getSelectedValue() {
     return selectedValue;
@@ -108,13 +86,6 @@ public abstract class Remix<T> {
     checkValue(newValue);
     selectedValue = newValue;
     runCallback();
-  }
-
-  /**
-   * Returns the layout id to inflate when displaying this Remix.
-   */
-  public int getlayoutId() {
-    return layoutId;
   }
 
   protected void runCallback() {

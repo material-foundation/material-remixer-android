@@ -66,7 +66,7 @@ public class StringRemixWidgetTest {
         R.layout.string_remix_widget);
     view = (StringRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.string_remix_widget, null);
-    view.bindRemix(remix);
+    view.bindRemixerItem(remix);
     text = (EditText) view.findViewById(R.id.stringRemixText);
     name = (TextView) view.findViewById(R.id.stringRemixName);
   }

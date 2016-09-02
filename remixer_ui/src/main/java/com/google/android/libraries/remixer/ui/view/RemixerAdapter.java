@@ -21,21 +21,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.google.android.libraries.remixer.Remix;
-import com.google.android.libraries.remixer.ui.widget.RemixWidget;
-
+import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.ui.widget.RemixerItemWidget;
 import java.util.List;
 
 /**
  * An adapter that takes care of displaying a list of {@link Remix}es using their corresponding
- * {@link RemixWidget}.
+ * {@link RemixerItemWidget}.
  */
 class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
-  private final List<Remix<?>> remixes;
+  private final List<RemixerItem> remixes;
 
-  public RemixerAdapter(List<Remix<?>> items) {
+  public RemixerAdapter(List<RemixerItem> items) {
     remixes = items;
   }
 
@@ -48,12 +47,12 @@ class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
-    holder.setRemix(remixes.get(position));
+    holder.setRemixerItem(remixes.get(position));
   }
 
   @Override
   public int getItemViewType(int position) {
-    return RemixWidgetHelper.getLayoutId(remixes.get(position));
+    return RemixerItemWidgetHelper.getLayoutId(remixes.get(position));
   }
 
   @Override
@@ -62,17 +61,17 @@ class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    private final RemixWidget view;
+    private final RemixerItemWidget view;
 
     public ViewHolder(View view) {
       super(view);
 
-      this.view = (RemixWidget) view;
+      this.view = (RemixerItemWidget) view;
     }
 
     @SuppressWarnings("unchecked")
-    public void setRemix(Remix remix) {
-      view.bindRemix(remix);
+    public void setRemixerItem(RemixerItem remixerItem) {
+      view.bindRemixerItem(remixerItem);
     }
   }
 }

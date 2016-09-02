@@ -19,49 +19,45 @@ package com.google.android.libraries.remixer.ui.widget;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.widget.CompoundButton;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import com.google.android.libraries.remixer.BooleanRemix;
+import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.R;
 
 /**
- * Displays a {@link BooleanRemix} as a switch.
+ * Displays a {@link Trigger} as a button.
  */
-public class BooleanRemixWidget extends RelativeLayout implements RemixerItemWidget<BooleanRemix> {
+public class TriggerWidget extends RelativeLayout implements RemixerItemWidget<Trigger> {
 
-  private TextView nameText;
-  private Switch remixSwitch;
+  private Button button;
 
-  public BooleanRemixWidget(Context context) {
+  public TriggerWidget(Context context) {
     super(context);
   }
 
-  public BooleanRemixWidget(Context context, AttributeSet attrs) {
+  public TriggerWidget(Context context, AttributeSet attrs) {
     super(context, attrs);
   }
 
-  public BooleanRemixWidget(Context context, AttributeSet attrs, int defStyle) {
+  public TriggerWidget(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
   }
 
   @Override
   protected void onFinishInflate() {
     super.onFinishInflate();
-    remixSwitch = (Switch) findViewById(R.id.booleanRemixSwitch);
-    nameText = (TextView) findViewById(R.id.booleanRemixName);
+    button = (Button) findViewById(R.id.triggerButton);
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final BooleanRemix remix) {
-    nameText.setText(remix.getTitle());
-    remixSwitch.setChecked(remix.getSelectedValue());
-    remixSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+  public void bindRemixerItem(@NonNull final Trigger trigger) {
+    button.setText(trigger.getTitle());
+    button.setOnClickListener(new OnClickListener() {
       @Override
-      public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        remix.setValue(b);
+      public void onClick(View view) {
+        trigger.trigger();
       }
     });
   }

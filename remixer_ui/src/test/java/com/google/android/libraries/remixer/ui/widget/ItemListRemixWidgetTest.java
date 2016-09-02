@@ -75,7 +75,7 @@ public class ItemListRemixWidgetTest {
         R.layout.item_list_remix_widget);
     view = (ItemListRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.item_list_remix_widget, null);
-    view.bindRemix(remix);
+    view.bindRemixerItem(remix);
     spinner = (Spinner) view.findViewById(R.id.itemListRemixSpinner);
     name = (TextView) view.findViewById(R.id.itemListRemixName);
   }

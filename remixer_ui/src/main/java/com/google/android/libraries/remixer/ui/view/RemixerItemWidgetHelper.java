@@ -19,19 +19,20 @@ package com.google.android.libraries.remixer.ui.view;
 import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.ItemListRemix;
 import com.google.android.libraries.remixer.RangeRemix;
-import com.google.android.libraries.remixer.Remix;
+import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.StringRemix;
+import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.R;
 
 import java.util.HashMap;
 import java.util.Locale;
 
 /**
- * Utility class to determine what widget to inflate for a remix.
+ * Utility class to determine what widget to inflate for a remixer item.
  */
-public final class RemixWidgetHelper {
+public final class RemixerItemWidgetHelper {
 
-  private RemixWidgetHelper() {}
+  private RemixerItemWidgetHelper() {}
 
   private static final String UNKNOWN_DEFAULT_ERROR_FORMAT =
       "Remix with key %s has no mapping to a layout resource. Cannot display it.";
@@ -44,6 +45,7 @@ public final class RemixWidgetHelper {
     mapping.put(ItemListRemix.class, R.layout.item_list_remix_widget);
     mapping.put(RangeRemix.class, R.layout.seekbar_range_remix_widget);
     mapping.put(StringRemix.class, R.layout.string_remix_widget);
+    mapping.put(Trigger.class, R.layout.trigger_widget);
   }
 
   /**
@@ -55,8 +57,8 @@ public final class RemixWidgetHelper {
    * @throws IllegalArgumentException if the Remix in question has no default layout associated with
    *     it and it is relying on a default.
    */
-  public static int getLayoutId(Remix<?> instance) {
-    int layoutId = instance.getlayoutId();
+  public static int getLayoutId(RemixerItem instance) {
+    int layoutId = instance.getLayoutId();
     if (layoutId != 0) {
       // This instance has a preferred layout.
       return layoutId;

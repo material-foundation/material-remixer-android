@@ -76,7 +76,7 @@ public @interface RangeRemixMethod {
   /**
    * The layout id to inflate when displaying this Remix. If not specified a default will be used.
    *
-   * <p>Its root element must implement {@code RemixWidget<Integer>}.
+   * <p>Its root element must implement {@code RemixerItemWidget<Remix<Integer>>}.
    */
   int layoutId() default 0;
 }

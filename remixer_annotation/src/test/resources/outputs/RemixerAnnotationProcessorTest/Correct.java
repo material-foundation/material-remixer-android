@@ -23,10 +23,12 @@ import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringRemix;
+import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Override;
+import java.lang.Runnable;
 import java.lang.String;
 import java.util.ArrayList;
 
@@ -43,19 +45,22 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
     BooleanRemix setBoolean_remix = new BooleanRemix("setBoolean", "setBoolean", false, setBoolean_callback, 0);
-    remixer.addRemix(setBoolean_remix);
+    remixer.addItem(setBoolean_remix);
     Generated_setInt setInt_callback = new Generated_setInt(activity);
     RangeRemix setInt_remix = new RangeRemix("setInt", "setInt", 0, 0, 100, 1, setInt_callback, 0);
-    remixer.addRemix(setInt_remix);
+    remixer.addItem(setInt_remix);
     Generated_setString setString_callback = new Generated_setString(activity);
     StringRemix setString_remix = new StringRemix("setString", "setString", "", setString_callback, 0);
-    remixer.addRemix(setString_remix);
+    remixer.addItem(setString_remix);
     ArrayList<String> setStringList_remix_list = new ArrayList<String>();
     setStringList_remix_list.add("hello");
     setStringList_remix_list.add("world");
     Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
     ItemListRemix<String> setStringList_remix = new ItemListRemix<String>("setStringList", "setStringList", "hello", setStringList_remix_list, setStringList_callback, 0);
-    remixer.addRemix(setStringList_remix);
+    remixer.addItem(setStringList_remix);
+    Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
+    Trigger pullTrigger_trigger = new Trigger("pullTrigger", "pullTrigger", pullTrigger_callback, 0);
+    remixer.addItem(pullTrigger_trigger);
     activity.remixer = remixer;
   }
 
@@ -108,6 +113,19 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     @Override
     public void onValueSet(Remix<String> remix) {
       activity.setStringList(remix.getSelectedValue());
+    }
+  }
+
+  static class Generated_pullTrigger implements Runnable {
+    private final Correct activity;
+
+    Generated_pullTrigger(Correct activity) {
+      this.activity = activity;
+    }
+
+    @Override
+    public void run() {
+      activity.pullTrigger();
     }
   }
 }

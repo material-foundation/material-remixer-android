@@ -22,20 +22,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to apply to a method to turn it into a {@code ItemListRemix<String>}.
- *
- * <p>It is set up in a way that you don't need to explicitly set the default value, if it is left
- * unspecified and the empty string is not part of the possible values, then the first value in
- * the list of possible values is assumed as default.
+ * Annotation to apply to a method to turn it into a Trigger.
  *
  * <p>Note: It has to be used on a public or default-access method in the same class that has a
  * @RemixerInstance annotated field.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface StringListRemixMethod {
+public @interface TriggerMethod {
   /**
-   * The key for the remix, may be left empty and the method name will be used instead.
+   * The key for the trigger, may be left empty and the method name will be used instead.
    *
    * <p>If using a custom key, make sure the key is unique and that it is a valid java identifier
    * name, because it will be used as such in code.
@@ -47,22 +43,11 @@ public @interface StringListRemixMethod {
    */
   String title() default "";
 
-  /**
-   * The default value for this remix, assumes "" as default.
-   *
-   * <p>If left unspecified and the empty string is not part of the possible values, then the first
-   * value in the list of possible values is assumed as default.
-   */
-  String defaultValue() default "";
 
-  /**
-   * List of possible values for this ItemListRemix<String>
-   */
-  String[] possibleValues() default {""};
   /**
    * The layout id to inflate when displaying this Remix. If not specified a default will be used.
    *
-   * <p>Its root element must implement {@code RemixerItemWidget<Remix<String>>}.
+   * <p>Its root element must implement {@code RemixerItemWidget<Trigger>}.
    */
   int layoutId() default 0;
 }

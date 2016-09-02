@@ -51,7 +51,7 @@ public @interface StringRemixMethod {
   /**
    * The layout id to inflate when displaying this Remix. If not specified a default will be used.
    *
-   * <p>Its root element must implement {@code RemixWidget<String>}.
+   * <p>Its root element must implement {@code RemixerItemWidget<Remix<String>>}.
    */
   int layoutId() default 0;
 }

@@ -22,6 +22,7 @@ import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
 import com.google.android.libraries.remixer.annotation.StringRemixMethod;
+import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import java.io.IOException;
@@ -62,17 +63,11 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
   private Filer filer;
   private Types typeUtils;
 
-  private Map<Class<? extends Annotation>, Class<?>> annotationToParameter;
   private Set<String> alreadyProcessedClasses = new HashSet<>();
 
   @Override
   public synchronized void init(ProcessingEnvironment processingEnv) {
     super.init(processingEnv);
-    annotationToParameter = new HashMap<>();
-    annotationToParameter.put(BooleanRemixMethod.class, Boolean.class);
-    annotationToParameter.put(RangeRemixMethod.class, Integer.class);
-    annotationToParameter.put(StringListRemixMethod.class, String.class);
-    annotationToParameter.put(StringRemixMethod.class, String.class);
 
     elementUtils = processingEnv.getElementUtils();
     errorReporter = new ErrorReporter(processingEnv);
@@ -170,23 +165,36 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
   }
 
   /**
-   * Checks that {@code method} has only one parameter of type {@code clazz}.
+   * Checks that {@code method} contains the right parameters.
+   *
+   * @param clazz Defines what the right parameters are for this method, if it's null then
+   *     {@code method} must have no parameters, if it's not null then {@code method} must have
+   *     one parameter of type {@code clazz}.
    */
   private void checkParameter(ExecutableElement method, Class<?> clazz)
       throws RemixerAnnotationException {
-    if (method.getParameters().size() != 1) {
+    int correctNumberOfParameters = clazz == null ? 0 : 1;
+    if (method.getParameters().size() != correctNumberOfParameters) {
       throw new RemixerAnnotationException(
-          method, "Remix annotations can only be used on methods with only one parameter");
+          method,
+          String.format(
+              Locale.getDefault(),
+              "This method must have exactly %d parameter(s)",
+              correctNumberOfParameters));
     }
-    VariableElement parameter = method.getParameters().get(0);
-    try {
-      checkElementType(parameter, clazz.getCanonicalName());
-    } catch (RemixerAnnotationException ex) {
-      // Throw the same exception with better message.
-      throw new RemixerAnnotationException(
-          parameter,
-          String.format("Trying to use Remix annotations on wrong parameter, must be of type %s",
-              clazz));
+    if (correctNumberOfParameters == 1) {
+      VariableElement parameter = method.getParameters().get(0);
+      try {
+        checkElementType(parameter, clazz.getCanonicalName());
+      } catch (RemixerAnnotationException ex) {
+        // Throw the same exception with better message.
+        throw new RemixerAnnotationException(
+            parameter,
+            String.format(
+                Locale.getDefault(),
+                "Trying to use Remix annotations on wrong parameter, must be of type %s",
+                clazz));
+      }
     }
   }
 

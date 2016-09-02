@@ -35,7 +35,7 @@ import java.util.List;
  * Displays an ItemListRemix as a Spinner. The list uses item.toString() to display it as text.
  */
 public class ItemListRemixWidget extends RelativeLayout
-    implements RemixWidget<ItemListRemix<?>> {
+    implements RemixerItemWidget<ItemListRemix<?>> {
 
   private TextView nameText;
   private Spinner spinner;
@@ -61,7 +61,7 @@ public class ItemListRemixWidget extends RelativeLayout
   }
 
   @Override
-  public void bindRemix(@NonNull final ItemListRemix remix) {
+  public void bindRemixerItem(@NonNull final ItemListRemix remix) {
     values = remix.getValueList();
     int position = values.indexOf(remix.getSelectedValue());
     nameText.setText(remix.getTitle());

@@ -73,7 +73,7 @@ public class SeekBarRangeRemixWidgetTest {
         R.layout.seekbar_range_remix_widget);
     view = (SeekBarRangeRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.seekbar_range_remix_widget, null);
-    view.bindRemix(remix);
+    view.bindRemixerItem(remix);
     seekbar = (SeekBar) view.findViewById(R.id.rangeRemixSeekBar);
     currentValue = (TextView) view.findViewById(R.id.rangeRemixCurrentValue);
     name = (TextView) view.findViewById(R.id.rangeRemixName);

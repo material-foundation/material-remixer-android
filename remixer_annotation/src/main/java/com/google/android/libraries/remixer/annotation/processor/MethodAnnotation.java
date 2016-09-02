@@ -56,9 +56,9 @@ public abstract class MethodAnnotation {
    */
   protected static final String NEW_CALLBACK_STATEMENT = "$L $L = new $L(activity)";
   /**
-   * Statement to add a remix instance to the current remixer.
+   * Statement to add a remixer item instance to the current remixer.
    */
-  protected static final String ADD_REMIX_STATEMENT = "remixer.addRemix($L)";
+  protected static final String ADD_REMIX_STATEMENT = "remixer.addItem($L)";
   /**
    * The element where the annotation was found.
    */
@@ -146,8 +146,7 @@ public abstract class MethodAnnotation {
         .addParameter(sourceClassName, "activity")
         .addStatement("this.$N = $N", "activity", "activity").build();
     return TypeSpec.classBuilder(generatedClassName)
-        .addSuperinterface(ParameterizedTypeName.get(
-            ClassName.get(RemixCallback.class), getRemixType()))
+        .addSuperinterface(getCallbackSuperinterface())
         .addField(activityField)
         .addModifiers(Modifier.STATIC)
         .addMethod(constructor)
@@ -157,6 +156,14 @@ public abstract class MethodAnnotation {
 
   public TypeElement getSourceClass() {
     return sourceClass;
+  }
+
+  /**
+   * Returns the type name for the interface to implement on the callback class.
+   */
+  protected TypeName getCallbackSuperinterface() {
+    return ParameterizedTypeName.get(
+        ClassName.get(RemixCallback.class), getRemixType());
   }
 
   /**
@@ -173,13 +180,12 @@ public abstract class MethodAnnotation {
   /**
    * Generates the method spec for the implementation of {@link RemixCallback#onValueSet}.
    */
-  private MethodSpec getCallbackMethodSpec() {
-    ParameterSpec parameter = getRemixParameterSpec();
+  protected MethodSpec getCallbackMethodSpec() {
     return MethodSpec.methodBuilder("onValueSet")
         .addModifiers(Modifier.PUBLIC)
         .addAnnotation(Override.class)
         .returns(void.class)
-        .addParameter(parameter)
+        .addParameter(getRemixParameterSpec())
         .addStatement("activity.$L(remix.getSelectedValue())", sourceMethod.getSimpleName())
         .build();
   }
