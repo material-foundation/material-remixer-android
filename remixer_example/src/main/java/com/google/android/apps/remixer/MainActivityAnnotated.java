@@ -16,7 +16,6 @@
 package com.google.android.apps.remixer;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
@@ -31,6 +30,7 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
 import com.google.android.libraries.remixer.annotation.StringRemixMethod;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
+import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
@@ -44,7 +44,6 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
   TextView boundedText;
   TextView freeformText;
   Button remixerButton;
-  private RemixerFragment remixerFragment;
 
   @RemixerInstance Remixer remixer;
 
@@ -56,13 +55,9 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
     freeformText = (TextView) findViewById(R.id.freeformText);
     remixerButton = (Button) findViewById(R.id.button);
     RemixerBinder.bind(this);
-    remixerButton.setOnClickListener(new View.OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-        getRemixerFragment().show(getSupportFragmentManager(), "Remixer");
-      }
-    });
+    RemixerFragment remixerFragment = RemixerFragment.newInstance();
+    remixerFragment.attachToGesture(this, Direction.UP, 3);
+    remixerFragment.attachToButton(this, remixerButton);
   }
 
   @RangeRemixMethod(minValue = 16, maxValue = 72, increment = 4)
@@ -94,13 +89,5 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
   @Override
   public Remixer getRemixer() {
     return remixer;
-  }
-
-  @NonNull
-  private RemixerFragment getRemixerFragment() {
-    if (remixerFragment == null) {
-      remixerFragment = RemixerFragment.newInstance();
-    }
-    return remixerFragment;
   }
 }

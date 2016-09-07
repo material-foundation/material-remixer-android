@@ -19,32 +19,16 @@
  * {@link com.google.android.libraries.remixer.ui.view.RemixerFragment}.
  *
  * <p>You should only need to instantiate it and push it to the FragmentManager from an activity
- * that implements {@link com.google.android.libraries.remixer.ui.view.RemixerActivity}:
- *
- * <pre><code>
- * import RemixerActivity;
- * import RemixerFragment;
- * import com.google.android.remixer.Remixer;
- *
- * class MyActivity implements RemixerActivity {
- *   Remixer remixer;
- *   RemixerFragment remixerFragment;
- *
- *   &#064;Override
- *   public Remixer getRemixer() {
- *     return remixer;
- *   }
- *
- *   // ...
- *
- *   void showRemixer() {
- *     if (remixerFragment == null) {
- *       remixerFragment = RemixerFragment.newInstance();
- *     }
- *     remixerFragment.show(getSupportFragmentManager(), "FragmentKey");
- *   }
- * }
- *
- * </code></pre>
+ * that implements {@link com.google.android.libraries.remixer.ui.view.RemixerActivity}, but
+ * RemixerFragment has two convenience methods to set it up:
+ * <ul>
+ * <li>{@link com.google.android.libraries.remixer.ui.view.RemixerFragment#attachToGesture(
+ *     android.support.v4.app.FragmentActivity,
+ *     com.google.android.libraries.remixer.ui.gesture.Direction, int)} which sets a gesture to
+ *     show the fragment, and...
+ * <li>{@link com.google.android.libraries.remixer.ui.view.RemixerFragment#
+ *     attachToButton(android.support.v4.app.FragmentActivity, android.widget.Button)} which shows
+ *     the fragment on a button click.
+ * </ul>
  */
 package com.google.android.libraries.remixer.ui.view;

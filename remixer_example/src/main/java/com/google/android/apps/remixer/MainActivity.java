@@ -1,13 +1,11 @@
 package com.google.android.apps.remixer;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import android.widget.Toast;
 import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.ItemListRemix;
@@ -17,6 +15,7 @@ import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.Trigger;
+import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
@@ -33,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
   private TextView freeformText;
   // The remixer instance
   private Remixer remixer;
-  // A fragment that is displayed with the Remixes.
-  private RemixerFragment remixerFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +63,12 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
         .setKey("boundedText")
         .setPossibleValues("Hello world", "Foo", "Bar", "May the force be with you")
         .setCallback(
-        new RemixCallback<String>() {
-          @Override
-          public void onValueSet(Remix<String> remix) {
-            boundedText.setText(remix.getSelectedValue());
-          }
-        });
+            new RemixCallback<String>() {
+              @Override
+              public void onValueSet(Remix<String> remix) {
+                boundedText.setText(remix.getSelectedValue());
+              }
+            });
     remixer.addItem(itemListRemix.build());
 
     // Create a BooleanRemix that controls whether freeformText is visible or not.
@@ -106,27 +103,14 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     });
     remixer.addItem(trigger);
 
-    // Add a callback to open the Remixer UI when the button is clicked.
-    remixerButton.setOnClickListener(new View.OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-        getRemixerFragment().show(getSupportFragmentManager(), "Remixer");
-      }
-    });
+    RemixerFragment remixerFragment = RemixerFragment.newInstance();
+    remixerFragment.attachToButton(this, remixerButton);
+    remixerFragment.attachToGesture(this, Direction.UP, 3);
   }
 
   @Override
   public Remixer getRemixer() {
     return remixer;
-  }
-
-  @NonNull
-  private RemixerFragment getRemixerFragment() {
-    if (remixerFragment == null) {
-      remixerFragment = RemixerFragment.newInstance();
-    }
-    return remixerFragment;
   }
 }
 
