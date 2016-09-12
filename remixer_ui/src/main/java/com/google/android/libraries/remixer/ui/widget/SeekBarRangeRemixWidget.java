@@ -22,7 +22,6 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.google.android.libraries.remixer.RangeRemix;
 import com.google.android.libraries.remixer.ui.R;
 

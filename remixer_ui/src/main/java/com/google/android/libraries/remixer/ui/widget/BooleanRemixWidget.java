@@ -23,7 +23,6 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.ui.R;
 

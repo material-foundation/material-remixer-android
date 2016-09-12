@@ -23,7 +23,6 @@ import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.R;
-
 import java.util.HashMap;
 import java.util.Locale;
 

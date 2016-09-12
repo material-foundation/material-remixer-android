@@ -17,8 +17,6 @@
 package com.google.android.libraries.remixer.ui.widget;
 
 import android.support.annotation.NonNull;
-
-import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 

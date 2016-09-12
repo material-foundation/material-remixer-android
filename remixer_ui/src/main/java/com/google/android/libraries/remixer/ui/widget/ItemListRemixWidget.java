@@ -25,10 +25,8 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.google.android.libraries.remixer.ItemListRemix;
 import com.google.android.libraries.remixer.ui.R;
-
 import java.util.List;
 
 /**

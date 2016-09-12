@@ -24,7 +24,6 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.ui.R;
 

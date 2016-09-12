@@ -17,12 +17,7 @@
 package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
-import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import java.io.IOException;
