@@ -110,13 +110,8 @@ public class RemixerFragment extends BottomSheetDialogFragment {
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_remix_list, container, false);
 
-    // Set the adapter
-    if (view instanceof RecyclerView) {
-      Context context = view.getContext();
-      RecyclerView recyclerView = (RecyclerView) view;
-      recyclerView.setLayoutManager(new LinearLayoutManager(context));
-      recyclerView.setAdapter(new RemixerAdapter(remixer.getRemixerItems()));
-    }
+    RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.remixerList);
+    recyclerView.setAdapter(new RemixerAdapter(remixer.getRemixerItems()));
     return view;
   }
 

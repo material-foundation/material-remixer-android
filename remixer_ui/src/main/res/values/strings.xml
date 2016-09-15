@@ -16,4 +16,5 @@
 
 <resources>
   <string name="app_name">Remixer</string>
+  <string name="remixer_framework_name">Remixer</string>
 </resources>
