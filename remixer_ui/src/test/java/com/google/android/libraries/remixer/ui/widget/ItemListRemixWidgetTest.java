@@ -73,6 +73,7 @@ public class ItemListRemixWidgetTest {
         Arrays.asList(ITEM_LIST),
         mockCallback,
         R.layout.item_list_remix_widget);
+    remix.init();
     view = (ItemListRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.item_list_remix_widget, null);
     view.bindRemixerItem(remix);

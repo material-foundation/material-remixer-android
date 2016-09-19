@@ -40,7 +40,6 @@ public class StringRemix extends Remix<String> {
       RemixCallback<String> callback,
       int layoutId) {
     super(title, key, defaultValue, callback, layoutId);
-    runCallback();
   }
 
   @Override
@@ -101,14 +100,16 @@ public class StringRemix extends Remix<String> {
      *
      * @throws IllegalArgumentException If key is missing
      */
-    public StringRemix build() {
+    public StringRemix buildAndInit() {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for StringRemix");
       }
       if (title == null) {
         title = key;
       }
-      return new StringRemix(title, key, defaultValue, callback, layoutId);
+      StringRemix remix = new StringRemix(title, key, defaultValue, callback, layoutId);
+      remix.init();
+      return remix;
     }
   }
 }

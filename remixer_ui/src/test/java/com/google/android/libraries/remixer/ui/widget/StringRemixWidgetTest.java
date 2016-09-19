@@ -64,6 +64,7 @@ public class StringRemixWidgetTest {
         DEFAULT_VALUE,
         mockCallback,
         R.layout.string_remix_widget);
+    remix.init();
     view = (StringRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.string_remix_widget, null);
     view.bindRemixerItem(remix);

@@ -27,7 +27,7 @@ public abstract class Remix<T> extends RemixerItem {
   /**
    * The callback to be executed when the value is updated.
    */
-  private final RemixCallback callback;
+  private final RemixCallback<T> callback;
 
   /**
    * Creates a new Remix.
@@ -38,8 +38,6 @@ public abstract class Remix<T> extends RemixerItem {
    * @param defaultValue The default value for this Remix.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
    * @param layoutId A layout to inflate when displaying this Remix in the UI.
-   * @throws IllegalArgumentException defaultValue is invalid for this Remix. See {@link
-   *     #checkValue(Object)}.
    */
   // TODO(miguely): Add default value semantics to the defaultValue, currently it behaves mostly
   // as an initial value. It should be used in cases when the value is set to an invalid value from
@@ -48,12 +46,24 @@ public abstract class Remix<T> extends RemixerItem {
       String title,
       String key,
       T defaultValue,
-      RemixCallback callback,
+      RemixCallback<T> callback,
       int layoutId) {
     super(title, key, layoutId);
     // TODO(miguely): pull this out of SharedPreferences.
     this.selectedValue = defaultValue;
     this.callback = callback;
+  }
+
+  /**
+   * Makes sure the default value is valid for this remix and runs the callback if so. This must be
+   * called as soon as the Remix is created.
+   *
+   * @throws IllegalArgumentException The currently selected value (or default value) is invalid for
+   *     this Remix. See {@link #checkValue(Object)}.
+   */
+  public final void init() {
+    checkValue(selectedValue);
+    runCallback();
   }
 
   /**
@@ -88,7 +98,7 @@ public abstract class Remix<T> extends RemixerItem {
     runCallback();
   }
 
-  protected void runCallback() {
+  private void runCallback() {
     if (callback != null) {
       callback.onValueSet(this);
     }

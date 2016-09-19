@@ -38,8 +38,6 @@ public class ItemListRemix<T> extends Remix<T> {
    * @param values List of valid values.
    * @param callback Callback to run once the value is set. Can be null.
    * @param layoutId A layout id that renders this control on screen.
-   * @throws IllegalArgumentException A list of valid values has been passed and the defaultValue
-   *     is not in it.
    */
   public ItemListRemix(
       String title,
@@ -50,8 +48,6 @@ public class ItemListRemix<T> extends Remix<T> {
       int layoutId) {
     super(title, key, defaultValue, callback, layoutId);
     this.valueList = values;
-    checkValue(defaultValue);
-    runCallback();
   }
 
   @Override
@@ -132,7 +128,7 @@ public class ItemListRemix<T> extends Remix<T> {
      * @throws IllegalArgumentException If key or possibleValues are missing or if the configuration
      *     is invalid for ItemListRemix.
      */
-    public ItemListRemix<T> build() {
+    public ItemListRemix<T> buildAndInit() {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for ItemListRemix");
       }
@@ -146,7 +142,10 @@ public class ItemListRemix<T> extends Remix<T> {
       if (title == null) {
         title = key;
       }
-      return new ItemListRemix<T>(title, key, defaultValue, possibleValues, callback, layoutId);
+      ItemListRemix<T> remix =
+          new ItemListRemix<T>(title, key, defaultValue, possibleValues, callback, layoutId);
+      remix.init();
+      return remix;
     }
   }
 }

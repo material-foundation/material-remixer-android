@@ -55,10 +55,9 @@ public class RangeRemix extends Remix<Integer> {
    * @param callback A callback to run when successfully initialized and when the value changes. Can
    *     be null.
    * @param layoutId A layout id that renders this control on screen.
-   * @throws IllegalArgumentException {@code minValue > maxValue} or {@code defaultValue <
-   *     minValue || defaultValue > maxValue }, meaning the defaultValue is out of range. Also
-   *     thrown when {@code increment < 1} or {@code (maxValue - minValue) % increment != 0}
-   *     which means the current increment setting can't possibly get from minValue to maxValue.
+   * @throws IllegalArgumentException {@code minValue > maxValue} or {@code increment < 1} or {@code
+   *     (maxValue - minValue) % increment != 0} which means the current increment setting can't
+   *     possibly get from minValue to maxValue.
    */
   public RangeRemix(
       String title,
@@ -73,11 +72,8 @@ public class RangeRemix extends Remix<Integer> {
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.increment = increment;
-
     checkRange();
     checkStepIncrement();
-    checkValue(defaultValue);
-    runCallback();
   }
 
   private void checkRange() {
@@ -219,7 +215,7 @@ public class RangeRemix extends Remix<Integer> {
      * @throws IllegalArgumentException If key, minValue or maxValue are missing, or if these
      *     settings are incorrect for {@link RangeRemix}
      */
-    public RangeRemix build() {
+    public RangeRemix buildAndInit() {
       if (minValue == null || maxValue == null) {
         throw new IllegalArgumentException("minValue and maxValue must not be null");
       }
@@ -232,8 +228,10 @@ public class RangeRemix extends Remix<Integer> {
       if (title == null) {
         title = key;
       }
-      return new RangeRemix(
+      RangeRemix remix = new RangeRemix(
           title, key, defaultValue, minValue, maxValue, increment, callback, layoutId);
+      remix.init();
+      return remix;
     }
   }
 }

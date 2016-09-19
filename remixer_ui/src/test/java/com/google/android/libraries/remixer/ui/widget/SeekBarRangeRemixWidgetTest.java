@@ -71,6 +71,7 @@ public class SeekBarRangeRemixWidgetTest {
         STEPPING,
         mockCallback,
         R.layout.seekbar_range_remix_widget);
+    remix.init();
     view = (SeekBarRangeRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.seekbar_range_remix_widget, null);
     view.bindRemixerItem(remix);

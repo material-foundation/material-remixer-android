@@ -33,7 +33,9 @@ public class RemixerTest {
   @Before
   public void setUp() {
     remix = new StringRemix("name", "key", "", null, 0);
+    remix.init();
     remix2 = new StringRemix("name2", "key2", "", null, 0);
+    remix2.init();
     remixer = new Remixer();
   }
 

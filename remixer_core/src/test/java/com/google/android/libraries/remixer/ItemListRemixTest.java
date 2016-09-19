@@ -37,21 +37,24 @@ public class ItemListRemixTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void failsOnDefaultValueNotInList() {
-    new ItemListRemix<String>("name", "key", "None", Arrays.asList("Something else"), null, 0);
+  public void initFailsOnDefaultValueNotInList() {
+    new ItemListRemix<String>(
+        "name", "key", "None", Arrays.asList("Something else"), null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void setValueRejectsUnknownString() {
     ItemListRemix<String> remix =
         new ItemListRemix<String>("name", "key", "A", Arrays.asList("A", "B"), null, 0);
+    remix.init();
     remix.setValue("C");
   }
 
   @Test
-  public void constructorCallsCallback() {
+  public void initCallsCallback() {
     ItemListRemix<String> remix =
         new ItemListRemix<String>("name", "key", "A", Arrays.asList("A", "B"), mockCallback, 0);
+    remix.init();
     Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(remix);
   }
 
@@ -59,6 +62,7 @@ public class ItemListRemixTest {
   public void setValueCallsCallback() {
     ItemListRemix<String> remix =
         new ItemListRemix<String>("name", "key", "A", Arrays.asList("A", "B"), mockCallback, 0);
+    remix.init();
     remix.setValue("B");
     Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(remix);
   }
@@ -67,6 +71,7 @@ public class ItemListRemixTest {
   public void doesNotCrashOnNullCallback() {
     ItemListRemix<String> remix =
         new ItemListRemix<String>("name", "key", "A", Arrays.asList("A", "B"), null, 0);
+    remix.init();
     remix.setValue("B");
   }
 }

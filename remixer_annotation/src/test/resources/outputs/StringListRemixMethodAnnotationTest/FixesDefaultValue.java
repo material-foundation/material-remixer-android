@@ -41,6 +41,7 @@ class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<FixesDefau
     fixValue_remix_list.add("world");
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
     ItemListRemix<String> fixValue_remix = new ItemListRemix<String>("fixValue", "fixValue", "hello", fixValue_remix_list, fixValue_callback, 0);
+    fixValue_remix.init();
     remixer.addItem(fixValue_remix);
     activity.remixer = remixer;
   }

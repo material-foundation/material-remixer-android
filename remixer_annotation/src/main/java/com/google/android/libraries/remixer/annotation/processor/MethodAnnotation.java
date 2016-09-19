@@ -56,6 +56,10 @@ public abstract class MethodAnnotation {
    */
   protected static final String NEW_CALLBACK_STATEMENT = "$L $L = new $L(activity)";
   /**
+   * Statement to initialize a remix after it's been constructed.
+   */
+  protected static final String INIT_REMIX_STATEMENT = "$L.init()";
+  /**
    * Statement to add a remixer item instance to the current remixer.
    */
   protected static final String ADD_REMIX_STATEMENT = "remixer.addItem($L)";

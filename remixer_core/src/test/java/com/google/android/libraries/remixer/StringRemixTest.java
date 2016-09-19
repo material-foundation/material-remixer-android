@@ -36,14 +36,16 @@ public class StringRemixTest {
   }
 
   @Test
-  public void constructorCallsCallback() {
+  public void initCallsCallback() {
     StringRemix remix = new StringRemix("name", "key", "A", mockCallback, 0);
+    remix.init();
     Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(remix);
   }
 
   @Test
   public void setValueCallsCallback() {
     StringRemix remix = new StringRemix("name", "key", "A", mockCallback, 0);
+    remix.init();
     remix.setValue("B");
     Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(remix);
   }
@@ -51,6 +53,7 @@ public class StringRemixTest {
   @Test
   public void doesNotCrashOnNullCallback() {
     StringRemix remix = new StringRemix("name", "key", "A", null, 0);
+    remix.init();
     remix.setValue("B");
   }
 }

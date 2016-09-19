@@ -117,6 +117,7 @@ public class StringListRemixMethodAnnotation extends MethodAnnotation {
             listVariable,
             callbackVariable,
             layoutId)
+        .addStatement(INIT_REMIX_STATEMENT, remixVariable)
         .addStatement(ADD_REMIX_STATEMENT, remixVariable);
   }
 

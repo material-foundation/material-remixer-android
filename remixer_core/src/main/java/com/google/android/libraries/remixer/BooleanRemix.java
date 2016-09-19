@@ -42,7 +42,6 @@ public class BooleanRemix extends Remix<Boolean> {
       RemixCallback callback,
       int layoutId) {
     super(title, key, defaultValue, callback, layoutId);
-    runCallback();
   }
 
   @Override
@@ -103,14 +102,16 @@ public class BooleanRemix extends Remix<Boolean> {
      *
      * @throws IllegalArgumentException If key is missing
      */
-    public BooleanRemix build() {
+    public BooleanRemix buildAndInit() {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for BooleanRemix");
       }
       if (title == null) {
         title = key;
       }
-      return new BooleanRemix(title, key, defaultValue, callback, layoutId);
+      BooleanRemix remix = new BooleanRemix(title, key, defaultValue, callback, layoutId);
+      remix.init();
+      return remix;
     }
   }
 }

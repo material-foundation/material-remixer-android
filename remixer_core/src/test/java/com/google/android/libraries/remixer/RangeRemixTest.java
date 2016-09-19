@@ -39,39 +39,41 @@ public class RangeRemixTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     singleIncrements = new RangeRemix("name", "key", 15, 0, 20, 1, singleIncrementsCallback, 0);
+    singleIncrements.init();
     increments5 = new RangeRemix("name", "key", 15, 0, 20, 5, increments5Callback, 0);
+    increments5.init();
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void constructorDoesNotAcceptDefaultValueGreaterThanMax() {
-    new RangeRemix("name", "key", 15, 0, 10, 1, null, 0);
+  public void initDoesNotAcceptDefaultValueGreaterThanMax() {
+    new RangeRemix("name", "key", 15, 0, 10, 1, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void constructorDoesNotAcceptDefaultValueLessThanMin() {
-    new RangeRemix("name", "key", 15, 20, 30, 1, null, 0);
+  public void initDoesNotAcceptDefaultValueLessThanMin() {
+    new RangeRemix("name", "key", 15, 20, 30, 1, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptInvalidRanges() {
-    new RangeRemix("name", "key", 15, 50, 20, 1, null, 0);
+    new RangeRemix("name", "key", 15, 50, 20, 1, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptNegativeStepping() {
-    new RangeRemix("name", "key", 15, 50, 20, -1, null, 0);
+    new RangeRemix("name", "key", 15, 50, 20, -1, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptInvalidStepping() {
     // Stepping is invalid because maxValue 52 cannot be reached from 15 in steps of 5
-    new RangeRemix("name", "key", 15, 0, 52, 5, null, 0);
+    new RangeRemix("name", "key", 15, 0, 52, 5, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void constructorDoesNotAcceptInvalidSteppingToDefaultValue() {
+  public void initDoesNotAcceptInvalidSteppingToDefaultValue() {
     // Stepping is invalid because defaultValue 22 cannot be reached from 15 in steps of 5
-    new RangeRemix("name", "key", 22, 0, 50, 5, null, 0);
+    new RangeRemix("name", "key", 22, 0, 50, 5, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -90,7 +92,7 @@ public class RangeRemixTest {
   }
 
   @Test
-  public void callbackIsCalledOnConstructor() {
+  public void callbackIsCalledOnInit() {
     Mockito.verify(singleIncrementsCallback, Mockito.times(1)).onValueSet(singleIncrements);
   }
 
@@ -105,6 +107,7 @@ public class RangeRemixTest {
   @Test
   public void doesNotCrashOnNullCallback() {
     RangeRemix remix = new RangeRemix("name", "key", 15, 0, 20, 1, null, 0);
+    remix.init();
     remix.setValue(18);
   }
 }

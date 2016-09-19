@@ -64,6 +64,7 @@ public class BooleanRemixWidgetTest {
         DEFAULT_VALUE,
         mockCallback,
         R.layout.boolean_remix_widget);
+    remix.init();
     view = (BooleanRemixWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.boolean_remix_widget, null);
     view.bindRemixerItem(remix);

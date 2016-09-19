@@ -45,18 +45,22 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
     BooleanRemix setBoolean_remix = new BooleanRemix("setBoolean", "setBoolean", false, setBoolean_callback, 0);
+    setBoolean_remix.init();
     remixer.addItem(setBoolean_remix);
     Generated_setInt setInt_callback = new Generated_setInt(activity);
     RangeRemix setInt_remix = new RangeRemix("setInt", "setInt", 0, 0, 100, 1, setInt_callback, 0);
+    setInt_remix.init();
     remixer.addItem(setInt_remix);
     Generated_setString setString_callback = new Generated_setString(activity);
     StringRemix setString_remix = new StringRemix("setString", "setString", "", setString_callback, 0);
+    setString_remix.init();
     remixer.addItem(setString_remix);
     ArrayList<String> setStringList_remix_list = new ArrayList<String>();
     setStringList_remix_list.add("hello");
     setStringList_remix_list.add("world");
     Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
     ItemListRemix<String> setStringList_remix = new ItemListRemix<String>("setStringList", "setStringList", "hello", setStringList_remix_list, setStringList_callback, 0);
+    setStringList_remix.init();
     remixer.addItem(setStringList_remix);
     Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
     Trigger pullTrigger_trigger = new Trigger("pullTrigger", "pullTrigger", pullTrigger_callback, 0);

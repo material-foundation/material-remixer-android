@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
             boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
           }
         });
-    remixer.addItem(fontSizeRangeRemix.build());
+    remixer.addItem(fontSizeRangeRemix.buildAndInit());
 
     // Create an ItemListRemix<String> that updates boundedText's contents from a list of options
     ItemListRemix.Builder<String> itemListRemix = new ItemListRemix.Builder<String>()
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
                 boundedText.setText(remix.getSelectedValue());
               }
             });
-    remixer.addItem(itemListRemix.build());
+    remixer.addItem(itemListRemix.buildAndInit());
 
     // Create a BooleanRemix that controls whether freeformText is visible or not.
     BooleanRemix.Builder booleanRemix = new BooleanRemix.Builder()
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
             freeformText.setVisibility(remix.getSelectedValue() ? View.VISIBLE : View.GONE);
           }
         });
-    remixer.addItem(booleanRemix.build());
+    remixer.addItem(booleanRemix.buildAndInit());
 
     // Create a StringRemix that lets you set freeformText's content freely.
     StringRemix.Builder freeformStringRemix = new StringRemix.Builder()
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
             freeformText.setText(remix.getSelectedValue());
           }
         });
-    remixer.addItem(freeformStringRemix.build());
+    remixer.addItem(freeformStringRemix.buildAndInit());
 
     Trigger trigger = new Trigger("Toast", "toast", new Runnable() {
       @Override
