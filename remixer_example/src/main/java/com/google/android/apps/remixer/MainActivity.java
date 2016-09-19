@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.libraries.remixer.BooleanRemix;
+import com.google.android.libraries.remixer.BooleanRemixBuilder;
 import com.google.android.libraries.remixer.ItemListRemix;
 import com.google.android.libraries.remixer.RangeRemix;
 import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.StringRemix;
+import com.google.android.libraries.remixer.StringRemixBuilder;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     remixer.addItem(itemListRemix.buildAndInit());
 
     // Create a BooleanRemix that controls whether freeformText is visible or not.
-    BooleanRemix.Builder booleanRemix = new BooleanRemix.Builder()
+    Remix.Builder<Boolean> booleanRemix = new BooleanRemixBuilder()
         .setKey("freeformTextDisplay")
         .setCallback(new RemixCallback<Boolean>() {
           @Override
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     remixer.addItem(booleanRemix.buildAndInit());
 
     // Create a StringRemix that lets you set freeformText's content freely.
-    StringRemix.Builder freeformStringRemix = new StringRemix.Builder()
+    Remix.Builder<String> freeformStringRemix = new StringRemixBuilder()
         .setKey("freeformText")
         .setDefaultValue("Change me!")
         .setCallback(new RemixCallback<String>() {

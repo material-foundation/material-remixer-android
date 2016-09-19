@@ -16,14 +16,16 @@
 
 package com.google.android.libraries.remixer.ui.widget;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import android.view.LayoutInflater;
 import android.widget.Switch;
 import android.widget.TextView;
-
-import com.google.android.libraries.remixer.BooleanRemix;
+import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.ui.R;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,10 +34,6 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(
@@ -50,7 +48,7 @@ public class BooleanRemixWidgetTest {
   @Mock
   RemixCallback<Boolean> mockCallback;
 
-  private BooleanRemix remix;
+  private Remix<Boolean> remix;
   private BooleanRemixWidget view;
   private TextView name;
   private Switch remixSwitch;
@@ -58,7 +56,7 @@ public class BooleanRemixWidgetTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    remix = new BooleanRemix(
+    remix = new Remix<>(
         TITLE,
         KEY,
         DEFAULT_VALUE,

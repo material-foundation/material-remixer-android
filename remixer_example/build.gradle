@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-  compile 'com.android.support:appcompat-v7:24.2.0'
+  compile 'com.android.support:appcompat-v7:24.2.1'
   compile project(':remixer_core')
   compile project(':remixer_ui')
   provided project(':remixer_annotation')

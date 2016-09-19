@@ -16,11 +16,11 @@
 
 package com.google.android.libraries.remixer.ui.view;
 
-import com.google.android.libraries.remixer.BooleanRemix;
+import android.support.annotation.Nullable;
 import com.google.android.libraries.remixer.ItemListRemix;
 import com.google.android.libraries.remixer.RangeRemix;
+import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.R;
 import java.util.HashMap;
@@ -36,15 +36,23 @@ public final class RemixerItemWidgetHelper {
   private static final String UNKNOWN_DEFAULT_ERROR_FORMAT =
       "Remix with key %s has no mapping to a layout resource. Cannot display it.";
 
-  private static final HashMap<Class<?>, Integer> mapping;
+  private static final HashMap<String, Integer> mapping;
+
+  private static String getKey(Class remixClass, @Nullable Class remixType) {
+    String result = remixClass.getCanonicalName();
+    if (remixType != null) {
+      result = String.format(Locale.getDefault(),  "%s,%s", result, remixType.getCanonicalName());
+    }
+    return result;
+  }
 
   static {
     mapping = new HashMap<>();
-    mapping.put(BooleanRemix.class, R.layout.boolean_remix_widget);
-    mapping.put(ItemListRemix.class, R.layout.item_list_remix_widget);
-    mapping.put(RangeRemix.class, R.layout.seekbar_range_remix_widget);
-    mapping.put(StringRemix.class, R.layout.string_remix_widget);
-    mapping.put(Trigger.class, R.layout.trigger_widget);
+    mapping.put(getKey(Remix.class, Boolean.class), R.layout.boolean_remix_widget);
+    mapping.put(getKey(ItemListRemix.class, null), R.layout.item_list_remix_widget);
+    mapping.put(getKey(RangeRemix.class, null), R.layout.seekbar_range_remix_widget);
+    mapping.put(getKey(Remix.class, String.class), R.layout.string_remix_widget);
+    mapping.put(getKey(Trigger.class, null), R.layout.trigger_widget);
   }
 
   /**
@@ -62,8 +70,17 @@ public final class RemixerItemWidgetHelper {
       // This instance has a preferred layout.
       return layoutId;
     }
-    if (mapping.containsKey(instance.getClass())) {
-      return mapping.get(instance.getClass());
+    String key;
+    if (instance instanceof Remix) {
+      Remix remix = (Remix) instance;
+      key = getKey(remix.getClass(), remix.getRemixType());
+      if (mapping.containsKey(key)) {
+        return mapping.get(key);
+      }
+    }
+    key = getKey(instance.getClass(), null);
+    if (mapping.containsKey(key)) {
+      return mapping.get(key);
     }
     // There is no mapping, there is no layoutId whatsoever. What do we do? Throw an informative
     // exception.

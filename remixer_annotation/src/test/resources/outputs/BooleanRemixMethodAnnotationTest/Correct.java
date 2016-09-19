@@ -16,7 +16,6 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
@@ -36,7 +35,7 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_correct correct_callback = new Generated_correct(activity);
-    BooleanRemix correct_remix = new BooleanRemix("correct", "correct", false, correct_callback, 0);
+    Remix<Boolean> correct_remix = new Remix<Boolean>("correct", "correct", false, correct_callback, 0);
     correct_remix.init();
     remixer.addItem(correct_remix);
     activity.remixer = remixer;

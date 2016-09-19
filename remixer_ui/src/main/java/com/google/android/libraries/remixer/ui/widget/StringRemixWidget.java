@@ -24,13 +24,14 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.google.android.libraries.remixer.StringRemix;
+import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.ui.R;
 
 /**
- * Displays a {@link StringRemix} in an EditText and lets you edit its value.
+ * Displays as {@link Remix&lt;String&gt;} in an EditText and lets you edit its value.
  */
-public class StringRemixWidget extends RelativeLayout implements RemixerItemWidget<StringRemix> {
+public class StringRemixWidget extends RelativeLayout
+    implements RemixerItemWidget<Remix<String>> {
 
   private TextView nameText;
   private EditText text;
@@ -55,7 +56,7 @@ public class StringRemixWidget extends RelativeLayout implements RemixerItemWidg
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final StringRemix remix) {
+  public void bindRemixerItem(@NonNull final Remix<String> remix) {
     nameText.setText(remix.getTitle());
     text.setText(remix.getSelectedValue());
     text.addTextChangedListener(new TextWatcher() {

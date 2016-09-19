@@ -16,10 +16,11 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
-import com.google.android.libraries.remixer.BooleanRemix;
+import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
@@ -30,10 +31,10 @@ import javax.lang.model.element.TypeElement;
 public class BooleanRemixMethodAnnotation extends MethodAnnotation {
 
   /**
-   * Statement to create a new BooleanRemix.
+   * Statement to create a new AnyValueRemix&lt;Boolean&gt;
    *
-   * <p>Would expand to {@code BooleanRemix remixName = new BooleanRemix(title, key,
-   * defaultValue, callback, layoutId)}.
+   * <p>Would expand to {@code AnyValueRemix&lt;Boolean&gt; remixName = new AnyValueRemix&lt;&gt;(
+   * title, key, defaultValue, callback, layoutId)}.
    */
   private static final String NEW_BOOLEAN_REMIX_STATEMENT =
       "$T $L = new $T($S, $S, $L, $L, $L)";
@@ -51,15 +52,17 @@ public class BooleanRemixMethodAnnotation extends MethodAnnotation {
   public void addSetupStatements(MethodSpec.Builder methodBuilder) {
     String callbackVariable = key + CALLBACK_VAR_SUFFIX;
     String remixVariable = key + REMIX_VAR_SUFFIX;
+    ParameterizedTypeName remixClass = ParameterizedTypeName.get(
+        ClassName.get(Remix.class), ClassName.get(Boolean.class));
     methodBuilder
         .addStatement(
             NEW_CALLBACK_STATEMENT,
             generatedClassName, callbackVariable, generatedClassName)
         .addStatement(
             NEW_BOOLEAN_REMIX_STATEMENT,
-            BooleanRemix.class,
+            remixClass,
             remixVariable,
-            BooleanRemix.class,
+            remixClass,
             title,
             key,
             defaultValue,

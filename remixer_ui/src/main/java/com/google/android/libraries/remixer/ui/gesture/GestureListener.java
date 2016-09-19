@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer.ui.gesture;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.SparseArray;
@@ -88,6 +89,7 @@ public class GestureListener implements View.OnTouchListener {
   }
 
   @Override
+  @SuppressLint("ClickableViewAccessibility")
   public boolean onTouch(View view, MotionEvent motionEvent) {
     int pointerIndex = motionEvent.getActionIndex();
     int pointerId = motionEvent.getPointerId(pointerIndex);

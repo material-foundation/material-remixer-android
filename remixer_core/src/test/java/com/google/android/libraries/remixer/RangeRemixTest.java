@@ -35,6 +35,9 @@ public class RangeRemixTest {
   RangeRemix singleIncrements;
   RangeRemix increments5;
 
+  /**
+   * Sets up the test.
+   */
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);

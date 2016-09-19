@@ -30,11 +30,14 @@ public class RemixerTest {
   private Remix remix;
   private Remix remix2;
 
+  /**
+   * Sets up the tests.
+   */
   @Before
   public void setUp() {
-    remix = new StringRemix("name", "key", "", null, 0);
+    remix = new Remix<>("name", "key", "", null, 0);
     remix.init();
-    remix2 = new StringRemix("name2", "key2", "", null, 0);
+    remix2 = new Remix<>("name2", "key2", "", null, 0);
     remix2.init();
     remixer = new Remixer();
   }

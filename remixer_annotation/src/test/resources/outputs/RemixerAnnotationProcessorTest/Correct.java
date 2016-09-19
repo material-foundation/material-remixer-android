@@ -16,13 +16,11 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.BooleanRemix;
 import com.google.android.libraries.remixer.ItemListRemix;
 import com.google.android.libraries.remixer.RangeRemix;
 import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Boolean;
@@ -44,7 +42,7 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
-    BooleanRemix setBoolean_remix = new BooleanRemix("setBoolean", "setBoolean", false, setBoolean_callback, 0);
+    Remix<Boolean> setBoolean_remix = new Remix<Boolean>("setBoolean", "setBoolean", false, setBoolean_callback, 0);
     setBoolean_remix.init();
     remixer.addItem(setBoolean_remix);
     Generated_setInt setInt_callback = new Generated_setInt(activity);
@@ -52,7 +50,7 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setInt_remix.init();
     remixer.addItem(setInt_remix);
     Generated_setString setString_callback = new Generated_setString(activity);
-    StringRemix setString_remix = new StringRemix("setString", "setString", "", setString_callback, 0);
+    Remix<String> setString_remix = new Remix<String>("setString", "setString", "", setString_callback, 0);
     setString_remix.init();
     remixer.addItem(setString_remix);
     ArrayList<String> setStringList_remix_list = new ArrayList<String>();

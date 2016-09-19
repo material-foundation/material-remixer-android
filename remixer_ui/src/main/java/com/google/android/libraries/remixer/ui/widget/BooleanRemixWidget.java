@@ -23,13 +23,14 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import com.google.android.libraries.remixer.BooleanRemix;
+import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.ui.R;
 
 /**
- * Displays a {@link BooleanRemix} as a switch.
+ * Displays an {@link Remix&lt;Boolean&gt;} as a switch.
  */
-public class BooleanRemixWidget extends RelativeLayout implements RemixerItemWidget<BooleanRemix> {
+public class BooleanRemixWidget extends RelativeLayout
+    implements RemixerItemWidget<Remix<Boolean>> {
 
   private TextView nameText;
   private Switch remixSwitch;
@@ -54,7 +55,7 @@ public class BooleanRemixWidget extends RelativeLayout implements RemixerItemWid
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final BooleanRemix remix) {
+  public void bindRemixerItem(@NonNull final Remix<Boolean> remix) {
     nameText.setText(remix.getTitle());
     remixSwitch.setChecked(remix.getSelectedValue());
     remixSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

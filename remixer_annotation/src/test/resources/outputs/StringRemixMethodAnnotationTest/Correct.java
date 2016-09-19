@@ -19,7 +19,6 @@ package somepackage;
 import com.google.android.libraries.remixer.Remix;
 import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.StringRemix;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Override;
 import java.lang.String;
@@ -36,7 +35,7 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_correct correct_callback = new Generated_correct(activity);
-    StringRemix correct_remix = new StringRemix("correct", "correct", "", correct_callback, 0);
+    Remix<String> correct_remix = new Remix<String>("correct", "correct", "", correct_callback, 0);
     correct_remix.init();
     remixer.addItem(correct_remix);
     activity.remixer = remixer;
