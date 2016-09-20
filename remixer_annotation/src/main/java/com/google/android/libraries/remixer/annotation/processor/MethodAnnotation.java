@@ -38,39 +38,39 @@ import javax.lang.model.element.TypeElement;
  * implement {@link #getKey()}, {@link #getRemixType()}, and
  * {@link #addSetupStatements(MethodSpec.Builder)}.
  */
-public abstract class MethodAnnotation {
+abstract class MethodAnnotation {
 
   /**
    * Suffix to append to a variable name to hold the callback to be used by the remix.
    */
-  protected static final String CALLBACK_VAR_SUFFIX = "_callback";
+  static final String CALLBACK_VAR_SUFFIX = "_callback";
   /**
    * Suffix to append to a variable that holds the generated remix.
    */
-  protected static final String REMIX_VAR_SUFFIX = "_remix";
+  static final String REMIX_VAR_SUFFIX = "_remix";
   /**
    * Statement to create the callback variable.
    *
    * <p>Would expand to something in the form of {@code CallbackType callbackVariable = new
    * CallbackType(activity)}
    */
-  protected static final String NEW_CALLBACK_STATEMENT = "$L $L = new $L(activity)";
+  static final String NEW_CALLBACK_STATEMENT = "$L $L = new $L(activity)";
   /**
    * Statement to initialize a remix after it's been constructed.
    */
-  protected static final String INIT_REMIX_STATEMENT = "$L.init()";
+  static final String INIT_REMIX_STATEMENT = "$L.init()";
   /**
    * Statement to add a remixer item instance to the current remixer.
    */
-  protected static final String ADD_REMIX_STATEMENT = "remixer.addItem($L)";
+  static final String ADD_REMIX_STATEMENT = "remixer.addItem($L)";
   /**
    * The element where the annotation was found.
    */
-  protected final ExecutableElement sourceMethod;
+  final ExecutableElement sourceMethod;
   /**
    * The type element which contains the annotated method.
    */
-  protected final TypeElement sourceClass;
+  private final TypeElement sourceClass;
   /**
    * The key for this Remix. If the annotation has an empty key then it uses the source method's
    * name as key.
@@ -83,22 +83,22 @@ public abstract class MethodAnnotation {
   /**
    * The layoutId to pass to the constructor of the remix. This will be used to inflate the UI.
    */
-  protected final int layoutId;
+  final int layoutId;
   /**
    * The name of the class to generate.
    */
-  protected String generatedClassName;
+  String generatedClassName;
   /**
    * The name of the class refered to by {@code sourceClass}, that is, the class where that contains
    * the annotated method.
    */
-  protected final TypeName sourceClassName;
+  private final TypeName sourceClassName;
   /**
    * A FieldSpec for a field in the generated class that will contain the current activity.
    */
-  protected final FieldSpec activityField;
+  private final FieldSpec activityField;
 
-  protected MethodAnnotation(
+  MethodAnnotation(
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
       String key,
@@ -123,7 +123,7 @@ public abstract class MethodAnnotation {
     return key;
   }
 
-  public ExecutableElement getSourceMethod() {
+  ExecutableElement getSourceMethod() {
     return sourceMethod;
   }
 
@@ -144,7 +144,7 @@ public abstract class MethodAnnotation {
    * Generates a class named {@code generatedClassName} which is an implementation of
    * {@code RemixCallback} that calls the {@code sourceMethod} on the activity.
    */
-  public TypeSpec generateCallbackClass() {
+  TypeSpec generateCallbackClass() {
     MethodSpec method = getCallbackMethodSpec();
     MethodSpec constructor = MethodSpec.constructorBuilder()
         .addParameter(sourceClassName, "activity")
@@ -158,7 +158,7 @@ public abstract class MethodAnnotation {
         .build();
   }
 
-  public TypeElement getSourceClass() {
+  TypeElement getSourceClass() {
     return sourceClass;
   }
 

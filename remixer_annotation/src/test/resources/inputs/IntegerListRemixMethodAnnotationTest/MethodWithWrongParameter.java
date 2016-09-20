@@ -17,17 +17,17 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
 
-public class ExplicitWrongDefault {
+public class MethodWithWrongParameter {
 
   @RemixerInstance
   public Remixer remixer;
 
   /**
-   * Default value is explicitly out of range, should fail.
+   * This method should take a string parameter, fail
    */
-  @StringListRemixMethod(defaultValue = "adfjuh", possibleValues = {"hello", "world"})
-  public void wrongDefault(String i){}
+  @IntegerListRemixMethod(possibleValues = {1, 2})
+  public void fail(String i){}
 }

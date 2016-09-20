@@ -19,12 +19,12 @@ package com.google.android.libraries.remixer.annotation.processor;
 /**
  * Utility class that checks that a key is valid.
  */
-public class KeyChecker {
+class KeyChecker {
 
   /**
    * Checks whether the given key is a valid Java Identifier Name.
    */
-  public static boolean isValidKey(String key) {
+  static boolean isValidKey(String key) {
     if (key.length() == 0) {
       return false;
     }

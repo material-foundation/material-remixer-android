@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to apply to a method to turn it into a BooleanRemix.
+ * Annotation to apply to a method to turn it into a Remix&lt;Boolean&gt;.
  *
  * <p>Note: It has to be used on a public or default-access method in the same class that has a
  * @RemixerInstance annotated field.
@@ -52,7 +52,7 @@ public @interface BooleanRemixMethod {
   /**
    * The layout id to inflate when displaying this Remix. If not specified a default will be used.
    *
-   * <p>Its root element must implement {@code RemixerItemWidget<Remix<Boolean>}.
+   * <p>Its root element must implement {@code RemixerItemWidget&lt;Remix&lt;Boolean&gt;&gt;}.
    */
   int layoutId() default 0;
 }

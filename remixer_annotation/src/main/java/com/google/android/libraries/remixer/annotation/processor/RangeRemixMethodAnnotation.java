@@ -27,7 +27,7 @@ import javax.lang.model.element.TypeElement;
 /**
  * Generates code to support {@link RangeRemixMethod} annotations.
  */
-public class RangeRemixMethodAnnotation extends MethodAnnotation {
+class RangeRemixMethodAnnotation extends MethodAnnotation {
 
   /**
    * Statement to create a new RangeRemix.
@@ -43,7 +43,7 @@ public class RangeRemixMethodAnnotation extends MethodAnnotation {
   private final int increment;
   private final int maxValue;
 
-  protected RangeRemixMethodAnnotation(
+  RangeRemixMethodAnnotation(
       TypeElement sourceClass, ExecutableElement sourceMethod, RangeRemixMethod annotation)
       throws RemixerAnnotationException {
     super(sourceClass, sourceMethod, annotation.key(), annotation.title(), annotation.layoutId());

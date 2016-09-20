@@ -45,6 +45,14 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     Remix<Boolean> setBoolean_remix = new Remix<Boolean>("setBoolean", "setBoolean", false, setBoolean_callback, 0);
     setBoolean_remix.init();
     remixer.addItem(setBoolean_remix);
+    ArrayList<Integer> setIntegerList_remix_list = new ArrayList<Integer>();
+    setIntegerList_remix_list.add(1);
+    setIntegerList_remix_list.add(2);
+    setIntegerList_remix_list.add(3);
+    Generated_setIntegerList setIntegerList_callback = new Generated_setIntegerList(activity);
+    ItemListRemix<Integer> setIntegerList_remix = new ItemListRemix<Integer>("setIntegerList", "setIntegerList", 1, setIntegerList_remix_list, setIntegerList_callback, 0);
+    setIntegerList_remix.init();
+    remixer.addItem(setIntegerList_remix);
     Generated_setInt setInt_callback = new Generated_setInt(activity);
     RangeRemix setInt_remix = new RangeRemix("setInt", "setInt", 0, 0, 100, 1, setInt_callback, 0);
     setInt_remix.init();
@@ -76,6 +84,19 @@ class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     @Override
     public void onValueSet(Remix<Boolean> remix) {
       activity.setBoolean(remix.getSelectedValue());
+    }
+  }
+
+  static class Generated_setIntegerList implements RemixCallback<Integer> {
+    private final Correct activity;
+
+    Generated_setIntegerList(Correct activity) {
+      this.activity = activity;
+    }
+
+    @Override
+    public void onValueSet(Remix<Integer> remix) {
+      activity.setIntegerList(remix.getSelectedValue());
     }
   }
 

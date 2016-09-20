@@ -49,12 +49,12 @@ import javax.lang.model.element.VariableElement;
  *
  * <p>While adding methods, this also makes sure that their remix keys are not duplicated.
  */
-public class AnnotatedClass {
+class AnnotatedClass {
 
   /**
    * The {@link RemixerBinder} class' name. this is useful for inheritance.
    */
-  public static final ClassName REMIXER_BINDER_CLASS_NAME =
+  private static final ClassName REMIXER_BINDER_CLASS_NAME =
       ClassName.get(RemixerBinder.Binder.class);
   /**
    * The class being compiled that has Remixer annotations.
@@ -93,7 +93,7 @@ public class AnnotatedClass {
    *     Remixer annotations.
    * @param remixerInstance The field that is annotated with @RemixerInstance.
    */
-  public AnnotatedClass(TypeElement sourceClass, VariableElement remixerInstance) {
+  AnnotatedClass(TypeElement sourceClass, VariableElement remixerInstance) {
     this.sourceClass = sourceClass;
     this.sourceClassName = ClassName.get(sourceClass.asType());
     generatedClassName = sourceClass.getSimpleName() + "_RemixerBinder";
@@ -109,7 +109,7 @@ public class AnnotatedClass {
    * @throws RemixerAnnotationException when a key is repeated among Remixer annotations in the same
    *     class.
    */
-  public void addMethod(MethodAnnotation method) throws RemixerAnnotationException {
+  void addMethod(MethodAnnotation method) throws RemixerAnnotationException {
     if (!method.getSourceClass().equals(sourceClass)) {
       throw new RemixerAnnotationException(method.getSourceMethod(),
           "Adding a method annotation to the wrong class, shouldn't happen. File a bug.");
@@ -130,7 +130,7 @@ public class AnnotatedClass {
   /**
    * Generates a Java file with the code corresponding to all Remixer annotations in this class.
    */
-  public JavaFile generateJavaFile() throws RemixerAnnotationException {
+  JavaFile generateJavaFile() throws RemixerAnnotationException {
     Collection<MethodAnnotation> annotatedMethods = sortMethods();
     TypeSpec.Builder classBuilder = TypeSpec.classBuilder(generatedClassName);
     ParameterizedTypeName superInterface =

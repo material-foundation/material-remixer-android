@@ -22,10 +22,10 @@ import javax.lang.model.element.Element;
  * An exception to throw when there is an error processing annotations, this will cause the
  * processor to report and error and fail.
  */
-public class RemixerAnnotationException extends Exception {
+class RemixerAnnotationException extends Exception {
   private final Element element;
 
-  public RemixerAnnotationException(Element element, String message) {
+  RemixerAnnotationException(Element element, String message) {
     super(message);
     this.element = element;
   }

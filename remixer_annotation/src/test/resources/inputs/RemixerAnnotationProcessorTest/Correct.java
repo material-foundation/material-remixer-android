@@ -17,6 +17,7 @@
 package somepackage;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
 import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
@@ -33,6 +34,9 @@ public class Correct {
 
   @BooleanRemixMethod
   public void setBoolean(Boolean i) {}
+
+  @IntegerListRemixMethod(possibleValues = {1, 2, 3})
+  public void setIntegerList(Integer i) {}
 
   @RangeRemixMethod
   public void setInt(Integer i) {}

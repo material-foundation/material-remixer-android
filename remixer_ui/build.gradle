@@ -27,10 +27,6 @@ android {
     versionName "1.0"
   }
 
-  dexOptions {
-    incremental true
-  }
-
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_7
     targetCompatibility JavaVersion.VERSION_1_7
@@ -44,13 +40,13 @@ android {
 }
 
 dependencies {
-  compile 'com.android.support:appcompat-v7:24.1.1'
-  compile 'com.android.support:design:24.1.1'
-  compile 'com.android.support:recyclerview-v7:24.1.1'
-  compile 'com.android.support:support-annotations:24.1.1'
+  compile 'com.android.support:appcompat-v7:24.2.1'
+  compile 'com.android.support:design:24.2.1'
+  compile 'com.android.support:recyclerview-v7:24.2.1'
+  compile 'com.android.support:support-annotations:24.2.1'
+  compile 'com.android.support:support-fragment:24.2.1'
   compile project(':remixer_core')
   testCompile 'junit:junit:4.12'
   testCompile 'org.mockito:mockito-core:1.9.5'
   testCompile 'org.robolectric:robolectric:3.1.1'
-  compile 'com.android.support:support-fragment:24.2.0'
 }

@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
 import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
 import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
 import com.google.android.libraries.remixer.annotation.StringRemixMethod;
@@ -28,7 +29,7 @@ import javax.lang.model.element.TypeElement;
 /**
  * An enum of all the supported annotations.
  */
-public enum SupportedMethodAnnotation {
+enum SupportedMethodAnnotation {
 
   BOOLEAN_REMIX(BooleanRemixMethod.class, Boolean.class) {
     @Override
@@ -36,7 +37,16 @@ public enum SupportedMethodAnnotation {
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
       BooleanRemixMethod annotation = (BooleanRemixMethod) baseAnnotation;
-      return new BooleanRemixMethodAnnotation(clazz, method, annotation);
+      return RemixMethodAnnotation.forBooleanRemixMethod(clazz, method, annotation);
+    }
+  },
+  INTEGER_LIST_REMIX(IntegerListRemixMethod.class, Integer.class) {
+    @Override
+    public MethodAnnotation getMethodAnnotation(
+        TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
+        throws RemixerAnnotationException {
+      IntegerListRemixMethod annotation = (IntegerListRemixMethod) baseAnnotation;
+      return ItemListRemixMethodAnnotation.forIntegerListRemixMethod(clazz, method, annotation);
     }
   },
   RANGE_REMIX(RangeRemixMethod.class, Integer.class) {
@@ -54,7 +64,7 @@ public enum SupportedMethodAnnotation {
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
       StringListRemixMethod annotation = (StringListRemixMethod) baseAnnotation;
-      return new StringListRemixMethodAnnotation(clazz, method, annotation);
+      return ItemListRemixMethodAnnotation.forStringListRemixMethod(clazz, method, annotation);
     }
   },
   STRING_REMIX(StringRemixMethod.class, String.class) {
@@ -63,7 +73,7 @@ public enum SupportedMethodAnnotation {
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
       StringRemixMethod annotation = (StringRemixMethod) baseAnnotation;
-      return new StringRemixMethodAnnotation(clazz, method, annotation);
+      return RemixMethodAnnotation.forStringRemixMethod(clazz, method, annotation);
     }
   },
   TRIGGER(TriggerMethod.class, null) {

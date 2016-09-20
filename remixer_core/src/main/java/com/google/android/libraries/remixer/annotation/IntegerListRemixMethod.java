@@ -22,14 +22,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to apply to a method to turn it into a Remix&lt;String&gt;.
+ * Annotation to apply to a method to turn it into a {@code ItemListRemix&lt;Integer&gt;}.
+ *
+ * <p>It is set up in a way that you don't need to explicitly set the default value, if it is left
+ * unspecified and 0 is not part of the possible values, then the first value in the list of
+ * possible values is assumed as default.
  *
  * <p>Note: It has to be used on a public or default-access method in the same class that has a
  * @RemixerInstance annotated field.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface StringRemixMethod {
+public @interface IntegerListRemixMethod {
   /**
    * The key for the remix, may be left empty and the method name will be used instead.
    *
@@ -44,10 +48,17 @@ public @interface StringRemixMethod {
   String title() default "";
 
   /**
-   * The default value for this remix, assumes false as default.
+   * The default value for this remix, assumes 0 as default.
+   *
+   * <p>If left unspecified and the empty string is not part of the possible values, then the first
+   * value in the list of possible values is assumed as default.
    */
-  String defaultValue() default "";
+  int defaultValue() default 0;
 
+  /**
+   * List of possible values for this ItemListRemix&lt;String&gt;.
+   */
+  int[] possibleValues() default {0};
   /**
    * The layout id to inflate when displaying this Remix. If not specified a default will be used.
    *

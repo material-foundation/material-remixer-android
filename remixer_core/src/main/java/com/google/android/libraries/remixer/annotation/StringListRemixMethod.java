@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to apply to a method to turn it into a {@code ItemListRemix<String>}.
+ * Annotation to apply to a method to turn it into a {@code ItemListRemix&lt;String&gt;}.
  *
  * <p>It is set up in a way that you don't need to explicitly set the default value, if it is left
  * unspecified and the empty string is not part of the possible values, then the first value in
@@ -56,13 +56,13 @@ public @interface StringListRemixMethod {
   String defaultValue() default "";
 
   /**
-   * List of possible values for this ItemListRemix<String>
+   * List of possible values for this ItemListRemix&lt;String&gt;.
    */
   String[] possibleValues() default {""};
   /**
    * The layout id to inflate when displaying this Remix. If not specified a default will be used.
    *
-   * <p>Its root element must implement {@code RemixerItemWidget<Remix<String>>}.
+   * <p>Its root element must implement {@code RemixerItemWidget&lt;Remix&lt;String&gt;&gt;}.
    */
   int layoutId() default 0;
 }

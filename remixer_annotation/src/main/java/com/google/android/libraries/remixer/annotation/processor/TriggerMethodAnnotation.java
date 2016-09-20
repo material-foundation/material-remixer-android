@@ -28,17 +28,17 @@ import javax.lang.model.element.TypeElement;
 /**
  * Generates code to support {@link TriggerMethod} annotations.
  */
-public class TriggerMethodAnnotation extends MethodAnnotation {
+class TriggerMethodAnnotation extends MethodAnnotation {
 
   /**
    * Statement to create a new Trigger.
    *
    * <p>Would expand to {@code Trigger triggerName = new Trigger(title, key, callback, layoutId)}.
    */
-  protected static final String NEW_TRIGGER_STATEMENT = "$T $L = new $T($S, $S, $L, $L)";
-  protected static final String TRIGGER_VAR_SUFFIX = "_trigger";
+  private static final String NEW_TRIGGER_STATEMENT = "$T $L = new $T($S, $S, $L, $L)";
+  private static final String TRIGGER_VAR_SUFFIX = "_trigger";
 
-  public TriggerMethodAnnotation(
+  TriggerMethodAnnotation(
       TypeElement sourceClass, ExecutableElement sourceMethod, TriggerMethod annotation)
       throws RemixerAnnotationException {
     super(sourceClass, sourceMethod, annotation.key(), annotation.title(), annotation.layoutId());

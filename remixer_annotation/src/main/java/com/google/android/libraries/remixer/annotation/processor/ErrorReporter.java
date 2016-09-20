@@ -24,31 +24,17 @@ import javax.tools.Diagnostic;
 /**
  * Utilities class to log from the Annotation processor.
  */
-public class ErrorReporter {
+class ErrorReporter {
   private final Messager messager;
 
-  public ErrorReporter(ProcessingEnvironment env) {
+  ErrorReporter(ProcessingEnvironment env) {
     this.messager = env.getMessager();
-  }
-
-  /**
-   * Adds a note to the compiler log.
-   */
-  public void reportNote(Element element, String msg) {
-    messager.printMessage(Diagnostic.Kind.NOTE, msg, element);
-  }
-
-  /**
-   * Adds a warning to the compiler log.
-   */
-  public void reportWarning(Element element, String msg) {
-    messager.printMessage(Diagnostic.Kind.WARNING, msg, element);
   }
 
   /**
    * Adds an error to the compiler log.
    */
-  public void reportError(Element element, String msg) {
+  void reportError(Element element, String msg) {
     messager.printMessage(Diagnostic.Kind.ERROR, msg, element);
   }
 }
