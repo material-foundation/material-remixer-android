@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.ui.widget;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.CompoundButton;
@@ -29,6 +30,7 @@ import com.google.android.libraries.remixer.ui.R;
 /**
  * Displays an {@link Remix&lt;Boolean&gt;} as a switch.
  */
+@Keep
 public class BooleanRemixWidget extends RelativeLayout
     implements RemixerItemWidget<Remix<Boolean>> {
 

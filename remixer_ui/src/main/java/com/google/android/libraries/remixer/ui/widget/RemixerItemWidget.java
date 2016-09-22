@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer.ui.widget;
 
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
@@ -26,6 +27,7 @@ import com.google.android.libraries.remixer.ui.view.RemixerFragment;
  * <p>This lets the {@link RemixerFragment} bind them to a {@link RemixerItem} when they are
  * inflated.
  */
+@Keep
 public interface RemixerItemWidget<T extends RemixerItem> {
   /**
    * Binds the remixer item to the widget in question.

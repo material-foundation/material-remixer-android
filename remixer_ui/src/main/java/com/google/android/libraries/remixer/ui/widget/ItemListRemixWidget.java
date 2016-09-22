@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.ui.widget;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.List;
 /**
  * Displays an ItemListRemix as a Spinner. The list uses item.toString() to display it as text.
  */
+@Keep
 public class ItemListRemixWidget extends RelativeLayout
     implements RemixerItemWidget<ItemListRemix<?>> {
 

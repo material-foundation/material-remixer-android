@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.ui.widget;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +31,7 @@ import com.google.android.libraries.remixer.ui.R;
 /**
  * Displays as {@link Remix&lt;String&gt;} in an EditText and lets you edit its value.
  */
+@Keep
 public class StringRemixWidget extends RelativeLayout
     implements RemixerItemWidget<Remix<String>> {
 

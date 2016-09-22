@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.ui.widget;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.google.android.libraries.remixer.ui.R;
 /**
  * Displays a {@link Trigger} as a button.
  */
+@Keep
 public class TriggerWidget extends RelativeLayout implements RemixerItemWidget<Trigger> {
 
   private Button button;

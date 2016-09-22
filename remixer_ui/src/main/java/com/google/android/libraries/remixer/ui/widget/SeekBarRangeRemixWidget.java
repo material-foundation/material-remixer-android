@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.ui.widget;
 
 import android.content.Context;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
@@ -28,6 +29,7 @@ import com.google.android.libraries.remixer.ui.R;
 /**
  * Displays a {@link RangeRemix} as a SeekBar.
  */
+@Keep
 public class SeekBarRangeRemixWidget
     extends RelativeLayout implements RemixerItemWidget<RangeRemix> {
 
