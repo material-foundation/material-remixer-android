@@ -15,15 +15,21 @@
  */
 package com.google.android.apps.remixer;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.libraries.remixer.ItemListRemix;
+import com.google.android.libraries.remixer.Remix;
+import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
 import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
@@ -55,9 +61,19 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
     freeformText = (TextView) findViewById(R.id.freeformText);
     remixerButton = (Button) findViewById(R.id.button);
     RemixerBinder.bind(this);
+
     RemixerFragment remixerFragment = RemixerFragment.newInstance();
     remixerFragment.attachToGesture(this, Direction.UP, 3);
     remixerFragment.attachToButton(this, remixerButton);
+  }
+
+  @IntegerListRemixMethod(
+      possibleValues = {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN},
+      layoutId = R.layout.color_list_remix_widget
+  )
+  void setTextColor(@ColorInt Integer color) {
+    boundedText.setTextColor(color);
+    freeformText.setTextColor(color);
   }
 
   @RangeRemixMethod(minValue = 16, maxValue = 72, increment = 4)

@@ -1,5 +1,6 @@
 package com.google.android.apps.remixer;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -43,6 +44,20 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     freeformText = (TextView) findViewById(R.id.freeformText);
     // Initialize the remixer instance
     remixer = new Remixer();
+
+    ItemListRemix<Integer> colorRemix = new ItemListRemix.Builder<Integer>()
+        .setKey("color")
+        .setPossibleValues(Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN)
+        .setCallback(new RemixCallback<Integer>() {
+          @Override
+          public void onValueSet(Remix<Integer> remix) {
+            boundedText.setTextColor(remix.getSelectedValue());
+            freeformText.setTextColor(remix.getSelectedValue());
+          }
+        })
+        .setLayoutId(R.layout.color_list_remix_widget)
+        .buildAndInit();
+    remixer.addItem(colorRemix);
 
     // Create a RangeRemix that updates boundedText's size between 10 and 48 sp.
     RangeRemix.Builder fontSizeRangeRemix = new RangeRemix.Builder()
