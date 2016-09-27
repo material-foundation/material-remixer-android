@@ -18,7 +18,7 @@ package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class FixesDefaultValue {
 
@@ -28,6 +28,6 @@ public class FixesDefaultValue {
   /**
    * Default value is implicitly "", this has to move to "hello"
    */
-  @StringListRemixMethod(possibleValues = {"hello", "world"})
+  @StringListVariableMethod(possibleValues = {"hello", "world"})
   public void fixValue(String i){}
 }

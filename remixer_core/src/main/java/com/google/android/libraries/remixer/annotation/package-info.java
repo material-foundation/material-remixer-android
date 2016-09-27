@@ -34,7 +34,7 @@
  * You can control the order in which remixes are added by moving the annotated methods in code,
  * Remixer will respect the order in which the methods are defined.
  *
- * It is possible to use both annotations and explicit Remix instantiations, you just have to add
+ * It is possible to use both annotations and explicit Variable instantiations, you just have to add
  * your explicit remix instantiations after the call to RemixerBinder.bind.
  */
 package com.google.android.libraries.remixer.annotation;

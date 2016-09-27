@@ -21,21 +21,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.google.android.libraries.remixer.Remix;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.ui.widget.RemixerItemWidget;
 import java.util.List;
 
 /**
- * An adapter that takes care of displaying a list of {@link Remix}es using their corresponding
+ * An adapter that takes care of displaying a list of {@link Variable}es using their corresponding
  * {@link RemixerItemWidget}.
  */
 class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
-  private final List<RemixerItem> remixes;
+  private final List<RemixerItem> remixerItems;
 
   public RemixerAdapter(List<RemixerItem> items) {
-    remixes = items;
+    remixerItems = items;
   }
 
   @Override
@@ -47,17 +47,17 @@ class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
-    holder.setRemixerItem(remixes.get(position));
+    holder.setRemixerItem(remixerItems.get(position));
   }
 
   @Override
   public int getItemViewType(int position) {
-    return RemixerItemWidgetHelper.getLayoutId(remixes.get(position));
+    return RemixerItemWidgetHelper.getLayoutId(remixerItems.get(position));
   }
 
   @Override
   public int getItemCount() {
-    return remixes.size();
+    return remixerItems.size();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {

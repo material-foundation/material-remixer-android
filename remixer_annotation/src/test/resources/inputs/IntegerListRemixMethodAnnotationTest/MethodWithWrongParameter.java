@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class MethodWithWrongParameter {
@@ -28,6 +28,6 @@ public class MethodWithWrongParameter {
   /**
    * This method should take a string parameter, fail
    */
-  @IntegerListRemixMethod(possibleValues = {1, 2})
+  @IntegerListVariableMethod(possibleValues = {1, 2})
   public void fail(String i){}
 }

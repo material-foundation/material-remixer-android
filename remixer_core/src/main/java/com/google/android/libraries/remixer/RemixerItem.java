@@ -19,7 +19,7 @@ package com.google.android.libraries.remixer;
 /**
  * An item that can be displayed on Remixer's interfaces.
  *
- * <p>These are either {@link Remix}es or {@link Trigger}s.
+ * <p>These are either {@link Variable}es or {@link Trigger}s.
  */
 public class RemixerItem {
 

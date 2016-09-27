@@ -18,13 +18,13 @@ package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
+import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 
 public class Correct {
 
   @RemixerInstance
   public Remixer remixer;
 
-  @StringRemixMethod
+  @StringVariableMethod
   public void correct(String i){}
 }

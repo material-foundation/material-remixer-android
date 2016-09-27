@@ -16,11 +16,9 @@
 
 package somepackage;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
 
 /**
  * Two methods have the remix key "key", should fail.
@@ -30,10 +28,10 @@ public class DuplicateKey {
   @RemixerInstance
   Remixer remixer;
 
-  @BooleanRemixMethod(key="key")
+  @BooleanVariableMethod(key="key")
   public void setBoolean(Boolean i) {}
 
-  @RangeRemixMethod(key="key")
+  @RangeVariableMethod(key="key")
   public void setInt(Integer i) {}
 
 }

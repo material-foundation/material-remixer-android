@@ -47,7 +47,7 @@ import javax.lang.model.element.VariableElement;
  * and the name of the {@link Remixer} instance annotated with {@link RemixerInstance}. It assumes
  * that there is only one such field in this class.
  *
- * <p>While adding methods, this also makes sure that their remix keys are not duplicated.
+ * <p>While adding methods, this also makes sure that their remixer keys are not duplicated.
  */
 class AnnotatedClass {
 
@@ -78,9 +78,10 @@ class AnnotatedClass {
    */
   private final Name remixerName;
   /**
-   * A set of all the used Remix Keys. Used for guaranteeing that there is no duplication of keys.
+   * A set of all the used Variable Keys. Used for guaranteeing that there is no duplication of
+   * keys.
    */
-  private final Set<String> remixKeys;
+  private final Set<String> remixerKeys;
   /**
    * A mapping from method to annotation, this is used later for sorting and to make sure one method
    * is only annotated once.
@@ -101,7 +102,7 @@ class AnnotatedClass {
     packageName =
         ((PackageElement) sourceClass.getEnclosingElement()).getQualifiedName().toString();
     methodMap = new HashMap<>();
-    remixKeys = new HashSet<>();
+    remixerKeys = new HashSet<>();
   }
 
   /**
@@ -114,15 +115,15 @@ class AnnotatedClass {
       throw new RemixerAnnotationException(method.getSourceMethod(),
           "Adding a method annotation to the wrong class, shouldn't happen. File a bug.");
     }
-    if (remixKeys.contains(method.getKey())) {
+    if (remixerKeys.contains(method.getKey())) {
       throw new RemixerAnnotationException(method.getSourceMethod(),
-          "Repeated Remix key, there can only be one with the same name in the same class");
+          "Repeated Variable key, there can only be one with the same name in the same class");
     }
     if (methodMap.containsKey(method.getSourceMethod())) {
       throw new RemixerAnnotationException(method.getSourceMethod(),
           "Method can only be annotated once.");
     }
-    remixKeys.add(method.getKey());
+    remixerKeys.add(method.getKey());
     // Put in a map, these will be sorted at the time of generating the source code
     methodMap.put(method.getSourceMethod(), method);
   }

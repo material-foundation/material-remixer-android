@@ -16,10 +16,10 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.ItemListRemix;
-import com.google.android.libraries.remixer.Remix;
-import com.google.android.libraries.remixer.RemixCallback;
+import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Integer;
 import java.lang.Override;
@@ -36,17 +36,17 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     } else {
       remixer = activity.remixer;
     }
-    ArrayList<Integer> fixValue_remix_list = new ArrayList<Integer>();
-    fixValue_remix_list.add(1);
-    fixValue_remix_list.add(2);
+    ArrayList<Integer> fixValue_variable_list = new ArrayList<Integer>();
+    fixValue_variable_list.add(1);
+    fixValue_variable_list.add(2);
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
-    ItemListRemix<Integer> fixValue_remix = new ItemListRemix<Integer>("fixValue", "fixValue", 1, fixValue_remix_list, fixValue_callback, 0);
-    fixValue_remix.init();
-    remixer.addItem(fixValue_remix);
+    ItemListVariable<Integer> fixValue_variable = new ItemListVariable<Integer>("fixValue", "fixValue", 1, fixValue_variable_list, fixValue_callback, 0);
+    fixValue_variable.init();
+    remixer.addItem(fixValue_variable);
     activity.remixer = remixer;
   }
 
-  static class Generated_fixValue implements RemixCallback<Integer> {
+  static class Generated_fixValue implements Callback<Integer> {
     private final FixesDefaultValue activity;
 
     Generated_fixValue(FixesDefaultValue activity) {
@@ -54,8 +54,8 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     }
 
     @Override
-    public void onValueSet(Remix<Integer> remix) {
-      activity.fixValue(remix.getSelectedValue());
+    public void onValueSet(Variable<Integer> variable) {
+      activity.fixValue(variable.getSelectedValue());
     }
   }
 }

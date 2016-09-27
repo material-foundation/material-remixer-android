@@ -17,9 +17,9 @@
 package com.google.android.libraries.remixer.ui.view;
 
 import android.support.annotation.Nullable;
-import com.google.android.libraries.remixer.ItemListRemix;
-import com.google.android.libraries.remixer.RangeRemix;
-import com.google.android.libraries.remixer.Remix;
+import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.RangeVariable;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.R;
@@ -34,34 +34,34 @@ public final class RemixerItemWidgetHelper {
   private RemixerItemWidgetHelper() {}
 
   private static final String UNKNOWN_DEFAULT_ERROR_FORMAT =
-      "Remix with key %s has no mapping to a layout resource. Cannot display it.";
+      "Variable with key %s has no mapping to a layout resource. Cannot display it.";
 
   private static final HashMap<String, Integer> mapping;
 
-  private static String getKey(Class remixClass, @Nullable Class remixType) {
-    String result = remixClass.getCanonicalName();
-    if (remixType != null) {
-      result = String.format(Locale.getDefault(),  "%s,%s", result, remixType.getCanonicalName());
+  private static String getKey(Class variableClass, @Nullable Class variableType) {
+    String result = variableClass.getCanonicalName();
+    if (variableType != null) {
+      result = String.format(Locale.getDefault(),  "%s,%s", result, variableType.getCanonicalName());
     }
     return result;
   }
 
   static {
     mapping = new HashMap<>();
-    mapping.put(getKey(Remix.class, Boolean.class), R.layout.boolean_remix_widget);
-    mapping.put(getKey(ItemListRemix.class, null), R.layout.item_list_remix_widget);
-    mapping.put(getKey(RangeRemix.class, null), R.layout.seekbar_range_remix_widget);
-    mapping.put(getKey(Remix.class, String.class), R.layout.string_remix_widget);
+    mapping.put(getKey(Variable.class, Boolean.class), R.layout.boolean_variable_widget);
+    mapping.put(getKey(ItemListVariable.class, null), R.layout.item_list_variable_widget);
+    mapping.put(getKey(RangeVariable.class, null), R.layout.seekbar_range_variable_widget);
+    mapping.put(getKey(Variable.class, String.class), R.layout.string_variable_widget);
     mapping.put(getKey(Trigger.class, null), R.layout.trigger_widget);
   }
 
   /**
-   * Returns the layout id to inflate for this Remix.
+   * Returns the layout id to inflate for this Variable.
    *
-   * <p>If no layout has been specified for the remix (it is 0), it tries to fall back to known
-   * default layout ids.
+   * <p>If no layout has been specified for the remixer item (it is 0), it tries to fall back to
+   * known default layout ids.
    *
-   * @throws IllegalArgumentException if the Remix in question has no default layout associated with
+   * @throws IllegalArgumentException if the Variable in question has no default layout associated with
    *     it and it is relying on a default.
    */
   public static int getLayoutId(RemixerItem instance) {
@@ -71,9 +71,9 @@ public final class RemixerItemWidgetHelper {
       return layoutId;
     }
     String key;
-    if (instance instanceof Remix) {
-      Remix remix = (Remix) instance;
-      key = getKey(remix.getClass(), remix.getRemixType());
+    if (instance instanceof Variable) {
+      Variable variable = (Variable) instance;
+      key = getKey(variable.getClass(), variable.getVariableType());
       if (mapping.containsKey(key)) {
         return mapping.get(key);
       }

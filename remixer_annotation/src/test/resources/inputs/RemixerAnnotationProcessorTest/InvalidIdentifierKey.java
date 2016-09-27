@@ -16,12 +16,8 @@
 
 package somepackage;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
-
 
 public class InvalidIdentifierKey {
 
@@ -31,7 +27,7 @@ public class InvalidIdentifierKey {
   /**
    * The key should be a valid Java identifier, cannot begin with 1, nor have spaces.
    */
-  @BooleanRemixMethod(key="1 invalid identifier key")
+  @BooleanVariableMethod(key="1 invalid identifier key")
   public void setBoolean(Boolean i) {}
 
 }

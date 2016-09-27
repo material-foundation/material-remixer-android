@@ -16,9 +16,9 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.Remix;
-import com.google.android.libraries.remixer.RemixCallback;
+import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Boolean;
 import java.lang.Override;
@@ -35,13 +35,13 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_correct correct_callback = new Generated_correct(activity);
-    Remix<Boolean> correct_remix = new Remix<Boolean>("correct", "correct", false, correct_callback, 0);
-    correct_remix.init();
-    remixer.addItem(correct_remix);
+    Variable<Boolean> correct_variable = new Variable<Boolean>("correct", "correct", false, correct_callback, 0);
+    correct_variable.init();
+    remixer.addItem(correct_variable);
     activity.remixer = remixer;
   }
 
-  static class Generated_correct implements RemixCallback<Boolean> {
+  static class Generated_correct implements Callback<Boolean> {
     private final Correct activity;
 
     Generated_correct(Correct activity) {
@@ -49,8 +49,8 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
 
     @Override
-    public void onValueSet(Remix<Boolean> remix) {
-      activity.correct(remix.getSelectedValue());
+    public void onValueSet(Variable<Boolean> variable) {
+      activity.correct(variable.getSelectedValue());
     }
   }
 }

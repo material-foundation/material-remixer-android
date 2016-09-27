@@ -23,14 +23,4 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
   </style>
-
-  <style name="RemixName" parent="android:TextAppearance.Medium">
-    <item name="android:textColor">@color/remixerTextColor</item>
-    <item name="android:textSize">@dimen/remixerTextSize</item>
-  </style>
-
-  <style name="RemixExtra" parent="android:TextAppearance.Small">
-    <item name="android:textColor">@color/remixerSecondaryTextColor</item>
-    <item name="android:textSize">@dimen/remixerSecondaryTextSize</item>
-  </style>
 </resources>

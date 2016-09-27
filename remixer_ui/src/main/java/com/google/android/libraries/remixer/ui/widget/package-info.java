@@ -15,16 +15,16 @@
  */
 
 /**
- * Contains all of the Remixer UI Elements that represent an individual Remix in the UI, these are
+ * Contains all of the Remixer UI Elements that represent an individual Variable in the UI, these are
  * the RemixerItemWidget family of classes.
  *
  * <p>Each RemixerItemWidget is bound to a corresponding layout id (i.e.
- * {@link com.google.android.libraries.remixer.ui.widget.BooleanRemixWidget} is instantiated by
- * inflating {@code R.layout.boolean_remix_widget}).
+ * {@link com.google.android.libraries.remixer.ui.widget.BooleanVariableWidget} is instantiated by
+ * inflating {@code R.layout.boolean_variable_widget}).
  *
  * <p>All of the Remixer UI elements must implement
  * {@link com.google.android.libraries.remixer.ui.widget.RemixerItemWidget}, that allows the
- * RemixerItemWidget to have its corresponding {@link com.google.android.libraries.remixer.Remix}
+ * RemixerItemWidget to have its corresponding {@link com.google.android.libraries.remixer.Variable}
  * assigned.
  */
 package com.google.android.libraries.remixer.ui.widget;

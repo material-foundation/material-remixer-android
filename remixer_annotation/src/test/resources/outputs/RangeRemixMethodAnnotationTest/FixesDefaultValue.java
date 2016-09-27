@@ -16,10 +16,10 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.RangeRemix;
-import com.google.android.libraries.remixer.Remix;
-import com.google.android.libraries.remixer.RemixCallback;
+import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Integer;
 import java.lang.Override;
@@ -36,13 +36,13 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
       remixer = activity.remixer;
     }
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
-    RangeRemix fixValue_remix = new RangeRemix("fixValue", "fixValue", 15, 15, 100, 1, fixValue_callback, 0);
-    fixValue_remix.init();
-    remixer.addItem(fixValue_remix);
+    RangeVariable fixValue_variable = new RangeVariable("fixValue", "fixValue", 15, 15, 100, 1, fixValue_callback, 0);
+    fixValue_variable.init();
+    remixer.addItem(fixValue_variable);
     activity.remixer = remixer;
   }
 
-  static class Generated_fixValue implements RemixCallback<Integer> {
+  static class Generated_fixValue implements Callback<Integer> {
     private final FixesDefaultValue activity;
 
     Generated_fixValue(FixesDefaultValue activity) {
@@ -50,8 +50,8 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     }
 
     @Override
-    public void onValueSet(Remix<Integer> remix) {
-      activity.fixValue(remix.getSelectedValue());
+    public void onValueSet(Variable<Integer> variable) {
+      activity.fixValue(variable.getSelectedValue());
     }
   }
 }

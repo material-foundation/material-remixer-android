@@ -61,11 +61,11 @@ class TriggerMethodAnnotation extends MethodAnnotation {
             key,
             callbackVariable,
             layoutId)
-        .addStatement(ADD_REMIX_STATEMENT, triggerVariable);
+        .addStatement(ADD_VARIABLE_STATEMENT, triggerVariable);
   }
 
   @Override
-  protected TypeName getRemixType() {
+  protected TypeName getVariableType() {
     // This does not apply to Triggers, they're basically typeless remixes
     return null;
   }

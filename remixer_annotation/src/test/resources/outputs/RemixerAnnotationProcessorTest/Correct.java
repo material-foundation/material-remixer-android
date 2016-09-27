@@ -16,12 +16,12 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.ItemListRemix;
-import com.google.android.libraries.remixer.RangeRemix;
-import com.google.android.libraries.remixer.Remix;
-import com.google.android.libraries.remixer.RemixCallback;
+import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.Trigger;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Boolean;
 import java.lang.Integer;
@@ -42,39 +42,39 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
-    Remix<Boolean> setBoolean_remix = new Remix<Boolean>("setBoolean", "setBoolean", false, setBoolean_callback, 0);
-    setBoolean_remix.init();
-    remixer.addItem(setBoolean_remix);
-    ArrayList<Integer> setIntegerList_remix_list = new ArrayList<Integer>();
-    setIntegerList_remix_list.add(1);
-    setIntegerList_remix_list.add(2);
-    setIntegerList_remix_list.add(3);
+    Variable<Boolean> setBoolean_variable = new Variable<Boolean>("setBoolean", "setBoolean", false, setBoolean_callback, 0);
+    setBoolean_variable.init();
+    remixer.addItem(setBoolean_variable);
+    ArrayList<Integer> setIntegerList_variable_list = new ArrayList<Integer>();
+    setIntegerList_variable_list.add(1);
+    setIntegerList_variable_list.add(2);
+    setIntegerList_variable_list.add(3);
     Generated_setIntegerList setIntegerList_callback = new Generated_setIntegerList(activity);
-    ItemListRemix<Integer> setIntegerList_remix = new ItemListRemix<Integer>("setIntegerList", "setIntegerList", 1, setIntegerList_remix_list, setIntegerList_callback, 0);
-    setIntegerList_remix.init();
-    remixer.addItem(setIntegerList_remix);
+    ItemListVariable<Integer> setIntegerList_variable = new ItemListVariable<Integer>("setIntegerList", "setIntegerList", 1, setIntegerList_variable_list, setIntegerList_callback, 0);
+    setIntegerList_variable.init();
+    remixer.addItem(setIntegerList_variable);
     Generated_setInt setInt_callback = new Generated_setInt(activity);
-    RangeRemix setInt_remix = new RangeRemix("setInt", "setInt", 0, 0, 100, 1, setInt_callback, 0);
-    setInt_remix.init();
-    remixer.addItem(setInt_remix);
+    RangeVariable setInt_variable = new RangeVariable("setInt", "setInt", 0, 0, 100, 1, setInt_callback, 0);
+    setInt_variable.init();
+    remixer.addItem(setInt_variable);
     Generated_setString setString_callback = new Generated_setString(activity);
-    Remix<String> setString_remix = new Remix<String>("setString", "setString", "", setString_callback, 0);
-    setString_remix.init();
-    remixer.addItem(setString_remix);
-    ArrayList<String> setStringList_remix_list = new ArrayList<String>();
-    setStringList_remix_list.add("hello");
-    setStringList_remix_list.add("world");
+    Variable<String> setString_variable = new Variable<String>("setString", "setString", "", setString_callback, 0);
+    setString_variable.init();
+    remixer.addItem(setString_variable);
+    ArrayList<String> setStringList_variable_list = new ArrayList<String>();
+    setStringList_variable_list.add("hello");
+    setStringList_variable_list.add("world");
     Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
-    ItemListRemix<String> setStringList_remix = new ItemListRemix<String>("setStringList", "setStringList", "hello", setStringList_remix_list, setStringList_callback, 0);
-    setStringList_remix.init();
-    remixer.addItem(setStringList_remix);
+    ItemListVariable<String> setStringList_variable = new ItemListVariable<String>("setStringList", "setStringList", "hello", setStringList_variable_list, setStringList_callback, 0);
+    setStringList_variable.init();
+    remixer.addItem(setStringList_variable);
     Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
     Trigger pullTrigger_trigger = new Trigger("pullTrigger", "pullTrigger", pullTrigger_callback, 0);
     remixer.addItem(pullTrigger_trigger);
     activity.remixer = remixer;
   }
 
-  static class Generated_setBoolean implements RemixCallback<Boolean> {
+  static class Generated_setBoolean implements Callback<Boolean> {
     private final Correct activity;
 
     Generated_setBoolean(Correct activity) {
@@ -82,12 +82,12 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
 
     @Override
-    public void onValueSet(Remix<Boolean> remix) {
-      activity.setBoolean(remix.getSelectedValue());
+    public void onValueSet(Variable<Boolean> variable) {
+      activity.setBoolean(variable.getSelectedValue());
     }
   }
 
-  static class Generated_setIntegerList implements RemixCallback<Integer> {
+  static class Generated_setIntegerList implements Callback<Integer> {
     private final Correct activity;
 
     Generated_setIntegerList(Correct activity) {
@@ -95,12 +95,12 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
 
     @Override
-    public void onValueSet(Remix<Integer> remix) {
-      activity.setIntegerList(remix.getSelectedValue());
+    public void onValueSet(Variable<Integer> variable) {
+      activity.setIntegerList(variable.getSelectedValue());
     }
   }
 
-  static class Generated_setInt implements RemixCallback<Integer> {
+  static class Generated_setInt implements Callback<Integer> {
     private final Correct activity;
 
     Generated_setInt(Correct activity) {
@@ -108,12 +108,12 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
 
     @Override
-    public void onValueSet(Remix<Integer> remix) {
-      activity.setInt(remix.getSelectedValue());
+    public void onValueSet(Variable<Integer> variable) {
+      activity.setInt(variable.getSelectedValue());
     }
   }
 
-  static class Generated_setString implements RemixCallback<String> {
+  static class Generated_setString implements Callback<String> {
     private final Correct activity;
 
     Generated_setString(Correct activity) {
@@ -121,12 +121,12 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
 
     @Override
-    public void onValueSet(Remix<String> remix) {
-      activity.setString(remix.getSelectedValue());
+    public void onValueSet(Variable<String> variable) {
+      activity.setString(variable.getSelectedValue());
     }
   }
 
-  static class Generated_setStringList implements RemixCallback<String> {
+  static class Generated_setStringList implements Callback<String> {
     private final Correct activity;
 
     Generated_setStringList(Correct activity) {
@@ -134,8 +134,8 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
 
     @Override
-    public void onValueSet(Remix<String> remix) {
-      activity.setStringList(remix.getSelectedValue());
+    public void onValueSet(Variable<String> variable) {
+      activity.setStringList(variable.getSelectedValue());
     }
   }
 

@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class FixesDefaultValue {
@@ -28,6 +28,6 @@ public class FixesDefaultValue {
   /**
    * Default value is implicitly 0, this has to move to 15 with minValue.
    */
-  @RangeRemixMethod(minValue = 15)
+  @RangeVariableMethod(minValue = 15)
   public void fixValue(Integer i){}
 }

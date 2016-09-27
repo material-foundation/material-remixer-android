@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class MethodWithWrongParameter {
@@ -28,6 +28,6 @@ public class MethodWithWrongParameter {
   /**
    * This method's parameter should be of type Integer. Should fail.
    */
-  @RangeRemixMethod()
+  @RangeVariableMethod()
   public void fail(String i){}
 }

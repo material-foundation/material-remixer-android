@@ -18,7 +18,7 @@ package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class EmptyList {
 
@@ -28,6 +28,6 @@ public class EmptyList {
   /**
    * List is empty explicitly! Fail
    */
-  @StringListRemixMethod(possibleValues = {})
+  @StringListVariableMethod(possibleValues = {})
   public void fail(String i){}
 }

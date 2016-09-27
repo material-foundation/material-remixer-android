@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class EmptyList {
@@ -28,6 +28,6 @@ public class EmptyList {
   /**
    * List is empty explicitly! Fail
    */
-  @IntegerListRemixMethod(possibleValues = {})
+  @IntegerListVariableMethod(possibleValues = {})
   public void fail(Integer i){}
 }

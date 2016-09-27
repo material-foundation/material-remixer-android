@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class FixesDefaultValue {
@@ -28,6 +28,6 @@ public class FixesDefaultValue {
   /**
    * Default value is implicitly 0, this has to move to 1
    */
-  @IntegerListRemixMethod(possibleValues = {1, 2})
+  @IntegerListVariableMethod(possibleValues = {1, 2})
   public void fixValue(Integer i){}
 }

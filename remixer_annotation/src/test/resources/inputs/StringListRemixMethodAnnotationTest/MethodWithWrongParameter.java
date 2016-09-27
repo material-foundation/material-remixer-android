@@ -17,9 +17,8 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class MethodWithWrongParameter {
 
@@ -29,6 +28,6 @@ public class MethodWithWrongParameter {
   /**
    * This method should take a string parameter, fail
    */
-  @StringListRemixMethod(possibleValues = {"hello","world"})
+  @StringListVariableMethod(possibleValues = {"hello","world"})
   public void fail(Integer i){}
 }

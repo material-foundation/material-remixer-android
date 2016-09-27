@@ -24,17 +24,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.libraries.remixer.ItemListRemix;
-import com.google.android.libraries.remixer.Remix;
-import com.google.android.libraries.remixer.RemixCallback;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
-import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
+import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
@@ -67,32 +64,32 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
     remixerFragment.attachToButton(this, remixerButton);
   }
 
-  @IntegerListRemixMethod(
+  @IntegerListVariableMethod(
       possibleValues = {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN},
-      layoutId = R.layout.color_list_remix_widget
+      layoutId = R.layout.color_list_variable_widget
   )
   void setTextColor(@ColorInt Integer color) {
     boundedText.setTextColor(color);
     freeformText.setTextColor(color);
   }
 
-  @RangeRemixMethod(minValue = 16, maxValue = 72, increment = 4)
+  @RangeVariableMethod(minValue = 16, maxValue = 72, increment = 4)
   void setTextSize(Integer size) {
     boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
   }
 
-  @StringListRemixMethod(
+  @StringListVariableMethod(
       possibleValues = {"Hello World", "Alohomora", "Foo", "Bar", "May the force be with you"})
   void setBoundedText(String text) {
     boundedText.setText(text);
   }
 
-  @BooleanRemixMethod
+  @BooleanVariableMethod
   void setFreeformVisible(Boolean visibility) {
     freeformText.setVisibility(visibility ? View.VISIBLE : View.GONE);
   }
 
-  @StringRemixMethod(defaultValue = "Change me!")
+  @StringVariableMethod(defaultValue = "Change me!")
   void setFreeformText(String text) {
     freeformText.setText(text);
   }

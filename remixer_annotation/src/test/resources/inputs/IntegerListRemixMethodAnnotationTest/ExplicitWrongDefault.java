@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class ExplicitWrongDefault {
@@ -28,6 +28,6 @@ public class ExplicitWrongDefault {
   /**
    * Default value is explicitly out of range, should fail.
    */
-  @IntegerListRemixMethod(defaultValue = 5, possibleValues = {2, 3})
+  @IntegerListVariableMethod(defaultValue = 5, possibleValues = {2, 3})
   public void wrongDefault(Integer i){}
 }

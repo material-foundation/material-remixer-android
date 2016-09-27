@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Contains a list of {@link Remix}es.
+ * Contains a list of {@link Variable}es.
  */
 public class Remixer {
 
@@ -34,10 +34,10 @@ public class Remixer {
   }
 
   /**
-   * This adds a remixer item ({@link Remix} or {@link Trigger}) to be tracked and displayed.
+   * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    *
    * @param remixerItem The remixer item to be added.
-   * @throws DuplicateRemixKeyException In case the remix has a key that has already been used.
+   * @throws DuplicateRemixerKeyException In case the remix has a key that has already been used.
    */
   public void addItem(RemixerItem remixerItem) {
     checkUniqueKey(remixerItem.getKey(), remixerItem);
@@ -46,7 +46,7 @@ public class Remixer {
 
   private void checkUniqueKey(String key, RemixerItem remixerItem) {
     if (keyMap.containsKey(key)) {
-      throw new DuplicateRemixKeyException(
+      throw new DuplicateRemixerKeyException(
         String.format(
           "Trying to add a %s as Remixer key %s but a %s already has that key",
           remixerItem.getClass().getName(),

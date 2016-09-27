@@ -54,7 +54,7 @@ public class TriggerWidgetTest {
         TITLE,
         KEY,
         mockCallback,
-        R.layout.string_remix_widget);
+        R.layout.string_variable_widget);
     TriggerWidget view = (TriggerWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.trigger_widget, null);
     view.bindRemixerItem(trigger);

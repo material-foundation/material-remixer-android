@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
+import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class MethodWithWrongParameter {
@@ -28,6 +28,6 @@ public class MethodWithWrongParameter {
   /**
    * This method's parameter should be of type Boolean, compilation should fail.
    */
-  @BooleanRemixMethod()
+  @BooleanVariableMethod()
   public void fail(Integer i){}
 }

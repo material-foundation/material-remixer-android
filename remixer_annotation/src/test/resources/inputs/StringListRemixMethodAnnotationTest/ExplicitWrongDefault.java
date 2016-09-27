@@ -18,7 +18,7 @@ package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class ExplicitWrongDefault {
 
@@ -28,6 +28,6 @@ public class ExplicitWrongDefault {
   /**
    * Default value is explicitly out of range, should fail.
    */
-  @StringListRemixMethod(defaultValue = "adfjuh", possibleValues = {"hello", "world"})
+  @StringListVariableMethod(defaultValue = "adfjuh", possibleValues = {"hello", "world"})
   public void wrongDefault(String i){}
 }
