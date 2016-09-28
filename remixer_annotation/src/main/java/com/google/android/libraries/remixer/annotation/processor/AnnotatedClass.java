@@ -151,7 +151,7 @@ class AnnotatedClass {
     bindMethodBuilder
         .addStatement("$T remixer", Remixer.class)
         .beginControlFlow("if (activity.$N == null)", remixerName)
-        .addStatement("remixer = new $T()",  Remixer.class)
+        .addStatement("remixer = $T.getInstance()",  Remixer.class)
         .nextControlFlow("else")
         .addStatement("remixer = activity.$N", remixerName)
         .endControlFlow();
