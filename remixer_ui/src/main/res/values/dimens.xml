@@ -18,9 +18,7 @@
   <!-- Default screen margins, per the Android Design guidelines. -->
   <dimen name="defaultPadding">16dp</dimen>
   <dimen name="secondaryPadding">8dp</dimen>
-  <dimen name="remixerTextSize">14dp</dimen>
-  <dimen name="remixerSecondaryTextSize">13dp</dimen>
-  <dimen name="remixColorCircleMinimumSize">40dp</dimen>
-  <dimen name="remixColorCirclePadding">4dp</dimen>
-  <dimen name="remixColorCircleBorder">1dp</dimen>
+  <dimen name="remixerColorCircleMinimumSize">40dp</dimen>
+  <dimen name="remixerColorCirclePadding">4dp</dimen>
+  <dimen name="remixerColorCircleBorder">1dp</dimen>
 </resources>

@@ -15,15 +15,15 @@
  */
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class NonPublicMethod {
 
   /**
-   * Remix annotations don't work on private/protected methods, should fail
+   * Variable annotations don't work on private/protected methods, should fail
    */
-  @RangeRemixMethod(key = "myKey")
+  @RangeVariableMethod(key = "myKey")
   private void fail(Integer i){}
 
   @RemixerInstance

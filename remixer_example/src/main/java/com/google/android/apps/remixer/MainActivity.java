@@ -8,28 +8,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.libraries.remixer.BooleanRemixBuilder;
-import com.google.android.libraries.remixer.ItemListRemix;
-import com.google.android.libraries.remixer.RangeRemix;
-import com.google.android.libraries.remixer.Remix;
-import com.google.android.libraries.remixer.RemixCallback;
+import com.google.android.libraries.remixer.BooleanVariableBuilder;
+import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.RangeVariable;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.StringRemixBuilder;
+import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 /**
- * Main activity with explicit instantiation or Remixer Objects.
+ * Main activity with explicit instantiation of Remixer Objects.
  *
  * <p>Notice implementing RemixerActivity is necessary to use RemixerFragment.
  */
 public class MainActivity extends AppCompatActivity implements RemixerActivity {
 
-  // A text view whose text is updated by an ItemListRemix<String> and font size by a RangeRemix
+  // A text view whose text is updated by an ItemListVariable<String> and font size by a RangeVariable
   private TextView boundedText;
-  // A text view whose text is updated by a StringRemix and is visible depending on a BooleanRemix
+  // A text view whose text is updated by a StringVariable and is visible depending on a BooleanVariable
   private TextView freeformText;
   // The remixer instance
   private Remixer remixer;
@@ -45,69 +45,68 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     // Initialize the remixer instance
     remixer = Remixer.getInstance();
 
-    ItemListRemix<Integer> colorRemix = new ItemListRemix.Builder<Integer>()
+    ItemListVariable.Builder<Integer> colorVariable = new ItemListVariable.Builder<Integer>()
         .setKey("color")
-        .setPossibleValues(Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN)
-        .setCallback(new RemixCallback<Integer>() {
+        .setPossibleValues(new Integer[] {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN} )
+        .setCallback(new Callback<Integer>() {
           @Override
-          public void onValueSet(Remix<Integer> remix) {
-            boundedText.setTextColor(remix.getSelectedValue());
-            freeformText.setTextColor(remix.getSelectedValue());
+          public void onValueSet(Variable<Integer> variable) {
+            boundedText.setTextColor(variable.getSelectedValue());
+            freeformText.setTextColor(variable.getSelectedValue());
           }
         })
-        .setLayoutId(R.layout.color_list_remix_widget)
-        .buildAndInit();
-    remixer.addItem(colorRemix);
+        .setLayoutId(R.layout.color_list_variable_widget);
+    remixer.addItem(colorVariable.buildAndInit());
 
-    // Create a RangeRemix that updates boundedText's size between 10 and 48 sp.
-    RangeRemix.Builder fontSizeRangeRemix = new RangeRemix.Builder()
+    // Create a RangeVariable that updates boundedText's size between 10 and 48 sp.
+    RangeVariable.Builder fontSizeRangeVariable = new RangeVariable.Builder()
         .setKey("font_size")
         .setMinValue(16)
         .setMaxValue(72)
         .setIncrement(4)
-        .setCallback(new RemixCallback<Integer>() {
+        .setCallback(new Callback<Integer>() {
           @Override
-          public void onValueSet(Remix<Integer> remix) {
-            boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, remix.getSelectedValue());
+          public void onValueSet(Variable<Integer> variable) {
+            boundedText.setTextSize(TypedValue.COMPLEX_UNIT_SP, variable.getSelectedValue());
           }
         });
-    remixer.addItem(fontSizeRangeRemix.buildAndInit());
+    remixer.addItem(fontSizeRangeVariable.buildAndInit());
 
-    // Create an ItemListRemix<String> that updates boundedText's contents from a list of options
-    ItemListRemix.Builder<String> itemListRemix = new ItemListRemix.Builder<String>()
+    // Create an ItemListVariable<String> that updates boundedText's contents from a list of options
+    ItemListVariable.Builder<String> itemListVariable = new ItemListVariable.Builder<String>()
         .setKey("boundedText")
-        .setPossibleValues("Hello world", "Foo", "Bar", "May the force be with you")
+        .setPossibleValues(new String[] {"Hello world", "Foo", "Bar", "May the force be with you"})
         .setCallback(
-            new RemixCallback<String>() {
+            new Callback<String>() {
               @Override
-              public void onValueSet(Remix<String> remix) {
-                boundedText.setText(remix.getSelectedValue());
+              public void onValueSet(Variable<String> variable) {
+                boundedText.setText(variable.getSelectedValue());
               }
             });
-    remixer.addItem(itemListRemix.buildAndInit());
+    remixer.addItem(itemListVariable.buildAndInit());
 
-    // Create a BooleanRemix that controls whether freeformText is visible or not.
-    Remix.Builder<Boolean> booleanRemix = new BooleanRemixBuilder()
+    // Create a BooleanVariable that controls whether freeformText is visible or not.
+    Variable.Builder<Boolean> booleanVariable = new BooleanVariableBuilder()
         .setKey("freeformTextDisplay")
-        .setCallback(new RemixCallback<Boolean>() {
+        .setCallback(new Callback<Boolean>() {
           @Override
-          public void onValueSet(Remix<Boolean> remix) {
-            freeformText.setVisibility(remix.getSelectedValue() ? View.VISIBLE : View.GONE);
+          public void onValueSet(Variable<Boolean> variable) {
+            freeformText.setVisibility(variable.getSelectedValue() ? View.VISIBLE : View.GONE);
           }
         });
-    remixer.addItem(booleanRemix.buildAndInit());
+    remixer.addItem(booleanVariable.buildAndInit());
 
-    // Create a StringRemix that lets you set freeformText's content freely.
-    Remix.Builder<String> freeformStringRemix = new StringRemixBuilder()
+    // Create a StringVariable that lets you set freeformText's content freely.
+    Variable.Builder<String> freeformStringVariable = new StringVariableBuilder()
         .setKey("freeformText")
         .setDefaultValue("Change me!")
-        .setCallback(new RemixCallback<String>() {
+        .setCallback(new Callback<String>() {
           @Override
-          public void onValueSet(Remix<String> remix) {
-            freeformText.setText(remix.getSelectedValue());
+          public void onValueSet(Variable<String> variable) {
+            freeformText.setText(variable.getSelectedValue());
           }
         });
-    remixer.addItem(freeformStringRemix.buildAndInit());
+    remixer.addItem(freeformStringVariable.buildAndInit());
 
     Trigger trigger = new Trigger("Toast", "toast", new Runnable() {
       @Override

@@ -48,8 +48,9 @@ public class SingleColorDrawable extends Drawable {
 
   public SingleColorDrawable(Context context) {
     this.context = context;
-    minSizeInPx = context.getResources().getDimensionPixelSize(R.dimen.remixColorCircleMinimumSize);
-    borderWidth = context.getResources().getDimensionPixelSize(R.dimen.remixColorCircleBorder);
+    minSizeInPx =
+        context.getResources().getDimensionPixelSize(R.dimen.remixerColorCircleMinimumSize);
+    borderWidth = context.getResources().getDimensionPixelSize(R.dimen.remixerColorCircleBorder);
     paintBorder.setColor(Color.DKGRAY);
     paintBorder.setStyle(Paint.Style.STROKE);
     paintBorder.setStrokeWidth(borderWidth);

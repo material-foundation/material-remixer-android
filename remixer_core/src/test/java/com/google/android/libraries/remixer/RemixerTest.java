@@ -27,33 +27,33 @@ import org.junit.runners.JUnit4;
 public class RemixerTest {
 
   private Remixer remixer;
-  private Remix remix;
-  private Remix remix2;
+  private Variable variable;
+  private Variable variable2;
 
   /**
    * Sets up the tests.
    */
   @Before
   public void setUp() {
-    remix = new Remix<>("name", "key", "", null, 0);
-    remix.init();
-    remix2 = new Remix<>("name2", "key2", "", null, 0);
-    remix2.init();
+    variable = new Variable<>("name", "key", "", null, 0);
+    variable.init();
+    variable2 = new Variable<>("name2", "key2", "", null, 0);
+    variable2.init();
     remixer = new Remixer();
   }
 
-  @Test(expected = DuplicateRemixKeyException.class)
+  @Test(expected = DuplicateRemixerKeyException.class)
   public void remixerRejectsDuplicates() {
-    remixer.addItem(remix);
-    remixer.addItem(remix);
+    remixer.addItem(variable);
+    remixer.addItem(variable);
   }
 
   @Test
   public void remixerReturnsListInOrder() {
-    remixer.addItem(remix);
-    remixer.addItem(remix2);
-    List<RemixerItem> remixList = remixer.getRemixerItems();
-    Assert.assertEquals(remix, remixList.get(0));
-    Assert.assertEquals(remix2, remixList.get(1));
+    remixer.addItem(variable);
+    remixer.addItem(variable2);
+    List<RemixerItem> remixeritemList = remixer.getRemixerItems();
+    Assert.assertEquals(variable, remixeritemList.get(0));
+    Assert.assertEquals(variable2, remixeritemList.get(1));
   }
 }

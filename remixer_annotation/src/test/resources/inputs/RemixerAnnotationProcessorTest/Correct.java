@@ -16,12 +16,12 @@
 
 package somepackage;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
-import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
+import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 
 /**
@@ -32,19 +32,19 @@ public class Correct {
   @RemixerInstance
   Remixer remixer;
 
-  @BooleanRemixMethod
+  @BooleanVariableMethod
   public void setBoolean(Boolean i) {}
 
-  @IntegerListRemixMethod(possibleValues = {1, 2, 3})
+  @IntegerListVariableMethod(possibleValues = {1, 2, 3})
   public void setIntegerList(Integer i) {}
 
-  @RangeRemixMethod
+  @RangeVariableMethod
   public void setInt(Integer i) {}
 
-  @StringRemixMethod
+  @StringVariableMethod
   public void setString(String i) {}
 
-  @StringListRemixMethod(possibleValues = {"hello", "world"})
+  @StringListVariableMethod(possibleValues = {"hello", "world"})
   public void setStringList(String i) {}
 
   @TriggerMethod

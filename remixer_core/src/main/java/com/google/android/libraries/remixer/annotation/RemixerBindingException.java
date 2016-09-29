@@ -27,14 +27,10 @@ public class RemixerBindingException extends RuntimeException {
    */
   private static final String ADVICE =
       ". Make sure that you're using @RemixerInstance on an instance of this class and that you"
-      + " are not proguarding out this class' binder. Normally adding this to your proguard"
-      + " configuration should help: "
-      + "-keep,allowobfuscation class * extends "
-      + "com.google.google.android.libraries.remixer.annotation.RemixerBinder.Binder";
-
-  public RemixerBindingException(String message) {
-    super(message + ADVICE);
-  }
+          + " are not proguarding out this class' binder. Normally adding this to your proguard"
+          + " configuration should help: "
+          + "-keep class * extends "
+          + "com.google.google.android.libraries.remixer.annotation.RemixerBinder$Binder";
 
   public RemixerBindingException(String message, Throwable ex) {
     super(message + ADVICE, ex);

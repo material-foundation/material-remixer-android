@@ -106,7 +106,7 @@ public class RemixerAnnotationProcessorTest {
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("Repeated Remix key")
+        .withErrorContaining("Repeated Variable key")
         .in(file);
   }
 

@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +107,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   public View onCreateView(LayoutInflater inflater,
                            ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_remix_list, container, false);
+    View view = inflater.inflate(R.layout.fragment_remixer_list, container, false);
 
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.remixerList);
     recyclerView.setAdapter(new RemixerAdapter(remixer.getRemixerItems()));

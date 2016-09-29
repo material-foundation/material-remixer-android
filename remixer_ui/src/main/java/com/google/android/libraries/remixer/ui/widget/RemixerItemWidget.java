@@ -22,7 +22,7 @@ import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 /**
- * An interface that all remix widgets must implement.
+ * An interface that all remixer item widgets must implement.
  *
  * <p>This lets the {@link RemixerFragment} bind them to a {@link RemixerItem} when they are
  * inflated.
@@ -33,7 +33,7 @@ public interface RemixerItemWidget<T extends RemixerItem> {
    * Binds the remixer item to the widget in question.
    *
    * <p>Subclasses need to set up all the callbacks from the UI to set the appropriate value on the
-   * backing Remix.
+   * backing Variable.
    */
-  void bindRemixerItem(@NonNull T remix);
+  void bindRemixerItem(@NonNull T remixerItem);
 }

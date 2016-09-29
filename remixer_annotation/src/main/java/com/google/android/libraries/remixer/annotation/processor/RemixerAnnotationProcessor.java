@@ -86,7 +86,7 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
       Map<String, AnnotatedClass> annotatedClasses = new HashMap<>();
       // First process RemixerInstance annotations.
       findRemixerInstances(roundEnv, annotatedClasses);
-      findRemixAnnotations(roundEnv, annotatedClasses);
+      findMethodAnnotations(roundEnv, annotatedClasses);
       for (Map.Entry<String, AnnotatedClass> classEntry : annotatedClasses.entrySet()) {
         if (!alreadyProcessedClasses.contains(classEntry.getKey())) {
           JavaFile file = classEntry.getValue().generateJavaFile();
@@ -129,12 +129,12 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
   }
 
   /**
-   * Finds all *RemixMethod annotations in the code.
+   * Finds all *Method annotations in the code.
    *
    * <p>Makes sure that they are applied to the right method (non-constructor, non-static,
    * public/default access, and that only take one parameter of the right type).
    */
-  private void findRemixAnnotations(
+  private void findMethodAnnotations(
       RoundEnvironment roundEnv, Map<String, AnnotatedClass> annotatedClasses)
       throws RemixerAnnotationException {
     for (SupportedMethodAnnotation annotationType : SupportedMethodAnnotation.values()) {
@@ -150,7 +150,7 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
         if (!annotatedClasses.containsKey(className)) {
           throw new RemixerAnnotationException(
               element,
-              "Remix annotations REQUIRE a @RemixerInstance annotated field in the same class");
+              "Variable annotations REQUIRE a @RemixerInstance annotated field in the same class");
         }
         Annotation annotation = method.getAnnotation(annotationType.getAnnotationType());
         annotatedClasses.get(className)
@@ -187,7 +187,7 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
             parameter,
             String.format(
                 Locale.getDefault(),
-                "Trying to use Remix annotations on wrong parameter, must be of type %s",
+                "Trying to use Variable annotations on wrong parameter, must be of type %s",
                 clazz));
       }
     }
@@ -202,7 +202,7 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
         || element.getModifiers().contains(Modifier.STATIC)) {
       throw new RemixerAnnotationException(
           element,
-          "Remix annotations can only be used on non-abstract, non-static, regular methods");
+          "Variable annotations can only be used on non-abstract, non-static, regular methods");
     }
   }
 
@@ -228,7 +228,7 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
     Set<Modifier> modifiers = element.getModifiers();
     if (modifiers.contains(Modifier.PRIVATE) || modifiers.contains(Modifier.PROTECTED)) {
       throw new RemixerAnnotationException(element,
-          "Remix annotations can only be used on public/default elements");
+          "Variable annotations can only be used on public/default elements");
     }
   }
 }

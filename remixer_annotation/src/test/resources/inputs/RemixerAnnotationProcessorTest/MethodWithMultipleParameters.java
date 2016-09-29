@@ -17,7 +17,7 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class MethodWithMultipleParameters {
@@ -26,8 +26,8 @@ public class MethodWithMultipleParameters {
   public Remixer remixer;
 
   /**
-   * Remix methods should only have one parameter, this should fail.
+   * Variable methods should only have one parameter, this should fail.
    */
-  @RangeRemixMethod(key = "myKey")
+  @RangeVariableMethod(key = "myKey")
   public void fail(Integer i, Integer i2){}
 }

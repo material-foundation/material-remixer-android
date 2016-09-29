@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 
 /**
- * This class needs a RemixerInstance to use RemixMethod annotations.
+ * This class needs a RemixerInstance to use Remixer Method annotations.
  */
 public class NoRemixerInstance {
 
-  @RangeRemixMethod(key = "myKey")
+  @RangeVariableMethod(key = "myKey")
   public void setInt(Integer i) {}
 }

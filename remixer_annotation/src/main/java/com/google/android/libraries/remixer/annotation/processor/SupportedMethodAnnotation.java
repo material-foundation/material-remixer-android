@@ -16,64 +16,66 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
-import com.google.android.libraries.remixer.annotation.BooleanRemixMethod;
-import com.google.android.libraries.remixer.annotation.IntegerListRemixMethod;
-import com.google.android.libraries.remixer.annotation.RangeRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringListRemixMethod;
-import com.google.android.libraries.remixer.annotation.StringRemixMethod;
+import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
+import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import java.lang.annotation.Annotation;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
 /**
- * An enum of all the supported annotations.
+ * An enum of all the supported method annotations.
  */
 enum SupportedMethodAnnotation {
 
-  BOOLEAN_REMIX(BooleanRemixMethod.class, Boolean.class) {
+  BOOLEAN_VARIABLE(BooleanVariableMethod.class, Boolean.class) {
     @Override
     public MethodAnnotation getMethodAnnotation(
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
-      BooleanRemixMethod annotation = (BooleanRemixMethod) baseAnnotation;
-      return RemixMethodAnnotation.forBooleanRemixMethod(clazz, method, annotation);
+      BooleanVariableMethod annotation = (BooleanVariableMethod) baseAnnotation;
+      return VariableMethodAnnotation.forBooleanVariableMethod(clazz, method, annotation);
     }
   },
-  INTEGER_LIST_REMIX(IntegerListRemixMethod.class, Integer.class) {
+  INTEGER_LIST_VARIABLE(IntegerListVariableMethod.class, Integer.class) {
     @Override
     public MethodAnnotation getMethodAnnotation(
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
-      IntegerListRemixMethod annotation = (IntegerListRemixMethod) baseAnnotation;
-      return ItemListRemixMethodAnnotation.forIntegerListRemixMethod(clazz, method, annotation);
+      IntegerListVariableMethod annotation = (IntegerListVariableMethod) baseAnnotation;
+      return
+          ItemListVariableMethodAnnotation.forIntegerListVariableMethod(clazz, method, annotation);
     }
   },
-  RANGE_REMIX(RangeRemixMethod.class, Integer.class) {
+  RANGE_VARIABLE(RangeVariableMethod.class, Integer.class) {
     @Override
     public MethodAnnotation getMethodAnnotation(
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
-      RangeRemixMethod annotation = (RangeRemixMethod) baseAnnotation;
-      return new RangeRemixMethodAnnotation(clazz, method, annotation);
+      RangeVariableMethod annotation = (RangeVariableMethod) baseAnnotation;
+      return new RangeVariableMethodAnnotation(clazz, method, annotation);
     }
   },
-  STRING_LIST_REMIX(StringListRemixMethod.class, String.class) {
+  STRING_LIST_VARIABLE(StringListVariableMethod.class, String.class) {
     @Override
     public MethodAnnotation getMethodAnnotation(
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
-      StringListRemixMethod annotation = (StringListRemixMethod) baseAnnotation;
-      return ItemListRemixMethodAnnotation.forStringListRemixMethod(clazz, method, annotation);
+      StringListVariableMethod annotation = (StringListVariableMethod) baseAnnotation;
+      return
+          ItemListVariableMethodAnnotation.forStringListVariableMethod(clazz, method, annotation);
     }
   },
-  STRING_REMIX(StringRemixMethod.class, String.class) {
+  STRING_VARIABLE(StringVariableMethod.class, String.class) {
     @Override
     public MethodAnnotation getMethodAnnotation(
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
-      StringRemixMethod annotation = (StringRemixMethod) baseAnnotation;
-      return RemixMethodAnnotation.forStringRemixMethod(clazz, method, annotation);
+      StringVariableMethod annotation = (StringVariableMethod) baseAnnotation;
+      return VariableMethodAnnotation.forStringVariableMethod(clazz, method, annotation);
     }
   },
   TRIGGER(TriggerMethod.class, null) {
@@ -111,6 +113,7 @@ enum SupportedMethodAnnotation {
   /**
    * Returns a {@link MethodAnnotation} object that represents one single MethodAnnotation found in
    * the code. This is used later to generate the code.
+   *
    * @throws RemixerAnnotationException Any semantic error or usage of an unimplemented annotation.
    */
   public abstract MethodAnnotation getMethodAnnotation(

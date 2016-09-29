@@ -17,12 +17,13 @@
 package com.google.android.libraries.remixer.annotation;
 
 /**
- * Used to bind activities to their implicitly generated remixes.
+ * Used to bind activities to their implicitly generated variables and triggers.
  */
 public class RemixerBinder {
 
   /**
-   * Binds an activity's remixer to its generated remixes.
+   * Binds an activity's remixer to its generated variables and triggers.
+   *
    * @throws RemixerBindingException When there is an issue instantiating the Binder class
    */
   @SuppressWarnings("ClassNewInstance")
@@ -58,7 +59,7 @@ public class RemixerBinder {
   public interface Binder<T> {
 
     /**
-     * Bind an activity's remixer instance to its generated remixes.
+     * Bind an activity's remixer instance to its generated variables and triggers.
      */
     void bindInstance(T activity);
   }

@@ -45,7 +45,8 @@ public @interface TriggerMethod {
 
 
   /**
-   * The layout id to inflate when displaying this Remix. If not specified a default will be used.
+   * The layout id to inflate when displaying this Variable. If not specified a default will be
+   * used.
    *
    * <p>Its root element must implement {@code RemixerItemWidget<Trigger>}.
    */
