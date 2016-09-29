@@ -41,7 +41,7 @@ public class StringListVariableMethodAnnotationTest {
   @Test
   public void failsMethodWithWrongParameter() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/StringListRemixMethodAnnotationTest/MethodWithWrongParameter.java");
+        .forResource("inputs/StringListVariableMethodAnnotationTest/MethodWithWrongParameter.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -53,7 +53,7 @@ public class StringListVariableMethodAnnotationTest {
   @Test
   public void failsExplicitWrongDefault() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/StringListRemixMethodAnnotationTest/ExplicitWrongDefault.java");
+        .forResource("inputs/StringListVariableMethodAnnotationTest/ExplicitWrongDefault.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -65,7 +65,7 @@ public class StringListVariableMethodAnnotationTest {
   @Test
   public void failsEmptyList() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/StringListRemixMethodAnnotationTest/EmptyList.java");
+        .forResource("inputs/StringListVariableMethodAnnotationTest/EmptyList.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -77,13 +77,13 @@ public class StringListVariableMethodAnnotationTest {
   @Test
   public void buildsAndFixesDefaultValue() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/StringListRemixMethodAnnotationTest/FixesDefaultValue.java");
+        .forResource("inputs/StringListVariableMethodAnnotationTest/FixesDefaultValue.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/StringListRemixMethodAnnotationTest/FixesDefaultValue.java"));
+            .forResource("outputs/StringListVariableMethodAnnotationTest/FixesDefaultValue.java"));
   }
 }

@@ -22,7 +22,7 @@
   android:padding="@dimen/defaultPadding">
 
   <TextView
-    android:id="@+id/stringRemixName"
+    android:id="@+id/variableName"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
@@ -32,7 +32,7 @@
     android:id="@+id/stringVariableText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/stringRemixName"
+    android:layout_below="@id/variableName"
     android:inputType="textMultiLine"
     android:maxLines="3"
     android:padding="@dimen/secondaryPadding"/>

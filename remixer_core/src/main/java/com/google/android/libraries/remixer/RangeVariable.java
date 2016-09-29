@@ -229,10 +229,10 @@ public class RangeVariable extends Variable<Integer> {
       if (title == null) {
         title = key;
       }
-      RangeVariable remix = new RangeVariable(
+      RangeVariable variable = new RangeVariable(
           title, key, defaultValue, minValue, maxValue, increment, callback, layoutId);
-      remix.init();
-      return remix;
+      variable.init();
+      return variable;
     }
   }
 }

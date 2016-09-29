@@ -41,7 +41,8 @@ public class IntegerListVariableMethodAnnotationTest {
   @Test
   public void failsMethodWithWrongParameter() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/IntegerListRemixMethodAnnotationTest/MethodWithWrongParameter.java");
+        .forResource(
+            "inputs/IntegerListVariableMethodAnnotationTest/MethodWithWrongParameter.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -53,7 +54,8 @@ public class IntegerListVariableMethodAnnotationTest {
   @Test
   public void failsExplicitWrongDefault() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/IntegerListRemixMethodAnnotationTest/ExplicitWrongDefault.java");
+        .forResource(
+            "inputs/IntegerListVariableMethodAnnotationTest/ExplicitWrongDefault.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -65,7 +67,7 @@ public class IntegerListVariableMethodAnnotationTest {
   @Test
   public void failsEmptyList() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/IntegerListRemixMethodAnnotationTest/EmptyList.java");
+        .forResource("inputs/IntegerListVariableMethodAnnotationTest/EmptyList.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -77,13 +79,13 @@ public class IntegerListVariableMethodAnnotationTest {
   @Test
   public void buildsAndFixesDefaultValue() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/IntegerListRemixMethodAnnotationTest/FixesDefaultValue.java");
+        .forResource("inputs/IntegerListVariableMethodAnnotationTest/FixesDefaultValue.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/IntegerListRemixMethodAnnotationTest/FixesDefaultValue.java"));
+            .forResource("outputs/IntegerListVariableMethodAnnotationTest/FixesDefaultValue.java"));
   }
 }

@@ -41,7 +41,7 @@ public class RangeVariableMethodAnnotationTest {
   @Test
   public void failsMethodWithWrongParameter() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeRemixMethodAnnotationTest/MethodWithWrongParameter.java");
+        .forResource("inputs/RangeVariableMethodAnnotationTest/MethodWithWrongParameter.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -53,7 +53,7 @@ public class RangeVariableMethodAnnotationTest {
   @Test
   public void failsWrongRange() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeRemixMethodAnnotationTest/WrongRange.java");
+        .forResource("inputs/RangeVariableMethodAnnotationTest/WrongRange.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -65,7 +65,7 @@ public class RangeVariableMethodAnnotationTest {
   @Test
   public void failsExplicitWrongDefault() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeRemixMethodAnnotationTest/ExplicitWrongDefault.java");
+        .forResource("inputs/RangeVariableMethodAnnotationTest/ExplicitWrongDefault.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -77,13 +77,13 @@ public class RangeVariableMethodAnnotationTest {
   @Test
   public void buildsAndFixesDefaultValue() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeRemixMethodAnnotationTest/FixesDefaultValue.java");
+        .forResource("inputs/RangeVariableMethodAnnotationTest/FixesDefaultValue.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/RangeRemixMethodAnnotationTest/FixesDefaultValue.java"));
+            .forResource("outputs/RangeVariableMethodAnnotationTest/FixesDefaultValue.java"));
   }
 }

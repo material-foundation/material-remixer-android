@@ -41,7 +41,7 @@ public class StringVariableMethodAnnotationTest {
   @Test
   public void failsMethodWithWrongParameter() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/StringRemixMethodAnnotationTest/MethodWithWrongParameter.java");
+        .forResource("inputs/StringVariableMethodAnnotationTest/MethodWithWrongParameter.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -53,13 +53,13 @@ public class StringVariableMethodAnnotationTest {
   @Test
   public void buildsCorrect() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/StringRemixMethodAnnotationTest/Correct.java");
+        .forResource("inputs/StringVariableMethodAnnotationTest/Correct.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/StringRemixMethodAnnotationTest/Correct.java"));
+            .forResource("outputs/StringVariableMethodAnnotationTest/Correct.java"));
   }
 }
