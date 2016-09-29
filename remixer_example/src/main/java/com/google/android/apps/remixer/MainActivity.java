@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     boundedText = (TextView) findViewById(R.id.boundedText);
     freeformText = (TextView) findViewById(R.id.freeformText);
     // Initialize the remixer instance
-    remixer = new Remixer();
+    remixer = Remixer.getInstance();
 
     ItemListRemix<Integer> colorRemix = new ItemListRemix.Builder<Integer>()
         .setKey("color")
