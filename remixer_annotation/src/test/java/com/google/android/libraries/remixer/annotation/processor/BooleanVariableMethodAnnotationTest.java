@@ -41,7 +41,7 @@ public class BooleanVariableMethodAnnotationTest {
   @Test
   public void failsMethodWithWrongParameter() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/BooleanRemixMethodAnnotationTest/MethodWithWrongParameter.java");
+        .forResource("inputs/BooleanVariableMethodAnnotationTest/MethodWithWrongParameter.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -53,13 +53,13 @@ public class BooleanVariableMethodAnnotationTest {
   @Test
   public void buildsCorrect() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/BooleanRemixMethodAnnotationTest/Correct.java");
+        .forResource("inputs/BooleanVariableMethodAnnotationTest/Correct.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/BooleanRemixMethodAnnotationTest/Correct.java"));
+            .forResource("outputs/BooleanVariableMethodAnnotationTest/Correct.java"));
   }
 }

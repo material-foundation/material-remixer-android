@@ -52,8 +52,8 @@ public class RemixerTest {
   public void remixerReturnsListInOrder() {
     remixer.addItem(variable);
     remixer.addItem(variable2);
-    List<RemixerItem> remixList = remixer.getRemixerItems();
-    Assert.assertEquals(variable, remixList.get(0));
-    Assert.assertEquals(variable2, remixList.get(1));
+    List<RemixerItem> remixeritemList = remixer.getRemixerItems();
+    Assert.assertEquals(variable, remixeritemList.get(0));
+    Assert.assertEquals(variable2, remixeritemList.get(1));
   }
 }

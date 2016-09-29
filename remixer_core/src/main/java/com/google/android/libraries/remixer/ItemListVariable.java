@@ -152,10 +152,10 @@ public class ItemListVariable<T> extends Variable<T> {
       if (title == null) {
         title = key;
       }
-      ItemListVariable<T> remix = new ItemListVariable<T>(
+      ItemListVariable<T> variable = new ItemListVariable<T>(
           title, key, defaultValue, possibleValues, parentObject, callback, layoutId);
-      remix.init();
-      return remix;
+      variable.init();
+      return variable;
     }
   }
 }

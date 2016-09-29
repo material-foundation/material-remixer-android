@@ -29,7 +29,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
   public void bindInstance(Correct activity) {
     Remixer remixer;
     if (activity.remixer == null) {
-      remixer = new Remixer();
+      remixer = Remixer.getInstance();
     } else {
       remixer = activity.remixer;
     }

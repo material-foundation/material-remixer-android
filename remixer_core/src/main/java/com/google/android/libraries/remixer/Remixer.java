@@ -25,10 +25,25 @@ import java.util.List;
  */
 public class Remixer {
 
+  private static Remixer instance;
+
   private HashMap<String, RemixerItem> keyMap;
   private List<RemixerItem> remixerItems;
 
-  public Remixer() {
+  /**
+   * Gets the singleton for Remixer.
+   *
+   * <p><b>Note this operation is not thread safe and should only be called from the main
+   * thread.</b>
+   */
+  public static Remixer getInstance() {
+    if (instance == null) {
+      instance = new Remixer();
+    }
+    return instance;
+  }
+
+  Remixer() {
     keyMap = new HashMap<>();
     remixerItems = new ArrayList<>();
   }
@@ -37,7 +52,8 @@ public class Remixer {
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    *
    * @param remixerItem The remixer item to be added.
-   * @throws DuplicateRemixerKeyException In case the remix has a key that has already been used.
+   * @throws DuplicateRemixerKeyException In case the remixer item has a key that has already been
+   *     used.
    */
   public void addItem(RemixerItem remixerItem) {
     checkUniqueKey(remixerItem.getKey(), remixerItem);

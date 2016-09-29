@@ -44,11 +44,11 @@ public class RangeVariable extends Variable<Integer> {
    * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
    * {@code callback}.
    *
-   * @param title The name of this remix to be displayed in the UI.
+   * @param title The name of this variable to be displayed in the UI.
    * @param key The key to store in SharedPreferences.
    * @param defaultValue The default value in case there is none in SharedPreferences.
-   * @param minValue The minimum value for this remix.
-   * @param maxValue The maximum value for this remix.
+   * @param minValue The minimum value for this variable.
+   * @param maxValue The maximum value for this variable.
    * @param increment A value that defines each step. Must be a positive integer. So if you have
    *     {@code minValue = 0 && maxValue = 12 && increment = 4}, only 0, 4, 8, 12 are possible
    *     values.
@@ -240,11 +240,11 @@ public class RangeVariable extends Variable<Integer> {
       if (title == null) {
         title = key;
       }
-      RangeVariable remix = new RangeVariable(
+      RangeVariable variable = new RangeVariable(
           title, key, defaultValue, minValue, maxValue, increment, parentObject, callback,
           layoutId);
-      remix.init();
-      return remix;
+      variable.init();
+      return variable;
     }
   }
 }

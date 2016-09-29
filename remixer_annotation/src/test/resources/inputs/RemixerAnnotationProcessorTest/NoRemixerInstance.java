@@ -17,7 +17,7 @@
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 
 /**
- * This class needs a RemixerInstance to use RemixMethod annotations.
+ * This class needs a RemixerInstance to use Remixer Method annotations.
  */
 public class NoRemixerInstance {
 

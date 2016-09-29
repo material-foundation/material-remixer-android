@@ -68,7 +68,7 @@ public class StringVariableWidgetTest {
         .inflate(R.layout.string_variable_widget, null);
     view.bindRemixerItem(variable);
     text = (EditText) view.findViewById(R.id.stringVariableText);
-    name = (TextView) view.findViewById(R.id.stringRemixName);
+    name = (TextView) view.findViewById(R.id.variableName);
   }
 
   @Test

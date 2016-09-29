@@ -47,7 +47,7 @@ class TriggerMethodAnnotation extends MethodAnnotation {
 
   @Override
   public void addSetupStatements(MethodSpec.Builder methodBuilder) {
-    String callbackVariable = key + CALLBACK_VAR_SUFFIX;
+    String callbackVariable = key + CALLBACK_NAME_SUFFIX;
     String triggerVariable = key + TRIGGER_VAR_SUFFIX;
     methodBuilder
         .addStatement(

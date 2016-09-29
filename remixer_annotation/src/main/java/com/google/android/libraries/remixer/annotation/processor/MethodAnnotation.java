@@ -43,7 +43,7 @@ abstract class MethodAnnotation {
   /**
    * Suffix to append to a variable name to hold the callback to be used by the variable.
    */
-  static final String CALLBACK_VAR_SUFFIX = "_callback";
+  static final String CALLBACK_NAME_SUFFIX = "_callback";
   /**
    * Suffix to append to a variable that holds the generated variable.
    */
