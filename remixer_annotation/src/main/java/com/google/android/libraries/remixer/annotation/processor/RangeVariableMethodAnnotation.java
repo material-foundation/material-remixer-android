@@ -66,7 +66,7 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
 
   @Override
   public void addSetupStatements(MethodSpec.Builder methodBuilder) {
-    String callbackName = key + CALLBACK_VAR_SUFFIX;
+    String callbackName = key + CALLBACK_NAME_SUFFIX;
     String variableName = key + VARIABLE_SUFFIX;
     methodBuilder
         .addStatement(

@@ -54,7 +54,7 @@ public class StringVariableWidget extends RelativeLayout
   protected void onFinishInflate() {
     super.onFinishInflate();
     text = (EditText) findViewById(R.id.stringVariableText);
-    nameText = (TextView) findViewById(R.id.variableName);
+    nameText = (TextView) findViewById(R.id.stringRemixName);
   }
 
   @Override

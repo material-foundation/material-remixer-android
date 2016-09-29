@@ -102,7 +102,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
 
   @Override
   public void addSetupStatements(MethodSpec.Builder methodBuilder) {
-    String callbackVariable = key + CALLBACK_VAR_SUFFIX;
+    String callbackVariable = key + CALLBACK_NAME_SUFFIX;
     String variableName = key + VARIABLE_SUFFIX;
     ParameterizedTypeName variableClass = ParameterizedTypeName.get(
         ClassName.get(Variable.class), getVariableType());
