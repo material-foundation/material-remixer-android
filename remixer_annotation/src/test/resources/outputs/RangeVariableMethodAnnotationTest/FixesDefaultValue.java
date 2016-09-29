@@ -31,7 +31,7 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
   public void bindInstance(FixesDefaultValue activity) {
     Remixer remixer;
     if (activity.remixer == null) {
-      remixer = new Remixer();
+      remixer = Remixer.getInstance();
     } else {
       remixer = activity.remixer;
     }
