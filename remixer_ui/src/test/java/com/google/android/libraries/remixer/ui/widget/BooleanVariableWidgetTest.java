@@ -60,6 +60,7 @@ public class BooleanVariableWidgetTest {
         TITLE,
         KEY,
         DEFAULT_VALUE,
+        this,
         mockCallback,
         R.layout.boolean_variable_widget);
     variable.init();

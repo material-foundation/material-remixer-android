@@ -60,6 +60,7 @@ public class StringVariableWidgetTest {
         TITLE,
         KEY,
         DEFAULT_VALUE,
+        this,
         mockCallback,
         R.layout.string_variable_widget);
     variable.init();

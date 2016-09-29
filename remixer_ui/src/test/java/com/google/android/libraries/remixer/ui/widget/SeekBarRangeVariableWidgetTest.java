@@ -69,6 +69,7 @@ public class SeekBarRangeVariableWidgetTest {
         MIN,
         MAX,
         STEPPING,
+        this,
         mockCallback,
         R.layout.seekbar_range_variable_widget);
     variable.init();

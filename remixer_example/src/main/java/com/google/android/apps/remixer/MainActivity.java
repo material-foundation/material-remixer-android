@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
 
     ItemListVariable.Builder<Integer> colorVariable = new ItemListVariable.Builder<Integer>()
         .setKey("color")
+        .setParentObject(this)
         .setPossibleValues(new Integer[] {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN} )
         .setCallback(new Callback<Integer>() {
           @Override
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     // Create a RangeVariable that updates boundedText's size between 10 and 48 sp.
     RangeVariable.Builder fontSizeRangeVariable = new RangeVariable.Builder()
         .setKey("font_size")
+        .setParentObject(this)
         .setMinValue(16)
         .setMaxValue(72)
         .setIncrement(4)
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     // Create an ItemListVariable<String> that updates boundedText's contents from a list of options
     ItemListVariable.Builder<String> itemListVariable = new ItemListVariable.Builder<String>()
         .setKey("boundedText")
+        .setParentObject(this)
         .setPossibleValues(new String[] {"Hello world", "Foo", "Bar", "May the force be with you"})
         .setCallback(
             new Callback<String>() {
@@ -88,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     // Create a BooleanVariable that controls whether freeformText is visible or not.
     Variable.Builder<Boolean> booleanVariable = new BooleanVariableBuilder()
         .setKey("freeformTextDisplay")
+        .setParentObject(this)
         .setCallback(new Callback<Boolean>() {
           @Override
           public void onValueSet(Variable<Boolean> variable) {
@@ -99,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     // Create a StringVariable that lets you set freeformText's content freely.
     Variable.Builder<String> freeformStringVariable = new StringVariableBuilder()
         .setKey("freeformText")
+        .setParentObject(this)
         .setDefaultValue("Change me!")
         .setCallback(new Callback<String>() {
           @Override
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
         });
     remixer.addItem(freeformStringVariable.buildAndInit());
 
-    Trigger trigger = new Trigger("Toast", "toast", new Runnable() {
+    Trigger trigger = new Trigger("Toast", "toast", this, new Runnable() {
       @Override
       public void run() {
         String value = freeformText.getText().toString();

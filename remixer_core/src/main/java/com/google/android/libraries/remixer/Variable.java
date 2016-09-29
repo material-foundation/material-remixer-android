@@ -27,7 +27,7 @@ public class Variable<T> extends RemixerItem {
   /**
    * The callback to be executed when the value is updated.
    */
-  private final Callback<T> callback;
+  private Callback<T> callback;
 
   /**
    * Creates a new Variable.
@@ -36,6 +36,7 @@ public class Variable<T> extends RemixerItem {
    *     Remixes.
    * @param title The name to display in the UI.
    * @param defaultValue The default value for this Variable.
+   * @param parentObject the object which created this variable, should be an activity.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
    * @param layoutId A layout to inflate when displaying this Variable in the UI.
    */
@@ -46,9 +47,10 @@ public class Variable<T> extends RemixerItem {
       String title,
       String key,
       T defaultValue,
+      Object parentObject,
       Callback<T> callback,
       int layoutId) {
-    super(title, key, layoutId);
+    super(title, key, parentObject, layoutId);
     // TODO(miguely): pull this out of SharedPreferences.
     this.selectedValue = defaultValue;
     this.callback = callback;
@@ -110,6 +112,11 @@ public class Variable<T> extends RemixerItem {
     }
   }
 
+  @Override
+  void clearCallback() {
+    callback = null;
+  }
+
   /**
    * Convenience builder for Variable.
    *
@@ -127,6 +134,7 @@ public class Variable<T> extends RemixerItem {
     private String key;
     private String title;
     private T defaultValue;
+    private Object parentObject;
     private Callback<T> callback;
     private int layoutId = 0;
 
@@ -144,6 +152,11 @@ public class Variable<T> extends RemixerItem {
 
     public Builder<T> setDefaultValue(T defaultValue) {
       this.defaultValue = defaultValue;
+      return this;
+    }
+
+    public Builder<T> setParentObject(Object parentObject) {
+      this.parentObject = parentObject;
       return this;
     }
 
@@ -166,10 +179,14 @@ public class Variable<T> extends RemixerItem {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for Variable");
       }
+      if (parentObject == null) {
+        throw new IllegalArgumentException("parentObject cannot be unset for Variable");
+      }
       if (title == null) {
         title = key;
       }
-      Variable<T> variable = new Variable<T>(title, key, defaultValue, callback, layoutId);
+      Variable<T> variable =
+          new Variable<T>(title, key, defaultValue, parentObject, callback, layoutId);
       variable.init();
       return variable;
     }

@@ -45,22 +45,22 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
    * Statement to create a new Variable&lt;T&gt;
    *
    * <p>Would expand to {@code Variable&lt;T&gt; variableName = new Variable&lt;&gt;(
-   * title, key, defaultValue, callback, layoutId)}.
+   * title, key, defaultValue, activity, callback, layoutId)}.
    */
   private static final String NEW_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $L, $L, $L)";
+      "$T $L = new $T($S, $S, $L, $L, $L, $L)";
 
   /**
    * Statement to create a new Variable&lt;String&gt;
    *
    * <p>Would expand to {@code Variable&lt;String&gt; variableName = new Variable&lt;&gt;(
-   * title, key, "defaultValue", callback, layoutId)}.
+   * title, key, "defaultValue", activity, callback, layoutId)}.
    *
    * <p>The difference lays in that the defaultValue is treated as a string and quoted, instead of
    * being treated like a literal
    */
   private static final String NEW_STRING_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $S, $L, $L)";
+      "$T $L = new $T($S, $S, $S, $L, $L, $L)";
 
   private final T defaultValue;
 
@@ -118,6 +118,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
             title,
             key,
             defaultValue,
+            ACTIVITY_NAME,
             callbackVariable,
             layoutId)
         .addStatement(INIT_VARIABLE_STATEMENT, variableName)

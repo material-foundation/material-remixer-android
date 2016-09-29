@@ -22,14 +22,14 @@ package com.google.android.libraries.remixer;
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
 public class Trigger extends RemixerItem {
-  private final Runnable runnable;
+  private Runnable runnable;
 
-  public Trigger(String title, String key, Runnable runnable) {
-    this(title, key, runnable, 0);
+  public Trigger(String title, String key, Object parentObject, Runnable runnable) {
+    this(title, key, parentObject, runnable, 0);
   }
 
-  public Trigger(String title, String key, Runnable runnable, int layoutId) {
-    super(title, key, layoutId);
+  public Trigger(String title, String key, Object parentObject, Runnable runnable, int layoutId) {
+    super(title, key, parentObject, layoutId);
     this.runnable = runnable;
   }
 
@@ -40,5 +40,10 @@ public class Trigger extends RemixerItem {
     if (runnable != null) {
       runnable.run();
     }
+  }
+
+  @Override
+  void clearCallback() {
+    runnable = null;
   }
 }

@@ -37,14 +37,14 @@ public class StringVariableTest {
 
   @Test
   public void initCallsCallback() {
-    Variable<String> variable = new Variable<>("name", "key", "A", mockCallback, 0);
+    Variable<String> variable = new Variable<>("name", "key", "A", this, mockCallback, 0);
     variable.init();
     Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(variable);
   }
 
   @Test
   public void setValueCallsCallback() {
-    Variable<String> variable = new Variable<>("name", "key", "A", mockCallback, 0);
+    Variable<String> variable = new Variable<>("name", "key", "A", this, mockCallback, 0);
     variable.init();
     variable.setValue("B");
     Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(variable);
@@ -52,7 +52,7 @@ public class StringVariableTest {
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    Variable<String> variable = new Variable<>("name", "key", "A", null, 0);
+    Variable<String> variable = new Variable<>("name", "key", "A", this, null, 0);
     variable.init();
     variable.setValue("B");
   }

@@ -41,23 +41,23 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   /**
    * Statement to create a new ItemListVariable&lt;T&gt;.
    *
-   * <p>Would expand to {@code ItemListVariable&lt;T&gt; variable = new
-   * ItemListVariable&lt;T&gt;(title, key, defaultValue, possibleValues, callback, layoutId)}.
+   * <p>Would expand to {@code ItemListVariable&lt;T&gt; variable = new ItemListVariable&lt;T&gt;(
+   * title, key, defaultValue, possibleValues, activity, callback, layoutId)}.
    */
   private static final String NEW_ITEM_LIST_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $L, $L, $L, $L)";
+      "$T $L = new $T($S, $S, $L, $L, $L, $L, $L)";
 
   /**
    * Statement to create a new ItemListVariable&lt;String&gt;.
    *
-   * <p>Would expand to {@code ItemListVariable&lt;String&gt; variable = new
-   * ItemListVariable&lt;&gt;(title, key, "defaultValue", possibleValues, callback, layoutId)}.
+   * <p>Would expand to {@code ItemListVariable&lt;String&gt; variable = new ItemListVariable
+   * &lt;&gt;(title, key, "defaultValue", possibleValues, activity, callback, layoutId)}.
    *
    * <p>The difference lies in treating the defaultValue as a string (escaping it in quotes) instead
    * of a literal (variable name or primitive constant).
    */
   private static final String NEW_STRING_LIST_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $S, $L, $L, $L)";
+      "$T $L = new $T($S, $S, $S, $L, $L, $L, $L)";
   /**
    * Statement to add a value to the list of possible values.
    */
@@ -192,6 +192,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
             key,
             defaultValue,
             listName,
+            ACTIVITY_NAME,
             callbackName,
             layoutId)
         .addStatement(INIT_VARIABLE_STATEMENT, variableName)

@@ -52,6 +52,7 @@ public class RangeVariable extends Variable<Integer> {
    * @param increment A value that defines each step. Must be a positive integer. So if you have
    *     {@code minValue = 0 && maxValue = 12 && increment = 4}, only 0, 4, 8, 12 are possible
    *     values.
+   * @param parentObject the object which created this variable, should be an activity.
    * @param callback A callback to run when successfully initialized and when the value changes. Can
    *     be null.
    * @param layoutId A layout id that renders this control on screen.
@@ -66,9 +67,10 @@ public class RangeVariable extends Variable<Integer> {
       int minValue,
       int maxValue,
       int increment,
+      Object parentObject,
       Callback<Integer> callback,
       int layoutId) {
-    super(title, key, defaultValue, callback, layoutId);
+    super(title, key, defaultValue, parentObject, callback, layoutId);
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.increment = increment;
@@ -165,6 +167,7 @@ public class RangeVariable extends Variable<Integer> {
     private Integer minValue;
     private Integer maxValue;
     private int increment = 1;
+    private Object parentObject;
     private Callback<Integer> callback;
     private int layoutId = 0;
 
@@ -172,6 +175,11 @@ public class RangeVariable extends Variable<Integer> {
 
     public Builder setKey(String key) {
       this.key = key;
+      return this;
+    }
+
+    public Builder setParentObject(Object parentObject) {
+      this.parentObject = parentObject;
       return this;
     }
 
@@ -226,11 +234,15 @@ public class RangeVariable extends Variable<Integer> {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for RangeVariable");
       }
+      if (parentObject == null) {
+        throw new IllegalArgumentException("parentObject cannot be unset for RangeVariable");
+      }
       if (title == null) {
         title = key;
       }
       RangeVariable remix = new RangeVariable(
-          title, key, defaultValue, minValue, maxValue, increment, callback, layoutId);
+          title, key, defaultValue, minValue, maxValue, increment, parentObject, callback,
+          layoutId);
       remix.init();
       return remix;
     }

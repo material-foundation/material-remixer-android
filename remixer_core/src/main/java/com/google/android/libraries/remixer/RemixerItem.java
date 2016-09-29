@@ -16,12 +16,14 @@
 
 package com.google.android.libraries.remixer;
 
+import java.lang.ref.WeakReference;
+
 /**
  * An item that can be displayed on Remixer's interfaces.
  *
  * <p>These are either {@link Variable}es or {@link Trigger}s.
  */
-public class RemixerItem {
+public abstract class RemixerItem {
 
   /**
    * The name to display in the UI for this remix.
@@ -36,14 +38,51 @@ public class RemixerItem {
    * with the remixer item type will be used.
    */
   private final int layoutId;
+  /**
+   * A weak reference to the object that created this RemixerItem.
+   *
+   * <p>It should be a reference to an activity, but it isn't since remixer_core cannot depend on
+   * Android classes. It is a weak reference in order not to leak the activity accidentally.
+   */
+  @SuppressWarnings("unchecked")
+  private final WeakReference parentObject;
+  /**
+   * A copy of the parent object's class object. This will be necessary to know whether an object
+   * is of the same class as the parent object, even after the parent object has been reclaimed by
+   * the Garbage Collector.
+   */
+  @SuppressWarnings("unchecked")
+  private final Class parentObjectClass;
 
   /**
    * Constructs a new RemixerItem with the given key, title and layoutId.
    */
-  public RemixerItem(String title, String key, int layoutId) {
+  @SuppressWarnings("unchecked")
+  protected RemixerItem(String title, String key, Object parentObject, int layoutId) {
     this.title = title;
     this.key = key;
+    this.parentObject = new WeakReference(parentObject);
+    this.parentObjectClass = parentObject.getClass();
     this.layoutId = layoutId;
+  }
+
+  /**
+   * Checks whether the parent object is the same as the parameter.
+   */
+  public boolean isParentObject(Object object) {
+    Object localParentObject = parentObject.get();
+    if (localParentObject == null) {
+      return false;
+    }
+    return localParentObject.equals(parentObject);
+  }
+
+  /**
+   * Checks whether the parameter is of the same class as the (possibly already reclaimed) parent
+   * object.
+   */
+  public boolean isSameClassAsParentObject(Object object) {
+    return parentObjectClass.equals(object.getClass());
   }
 
   public String getTitle() {
@@ -60,4 +99,6 @@ public class RemixerItem {
   public int getLayoutId() {
     return layoutId;
   }
+
+  abstract void clearCallback();
 }

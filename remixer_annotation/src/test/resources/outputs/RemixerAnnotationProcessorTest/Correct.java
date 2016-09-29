@@ -42,7 +42,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
-    Variable<Boolean> setBoolean_variable = new Variable<Boolean>("setBoolean", "setBoolean", false, setBoolean_callback, 0);
+    Variable<Boolean> setBoolean_variable = new Variable<Boolean>("setBoolean", "setBoolean", false, activity, setBoolean_callback, 0);
     setBoolean_variable.init();
     remixer.addItem(setBoolean_variable);
     ArrayList<Integer> setIntegerList_variable_list = new ArrayList<Integer>();
@@ -50,26 +50,26 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setIntegerList_variable_list.add(2);
     setIntegerList_variable_list.add(3);
     Generated_setIntegerList setIntegerList_callback = new Generated_setIntegerList(activity);
-    ItemListVariable<Integer> setIntegerList_variable = new ItemListVariable<Integer>("setIntegerList", "setIntegerList", 1, setIntegerList_variable_list, setIntegerList_callback, 0);
+    ItemListVariable<Integer> setIntegerList_variable = new ItemListVariable<Integer>("setIntegerList", "setIntegerList", 1, setIntegerList_variable_list, activity, setIntegerList_callback, 0);
     setIntegerList_variable.init();
     remixer.addItem(setIntegerList_variable);
     Generated_setInt setInt_callback = new Generated_setInt(activity);
-    RangeVariable setInt_variable = new RangeVariable("setInt", "setInt", 0, 0, 100, 1, setInt_callback, 0);
+    RangeVariable setInt_variable = new RangeVariable("setInt", "setInt", 0, 0, 100, 1, activity, setInt_callback, 0);
     setInt_variable.init();
     remixer.addItem(setInt_variable);
     Generated_setString setString_callback = new Generated_setString(activity);
-    Variable<String> setString_variable = new Variable<String>("setString", "setString", "", setString_callback, 0);
+    Variable<String> setString_variable = new Variable<String>("setString", "setString", "", activity, setString_callback, 0);
     setString_variable.init();
     remixer.addItem(setString_variable);
     ArrayList<String> setStringList_variable_list = new ArrayList<String>();
     setStringList_variable_list.add("hello");
     setStringList_variable_list.add("world");
     Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
-    ItemListVariable<String> setStringList_variable = new ItemListVariable<String>("setStringList", "setStringList", "hello", setStringList_variable_list, setStringList_callback, 0);
+    ItemListVariable<String> setStringList_variable = new ItemListVariable<String>("setStringList", "setStringList", "hello", setStringList_variable_list, activity, setStringList_callback, 0);
     setStringList_variable.init();
     remixer.addItem(setStringList_variable);
     Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
-    Trigger pullTrigger_trigger = new Trigger("pullTrigger", "pullTrigger", pullTrigger_callback, 0);
+    Trigger pullTrigger_trigger = new Trigger("pullTrigger", "pullTrigger", activity, pullTrigger_callback, 0);
     remixer.addItem(pullTrigger_trigger);
     activity.remixer = remixer;
   }

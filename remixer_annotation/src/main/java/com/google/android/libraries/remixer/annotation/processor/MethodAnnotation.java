@@ -63,6 +63,7 @@ abstract class MethodAnnotation {
    * Statement to add a remixer item instance to the current remixer.
    */
   static final String ADD_VARIABLE_STATEMENT = "remixer.addItem($L)";
+  protected static final String ACTIVITY_NAME = "activity";
   /**
    * The element where the annotation was found.
    */
