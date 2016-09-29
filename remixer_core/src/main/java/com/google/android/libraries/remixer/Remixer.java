@@ -32,6 +32,8 @@ public class Remixer {
 
   /**
    * Gets the singleton for Remixer.
+   *
+   * <p><b>Note this operation is not thread safe and should only be called from the main thread</b>
    */
   public static Remixer getInstance() {
     if (instance == null) {
