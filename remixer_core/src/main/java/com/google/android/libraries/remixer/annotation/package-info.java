@@ -27,14 +27,15 @@
  * {@code onCreate(...)} passing the activity, this will set up Remixer for you, even creating the
  * instance.
  *
- * All of the other *RemixMethod annotations in this package can be applied to any public or
- * default-access non-abstract instance method that takes one parameter of the right type. They all
- * have sensible, convenient defaults explained in their own documentation.
+ * All of the other Remixer Method annotations in this package can be applied to any public or
+ * default-access non-abstract instance method that takes one parameter of the right type (or no
+ * parameters in the case of TriggerMethod). They all have sensible, convenient defaults explained
+ * in their own documentation.
  *
  * You can control the order in which remixes are added by moving the annotated methods in code,
  * Remixer will respect the order in which the methods are defined.
  *
  * It is possible to use both annotations and explicit Variable instantiations, you just have to add
- * your explicit remix instantiations after the call to RemixerBinder.bind.
+ * your explicit remixer item instantiations after the call to RemixerBinder.bind.
  */
 package com.google.android.libraries.remixer.annotation;

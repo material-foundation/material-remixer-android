@@ -24,7 +24,7 @@ package com.google.android.libraries.remixer;
 public class RemixerItem {
 
   /**
-   * The name to display in the UI for this remix.
+   * The name to display in the UI for this remixer item.
    */
   private final String title;
   /**

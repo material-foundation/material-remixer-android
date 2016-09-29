@@ -21,7 +21,7 @@ import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 /**
- * Two methods have the remix key "key", should fail.
+ * Two methods have the remixer key "key", should fail.
  */
 public class DuplicateKey {
 

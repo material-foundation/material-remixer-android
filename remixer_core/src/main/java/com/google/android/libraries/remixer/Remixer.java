@@ -52,7 +52,8 @@ public class Remixer {
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    *
    * @param remixerItem The remixer item to be added.
-   * @throws DuplicateRemixerKeyException In case the remix has a key that has already been used.
+   * @throws DuplicateRemixerKeyException In case the remixer item has a key that has already been
+   *     used.
    */
   public void addItem(RemixerItem remixerItem) {
     checkUniqueKey(remixerItem.getKey(), remixerItem);

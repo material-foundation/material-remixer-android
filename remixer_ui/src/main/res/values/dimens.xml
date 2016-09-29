@@ -19,6 +19,6 @@
   <dimen name="defaultPadding">16dp</dimen>
   <dimen name="secondaryPadding">8dp</dimen>
   <dimen name="remixerColorCircleMinimumSize">40dp</dimen>
-  <dimen name="remixColorCirclePadding">4dp</dimen>
+  <dimen name="remixerColorCirclePadding">4dp</dimen>
   <dimen name="remixerColorCircleBorder">1dp</dimen>
 </resources>

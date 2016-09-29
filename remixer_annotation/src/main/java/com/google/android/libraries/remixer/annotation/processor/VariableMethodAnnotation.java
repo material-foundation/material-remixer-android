@@ -27,7 +27,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
 /**
- * Generates code to support RemixMethod annotations that generate Variable&lt;T&gt;, such as
+ * Generates code to support Remixer Method annotations that generate Variable&lt;T&gt;, such as
  * {@link BooleanVariableMethod} and {@link StringVariableMethod}.
  *
  * <p>While in remixer_core all variables are either of class Variable or of a subclass, these
