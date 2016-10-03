@@ -71,10 +71,10 @@ public abstract class RemixerItem {
    */
   public boolean isParentObject(Object object) {
     Object localParentObject = parentObject.get();
-    if (localParentObject == null) {
+    if (object == null) {
       return false;
     }
-    return localParentObject.equals(parentObject);
+    return localParentObject == object;
   }
 
   /**
