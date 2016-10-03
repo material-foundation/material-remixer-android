@@ -11,10 +11,11 @@ The project is defined as a gradle project with submodules.
   * tests: JUnit tests for the Remixer code.
 * remixer_ui: The code that shows remixes in the UI.
   * main
-    * `com.google.android.libraries.remixer.view` is  the code to display the UI as a BottomSheetFragmentDialog
-    * `com.google.android.libraries.remixer.widget` is a family of widgets that can display each individual Remixer item (variable or trigger).
-    * `com.google.android.libraries.remixer.widget.RemixerItemWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
-  * tests: JUnit/Robolectric tests
+    * `com.google.android.libraries.remixer.ui.view` is  the code to display the UI as a BottomSheetFragmentDialog
+    * `com.google.android.libraries.remixer.ui.widget` is a family of widgets that can display each individual Remixer item (variable or trigger).
+    * `com.google.android.libraries.remixer.ui.widget.RemixerItemWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
+    * `com.google.android.libraries.remixer.ui.RemixerCallbacks` is an implementation of `Application.ActivityLifecycleCallbacks` that clears up callbacks once the corresponding activity is destroyed so it doesn't leak. It needs to be registered in the `Application.onCreate()` method.
+  * tests: JUnit/Robolectric tests.
 * remixer_annotation: An annotation processor to make it easier to add remixes to your code.
   * main: The annotation processing code.
   * tests: JUnit tests based on actual classes to compile.
