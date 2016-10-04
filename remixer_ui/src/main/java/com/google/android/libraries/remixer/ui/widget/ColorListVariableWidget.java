@@ -37,7 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Displays an ItemListVariable&lt;Integer&gt; as a list of colors represented by the integer values.
+ * Displays an ItemListVariable&lt;Integer&gt; as a list of colors represented by the integer
+ * values.
  *
  * <p>After clicking the color, the corresponding value is set on the Variable, and selection is
  * indicated with a contrasting checkmark.

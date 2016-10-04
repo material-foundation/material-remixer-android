@@ -27,9 +27,11 @@ import com.google.android.libraries.remixer.ui.view.RemixerFragment;
  */
 public class MainActivity extends AppCompatActivity implements RemixerActivity {
 
-  // A text view whose text is updated by an ItemListVariable<String> and font size by a RangeVariable
+  // A text view whose text is updated by an ItemListVariable<String> and font size by a
+  // RangeVariable
   private TextView boundedText;
-  // A text view whose text is updated by a StringVariable and is visible depending on a BooleanVariable
+  // A text view whose text is updated by a StringVariable and is visible depending on a
+  // BooleanVariable
   private TextView freeformText;
   // The remixer instance
   private Remixer remixer;

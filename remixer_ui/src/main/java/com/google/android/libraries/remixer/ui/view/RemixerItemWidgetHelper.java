@@ -41,7 +41,8 @@ public final class RemixerItemWidgetHelper {
   private static String getKey(Class variableClass, @Nullable Class variableType) {
     String result = variableClass.getCanonicalName();
     if (variableType != null) {
-      result = String.format(Locale.getDefault(),  "%s,%s", result, variableType.getCanonicalName());
+      result = String.format(
+          Locale.getDefault(),  "%s,%s", result, variableType.getCanonicalName());
     }
     return result;
   }
@@ -61,8 +62,8 @@ public final class RemixerItemWidgetHelper {
    * <p>If no layout has been specified for the remixer item (it is 0), it tries to fall back to
    * known default layout ids.
    *
-   * @throws IllegalArgumentException if the Variable in question has no default layout associated with
-   *     it and it is relying on a default.
+   * @throws IllegalArgumentException if the Variable in question has no default layout associated
+   *     with it and it is relying on a default.
    */
   public static int getLayoutId(RemixerItem instance) {
     int layoutId = instance.getLayoutId();
