@@ -15,8 +15,8 @@
  */
 
 /**
- * Contains all of the Remixer UI Elements that represent an individual Variable in the UI, these are
- * the RemixerItemWidget family of classes.
+ * Contains all of the Remixer UI Elements that represent an individual Variable in the UI, these
+ * are the RemixerItemWidget family of classes.
  *
  * <p>Each RemixerItemWidget is bound to a corresponding layout id (i.e.
  * {@link com.google.android.libraries.remixer.ui.widget.BooleanVariableWidget} is instantiated by
