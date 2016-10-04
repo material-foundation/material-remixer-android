@@ -37,14 +37,14 @@ public class TriggerTest {
 
   @Test
   public void triggerCallsCallback() {
-    Trigger trigger = new Trigger("name", "key", mockCallback, 0);
+    Trigger trigger = new Trigger("name", "key", this, mockCallback, 0);
     trigger.trigger();
     Mockito.verify(mockCallback, Mockito.times(1)).run();
   }
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    Trigger trigger = new Trigger("name", "key", null, 0);
+    Trigger trigger = new Trigger("name", "key", this, null, 0);
     trigger.trigger();
   }
 }

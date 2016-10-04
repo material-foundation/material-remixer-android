@@ -41,42 +41,43 @@ public class RangeVariableTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    singleIncrements = new RangeVariable("name", "key", 15, 0, 20, 1, singleIncrementsCallback, 0);
+    singleIncrements = new RangeVariable(
+        "name", "key", 15, 0, 20, 1, this, singleIncrementsCallback, 0);
     singleIncrements.init();
-    increments5 = new RangeVariable("name", "key", 15, 0, 20, 5, increments5Callback, 0);
+    increments5 = new RangeVariable("name", "key", 15, 0, 20, 5, this, increments5Callback, 0);
     increments5.init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void initDoesNotAcceptDefaultValueGreaterThanMax() {
-    new RangeVariable("name", "key", 15, 0, 10, 1, null, 0).init();
+    new RangeVariable("name", "key", 15, 0, 10, 1, this, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void initDoesNotAcceptDefaultValueLessThanMin() {
-    new RangeVariable("name", "key", 15, 20, 30, 1, null, 0).init();
+    new RangeVariable("name", "key", 15, 20, 30, 1, this, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptInvalidRanges() {
-    new RangeVariable("name", "key", 15, 50, 20, 1, null, 0).init();
+    new RangeVariable("name", "key", 15, 50, 20, 1, this, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptNegativeStepping() {
-    new RangeVariable("name", "key", 15, 50, 20, -1, null, 0).init();
+    new RangeVariable("name", "key", 15, 50, 20, -1, this, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptInvalidStepping() {
     // Stepping is invalid because maxValue 52 cannot be reached from 15 in steps of 5
-    new RangeVariable("name", "key", 15, 0, 52, 5, null, 0).init();
+    new RangeVariable("name", "key", 15, 0, 52, 5, this, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void initDoesNotAcceptInvalidSteppingToDefaultValue() {
     // Stepping is invalid because defaultValue 22 cannot be reached from 15 in steps of 5
-    new RangeVariable("name", "key", 22, 0, 50, 5, null, 0).init();
+    new RangeVariable("name", "key", 22, 0, 50, 5, this, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -109,7 +110,7 @@ public class RangeVariableTest {
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    RangeVariable variable = new RangeVariable("name", "key", 15, 0, 20, 1, null, 0);
+    RangeVariable variable = new RangeVariable("name", "key", 15, 0, 20, 1, this, null, 0);
     variable.init();
     variable.setValue(18);
   }

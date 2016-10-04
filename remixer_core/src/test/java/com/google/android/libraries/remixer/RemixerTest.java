@@ -35,9 +35,9 @@ public class RemixerTest {
    */
   @Before
   public void setUp() {
-    variable = new Variable<>("name", "key", "", null, 0);
+    variable = new Variable<>("name", "key", "", this, null, 0);
     variable.init();
-    variable2 = new Variable<>("name2", "key2", "", null, 0);
+    variable2 = new Variable<>("name2", "key2", "", this, null, 0);
     variable2.init();
     remixer = new Remixer();
   }

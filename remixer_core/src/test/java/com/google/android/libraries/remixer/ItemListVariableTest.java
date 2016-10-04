@@ -38,14 +38,14 @@ public class ItemListVariableTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void initFailsOnDefaultValueNotInList() {
-    new ItemListVariable<String>(
-        "name", "key", "None", Arrays.asList("Something else"), null, 0).init();
+    new ItemListVariable<>(
+        "name", "key", "None", Arrays.asList("Something else"), this, null, 0).init();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void setValueRejectsUnknownString() {
     ItemListVariable<String> variable =
-        new ItemListVariable<String>("name", "key", "A", Arrays.asList("A", "B"), null, 0);
+        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, null, 0);
     variable.init();
     variable.setValue("C");
   }
@@ -53,7 +53,7 @@ public class ItemListVariableTest {
   @Test
   public void initCallsCallback() {
     ItemListVariable<String> variable =
-        new ItemListVariable<String>("name", "key", "A", Arrays.asList("A", "B"), mockCallback, 0);
+        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, mockCallback, 0);
     variable.init();
     Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(variable);
   }
@@ -61,7 +61,7 @@ public class ItemListVariableTest {
   @Test
   public void setValueCallsCallback() {
     ItemListVariable<String> variable =
-        new ItemListVariable<String>("name", "key", "A", Arrays.asList("A", "B"), mockCallback, 0);
+        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, mockCallback, 0);
     variable.init();
     variable.setValue("B");
     Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(variable);
@@ -70,7 +70,7 @@ public class ItemListVariableTest {
   @Test
   public void doesNotCrashOnNullCallback() {
     ItemListVariable<String> variable =
-        new ItemListVariable<String>("name", "key", "A", Arrays.asList("A", "B"), null, 0);
+        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, null, 0);
     variable.init();
     variable.setValue("B");
   }

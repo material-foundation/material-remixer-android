@@ -33,10 +33,10 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
    * Statement to create a new RangeVariable.
    *
    * <p>Would expand to {@code RangeVariable variableName = new RangeVariable(title, key,
-   * defaultValue, minValue, maxValue, callback, layoutId)}.
+   * defaultValue, minValue, maxValue, activity, callback, layoutId)}.
    */
   private static final String NEW_RANGE_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $L, $L, $L, $L, $L, $L)";
+      "$T $L = new $T($S, $S, $L, $L, $L, $L, $L, $L, $L)";
 
   private final int minValue;
   private int defaultValue;
@@ -83,6 +83,7 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
             minValue,
             maxValue,
             increment,
+            ACTIVITY_NAME,
             callbackName,
             layoutId)
         .addStatement(INIT_VARIABLE_STATEMENT, variableName)

@@ -68,6 +68,7 @@ public class ColorListVariableWidgetTest {
         KEY,
         ITEM_LIST[DEFAULT_VALUE_INDEX],
         Arrays.asList(ITEM_LIST),
+        this,
         mockCallback,
         R.layout.item_list_variable_widget);
     variable.init();

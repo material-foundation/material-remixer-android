@@ -53,6 +53,7 @@ public class TriggerWidgetTest {
     Trigger trigger = new Trigger(
         TITLE,
         KEY,
+        this,
         mockCallback,
         R.layout.string_variable_widget);
     TriggerWidget view = (TriggerWidget) LayoutInflater.from(RuntimeEnvironment.application)

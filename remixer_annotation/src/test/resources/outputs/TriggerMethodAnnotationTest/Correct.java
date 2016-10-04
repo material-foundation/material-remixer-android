@@ -34,7 +34,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_correct correct_callback = new Generated_correct(activity);
-    Trigger correct_trigger = new Trigger("correct", "correct", correct_callback, 0);
+    Trigger correct_trigger = new Trigger("correct", "correct", activity, correct_callback, 0);
     remixer.addItem(correct_trigger);
     activity.remixer = remixer;
   }

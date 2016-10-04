@@ -35,7 +35,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
       remixer = activity.remixer;
     }
     Generated_correct correct_callback = new Generated_correct(activity);
-    Variable<String> correct_variable = new Variable<String>("correct", "correct", "", correct_callback, 0);
+    Variable<String> correct_variable = new Variable<String>("correct", "correct", "", activity, correct_callback, 0);
     correct_variable.init();
     remixer.addItem(correct_variable);
     activity.remixer = remixer;
