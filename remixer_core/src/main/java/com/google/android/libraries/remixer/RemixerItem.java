@@ -70,11 +70,10 @@ public abstract class RemixerItem {
    * Checks whether the parent object is the same as the parameter.
    */
   public boolean isParentObject(Object object) {
-    Object localParentObject = parentObject.get();
     if (object == null) {
       return false;
     }
-    return localParentObject == object;
+    return parentObject.get() == object;
   }
 
   /**
@@ -82,7 +81,7 @@ public abstract class RemixerItem {
    * object.
    */
   public boolean isSameClassAsParentObject(Object object) {
-    return parentObjectClass.equals(object.getClass());
+    return parentObjectClass == object.getClass();
   }
 
   public String getTitle() {
@@ -100,5 +99,9 @@ public abstract class RemixerItem {
     return layoutId;
   }
 
+  /**
+   * Removes the callback for this remixer item, it is used to avoid leaks through callbacks once
+   * activities are destroyed.
+   */
   abstract void clearCallback();
 }
