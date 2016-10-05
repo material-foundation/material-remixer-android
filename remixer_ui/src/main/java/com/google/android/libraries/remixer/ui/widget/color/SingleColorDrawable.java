@@ -62,8 +62,9 @@ public class SingleColorDrawable extends Drawable {
 
   @Override
   public void setBounds(@NonNull Rect bounds) {
-    if (bounds.height() < minSizeInPx || bounds.width() < minSizeInPx)
+    if (bounds.height() < minSizeInPx || bounds.width() < minSizeInPx) {
       return;
+    }
     super.setBounds(bounds);
   }
 
