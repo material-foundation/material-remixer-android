@@ -16,6 +16,8 @@
 
 package com.google.android.libraries.remixer;
 
+import java.util.Locale;
+
 /**
  * A runnable that can be triggered via any of the Remixer interfaces.
  *
@@ -45,5 +47,17 @@ public class Trigger extends RemixerItem {
   @Override
   void clearCallback() {
     runnable = null;
+  }
+
+  @Override
+  void isCompatibleWith(RemixerItem item) {
+    if (item.getKey().equals(getKey()) && item.getClass() != this.getClass()) {
+      throw new IncompatibleRemixerItemsWithSameKeyException(
+          String.format(
+              Locale.getDefault(),
+              "%s is incompatible with Trigger with same key %s",
+              item.getClass().getCanonicalName(),
+              getKey()));
+    }
   }
 }

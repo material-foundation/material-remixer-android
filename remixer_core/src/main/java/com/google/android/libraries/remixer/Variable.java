@@ -16,6 +16,8 @@
 
 package com.google.android.libraries.remixer;
 
+import java.util.Locale;
+
 /**
  * Base class for all Remixes that does not do any value checking. A variable takes care of calling
  * a callback when the value is changed. It does not support any sort of null values.
@@ -115,6 +117,32 @@ public class Variable<T> extends RemixerItem {
   @Override
   void clearCallback() {
     callback = null;
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  void isCompatibleWith(RemixerItem item) {
+    if (item.getKey().equals(getKey())) {
+      if (item.getClass() != getClass()) {
+        throw new IncompatibleRemixerItemsWithSameKeyException(
+            String.format(
+                Locale.getDefault(),
+                "%s is incompatible with %s with same key %s",
+                getClass().getCanonicalName(),
+                item.getClass().getCanonicalName(),
+                getKey()));
+      }
+      Variable<T> variable = (Variable<T>) item;
+      if (variable.getVariableType() != getVariableType()) {
+        throw new IncompatibleRemixerItemsWithSameKeyException(
+            String.format(
+                Locale.getDefault(),
+                "Two variables with the same key, %s, have different types %s and %s",
+                getKey(),
+                getVariableType().getCanonicalName(),
+                variable.getVariableType().getCanonicalName()));
+      }
+    }
   }
 
   /**

@@ -17,11 +17,11 @@
 package com.google.android.libraries.remixer;
 
 /**
- * Thrown if two items are added with the same key.
+ * Thrown if two items are added with the same key for the same parent object.
  */
-public class DuplicateRemixerKeyException extends RuntimeException {
+public class DuplicateKeyException extends RuntimeException {
 
-  public DuplicateRemixerKeyException(String message) {
+  public DuplicateKeyException(String message) {
     super(message);
   }
 }
