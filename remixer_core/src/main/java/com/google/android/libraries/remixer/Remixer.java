@@ -130,4 +130,16 @@ public class Remixer {
     }
     return result;
   }
+
+  /**
+   * Removes callbacks for all remixes whose parent object is {@code activity}. This makes sure
+   * {@code activity} doesn't leak through its callbacks.
+   */
+  public void cleanUpCallbacks(Object activity) {
+    for (RemixerItem remixerItem : remixerItems) {
+      if (remixerItem.isParentObject(activity)) {
+        remixerItem.clearCallback();
+      }
+    }
+  }
 }
