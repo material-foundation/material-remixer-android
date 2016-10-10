@@ -25,9 +25,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
  */
 public class DuplicateKey {
 
-  @RemixerInstance
-  Remixer remixer;
-
   @BooleanVariableMethod(key="key")
   public void setBoolean(Boolean i) {}
 

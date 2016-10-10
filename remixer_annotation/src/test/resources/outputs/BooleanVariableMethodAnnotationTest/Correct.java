@@ -28,17 +28,11 @@ import java.lang.Override;
 public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
   @Override
   public void bindInstance(Correct activity) {
-    Remixer remixer;
-    if (activity.remixer == null) {
-      remixer = Remixer.getInstance();
-    } else {
-      remixer = activity.remixer;
-    }
+    Remixer remixer = Remixer.getInstance();
     Generated_correct correct_callback = new Generated_correct(activity);
     Variable<Boolean> correct_variable = new Variable<Boolean>("correct", "correct", false, activity, correct_callback, 0);
     correct_variable.init();
     remixer.addItem(correct_variable);
-    activity.remixer = remixer;
   }
 
   static class Generated_correct implements Callback<Boolean> {

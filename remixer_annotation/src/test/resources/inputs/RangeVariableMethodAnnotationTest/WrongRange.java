@@ -22,9 +22,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class WrongRange {
 
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * minValue > maxValue, should fail.
    */

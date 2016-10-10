@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 
 public class MethodWithWrongParameter {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * This method should take a String parameter, fail.
    */

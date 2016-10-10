@@ -31,18 +31,10 @@ import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.gesture.GestureListener;
 
 /**
- * A fragment that shows all Remixes for the current activity. MUST only be instantiated from an
- * activity that implements {@link RemixerActivity}. It's very easy to use:
+ * A fragment that shows all Remixes for the current activity. It's very easy to use:
  *
  * <pre><code>
- * class MyActivity extends FragmentActivity implements RemixerActivity {
- *   Remixer remixer;
- *
- *   &#064;Override
- *   public Remixer getRemixer() {
- *     return remixer;
- *   }
- *
+ * class MyActivity extends FragmentActivity {
  *   // ...
  *
  *   protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +55,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   private Remixer remixer;
 
   public RemixerFragment() {
+    remixer = Remixer.getInstance();
   }
 
   public static RemixerFragment newInstance() {
@@ -100,7 +93,6 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    remixer = ((RemixerActivity) getActivity()).getRemixer();
   }
 
   @Override

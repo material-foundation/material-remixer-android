@@ -51,42 +51,6 @@ public class RemixerAnnotationProcessorTest {
   }
 
   @Test
-  public void failsOnNonPublicInstance() {
-    JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RemixerAnnotationProcessorTest/NonPublicRemixerInstance.java");
-    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
-        .that(file)
-        .processedWith(allProcessors)
-        .failsToCompile()
-        .withErrorContaining("public/default")
-        .in(file);
-  }
-
-  @Test
-  public void failsOnNoRemixerInstance() {
-    JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RemixerAnnotationProcessorTest/NoRemixerInstance.java");
-    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
-        .that(file)
-        .processedWith(allProcessors)
-        .failsToCompile()
-        .withErrorContaining("RemixerInstance")
-        .in(file);
-  }
-
-  @Test
-  public void failsOnWrongTypeRemixerInstance() {
-    JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RemixerAnnotationProcessorTest/WrongTypeRemixerInstance.java");
-    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
-        .that(file)
-        .processedWith(allProcessors)
-        .failsToCompile()
-        .withErrorContaining("com.google.android.libraries.remixer.Remixer")
-        .in(file);
-  }
-
-  @Test
   public void failsOnMethodWithMultipleParameters() {
     JavaFileObject file = JavaFileObjects
         .forResource("inputs/RemixerAnnotationProcessorTest/MethodWithMultipleParameters.java");

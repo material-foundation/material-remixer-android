@@ -17,15 +17,12 @@ import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
-import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 /**
  * Main activity with explicit instantiation of Remixer Objects.
- *
- * <p>Notice implementing RemixerActivity is necessary to use RemixerFragment.
  */
-public class MainActivity extends AppCompatActivity implements RemixerActivity {
+public class MainActivity extends AppCompatActivity {
 
   // A text view whose text is updated by an ItemListVariable<String> and font size by a
   // RangeVariable
@@ -127,11 +124,6 @@ public class MainActivity extends AppCompatActivity implements RemixerActivity {
     RemixerFragment remixerFragment = RemixerFragment.newInstance();
     remixerFragment.attachToButton(this, remixerButton);
     remixerFragment.attachToGesture(this, Direction.UP, 3);
-  }
-
-  @Override
-  public Remixer getRemixer() {
-    return remixer;
   }
 }
 

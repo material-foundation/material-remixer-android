@@ -22,9 +22,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class MethodWithWrongParameter {
 
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * This method's parameter should be of type Integer. Should fail.
    */

@@ -52,7 +52,7 @@ import javax.lang.model.element.VariableElement;
 class AnnotatedClass {
 
   /**
-   * The {@link RemixerBinder} class' name. this is useful for inheritance.
+   * The {@link RemixerBinder} class' name.
    */
   private static final ClassName REMIXER_BINDER_CLASS_NAME =
       ClassName.get(RemixerBinder.Binder.class);
@@ -74,10 +74,6 @@ class AnnotatedClass {
    */
   private final String packageName;
   /**
-   * The name of the {@code Remixer} instance that is annotated {@code @RemixerInstance}.
-   */
-  private final Name remixerName;
-  /**
    * A set of all the used Variable Keys. Used for guaranteeing that there is no duplication of
    * keys.
    */
@@ -94,11 +90,10 @@ class AnnotatedClass {
    *     Remixer annotations.
    * @param remixerInstance The field that is annotated with @RemixerInstance.
    */
-  AnnotatedClass(TypeElement sourceClass, VariableElement remixerInstance) {
+  AnnotatedClass(TypeElement sourceClass) {
     this.sourceClass = sourceClass;
     this.sourceClassName = ClassName.get(sourceClass.asType());
     generatedClassName = sourceClass.getSimpleName() + "_RemixerBinder";
-    remixerName = remixerInstance.getSimpleName();
     packageName =
         ((PackageElement) sourceClass.getEnclosingElement()).getQualifiedName().toString();
     methodMap = new HashMap<>();
@@ -148,22 +143,14 @@ class AnnotatedClass {
         .addAnnotation(Override.class)
         .addModifiers(Modifier.PUBLIC);
 
-    // Initialize "remixer" object, reuse the activity's object if it is not null.
     bindMethodBuilder
-        .addStatement("$T remixer", Remixer.class)
-        .beginControlFlow("if (activity.$N == null)", remixerName)
-        .addStatement("remixer = $T.getInstance()",  Remixer.class)
-        .nextControlFlow("else")
-        .addStatement("remixer = activity.$N", remixerName)
-        .endControlFlow();
+        .addStatement("$T remixer = $T.getInstance()", Remixer.class, Remixer.class);
     for (MethodAnnotation method : annotatedMethods) {
       // Create all of the internal callback classes
       classBuilder.addType(method.generateCallbackClass());
       // Add them to the bind method.
       method.addSetupStatements(bindMethodBuilder);
     }
-    // Copy remixer into the activity's remixer instance.
-    bindMethodBuilder.addStatement("activity.$N = remixer", remixerName);
     classBuilder.addMethod(bindMethodBuilder.build());
 
     return JavaFile.builder(packageName, classBuilder.build()).build();
