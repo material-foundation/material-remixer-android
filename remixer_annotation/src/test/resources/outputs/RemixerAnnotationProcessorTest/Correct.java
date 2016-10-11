@@ -35,12 +35,7 @@ import java.util.ArrayList;
 public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
   @Override
   public void bindInstance(Correct activity) {
-    Remixer remixer;
-    if (activity.remixer == null) {
-      remixer = Remixer.getInstance();
-    } else {
-      remixer = activity.remixer;
-    }
+    Remixer remixer = Remixer.getInstance();
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
     Variable<Boolean> setBoolean_variable = new Variable<Boolean>("setBoolean", "setBoolean", false, activity, setBoolean_callback, 0);
     setBoolean_variable.init();
@@ -71,7 +66,6 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
     Trigger pullTrigger_trigger = new Trigger("pullTrigger", "pullTrigger", activity, pullTrigger_callback, 0);
     remixer.addItem(pullTrigger_trigger);
-    activity.remixer = remixer;
   }
 
   static class Generated_setBoolean implements Callback<Boolean> {

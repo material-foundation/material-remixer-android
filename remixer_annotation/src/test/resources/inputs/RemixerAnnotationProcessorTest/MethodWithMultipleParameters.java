@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class MethodWithMultipleParameters {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * Variable methods should only have one parameter, this should fail.
    */

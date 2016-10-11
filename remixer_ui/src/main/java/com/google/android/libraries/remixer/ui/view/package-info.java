@@ -18,9 +18,8 @@
  * Contains the code to display the
  * {@link com.google.android.libraries.remixer.ui.view.RemixerFragment}.
  *
- * <p>You should only need to instantiate it and push it to the FragmentManager from an activity
- * that implements {@link com.google.android.libraries.remixer.ui.view.RemixerActivity}, but
- * RemixerFragment has two convenience methods to set it up:
+ * <p>You should only need to instantiate it and push it to the FragmentManager, but RemixerFragment
+ * has two convenience methods to set it up:
  * <ul>
  * <li>{@link com.google.android.libraries.remixer.ui.view.RemixerFragment#attachToGesture(
  *     android.support.v4.app.FragmentActivity,

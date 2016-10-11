@@ -25,7 +25,4 @@ public class NonPublicMethod {
    */
   @RangeVariableMethod(key = "myKey")
   private void fail(Integer i){}
-
-  @RemixerInstance
-  public Remixer remixer;
 }

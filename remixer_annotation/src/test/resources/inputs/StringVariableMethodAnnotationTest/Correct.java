@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 
 public class Correct {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   @StringVariableMethod
   public void correct(String i){}
 }

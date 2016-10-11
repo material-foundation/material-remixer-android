@@ -30,12 +30,7 @@ import java.util.ArrayList;
 public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<FixesDefaultValue> {
   @Override
   public void bindInstance(FixesDefaultValue activity) {
-    Remixer remixer;
-    if (activity.remixer == null) {
-      remixer = Remixer.getInstance();
-    } else {
-      remixer = activity.remixer;
-    }
+    Remixer remixer = Remixer.getInstance();
     ArrayList<String> fixValue_variable_list = new ArrayList<String>();
     fixValue_variable_list.add("hello");
     fixValue_variable_list.add("world");
@@ -43,7 +38,6 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     ItemListVariable<String> fixValue_variable = new ItemListVariable<String>("fixValue", "fixValue", "hello", fixValue_variable_list, activity, fixValue_callback, 0);
     fixValue_variable.init();
     remixer.addItem(fixValue_variable);
-    activity.remixer = remixer;
   }
 
   static class Generated_fixValue implements Callback<String> {

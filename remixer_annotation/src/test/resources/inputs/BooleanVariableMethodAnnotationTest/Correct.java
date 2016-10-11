@@ -22,9 +22,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class Correct {
 
-  @RemixerInstance
-  public Remixer remixer;
-
   @BooleanVariableMethod
   public void correct(Boolean i){}
 }

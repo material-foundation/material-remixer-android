@@ -22,9 +22,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class FixesDefaultValue {
 
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * Default value is implicitly 0, this has to move to 15 with minValue.
    */

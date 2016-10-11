@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 
 public class Correct {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   @TriggerMethod
   public void correct(){}
 }

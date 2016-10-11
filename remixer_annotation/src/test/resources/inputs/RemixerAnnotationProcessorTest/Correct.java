@@ -29,9 +29,6 @@ import com.google.android.libraries.remixer.annotation.TriggerMethod;
  */
 public class Correct {
 
-  @RemixerInstance
-  Remixer remixer;
-
   @BooleanVariableMethod
   public void setBoolean(Boolean i) {}
 

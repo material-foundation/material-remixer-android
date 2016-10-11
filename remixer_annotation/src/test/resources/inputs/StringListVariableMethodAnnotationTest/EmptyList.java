@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class EmptyList {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * List is empty explicitly! Fail
    */

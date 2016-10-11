@@ -73,7 +73,6 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
   @Override
   public Set<String> getSupportedAnnotationTypes() {
     Set<String> set = new HashSet<>();
-    set.add(RemixerInstance.class.getCanonicalName());
     for (SupportedMethodAnnotation annotation : SupportedMethodAnnotation.values()) {
       set.add(annotation.getAnnotationType().getCanonicalName());
     }
@@ -84,8 +83,6 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
   public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
     try {
       Map<String, AnnotatedClass> annotatedClasses = new HashMap<>();
-      // First process RemixerInstance annotations.
-      findRemixerInstances(roundEnv, annotatedClasses);
       findMethodAnnotations(roundEnv, annotatedClasses);
       for (Map.Entry<String, AnnotatedClass> classEntry : annotatedClasses.entrySet()) {
         if (!alreadyProcessedClasses.contains(classEntry.getKey())) {
@@ -101,30 +98,6 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
     } catch (IOException ex) {
       errorReporter.reportError(null, "Couldn't write file: " + ex.getMessage());
       return false;
-    }
-  }
-
-  /**
-   * Finds all {@link RemixerInstance} annotations.
-   * Makes sure that there is only one of those per class and that they are applied to the right
-   * field (public/default access of type {@link Remixer}.
-   */
-  private void findRemixerInstances(
-      RoundEnvironment roundEnv, Map<String, AnnotatedClass> annotatedClasses)
-      throws RemixerAnnotationException {
-    for (Element instance : roundEnv.getElementsAnnotatedWith(RemixerInstance.class)) {
-      // We know these are field elements since RemixerInstances only apply to those.
-      checkPublicOrDefault(instance);
-      checkElementType(instance, Remixer.class.getCanonicalName());
-      TypeElement clazz = (TypeElement) instance.getEnclosingElement();
-      String className = clazz.getQualifiedName().toString();
-      if (annotatedClasses.containsKey(className)) {
-        throw new RemixerAnnotationException(
-            instance, "There can only be one @RemixerInstance per class");
-      }
-      annotatedClasses.put(
-          className,
-          new AnnotatedClass(clazz, (VariableElement) instance));
     }
   }
 
@@ -148,9 +121,7 @@ public class RemixerAnnotationProcessor extends AbstractProcessor {
         TypeElement clazz = (TypeElement) method.getEnclosingElement();
         String className = clazz.getQualifiedName().toString();
         if (!annotatedClasses.containsKey(className)) {
-          throw new RemixerAnnotationException(
-              element,
-              "Variable annotations REQUIRE a @RemixerInstance annotated field in the same class");
+          annotatedClasses.put(className, new AnnotatedClass(clazz));
         }
         Annotation annotation = method.getAnnotation(annotationType.getAnnotationType());
         annotatedClasses.get(className)

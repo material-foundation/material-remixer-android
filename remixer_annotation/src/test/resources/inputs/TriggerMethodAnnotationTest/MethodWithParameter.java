@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 
 public class MethodWithParameter {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * This method should not take any parameters, fail.
    */

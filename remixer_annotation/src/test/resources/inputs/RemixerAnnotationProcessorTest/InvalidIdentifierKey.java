@@ -20,10 +20,6 @@ import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class InvalidIdentifierKey {
-
-  @RemixerInstance
-  Remixer remixer;
-
   /**
    * The key should be a valid Java identifier, cannot begin with 1, nor have spaces.
    */

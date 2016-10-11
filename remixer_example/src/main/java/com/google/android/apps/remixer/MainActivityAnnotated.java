@@ -24,32 +24,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
-import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
-import com.google.android.libraries.remixer.ui.view.RemixerActivity;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 /**
  * Annotated version of the MainActivity.
- *
- * <p>Notice implementing RemixerActivity is necessary to use RemixerFragment.
  */
-public class MainActivityAnnotated extends AppCompatActivity implements RemixerActivity {
+public class MainActivityAnnotated extends AppCompatActivity {
 
   TextView boundedText;
   TextView freeformText;
   Button remixerButton;
-
-  @RemixerInstance Remixer remixer;
-
+  
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -97,10 +90,5 @@ public class MainActivityAnnotated extends AppCompatActivity implements RemixerA
   @TriggerMethod
   void toast() {
     Toast.makeText(this, freeformText.getText(), Toast.LENGTH_SHORT).show();
-  }
-
-  @Override
-  public Remixer getRemixer() {
-    return remixer;
   }
 }

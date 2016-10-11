@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class ExplicitWrongDefault {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * Default value is explicitly out of range, should fail.
    */

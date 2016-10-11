@@ -21,10 +21,6 @@ import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class FixesDefaultValue {
-
-  @RemixerInstance
-  public Remixer remixer;
-
   /**
    * Default value is implicitly "", this has to move to "hello"
    */
