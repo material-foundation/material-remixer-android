@@ -19,6 +19,7 @@ package com.google.android.libraries.remixer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Contains a list of {@link Variable}es.
@@ -27,7 +28,7 @@ public class Remixer {
 
   private static Remixer instance;
 
-  private HashMap<String, RemixerItem> keyMap;
+  private HashMap<String, List<RemixerItem>> keyMap;
   private List<RemixerItem> remixerItems;
 
   /**
@@ -50,30 +51,81 @@ public class Remixer {
 
   /**
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
+   * Checks that the remixer item is compatible with the existing remixer items with the same key.
+   *
+   * <p>This method also removes old remixer items whose parent objects have been reclaimed by the
+   * Garbage collector which are being replaced by items from the same class of parent objects.
+   * No items are removed until equivalent ones from the same parent object class are added to
+   * replace them. This guarantees that no incompatible items for the same key are ever accepted.
    *
    * @param remixerItem The remixer item to be added.
-   * @throws DuplicateRemixerKeyException In case the remixer item has a key that has already been
-   *     used.
+   * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
+   *     added by other parent objects with incompatible types.
+   * @throws DuplicateKeyException Another item with the same key was added by the same parent
+   *     object.
    */
   public void addItem(RemixerItem remixerItem) {
-    checkUniqueKey(remixerItem.getKey(), remixerItem);
+    List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
+    List<RemixerItem> itemsToRemove = new ArrayList<>();
+    for (RemixerItem existingItem : listForKey) {
+      existingItem.assertIsCompatibleWith(remixerItem);
+      if (!existingItem.hasParentObject()) {
+        // The parent activity has been reclaimed by the OS already. It has no callback and it's
+        // still around for keeping the value in sync, saving and checking consistency across types.
+        // Since we're adding a new item that has been asserted to be compatible, it is not
+        // necessary to keep this instance around.
+        itemsToRemove.add(existingItem);
+      } else {
+        // The parent activity is still alive and kicking.
+        if (existingItem.isParentObject(remixerItem.getParentObject())) {
+          // An object with the same key for the same parent object, this shouldn't happen so throw
+          // an exception.
+          throw new DuplicateKeyException(
+              String.format(
+                  Locale.getDefault(),
+                  "Duplicate key %s being used in class %s",
+                  remixerItem.getKey(),
+                  remixerItem.getParentObject().getClass().getCanonicalName()
+              ));
+        }
+      }
+    }
+    for (RemixerItem remove : itemsToRemove) {
+      listForKey.remove(remove);
+      remixerItems.remove(remove);
+    }
+    listForKey.add(remixerItem);
     remixerItems.add(remixerItem);
   }
 
-  private void checkUniqueKey(String key, RemixerItem remixerItem) {
+  private List<RemixerItem> getItemsWithKey(String key) {
+    List<RemixerItem> list = null;
     if (keyMap.containsKey(key)) {
-      throw new DuplicateRemixerKeyException(
-        String.format(
-          "Trying to add a %s as Remixer key %s but a %s already has that key",
-          remixerItem.getClass().getName(),
-          key,
-          keyMap.get(key).getClass().getName()));
+      list = keyMap.get(key);
+    } else {
+      list = new ArrayList<>();
+      keyMap.put(key, list);
     }
-    keyMap.put(key, remixerItem);
+    return list;
   }
 
   public List<RemixerItem> getRemixerItems() {
     return remixerItems;
+  }
+
+  /**
+   * Gets all the Remixer Items associated with the parent object {@code parent}. {@code parent} is
+   * expected to be an Activity, it is Object here because remixer_core cannot depend on the Android
+   * SDK.
+   */
+  public List<RemixerItem> getRemixerItemsForParentObject(Object parent) {
+    List<RemixerItem> result = new ArrayList<>();
+    for (RemixerItem item : remixerItems) {
+      if (item.isParentObject(parent)) {
+        result.add(item);
+      }
+    }
+    return result;
   }
 
   /**

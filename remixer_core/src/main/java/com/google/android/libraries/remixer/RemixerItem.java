@@ -77,6 +77,13 @@ public abstract class RemixerItem {
   }
 
   /**
+   * Checks whether the parent object has been reclaimed.
+   */
+  public boolean hasParentObject() {
+    return parentObject.get() != null;
+  }
+
+  /**
    * Checks whether the parameter is of the same class as the (possibly already reclaimed) parent
    * object.
    */
@@ -104,4 +111,27 @@ public abstract class RemixerItem {
    * activities are destroyed.
    */
   abstract void clearCallback();
+
+  /**
+   * Checks whether {@code item} is compatible with this RemixerItem.
+   * @throws IncompatibleRemixerItemsWithSameKeyException if {@code item} has the same key as this
+   *     object, and they are of different types or otherwise incompatible.
+   */
+  abstract void assertIsCompatibleWith(RemixerItem item);
+
+  /**
+   * Returns the parent object.
+   */
+  Object getParentObject() {
+    return parentObject.get();
+  }
+
+  /**
+   * Clears the parent object reference to simulate reclaiming the parent object in tests.
+   *
+   * <p><b>Visible only for testing.</b>
+   */
+  void clearParentObject() {
+    parentObject.clear();
+  }
 }
