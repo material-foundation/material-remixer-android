@@ -50,7 +50,7 @@ public class Trigger extends RemixerItem {
   }
 
   @Override
-  void isCompatibleWith(RemixerItem item) {
+  void assertIsCompatibleWith(RemixerItem item) {
     if (item.getKey().equals(getKey()) && item.getClass() != this.getClass()) {
       throw new IncompatibleRemixerItemsWithSameKeyException(
           String.format(

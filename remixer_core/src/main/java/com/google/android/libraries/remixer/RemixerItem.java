@@ -117,7 +117,7 @@ public abstract class RemixerItem {
    * @throws IncompatibleRemixerItemsWithSameKeyException if {@code item} has the same key as this
    *     object, and they are of different types or otherwise incompatible.
    */
-  abstract void isCompatibleWith(RemixerItem item);
+  abstract void assertIsCompatibleWith(RemixerItem item);
 
   /**
    * Returns the parent object.

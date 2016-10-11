@@ -68,18 +68,13 @@ public class Remixer {
     List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
     List<RemixerItem> itemsToRemove = new ArrayList<>();
     for (RemixerItem existingItem : listForKey) {
-      existingItem.isCompatibleWith(remixerItem);
+      existingItem.assertIsCompatibleWith(remixerItem);
       if (!existingItem.hasParentObject()) {
         // The parent activity has been reclaimed by the OS already. It has no callback and it's
         // still around for keeping the value in sync, saving and checking consistency across types.
-        if (existingItem.isSameClassAsParentObject(remixerItem.getParentObject())) {
-          // At this point, we can remove the existing item, since a full replacement is coming
-          // in with the new item: same key coming from the same parent class. The only reason why
-          // this was being kept to this point was to make sure no remixer item came with
-          // incompatible types from a different activity and keeping the value for storage, the
-          // same can be achieved by the new one.
-          itemsToRemove.add(existingItem);
-        }
+        // Since we're adding a new item that has been asserted to be compatible, it is not
+        // necessary to keep this instance around.
+        itemsToRemove.add(existingItem);
       } else {
         // The parent activity is still alive and kicking.
         if (existingItem.isParentObject(remixerItem.getParentObject())) {
@@ -119,7 +114,9 @@ public class Remixer {
   }
 
   /**
-   * Gets all the Remixer Items associated with the parent object {@code parent}.
+   * Gets all the Remixer Items associated with the parent object {@code parent}. {@code parent} is
+   * expected to be an Activity, it is Object here because remixer_core cannot depend on the Android
+   * SDK.
    */
   public List<RemixerItem> getRemixerItemsForParentObject(Object parent) {
     List<RemixerItem> result = new ArrayList<>();

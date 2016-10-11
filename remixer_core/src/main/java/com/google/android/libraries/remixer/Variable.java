@@ -121,7 +121,7 @@ public class Variable<T> extends RemixerItem {
 
   @Override
   @SuppressWarnings("unchecked")
-  void isCompatibleWith(RemixerItem item) {
+  void assertIsCompatibleWith(RemixerItem item) {
     if (item.getKey().equals(getKey())) {
       if (item.getClass() != getClass()) {
         throw new IncompatibleRemixerItemsWithSameKeyException(
