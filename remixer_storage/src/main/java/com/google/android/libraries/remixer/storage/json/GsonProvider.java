@@ -14,4 +14,27 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example', ':remixer_storage'
+package com.google.android.libraries.remixer.storage.json;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+/**
+ * Provides a configured Gson instance.
+ */
+public final class GsonProvider {
+
+  private static final Gson instance;
+
+  static {
+    instance = new GsonBuilder()
+        .disableHtmlEscaping()
+        .registerTypeAdapter(RemixerStatus.class, new RemixerStatusSerializer())
+        .registerTypeAdapter(StoredVariable.class, new StoredVariableSerializer())
+        .create();
+  }
+
+  public static Gson getInstance() {
+    return instance;
+  }
+}
