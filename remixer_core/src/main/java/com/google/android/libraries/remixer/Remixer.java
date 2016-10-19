@@ -64,6 +64,7 @@ public class Remixer {
    * @throws DuplicateKeyException Another item with the same key was added by the same parent
    *     object.
    */
+  @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
     List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
     List<RemixerItem> itemsToRemove = new ArrayList<>();
@@ -94,11 +95,19 @@ public class Remixer {
       listForKey.remove(remove);
       remixerItems.remove(remove);
     }
+    if (remixerItem instanceof Variable && listForKey.size() > 0) {
+      // Make sure that variables use their current value if it has been modified in another
+      // context.
+      Variable otherVariable = (Variable) listForKey.get(0);
+      Variable newVariable = (Variable) remixerItem;
+      newVariable.setValueWithoutNotifying(otherVariable.getSelectedValue());
+    }
     listForKey.add(remixerItem);
+    remixerItem.setRemixer(this);
     remixerItems.add(remixerItem);
   }
 
-  private List<RemixerItem> getItemsWithKey(String key) {
+  List<RemixerItem> getItemsWithKey(String key) {
     List<RemixerItem> list = null;
     if (keyMap.containsKey(key)) {
       list = keyMap.get(key);

@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -103,9 +104,29 @@ public class Variable<T> extends RemixerItem {
    * @throws IllegalArgumentException {@code newValue} is an invalid value for this Variable.
    */
   public void setValue(T newValue) {
+    setValueWithoutNotifying(newValue);
+    notifyOthers();
+  }
+
+  void setValueWithoutNotifying(T newValue) {
     checkValue(newValue);
     selectedValue = newValue;
     runCallback();
+  }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  protected void notifyOthers() {
+    if (remixer == null) {
+      // This instance hasn't been added to a Remixer, probably still being set up, abort.
+      return;
+    }
+    List<RemixerItem> itemList = remixer.getItemsWithKey(getKey());
+    for (RemixerItem item : itemList) {
+      if (item != this) {
+        ((Variable<T>) item).setValueWithoutNotifying(getSelectedValue());
+      }
+    }
   }
 
   private void runCallback() {

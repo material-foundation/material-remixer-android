@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -39,8 +40,27 @@ public class Trigger extends RemixerItem {
    * 'Pulls the trigger' and runs the enclosed runnable.
    */
   public void trigger() {
+    triggerWithoutNotifying();
+    notifyOthers();
+  }
+
+  private void triggerWithoutNotifying() {
     if (runnable != null) {
       runnable.run();
+    }
+  }
+
+  @Override
+  protected void notifyOthers() {
+    if (remixer == null) {
+      // This instance hasn't been added to a Remixer, probably still being set up, abort.
+      return;
+    }
+    List<RemixerItem> itemList = remixer.getItemsWithKey(getKey());
+    for (RemixerItem item : itemList) {
+      if (item != this) {
+        ((Trigger) item).triggerWithoutNotifying();
+      }
     }
   }
 
