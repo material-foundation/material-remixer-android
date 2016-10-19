@@ -125,6 +125,34 @@ public class RemixerTest {
   }
 
   @Test
+  public void remixerUpdatesVariableValueWhenJustAdded() {
+    // Initialize two nearly identical variables with two different parent objects of the same class
+    final Object parent1 = new Object();
+    final Object parent2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
+    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
+    remixer.addItem(variableString);
+    variableString.setValue("May the force be with you");
+    Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
+    remixer.addItem(variableString2);
+    Assert.assertEquals(variableString.getSelectedValue(), variableString2.getSelectedValue());
+  }
+
+  @Test
+  public void remixerUpdatesAllExistingVariableValuesWhenAnyOfThemChanges() {
+    // Initialize two nearly identical variables with two different parent objects of the same class
+    final Object parent1 = new Object();
+    final Object parent2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
+    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
+    remixer.addItem(variableString);
+    remixer.addItem(variableString2);
+    variableString.setValue("May the force be with you");
+    Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
+    Assert.assertEquals(variableString.getSelectedValue(), variableString2.getSelectedValue());
+  }
+
+  @Test
   public void remixerReturnsListInOrder() {
     remixer.addItem(variable);
     remixer.addItem(variable2);
