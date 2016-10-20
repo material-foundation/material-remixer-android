@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2016 Google Inc.
   ~
@@ -14,12 +15,17 @@
   ~ limitations under the License.
   -->
 
-<resources>
-  <string name="app_name">Remixer Example app</string>
-  <string name="mainDemoName">Main Demo</string>
-  <string name="boxDemoName">Box Demo</string>
-  <string name="swipeInstructions">Use a three-finger swipe up to open remixer in this activity.</string>
-  <string name="boxContentDescription">A box which changes colors</string>
-  <string name="defaultFreeformString">You can change this string</string>
-  <string name="showRemixerLabel">Show Remixer</string>
-</resources>
+
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/activity_menu"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context="com.google.android.apps.remixer.MenuActivity">
+
+  <ListView
+    android:id="@+id/exampleList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</RelativeLayout>
