@@ -52,7 +52,7 @@ public class BoxActivity extends AppCompatActivity {
     // Create a RangeVariable that updates titleText's size between 16 and 72 sp. This reuses the
     // same value as the one in the MainActivity...
     RangeVariable.Builder fontSizeRangeVariable = new RangeVariable.Builder()
-        .setKey("setTextSize")
+        .setKey("setTitleTextSize")
         .setTitle("(Shared) title text size")
         .setParentObject(this)
         .setMinValue(16)
