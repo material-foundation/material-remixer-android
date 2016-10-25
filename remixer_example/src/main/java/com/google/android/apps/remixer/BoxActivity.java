@@ -69,7 +69,5 @@ public class BoxActivity extends AppCompatActivity {
   void setBoxColor(Integer color) {
     box.setBackgroundColor(color);
   }
-
-
 }
 

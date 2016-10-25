@@ -30,13 +30,13 @@ import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 /**
- * Annotated version of the BoxActivity.
+ * Example activity where remixer is used to control text size and text values.
  */
 public class MainActivity extends AppCompatActivity {
 
-  TextView titleText;
-  TextView freeformText;
-  Button remixerButton;
+  private TextView titleText;
+  private TextView freeformText;
+  private Button remixerButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
