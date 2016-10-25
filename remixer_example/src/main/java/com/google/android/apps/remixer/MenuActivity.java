@@ -16,45 +16,66 @@
 
 package com.google.android.apps.remixer;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.LayoutRes;
+import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity {
 
-  private ListView listView;
+  private RecyclerView list;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_menu);
-    listView = (ListView) findViewById(R.id.exampleList);
-    final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.list_text);
-    adapter.add(getResources().getString(R.string.mainDemoName));
-    adapter.add(getResources().getString(R.string.boxDemoName));
-    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    list = (RecyclerView) findViewById(R.id.exampleList);
+    list.setAdapter(new RecyclerView.Adapter<ViewHolder>() {
       @Override
-      public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent();
-        switch (i) {
-          case 0:
-            intent.setClass(getApplicationContext(), MainActivity.class);
-            break;
-          default:
-            intent.setClass(getApplicationContext(), BoxActivity.class);
-            break;
-        }
-        startActivity(intent);
+      public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(
+            LayoutInflater.from(MenuActivity.this).inflate(R.layout.list_text, null));
+      }
+
+      @Override
+      public void onBindViewHolder(ViewHolder holder, int position) {
+        int textId = position == 0 ? R.string.mainDemoName : R.string.boxDemoName;
+        Class activityClass = position == 0 ? MainActivity.class : BoxActivity.class;
+        holder.setContent(textId, activityClass);
+      }
+
+      @Override
+      public int getItemCount() {
+        return 2;
       }
     });
-    listView.setAdapter(adapter);
+  }
+
+  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    Class activityClass;
+
+    ViewHolder(View itemView) {
+      super(itemView);
+      itemView.setOnClickListener(this);
+    }
+
+    void setContent(@StringRes int string, Class activityClass) {
+      ((TextView) itemView).setText(string);
+      this.activityClass = activityClass;
+    }
+
+    @Override
+    public void onClick(View view) {
+      Intent intent = new Intent();
+      intent.setClass(MenuActivity.this, activityClass);
+      startActivity(intent);
+    }
   }
 }
