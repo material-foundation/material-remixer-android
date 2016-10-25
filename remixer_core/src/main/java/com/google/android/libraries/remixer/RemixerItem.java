@@ -110,8 +110,6 @@ public abstract class RemixerItem {
     return layoutId;
   }
 
-  protected abstract void notifyOthers();
-
   /**
    * Removes the callback for this remixer item, it is used to avoid leaks through callbacks once
    * activities are destroyed.

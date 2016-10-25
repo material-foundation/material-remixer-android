@@ -28,7 +28,16 @@ public class Remixer {
 
   private static Remixer instance;
 
+  /**
+   * This is a map of Remixer Item keys to a list of remixer items that have that key.
+   *
+   * <p>There may be several RemixerItems for the same key because the key can be reused in
+   * different activities and the value has to be sared across those.
+   */
   private HashMap<String, List<RemixerItem>> keyMap;
+  /**
+   * A list of all the Remixer Items added to the Remixer.
+   */
   private List<RemixerItem> remixerItems;
 
   /**
@@ -100,7 +109,7 @@ public class Remixer {
       // context.
       Variable otherVariable = (Variable) listForKey.get(0);
       Variable newVariable = (Variable) remixerItem;
-      newVariable.setValueWithoutNotifying(otherVariable.getSelectedValue());
+      newVariable.setValueWithoutNotifyingOthers(otherVariable.getSelectedValue());
     }
     listForKey.add(remixerItem);
     remixerItem.setRemixer(this);
