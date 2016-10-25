@@ -104,7 +104,7 @@ public class Variable<T> extends RemixerItem {
    */
   public void setValue(T newValue) {
     setValueWithoutNotifyingOthers(newValue);
-    notifyOthers();
+    setValueOnOthersWithTheSameKey();
   }
 
   /**
@@ -121,10 +121,10 @@ public class Variable<T> extends RemixerItem {
   }
 
   /**
-   * Notifies all other Variables of the same key that the value has been changed.
+   * Sets the new value on all other Variables of the same key.
    */
   @SuppressWarnings("unchecked")
-  private void notifyOthers() {
+  private void setValueOnOthersWithTheSameKey() {
     if (remixer == null) {
       // This instance hasn't been added to a Remixer, probably still being set up, abort.
       return;

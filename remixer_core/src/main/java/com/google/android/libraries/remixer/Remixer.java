@@ -32,7 +32,7 @@ public class Remixer {
    * This is a map of Remixer Item keys to a list of remixer items that have that key.
    *
    * <p>There may be several RemixerItems for the same key because the key can be reused in
-   * different activities and the value has to be sared across those.
+   * different activities and the value has to be shared across those.
    */
   private HashMap<String, List<RemixerItem>> keyMap;
   /**
@@ -107,8 +107,13 @@ public class Remixer {
     if (remixerItem instanceof Variable && listForKey.size() > 0) {
       // Make sure that variables use their current value if it has been modified in another
       // context.
+      // If any modification has been made in any other context to the value of variables with the
+      // same key, otherVariable will have the newest value.
       Variable otherVariable = (Variable) listForKey.get(0);
+      // At this point newVariable will have the default value only.
       Variable newVariable = (Variable) remixerItem;
+      // Make newVariable have the current value found in variables that have already been added to
+      // the Remixer.
       newVariable.setValueWithoutNotifyingOthers(otherVariable.getSelectedValue());
     }
     listForKey.add(remixerItem);
