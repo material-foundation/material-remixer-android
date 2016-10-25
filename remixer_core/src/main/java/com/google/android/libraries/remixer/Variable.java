@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -96,16 +97,44 @@ public class Variable<T> extends RemixerItem {
   /**
    * Sets the selected value to a new value.
    *
-   * <p>This needs to be implemented in each of the variables that extend this class, it should
-   * throw an IllegalArgumentException if the value is invalid.
+   * <p>This also notifies all other variables with the same key that the value has changed.
    *
    * @param newValue Value to set. Cannot be null.
    * @throws IllegalArgumentException {@code newValue} is an invalid value for this Variable.
    */
   public void setValue(T newValue) {
+    setValueWithoutNotifyingOthers(newValue);
+    setValueOnOthersWithTheSameKey();
+  }
+
+  /**
+   * Sets the selected value to a new value without notifying other variables of this change. Only
+   * for internal use
+   *
+   * @param newValue Value to set. Cannot be null.
+   * @throws IllegalArgumentException {@code newValue} is an invalid value for this Variable.
+   */
+  void setValueWithoutNotifyingOthers(T newValue) {
     checkValue(newValue);
     selectedValue = newValue;
     runCallback();
+  }
+
+  /**
+   * Sets the new value on all other Variables of the same key.
+   */
+  @SuppressWarnings("unchecked")
+  private void setValueOnOthersWithTheSameKey() {
+    if (remixer == null) {
+      // This instance hasn't been added to a Remixer, probably still being set up, abort.
+      return;
+    }
+    List<RemixerItem> itemList = remixer.getItemsWithKey(getKey());
+    for (RemixerItem item : itemList) {
+      if (item != this) {
+        ((Variable<T>) item).setValueWithoutNotifyingOthers(getSelectedValue());
+      }
+    }
   }
 
   private void runCallback() {

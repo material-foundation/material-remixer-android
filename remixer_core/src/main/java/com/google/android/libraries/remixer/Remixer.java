@@ -28,7 +28,16 @@ public class Remixer {
 
   private static Remixer instance;
 
+  /**
+   * This is a map of Remixer Item keys to a list of remixer items that have that key.
+   *
+   * <p>There may be several RemixerItems for the same key because the key can be reused in
+   * different activities and the value has to be shared across those.
+   */
   private HashMap<String, List<RemixerItem>> keyMap;
+  /**
+   * A list of all the Remixer Items added to the Remixer.
+   */
   private List<RemixerItem> remixerItems;
 
   /**
@@ -64,6 +73,7 @@ public class Remixer {
    * @throws DuplicateKeyException Another item with the same key was added by the same parent
    *     object.
    */
+  @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
     List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
     List<RemixerItem> itemsToRemove = new ArrayList<>();
@@ -94,11 +104,24 @@ public class Remixer {
       listForKey.remove(remove);
       remixerItems.remove(remove);
     }
+    if (remixerItem instanceof Variable && listForKey.size() > 0) {
+      // Make sure that variables use their current value if it has been modified in another
+      // context.
+      // If any modification has been made in any other context to the value of variables with the
+      // same key, otherVariable will have the newest value.
+      Variable otherVariable = (Variable) listForKey.get(0);
+      // At this point newVariable will have the default value only.
+      Variable newVariable = (Variable) remixerItem;
+      // Make newVariable have the current value found in variables that have already been added to
+      // the Remixer.
+      newVariable.setValueWithoutNotifyingOthers(otherVariable.getSelectedValue());
+    }
     listForKey.add(remixerItem);
+    remixerItem.setRemixer(this);
     remixerItems.add(remixerItem);
   }
 
-  private List<RemixerItem> getItemsWithKey(String key) {
+  List<RemixerItem> getItemsWithKey(String key) {
     List<RemixerItem> list = null;
     if (keyMap.containsKey(key)) {
       list = keyMap.get(key);
