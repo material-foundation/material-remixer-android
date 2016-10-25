@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @RangeVariableMethod(
+      key = "titleTextSize",
       minValue = 16, maxValue = 72, increment = 4, title = "(Shared) Title font size")
   void setTitleTextSize(Integer size) {
     titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);

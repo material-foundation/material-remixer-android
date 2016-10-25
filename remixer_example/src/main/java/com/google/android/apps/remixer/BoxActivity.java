@@ -18,25 +18,22 @@ import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Trigger;
+import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
+import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 /**
- * This activity reuses one of the values from variables in MainActivity and it also uses the more
- * explicit (not-annotation-based) API for Remixer.
- *
- * <p>While this is supported we think most people would prefer to use the clearer, less verbose
- * annotation-based API.
+ * This activity reuses one of the values from variables in MainActivity.
  */
 public class BoxActivity extends AppCompatActivity {
 
   // A title text whose text size is set by a variable.
   private TextView titleText;
-
+  // An ImageView that does nothing but draw a box with its background color.
   private ImageView box;
-  // The remixer instance
-  private Remixer remixer;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -47,55 +44,32 @@ public class BoxActivity extends AppCompatActivity {
     titleText = (TextView) findViewById(R.id.titleText);
     box = (ImageView) findViewById(R.id.box);
     // Initialize the remixer instance
-    remixer = Remixer.getInstance();
-
-    // Create a RangeVariable that updates titleText's size between 16 and 72 sp. This reuses the
-    // same value as the one in the MainActivity...
-    RangeVariable.Builder fontSizeRangeVariable = new RangeVariable.Builder()
-        .setKey("setTitleTextSize")
-        .setTitle("(Shared) title text size")
-        .setParentObject(this)
-        .setMinValue(16)
-        .setMaxValue(72)
-        .setIncrement(4)
-        .setCallback(new Callback<Integer>() {
-          @Override
-          public void onValueSet(Variable<Integer> variable) {
-            titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, variable.getSelectedValue());
-          }
-        });
-    remixer.addItem(fontSizeRangeVariable.buildAndInit());
-
-    // Create a BooleanVariable that controls whether the box is shown.
-    Variable.Builder<Boolean> booleanVariable = new BooleanVariableBuilder()
-        .setKey("showBox")
-        .setTitle("Show Box")
-        .setParentObject(this)
-        .setCallback(new Callback<Boolean>() {
-          @Override
-          public void onValueSet(Variable<Boolean> variable) {
-            box.setVisibility(variable.getSelectedValue() ? View.VISIBLE : View.GONE);
-          }
-        });
-    remixer.addItem(booleanVariable.buildAndInit());
-
-    // Create a list of colors to set for the box
-    ItemListVariable.Builder<Integer> colorVariable = new ItemListVariable.Builder<Integer>()
-        .setKey("setBoxColor")
-        .setTitle("Box color")
-        .setParentObject(this)
-        .setPossibleValues(new Integer[] {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN} )
-        .setCallback(new Callback<Integer>() {
-          @Override
-          public void onValueSet(Variable<Integer> variable) {
-            box.setBackgroundColor(variable.getSelectedValue());
-          }
-        })
-        .setLayoutId(R.layout.color_list_variable_widget);
-    remixer.addItem(colorVariable.buildAndInit());
-
+    RemixerBinder.bind(this);
     RemixerFragment remixerFragment = RemixerFragment.newInstance();
     remixerFragment.attachToGesture(this, Direction.UP, 3);
   }
+
+  @RangeVariableMethod(
+      key = "titleTextSize", title = "(Shared) title text size",
+      minValue = 16, maxValue = 72, increment = 4
+  )
+  public void setTitleTextSize(Integer size) {
+    titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
+  }
+
+  @BooleanVariableMethod(key = "showBox", title = "Show box")
+  void showBox(Boolean show) {
+    box.setVisibility(show ? View.VISIBLE : View.GONE);
+  }
+
+  @IntegerListVariableMethod(
+      key = "boxColor", title = "Box color",
+      possibleValues = {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN}
+  )
+  void setBoxColor(Integer color) {
+    box.setBackgroundColor(color);
+  }
+
+
 }
 
