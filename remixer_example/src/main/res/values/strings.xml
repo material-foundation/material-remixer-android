@@ -15,5 +15,11 @@
   -->
 
 <resources>
-    <string name="app_name">Remixer Example app</string>
+  <string name="app_name">Remixer Example app</string>
+  <string name="mainDemoName">Main Demo</string>
+  <string name="boxDemoName">Box Demo</string>
+  <string name="swipeInstructions">Use a three-finger swipe up to open remixer in this activity.</string>
+  <string name="boxContentDescription">A box which changes colors</string>
+  <string name="defaultFreeformString">You can change this string</string>
+  <string name="showRemixerLabel">Show Remixer</string>
 </resources>

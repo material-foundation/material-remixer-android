@@ -28,17 +28,16 @@
     android:id="@+id/titleText"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Hello World!"/>
+    android:text="@string/boxDemoName"/>
+
+  <ImageView
+    android:id="@+id/box"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:contentDescription="@string/boxContentDescription"/>
 
   <TextView
-    android:id="@+id/freeformText"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/defaultFreeformString"/>
-
-  <Button
-    android:id="@+id/button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/showRemixerLabel"/>
+    android:text="@string/swipeInstructions"/>
 </LinearLayout>
