@@ -1,6 +1,11 @@
-# Remixer
+![remixer](https://github.com/material-foundation/material-remixer/raw/master/docs/assets/lockup_remixer_icon_horizontal_dark.png)
 
-Remixer is an library that allows you to dynamically adjust UI settings during the development process.
+Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself. 
+
+This SDK for Android is currently in development.
+
+**New to Remixer?** Visit our [main repo](https://github.com/material-foundation/material-remixer) to get a full description of what it is and how it works.
+- - -
 
 ## Project structure
 
