@@ -29,6 +29,10 @@ The project is defined as a gradle project with submodules.
 2. You have two options here:
   1. Open it on Android Studio and build from there.
   2. run `./gradlew build`  on your terminal (`gradlew.bat build` on Windows).
+    * This assumes that you have a copy of the android SDK and,
+    * That you have exported a `ANDROID_HOME` environment variable that points to your SDK install (the directory that contains subdirectories such as `tools`, `platform-tools`, etc.)
+      * If you use Android Studio on a mac that defaults to `/Users/<yourusername>/Library/Android/sdk`
+      * In this case you can put `export ANDROID_HOME=/Users/<yourusername>/Library/Android/sdk` in your `~/.profile` or `~/.bash_profile` as appropriate.)
 
 ## Installing the example app
 

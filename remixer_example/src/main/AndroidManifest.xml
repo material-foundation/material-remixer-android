@@ -13,26 +13,44 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
+-->
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.google.android.apps.remixer"
+  tools:ignore="GoogleAppIndexingWarning">
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.google.android.apps.remixer">
+  <application
+    android:name=".RemixerApplication"
+    android:allowBackup="false"
+    android:icon="@drawable/logo_remixer_color_48"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme"
+    tools:replace="android:allowBackup">
+    <activity
+      android:name=".MenuActivity"
+      android:theme="@style/AppTheme">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-    <application
-        android:icon="@drawable/logo_remixer_color_48"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:name=".RemixerApplication"
-        android:theme="@style/AppTheme">
-        <activity
-          android:name="com.google.android.apps.remixer.MainActivityAnnotated"
-          android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <activity
+      android:name=".MainActivity"
+      android:parentActivityName=".MenuActivity">
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".MenuActivity" />
+    </activity>
+    <activity
+      android:name=".BoxActivity"
+      android:parentActivityName=".MenuActivity">
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".MenuActivity" />
+    </activity>
+  </application>
 
 </manifest>

@@ -53,6 +53,10 @@ public abstract class RemixerItem {
    */
   @SuppressWarnings("unchecked")
   private final Class parentObjectClass;
+  /**
+   * The remixer instance this RemixerItem has been attached to.
+   */
+  protected Remixer remixer;
 
   /**
    * Constructs a new RemixerItem with the given key, title and layoutId.
@@ -133,5 +137,13 @@ public abstract class RemixerItem {
    */
   void clearParentObject() {
     parentObject.clear();
+  }
+
+  /**
+   * Set the current remixer instance. This allows the Remixer item to notify other items with the
+   * same key.
+   */
+  public void setRemixer(Remixer remixer) {
+    this.remixer = remixer;
   }
 }
