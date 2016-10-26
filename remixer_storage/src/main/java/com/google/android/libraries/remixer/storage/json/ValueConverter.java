@@ -52,6 +52,7 @@ abstract class ValueConverter<T> {
   /**
    * Creates a StoredVariable that represents the data in {@code item} if {@code item} is of this
    * type. Returns null otherwise.
+   * @throws IllegalArgumentException if {@code item} does not match this type.
    */
   abstract StoredVariable<T> fromRemixerItem(RemixerItem item);
 
