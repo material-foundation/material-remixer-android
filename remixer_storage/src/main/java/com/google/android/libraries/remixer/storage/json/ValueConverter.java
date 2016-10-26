@@ -50,11 +50,6 @@ abstract class ValueConverter<T> {
   abstract JsonElement valueToJson(T value);
 
   /**
-   * Instantiates an appropriate {@link StoredVariable} for the data type.
-   */
-  abstract StoredVariable<T> createStoredVariable();
-
-  /**
    * Creates a StoredVariable that represents the data in {@code item} if {@code item} is of this
    * type. Returns null otherwise.
    */
@@ -64,7 +59,7 @@ abstract class ValueConverter<T> {
    * Deserializes a JsonElement that contains a StoredVariable.
    */
   StoredVariable<T> deserialize(JsonElement json) {
-    StoredVariable<T> result = createStoredVariable();
+    StoredVariable<T> result = new StoredVariable<>();
     JsonObject object = json.getAsJsonObject();
     if (object.has(StoredVariable.SELECTED_VALUE)) {
       result.selectedValue = parseValue(object.get(StoredVariable.SELECTED_VALUE));

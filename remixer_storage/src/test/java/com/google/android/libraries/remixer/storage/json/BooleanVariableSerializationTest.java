@@ -49,7 +49,7 @@ public class BooleanVariableSerializationTest {
   @Test
   public void booleanVariableConvertsToStorageTest() {
     StoredVariable<Boolean> result = StoredVariable.fromRemixerItem(booleanVariable);
-    Assert.assertEquals(SupportedDataType.BOOLEAN.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.BOOLEAN.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsVariable(result, booleanVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -59,7 +59,7 @@ public class BooleanVariableSerializationTest {
   public void modifiedBooleanVariableConvertsToStorageTest() {
     booleanVariable.setValue(true);
     StoredVariable<Boolean> result = StoredVariable.fromRemixerItem(booleanVariable);
-    Assert.assertEquals(SupportedDataType.BOOLEAN.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.BOOLEAN.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsVariable(result, booleanVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));

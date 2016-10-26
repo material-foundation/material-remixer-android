@@ -68,7 +68,7 @@ public class IntegerVariableSerializationTest {
   @Test
   public void integerListVariableConvertsToStorageTest() {
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerListVariable);
-    Assert.assertEquals(SupportedDataType.NUMBER.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.NUMBER.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, integerListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -79,7 +79,7 @@ public class IntegerVariableSerializationTest {
   public void modifiedIntegerListVariableConvertsToStorageTest() {
     integerListVariable.setValue(Color.BLUE);
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerListVariable);
-    Assert.assertEquals(SupportedDataType.NUMBER.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.NUMBER.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, integerListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -89,7 +89,7 @@ public class IntegerVariableSerializationTest {
   @Test
   public void integerVariableConvertsToStorageTest() {
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerVariable);
-    Assert.assertEquals(SupportedDataType.NUMBER.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.NUMBER.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsVariable(result, integerVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -100,7 +100,7 @@ public class IntegerVariableSerializationTest {
   public void modifiedIntegerVariableConvertsToStorageTest() {
     integerListVariable.setValue(Color.BLUE);
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerVariable);
-    Assert.assertEquals(SupportedDataType.NUMBER.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.NUMBER.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsVariable(result, integerVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -110,7 +110,7 @@ public class IntegerVariableSerializationTest {
   @Test
   public void rangeVariableConvertsToStorageTest() {
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(rangeVariable);
-    Assert.assertEquals(SupportedDataType.NUMBER.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.NUMBER.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsRangeVariable(result, rangeVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -121,7 +121,7 @@ public class IntegerVariableSerializationTest {
   public void modifiedRangeVariableConvertsToStorageTest() {
     rangeVariable.setValue(20);
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(rangeVariable);
-    Assert.assertEquals(SupportedDataType.NUMBER.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.NUMBER.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsRangeVariable(result, rangeVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));

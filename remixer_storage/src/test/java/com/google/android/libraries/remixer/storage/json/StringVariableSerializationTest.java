@@ -57,7 +57,7 @@ public class StringVariableSerializationTest {
   @Test
   public void stringVariableConvertsToStorageTest() {
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsVariable(result, stringVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -67,7 +67,7 @@ public class StringVariableSerializationTest {
   public void modifiedStringVariableConvertsToStorageTest() {
     stringVariable.setValue("heythere");
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsVariable(result, stringVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -76,7 +76,7 @@ public class StringVariableSerializationTest {
   @Test
   public void stringListVariableConvertsToStorageTest() {
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringListVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, stringListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -86,7 +86,7 @@ public class StringVariableSerializationTest {
   public void modifiedStringListariableConvertsToStorageTest() {
     stringListVariable.setValue("b");
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringListVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, stringListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));

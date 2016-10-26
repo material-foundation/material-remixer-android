@@ -28,14 +28,14 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 class RemixerStatusSerializer
-    implements JsonSerializer<RemixerStatus>, JsonDeserializer<RemixerStatus> {
+    implements JsonSerializer<SerializableRemixerContents>, JsonDeserializer<SerializableRemixerContents> {
 
   @Override
-  public RemixerStatus deserialize(
+  public SerializableRemixerContents deserialize(
       JsonElement json, Type typeOfT, JsonDeserializationContext context)
       throws JsonParseException {
     Gson gson = GsonProvider.getInstance();
-    RemixerStatus status = new RemixerStatus();
+    SerializableRemixerContents status = new SerializableRemixerContents();
     JsonObject object = json.getAsJsonObject();
     for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
       status.addItem(gson.fromJson(entry.getValue(), StoredVariable.class));
@@ -45,7 +45,7 @@ class RemixerStatusSerializer
 
   @Override
   public JsonElement serialize(
-      RemixerStatus src, Type typeOfSrc, JsonSerializationContext context) {
+      SerializableRemixerContents src, Type typeOfSrc, JsonSerializationContext context) {
     Gson gson = GsonProvider.getInstance();
     JsonObject object = new JsonObject();
     for (String key : src.keySet()) {

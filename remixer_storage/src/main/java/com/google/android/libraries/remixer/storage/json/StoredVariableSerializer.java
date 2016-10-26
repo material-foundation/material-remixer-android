@@ -45,7 +45,7 @@ class StoredVariableSerializer
     String dataType = jsonDataType.getAsString();
     StoredVariable variable = null;
     for (SupportedDataType type : SupportedDataType.values()) {
-      if (dataType.equals(type.getType())) {
+      if (dataType.equals(type.getDataTypeSerializableString())) {
         variable = type.getValueConverter().deserialize(json);
         break;
       }
@@ -63,7 +63,7 @@ class StoredVariableSerializer
       StoredVariable src, Type typeOfSrc, JsonSerializationContext context) {
     ValueConverter converter = null;
     for (SupportedDataType type : SupportedDataType.values()) {
-      if (src.dataType.equals(type.getType())) {
+      if (src.dataType.equals(type.getDataTypeSerializableString())) {
         converter = type.getValueConverter();
         break;
       }

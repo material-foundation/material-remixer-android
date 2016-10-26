@@ -30,7 +30,7 @@ import com.google.gson.JsonPrimitive;
 /**
  * Enum that contains all the supported data types for Remixer serialization.
  *
- * Each data type has a type identifier string and a {@link ValueConverter} which does most of the
+ * Each data dataTypeSerializableString has a dataTypeSerializableString identifier string and a {@link ValueConverter} which does most of the
  * heavywork for serialization.
  */
 enum SupportedDataType {
@@ -52,17 +52,13 @@ enum SupportedDataType {
         Variable var = (Variable) item;
         if (var.getVariableType() == Boolean.class) {
           StoredVariable<Boolean> storage = new StoredVariable<>();
-          storage.dataType = BOOLEAN.getType();
+          storage.dataType = BOOLEAN.getDataTypeSerializableString();
           storage.selectedValue = (Boolean) var.getSelectedValue();
           return storage;
         }
       }
-      return null;
-    }
-
-    @Override
-    public StoredVariable<Boolean> createStoredVariable() {
-      return new StoredVariable<>();
+      throw new IllegalArgumentException(
+          "Passed an incompatible object to convert to StoredVariable<Boolean>");
     }
   }),
   COLOR("color", new ValueConverter<Integer>("color") {
@@ -94,7 +90,7 @@ enum SupportedDataType {
         if (var.getVariableType() == Integer.class
             && var.getLayoutId() == R.layout.color_list_variable_widget) {
           StoredVariable<Integer> storage = new StoredVariable<>();
-          storage.dataType = COLOR.getType();
+          storage.dataType = COLOR.getDataTypeSerializableString();
           storage.selectedValue = (Integer) var.getSelectedValue();
           if (var instanceof ItemListVariable) {
             storage.possibleValues = ((ItemListVariable<Integer>) var).getValueList();
@@ -102,12 +98,8 @@ enum SupportedDataType {
           return storage;
         }
       }
-      return null;
-    }
-
-    @Override
-    public StoredVariable<Integer> createStoredVariable() {
-      return new StoredVariable<>();
+      throw new IllegalArgumentException(
+          "Passed an incompatible object to convert to StoredVariable<Color>");
     }
   }),
   NUMBER("number", new ValueConverter<Integer>("number") {
@@ -124,11 +116,6 @@ enum SupportedDataType {
     }
 
     @Override
-    public StoredVariable<Integer> createStoredVariable() {
-      return new StoredVariable<>();
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     StoredVariable<Integer> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
@@ -136,7 +123,7 @@ enum SupportedDataType {
         if (var.getVariableType() == Integer.class
             && var.getLayoutId() != R.layout.color_list_variable_widget) {
           StoredVariable<Integer> storage = new StoredVariable<>();
-          storage.dataType = NUMBER.getType();
+          storage.dataType = NUMBER.getDataTypeSerializableString();
           storage.selectedValue = (Integer) var.getSelectedValue();
           if (var instanceof RangeVariable) {
             RangeVariable range = (RangeVariable) var;
@@ -150,7 +137,8 @@ enum SupportedDataType {
           return storage;
         }
       }
-      return null;
+      throw new IllegalArgumentException(
+          "Passed an incompatible object to convert to StoredVariable<Integer>");
     }
   }),
   STRING("string", new ValueConverter<String>("string") {
@@ -165,18 +153,13 @@ enum SupportedDataType {
     }
 
     @Override
-    public StoredVariable<String> createStoredVariable() {
-      return new StoredVariable<>();
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     StoredVariable<String> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
         if (var.getVariableType() == String.class) {
           StoredVariable<String> storage = new StoredVariable<>();
-          storage.dataType = STRING.getType();
+          storage.dataType = STRING.getDataTypeSerializableString();
           storage.selectedValue = (String) var.getSelectedValue();
           if (var instanceof ItemListVariable) {
             storage.possibleValues = ((ItemListVariable<String>) var).getValueList();
@@ -184,7 +167,8 @@ enum SupportedDataType {
           return storage;
         }
       }
-      return null;
+      throw new IllegalArgumentException(
+          "Passed an incompatible object to convert to StoredVariable<String>");
     }
   }),
   TRIGGER("trigger", new ValueConverter<Void>("trigger") {
@@ -199,35 +183,38 @@ enum SupportedDataType {
     }
 
     @Override
-    StoredVariable<Void> createStoredVariable() {
-      return new StoredVariable<>();
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     StoredVariable<Void> fromRemixerItem(RemixerItem item) {
       if (item instanceof Trigger) {
         StoredVariable<Void> storage = new StoredVariable<>();
-        storage.dataType = TRIGGER.getType();
+        storage.dataType = TRIGGER.getDataTypeSerializableString();
         return storage;
       }
       return null;
     }
   });
 
-  SupportedDataType(String type, ValueConverter valueConverter) {
-    this.type = type;
-    this.valueConverter = valueConverter;
-  }
-  private String type;
-
+  /**
+   * A string that represents this dataType when serialized. When deserializing it's used to
+   * identify the parsing logic to use.
+   */
+  private String dataTypeSerializableString;
+  /**
+   * The value converter that contains all the export and parsing logic used in the serialization
+   * and deserialization logic.
+   */
   private ValueConverter valueConverter;
 
-  public String getType() {
-    return type;
+  SupportedDataType(String dataTypeSerializableString, ValueConverter valueConverter) {
+    this.dataTypeSerializableString = dataTypeSerializableString;
+    this.valueConverter = valueConverter;
   }
 
-  public ValueConverter getValueConverter() {
+  String getDataTypeSerializableString() {
+    return dataTypeSerializableString;
+  }
+
+  ValueConverter getValueConverter() {
     return valueConverter;
   }
 

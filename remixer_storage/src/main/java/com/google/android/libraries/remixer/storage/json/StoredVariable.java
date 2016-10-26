@@ -40,7 +40,6 @@ class StoredVariable<T> {
   static final String MAX_VALUE = "maxValue";
   static final String INCREMENT = "increment";
 
-
   // This first section applies to every Remixer item.
   /**
    * The RemixerItem's key.
@@ -51,8 +50,8 @@ class StoredVariable<T> {
    */
   String title;
   /**
-   * The data type this variable represents, it's the string representation of one of the
-   * {@link SupportedDataType}.
+   * The data type this variable represents, it's the string representation of one of the {@link
+   * SupportedDataType}.
    */
   String dataType;
 
@@ -121,12 +120,14 @@ class StoredVariable<T> {
   /**
    * Creates a Stored variable from a existing RemixerItem.
    */
-  public static StoredVariable fromRemixerItem(RemixerItem item) {
+  static StoredVariable fromRemixerItem(RemixerItem item) {
     StoredVariable storage = null;
     for (SupportedDataType type : SupportedDataType.values()) {
-      storage = type.getValueConverter().fromRemixerItem(item);
-      if (storage != null) {
+      try {
+        storage = type.getValueConverter().fromRemixerItem(item);
         break;
+      } catch (IllegalArgumentException ex) {
+        // Don't do anything, this just wasn't the right data type.
       }
     }
     if (storage == null) {
@@ -136,7 +137,5 @@ class StoredVariable<T> {
     storage.key = item.getKey();
     storage.title = item.getTitle();
     return storage;
-
   }
-
 }

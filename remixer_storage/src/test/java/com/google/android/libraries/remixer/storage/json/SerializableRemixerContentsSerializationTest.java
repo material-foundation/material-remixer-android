@@ -35,7 +35,7 @@ import org.robolectric.annotation.Config;
     sdk = 21,
     manifest = "src/main/AndroidManifest.xml",
     packageName = "com.google.android.libraries.remixer.ui")
-public class RemixerStatusSerializationTest {
+public class SerializableRemixerContentsSerializationTest {
 
   private Variable<Boolean> booleanVariable;
   private ItemListVariable<Integer> colorListVariable;
@@ -44,12 +44,12 @@ public class RemixerStatusSerializationTest {
   private RangeVariable rangeVariable;
   private ItemListVariable<String> stringListVariable;
   private Variable<String> stringVariable;
-  private RemixerStatus status;
+  private SerializableRemixerContents status;
   private Gson gson = GsonProvider.getInstance();
 
   @Before
   public void setUp() {
-    status = new RemixerStatus();
+    status = new SerializableRemixerContents();
     booleanVariable = new BooleanVariableBuilder()
         .setParentObject(this)
         .setKey("boolean")
@@ -101,7 +101,7 @@ public class RemixerStatusSerializationTest {
 
   @Test
   public void remixerStatusSerializesAndDeserializesTest() {
-    Assert.assertEquals(status, gson.fromJson(gson.toJsonTree(status), RemixerStatus.class));
+    Assert.assertEquals(status, gson.fromJson(gson.toJsonTree(status), SerializableRemixerContents.class));
   }
 
   @Test
@@ -114,6 +114,6 @@ public class RemixerStatusSerializationTest {
     status.addItem(stringVariable);
     Assert.assertEquals(
         stringVariable.getSelectedValue(), status.getItem(stringVariable.getKey()).selectedValue);
-    Assert.assertEquals(status, gson.fromJson(gson.toJsonTree(status), RemixerStatus.class));
+    Assert.assertEquals(status, gson.fromJson(gson.toJsonTree(status), SerializableRemixerContents.class));
   }
 }

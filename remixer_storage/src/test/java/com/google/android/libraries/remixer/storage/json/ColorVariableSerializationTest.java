@@ -52,7 +52,7 @@ public class ColorVariableSerializationTest {
   @Test
   public void colorListVariableConvertsToStorageTest() {
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(colorListVariable);
-    Assert.assertEquals(SupportedDataType.COLOR.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.COLOR.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, colorListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -62,7 +62,7 @@ public class ColorVariableSerializationTest {
   public void modifiedColorListVariableConvertsToStorageTest() {
     colorListVariable.setValue(Color.BLUE);
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(colorListVariable);
-    Assert.assertEquals(SupportedDataType.COLOR.getType(), result.dataType);
+    Assert.assertEquals(SupportedDataType.COLOR.getDataTypeSerializableString(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, colorListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));

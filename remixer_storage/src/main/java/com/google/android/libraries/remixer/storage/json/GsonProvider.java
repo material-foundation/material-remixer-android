@@ -29,7 +29,7 @@ public final class GsonProvider {
   static {
     instance = new GsonBuilder()
         .disableHtmlEscaping()
-        .registerTypeAdapter(RemixerStatus.class, new RemixerStatusSerializer())
+        .registerTypeAdapter(SerializableRemixerContents.class, new RemixerStatusSerializer())
         .registerTypeAdapter(StoredVariable.class, new StoredVariableSerializer())
         .create();
   }
