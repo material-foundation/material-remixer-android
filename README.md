@@ -1,4 +1,4 @@
-![remixer](https://github.com/material-foundation/material-remixer/raw/master/docs/assets/lockup_remixer_icon_horizontal_dark.png)
+# ![remixer](https://storage.googleapis.com/icons.google.com.a.appspot.com/google-assets/branding/product_logos/_quantum/res-export/logo_remixer_48px_clr.svg) Remixer
 
 Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself. 
 
