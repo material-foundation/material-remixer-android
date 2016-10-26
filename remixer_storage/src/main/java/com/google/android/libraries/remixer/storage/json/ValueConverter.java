@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer.storage.json;
 
+import android.support.annotation.Nullable;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -42,11 +43,13 @@ abstract class ValueConverter<T> {
   /**
    * Returns an object of type T that holds the value in the current Json Element.
    */
+  @Nullable
   abstract T parseValue(JsonElement element);
 
   /**
    * Returns a JsonElement that represents the value passed in.
    */
+  @Nullable
   abstract JsonElement valueToJson(T value);
 
   /**

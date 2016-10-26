@@ -190,19 +190,13 @@ enum SupportedDataType {
         storage.dataType = TRIGGER.getDataTypeSerializableString();
         return storage;
       }
-      return null;
+      throw new IllegalArgumentException(
+          "Passed an incompatible object to convert to StoredVariable<Void> (Trigger)");
     }
   });
 
-  /**
-   * A string that represents this dataType when serialized. When deserializing it's used to
-   * identify the parsing logic to use.
-   */
   private String dataTypeSerializableString;
-  /**
-   * The value converter that contains all the export and parsing logic used in the serialization
-   * and deserialization logic.
-   */
+
   private ValueConverter valueConverter;
 
   SupportedDataType(String dataTypeSerializableString, ValueConverter valueConverter) {
@@ -210,10 +204,18 @@ enum SupportedDataType {
     this.valueConverter = valueConverter;
   }
 
+  /**
+   * Gets the string that represents this dataType when serialized. When deserializing it's used to
+   * identify the parsing logic to use.
+   */
   String getDataTypeSerializableString() {
     return dataTypeSerializableString;
   }
 
+  /**
+   * Gets the value converter that contains all the export and parsing logic used in the
+   * serialization and deserialization processes.
+   */
   ValueConverter getValueConverter() {
     return valueConverter;
   }

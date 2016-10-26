@@ -22,19 +22,19 @@ import com.google.gson.GsonBuilder;
 /**
  * Provides a configured Gson instance.
  */
-public final class GsonProvider {
+final class GsonProvider {
 
   private static final Gson instance;
 
   static {
     instance = new GsonBuilder()
         .disableHtmlEscaping()
-        .registerTypeAdapter(SerializableRemixerContents.class, new RemixerStatusSerializer())
+        .registerTypeAdapter(SerializableRemixerContents.class, new RemixerContentsSerializer())
         .registerTypeAdapter(StoredVariable.class, new StoredVariableSerializer())
         .create();
   }
 
-  public static Gson getInstance() {
+  static Gson getInstance() {
     return instance;
   }
 }

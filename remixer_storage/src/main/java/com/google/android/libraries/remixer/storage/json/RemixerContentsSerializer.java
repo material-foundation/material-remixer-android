@@ -27,7 +27,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-class RemixerStatusSerializer
+class RemixerContentsSerializer
     implements JsonSerializer<SerializableRemixerContents>, JsonDeserializer<SerializableRemixerContents> {
 
   @Override
@@ -35,12 +35,12 @@ class RemixerStatusSerializer
       JsonElement json, Type typeOfT, JsonDeserializationContext context)
       throws JsonParseException {
     Gson gson = GsonProvider.getInstance();
-    SerializableRemixerContents status = new SerializableRemixerContents();
+    SerializableRemixerContents serializableRemixerContents = new SerializableRemixerContents();
     JsonObject object = json.getAsJsonObject();
     for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
-      status.addItem(gson.fromJson(entry.getValue(), StoredVariable.class));
+      serializableRemixerContents.addItem(gson.fromJson(entry.getValue(), StoredVariable.class));
     }
-    return status;
+    return serializableRemixerContents;
   }
 
   @Override

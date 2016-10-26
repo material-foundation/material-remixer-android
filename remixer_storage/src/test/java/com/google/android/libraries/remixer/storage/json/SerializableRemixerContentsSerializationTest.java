@@ -33,8 +33,7 @@ import org.robolectric.annotation.Config;
 @RunWith(RobolectricTestRunner.class)
 @Config(
     sdk = 21,
-    manifest = "src/main/AndroidManifest.xml",
-    packageName = "com.google.android.libraries.remixer.ui")
+    manifest = "src/main/AndroidManifest.xml")
 public class SerializableRemixerContentsSerializationTest {
 
   private Variable<Boolean> booleanVariable;
@@ -44,17 +43,17 @@ public class SerializableRemixerContentsSerializationTest {
   private RangeVariable rangeVariable;
   private ItemListVariable<String> stringListVariable;
   private Variable<String> stringVariable;
-  private SerializableRemixerContents status;
+  private SerializableRemixerContents serializableRemixerContents;
   private Gson gson = GsonProvider.getInstance();
 
   @Before
   public void setUp() {
-    status = new SerializableRemixerContents();
+    serializableRemixerContents = new SerializableRemixerContents();
     booleanVariable = new BooleanVariableBuilder()
         .setParentObject(this)
         .setKey("boolean")
         .buildAndInit();
-    status.addItem(booleanVariable);
+    serializableRemixerContents.addItem(booleanVariable);
     colorListVariable = new ItemListVariable.Builder<Integer>()
         .setParentObject(this)
         .setKey("colorList")
@@ -62,20 +61,20 @@ public class SerializableRemixerContentsSerializationTest {
         .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
         .setLayoutId(com.google.android.libraries.remixer.ui.R.layout.color_list_variable_widget)
         .buildAndInit();
-    status.addItem(colorListVariable);
+    serializableRemixerContents.addItem(colorListVariable);
     integerVariable  = new Variable.Builder<Integer>()
         .setDefaultValue(0)
         .setKey("integer")
         .setParentObject(this)
         .buildAndInit();
-    status.addItem(integerVariable);
+    serializableRemixerContents.addItem(integerVariable);
     integerListVariable = new ItemListVariable.Builder<Integer>()
         .setParentObject(this)
         .setKey("integerList")
         .setDefaultValue(Color.BLACK)
         .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
         .buildAndInit();
-    status.addItem(integerListVariable);
+    serializableRemixerContents.addItem(integerListVariable);
     rangeVariable = new RangeVariable.Builder()
         .setParentObject(this)
         .setKey("range")
@@ -84,36 +83,44 @@ public class SerializableRemixerContentsSerializationTest {
         .setIncrement(10)
         .setMaxValue(100)
         .buildAndInit();
-    status.addItem(rangeVariable);
+    serializableRemixerContents.addItem(rangeVariable);
     stringVariable = new StringVariableBuilder()
         .setParentObject(this)
         .setKey("string")
         .buildAndInit();
-    status.addItem(stringVariable);
+    serializableRemixerContents.addItem(stringVariable);
     stringListVariable = new ItemListVariable.Builder<String>()
         .setParentObject(this)
         .setKey("stringList")
         .setDefaultValue("a")
         .setPossibleValues(new String[]{"a", "b", "c"})
         .buildAndInit();
-    status.addItem(stringListVariable);
+    serializableRemixerContents.addItem(stringListVariable);
   }
 
   @Test
-  public void remixerStatusSerializesAndDeserializesTest() {
-    Assert.assertEquals(status, gson.fromJson(gson.toJsonTree(status), SerializableRemixerContents.class));
+  public void remixerContentsSerializesAndDeserializesTest() {
+    Assert.assertEquals(
+        serializableRemixerContents,
+        gson.fromJson(gson.toJsonTree(serializableRemixerContents),
+            SerializableRemixerContents.class));
   }
 
   @Test
-  public void modifiedRemixerStatusSerializesAndDeserializesTest() {
+  public void modifiedRemixerContentsSerializesAndDeserializesTest() {
     booleanVariable.setValue(true);
-    status.addItem(booleanVariable);
+    serializableRemixerContents.addItem(booleanVariable);
     Assert.assertEquals(
-        booleanVariable.getSelectedValue(), status.getItem(booleanVariable.getKey()).selectedValue);
+        booleanVariable.getSelectedValue(),
+        serializableRemixerContents.getItem(booleanVariable.getKey()).selectedValue);
     stringVariable.setValue("SOMENEWVALUE");
-    status.addItem(stringVariable);
+    serializableRemixerContents.addItem(stringVariable);
     Assert.assertEquals(
-        stringVariable.getSelectedValue(), status.getItem(stringVariable.getKey()).selectedValue);
-    Assert.assertEquals(status, gson.fromJson(gson.toJsonTree(status), SerializableRemixerContents.class));
+        stringVariable.getSelectedValue(),
+        serializableRemixerContents.getItem(stringVariable.getKey()).selectedValue);
+    Assert.assertEquals(
+        serializableRemixerContents,
+        gson.fromJson(gson.toJsonTree(serializableRemixerContents),
+            SerializableRemixerContents.class));
   }
 }

@@ -31,8 +31,7 @@ import org.robolectric.annotation.Config;
 @RunWith(RobolectricTestRunner.class)
 @Config(
     sdk = 21,
-    manifest = "src/main/AndroidManifest.xml",
-    packageName = "com.google.android.libraries.remixer.ui")
+    manifest = "src/main/AndroidManifest.xml")
 public class IntegerVariableSerializationTest {
 
   private static String KEY = "key";

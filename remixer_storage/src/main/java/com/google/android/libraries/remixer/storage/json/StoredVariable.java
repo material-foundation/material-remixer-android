@@ -121,21 +121,21 @@ class StoredVariable<T> {
    * Creates a Stored variable from a existing RemixerItem.
    */
   static StoredVariable fromRemixerItem(RemixerItem item) {
-    StoredVariable storage = null;
+    StoredVariable storedVariable = null;
     for (SupportedDataType type : SupportedDataType.values()) {
       try {
-        storage = type.getValueConverter().fromRemixerItem(item);
+        storedVariable = type.getValueConverter().fromRemixerItem(item);
         break;
       } catch (IllegalArgumentException ex) {
         // Don't do anything, this just wasn't the right data type.
       }
     }
-    if (storage == null) {
+    if (storedVariable == null) {
       throw new UnsupportedOperationException(
           "Cannot convert remixer item, maybe you forgot to add support for a new type?");
     }
-    storage.key = item.getKey();
-    storage.title = item.getTitle();
-    return storage;
+    storedVariable.key = item.getKey();
+    storedVariable.title = item.getTitle();
+    return storedVariable;
   }
 }

@@ -28,7 +28,7 @@ import java.util.Set;
  * callbacks, etc) to just focus on data. This object will be serialized to Json and back to get the
  * full status of Remixer across the entire app.
  */
-public class SerializableRemixerContents {
+class SerializableRemixerContents {
 
   /**
    * Mapping from Remixer Item ID to the item's representation in Serializable format.
@@ -36,10 +36,15 @@ public class SerializableRemixerContents {
    * <p>Notice that while {@link com.google.android.libraries.remixer.Remixer#keyMap} contains more
    * than one item per key, all of those items contain the same data (same value for variables), so
    * we only keep one of them here.
+   *
+   * <p>This is never used for anything other than storage and syncing. It is meant as a
+   * serializable copy of {@link com.google.android.libraries.remixer.Remixer}. When adding
+   * variables, the value should be synced to whatever is already stored here, or copied here if it
+   * does not exist.
    */
   private Map<String, StoredVariable> keyToDataMap;
 
-  public SerializableRemixerContents() {
+  SerializableRemixerContents() {
     keyToDataMap = new HashMap<>();
   }
 
@@ -48,7 +53,7 @@ public class SerializableRemixerContents {
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
    */
-  public void addItem(RemixerItem item) {
+  void addItem(RemixerItem item) {
     keyToDataMap.put(item.getKey(), StoredVariable.fromRemixerItem(item));
   }
 
@@ -74,9 +79,9 @@ public class SerializableRemixerContents {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    SerializableRemixerContents status = (SerializableRemixerContents) o;
+    SerializableRemixerContents serializableRemixerContents = (SerializableRemixerContents) o;
 
-    return keyToDataMap.equals(status.keyToDataMap);
+    return keyToDataMap.equals(serializableRemixerContents.keyToDataMap);
 
   }
 
