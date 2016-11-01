@@ -72,7 +72,7 @@ dependencies {
 
 ### If you're using the annotation-based API
 
-_(You most-likely want to do this)_. You need to add a couple more dependencies.
+_(You most likely want to do this)_. You need to add a couple more dependencies.
 
 In your main build.gradle add `classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'`, probably leaving your dependencies like this:
 ```gradle
@@ -85,6 +85,17 @@ buildscript {
 ```
 
 On the modules where you will be using Remixer `apply plugin: 'android-apt'`, and add an extra dependency on `provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'`. Notice how the dependency is a `provided` clause instead of `compile`, this is on purpose as this is not a regular dependency but a compiler plugin.
+```gradle
+apply plugin: 'android-apt'
+
+...
+
+dependencies {
+  ...
+  provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
+}
+
+```
 
 ## Repositories
 
