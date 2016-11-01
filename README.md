@@ -69,6 +69,8 @@ allprojects {
 
 And in your modules, add the dependencies you need from remixer, most likely these:
 ```gradle
+apply plugin: 'android-apt'
+
 dependencies {
     compile 'com.github.material-foundation:material-remixer-android:develop-SNAPSHOT'
     provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
