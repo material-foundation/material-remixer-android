@@ -50,9 +50,15 @@ __Disclaimer:__ Remixer still hasn't reached a stage that we consider is stable 
 
 Using gradle it's super easy to start using Remixer following these instructions.
 
-In your main build.gradle file make sure you have the following repositories set up:
+In your main build.gradle file make sure you have the following dependencies and repositories set up:
 
 ```gradle
+buildscript {
+  dependencies {
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+  }
+}
+
 allprojects {
     repositories {
         jcenter()
@@ -64,38 +70,12 @@ allprojects {
 And in your modules, add the dependencies you need from remixer, most likely these:
 ```gradle
 dependencies {
-    compile 'com.github.material-foundation.material-remixer-android:remixer_core:develop-SNAPSHOT'
-    compile 'com.github.material-foundation.material-remixer-android:remixer_ui:develop-SNAPSHOT'
-    compile 'com.github.material-foundation.material-remixer-android:remixer_storage:develop-SNAPSHOT'
+    compile 'com.github.material-foundation:material-remixer-android:develop-SNAPSHOT'
+    provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
 }
 ```
 
-### If you're using the annotation-based API
-
-_(You most likely want to do this)_. You need to add a couple more dependencies.
-
-In your main build.gradle add `classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'`, probably leaving your dependencies like this:
-```gradle
-buildscript {
-  dependencies {
-    classpath 'com.android.tools.build:gradle:2.2.0'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-  }
-}
-```
-
-On the modules where you will be using Remixer `apply plugin: 'android-apt'`, and add an extra dependency on `provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'`. Notice how the dependency is a `provided` clause instead of `compile`, this is on purpose as this is not a regular dependency but a compiler plugin.
-```gradle
-apply plugin: 'android-apt'
-
-...
-
-dependencies {
-  ...
-  provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
-}
-
-```
+Notice the dependency on `remixer_annotation` is a `provided` clause instead of `compile`, this is on purpose as this is not a regular dependency but a compiler plugin.
 
 ## Repositories
 
