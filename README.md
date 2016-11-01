@@ -27,23 +27,6 @@ The project is defined as a gradle project with submodules.
 * remixer_example: This is an example app.
   * main: the code for the example app
 
-## Building
-
-1. Clone the repository
-   ```git clone https://github.com/material-foundation/material-remixer-android.git```
-2. You have two options here:
-  1. Open it on Android Studio and build from there.
-  2. run `./gradlew build`  on your terminal (`gradlew.bat build` on Windows).
-    * This assumes that you have a copy of the android SDK and,
-    * That you have exported a `ANDROID_HOME` environment variable that points to your SDK install (the directory that contains subdirectories such as `tools`, `platform-tools`, etc.)
-      * If you use Android Studio on a mac that defaults to `/Users/<yourusername>/Library/Android/sdk`
-      * In this case you can put `export ANDROID_HOME=/Users/<yourusername>/Library/Android/sdk` in your `~/.profile` or `~/.bash_profile` as appropriate.)
-
-## Installing the example app
-
-If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
-```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```
-
 ## Try it in your app!
 
 __Disclaimer:__ Remixer still hasn't reached a stage that we consider is stable enough to commit to the current status of the API, it will be evolving quickly and we may commit breaking changes every once in a while. _That said_, we would love to have you try it out and tell us what you think is missing and what you'd like us to focus on.
@@ -78,6 +61,23 @@ dependencies {
 ```
 
 Notice the dependency on `remixer_annotation` is a `provided` clause instead of `compile`, this is on purpose as this is not a regular dependency but a compiler plugin.
+
+## Building
+
+1. Clone the repository
+   ```git clone https://github.com/material-foundation/material-remixer-android.git```
+2. You have two options here:
+  1. Open it on Android Studio and build from there.
+  2. run `./gradlew build`  on your terminal (`gradlew.bat build` on Windows).
+    * This assumes that you have a copy of the android SDK and,
+    * That you have exported a `ANDROID_HOME` environment variable that points to your SDK install (the directory that contains subdirectories such as `tools`, `platform-tools`, etc.)
+      * If you use Android Studio on a mac that defaults to `/Users/<yourusername>/Library/Android/sdk`
+      * In this case you can put `export ANDROID_HOME=/Users/<yourusername>/Library/Android/sdk` in your `~/.profile` or `~/.bash_profile` as appropriate.)
+
+### Installing the example app
+
+If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
+```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```
 
 ## Repositories
 
