@@ -109,12 +109,12 @@ public class SerializableRemixerContentsSerializationTest {
   @Test
   public void modifiedRemixerContentsSerializesAndDeserializesTest() {
     booleanVariable.setValue(true);
-    serializableRemixerContents.addItem(booleanVariable);
+    serializableRemixerContents.setValue(booleanVariable);
     Assert.assertEquals(
         booleanVariable.getSelectedValue(),
         serializableRemixerContents.getItem(booleanVariable.getKey()).selectedValue);
     stringVariable.setValue("SOMENEWVALUE");
-    serializableRemixerContents.addItem(stringVariable);
+    serializableRemixerContents.setValue(stringVariable);
     Assert.assertEquals(
         stringVariable.getSelectedValue(),
         serializableRemixerContents.getItem(stringVariable.getKey()).selectedValue);

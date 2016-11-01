@@ -47,13 +47,6 @@ public abstract class RemixerItem {
   @SuppressWarnings("unchecked")
   private final WeakReference parentObject;
   /**
-   * A copy of the parent object's class object. This will be necessary to know whether an object
-   * is of the same class as the parent object, even after the parent object has been reclaimed by
-   * the Garbage Collector.
-   */
-  @SuppressWarnings("unchecked")
-  private final Class parentObjectClass;
-  /**
    * The remixer instance this RemixerItem has been attached to.
    */
   protected Remixer remixer;
@@ -66,33 +59,7 @@ public abstract class RemixerItem {
     this.title = title;
     this.key = key;
     this.parentObject = new WeakReference(parentObject);
-    this.parentObjectClass = parentObject.getClass();
     this.layoutId = layoutId;
-  }
-
-  /**
-   * Checks whether the parent object is the same as the parameter.
-   */
-  public boolean isParentObject(Object object) {
-    if (object == null) {
-      return false;
-    }
-    return parentObject.get() == object;
-  }
-
-  /**
-   * Checks whether the parent object has been reclaimed.
-   */
-  public boolean hasParentObject() {
-    return parentObject.get() != null;
-  }
-
-  /**
-   * Checks whether the parameter is of the same class as the (possibly already reclaimed) parent
-   * object.
-   */
-  public boolean isSameClassAsParentObject(Object object) {
-    return parentObjectClass == object.getClass();
   }
 
   public String getTitle() {
@@ -111,32 +78,10 @@ public abstract class RemixerItem {
   }
 
   /**
-   * Removes the callback for this remixer item, it is used to avoid leaks through callbacks once
-   * activities are destroyed.
-   */
-  abstract void clearCallback();
-
-  /**
-   * Checks whether {@code item} is compatible with this RemixerItem.
-   * @throws IncompatibleRemixerItemsWithSameKeyException if {@code item} has the same key as this
-   *     object, and they are of different types or otherwise incompatible.
-   */
-  abstract void assertIsCompatibleWith(RemixerItem item);
-
-  /**
-   * Returns the parent object.
+   * Returns the parent object, may be null if the parent object has been reclaimed.
    */
   Object getParentObject() {
     return parentObject.get();
-  }
-
-  /**
-   * Clears the parent object reference to simulate reclaiming the parent object in tests.
-   *
-   * <p><b>Visible only for testing.</b>
-   */
-  void clearParentObject() {
-    parentObject.clear();
   }
 
   /**

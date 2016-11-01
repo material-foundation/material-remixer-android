@@ -16,7 +16,6 @@
 
 package com.google.android.libraries.remixer.storage.json;
 
-import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.RemixerItem;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import java.util.List;
  * a regular {@link com.google.android.libraries.remixer.RemixerItem} as soon as it's completely
  * parsed.
  */
-class StoredVariable<T> {
+public class StoredVariable<T> {
 
   // Json dictionary keys to serialize this object
   static final String KEY = "key";
@@ -81,19 +80,60 @@ class StoredVariable<T> {
    */
   T increment;
 
+  public String getKey() {
+    return key;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public String getDataType() {
+    return dataType;
+  }
+
+  public T getSelectedValue() {
+    return selectedValue;
+  }
+
+  public List<T> getPossibleValues() {
+    return possibleValues;
+  }
+
+  public T getMinValue() {
+    return minValue;
+  }
+
+  public T getMaxValue() {
+    return maxValue;
+  }
+
+  public T getIncrement() {
+    return increment;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
     StoredVariable<?> variable = (StoredVariable<?>) o;
+    if (!isCompatibleWith(variable))
+      return false;
+    return selectedValue != null ?
+        selectedValue.equals(variable.selectedValue) : variable.selectedValue == null;
+  }
+
+  /**
+   * Checks whether the configuration of this stored variable matches the configuration of the
+   * argument. The configuration explicitly excludes the value for comparison, the value may be
+   * synced later if the configurations are compatible
+   */
+  public boolean isCompatibleWith(StoredVariable<?> variable) {
 
     if (!key.equals(variable.key)) return false;
     if (title != null ? !title.equals(variable.title) : variable.title != null) return false;
     if (!dataType.equals(variable.dataType)) return false;
-    if (selectedValue != null ?
-        !selectedValue.equals(variable.selectedValue) : variable.selectedValue != null)
-      return false;
     if (possibleValues != null ?
         !possibleValues.equals(variable.possibleValues) : variable.possibleValues != null)
       return false;

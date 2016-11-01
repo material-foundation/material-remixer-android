@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.sync.SynchronizationMechanism;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +42,12 @@ public class Remixer {
   private List<RemixerItem> remixerItems;
 
   /**
+   * The synchronization mechanism used to keep values in sync across different instances of the
+   * variables and save/sync to other devices.
+   */
+  private SynchronizationMechanism synchronizationMechanism;
+
+  /**
    * Gets the singleton for Remixer.
    *
    * <p><b>Note this operation is not thread safe and should only be called from the main
@@ -53,9 +60,24 @@ public class Remixer {
     return instance;
   }
 
-  Remixer() {
+  /**
+   * Visible only for testing. Users should only use {@link #getInstance()}.
+   */
+  public Remixer() {
     keyMap = new HashMap<>();
     remixerItems = new ArrayList<>();
+  }
+
+  /**
+   * Set the synchronization mechanism to keep variables in sync locally and (possibly) with
+   * external sources.
+   *
+   * <p>Remixer relies on a SynchronizationMechanism instance to be the source of truth of the
+   * values and configuration, so the user should always set a SynchronizationMechanism.
+   */
+  public void setSynchronizationMechanism(SynchronizationMechanism synchronizationMechanism) {
+    this.synchronizationMechanism = synchronizationMechanism;
+    synchronizationMechanism.setRemixerInstance(this);
   }
 
   /**
@@ -77,47 +99,28 @@ public class Remixer {
   public void addItem(RemixerItem remixerItem) {
     List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
     List<RemixerItem> itemsToRemove = new ArrayList<>();
+    Object parentObject = remixerItem.getParentObject();
     for (RemixerItem existingItem : listForKey) {
-      existingItem.assertIsCompatibleWith(remixerItem);
-      if (!existingItem.hasParentObject()) {
-        // The parent activity has been reclaimed by the OS already. It has no callback and it's
-        // still around for keeping the value in sync, saving and checking consistency across types.
-        // Since we're adding a new item that has been asserted to be compatible, it is not
-        // necessary to keep this instance around.
-        itemsToRemove.add(existingItem);
-      } else {
-        // The parent activity is still alive and kicking.
-        if (existingItem.isParentObject(remixerItem.getParentObject())) {
-          // An object with the same key for the same parent object, this shouldn't happen so throw
-          // an exception.
-          throw new DuplicateKeyException(
-              String.format(
-                  Locale.getDefault(),
-                  "Duplicate key %s being used in class %s",
-                  remixerItem.getKey(),
-                  remixerItem.getParentObject().getClass().getCanonicalName()
-              ));
-        }
+      if (parentObject != null && parentObject == existingItem.getParentObject()) {
+        // An object with the same key for the same parent object, this shouldn't happen so throw
+        // an exception.
+        throw new DuplicateKeyException(
+            String.format(
+                Locale.getDefault(),
+                "Duplicate key %s being used in class %s",
+                remixerItem.getKey(),
+                remixerItem.getParentObject().getClass().getCanonicalName()
+            ));
       }
+
     }
-    for (RemixerItem remove : itemsToRemove) {
-      listForKey.remove(remove);
-      remixerItems.remove(remove);
+    if (synchronizationMechanism != null) {
+      // Notify the synchronization mechanism, which will take care of keeping the values in sync
+      // and checking compatibility.
+      synchronizationMechanism.onAddingRemixerItem(remixerItem);
     }
-    if (remixerItem instanceof Variable && listForKey.size() > 0) {
-      // Make sure that variables use their current value if it has been modified in another
-      // context.
-      // If any modification has been made in any other context to the value of variables with the
-      // same key, otherVariable will have the newest value.
-      Variable otherVariable = (Variable) listForKey.get(0);
-      // At this point newVariable will have the default value only.
-      Variable newVariable = (Variable) remixerItem;
-      // Make newVariable have the current value found in variables that have already been added to
-      // the Remixer.
-      newVariable.setValueWithoutNotifyingOthers(otherVariable.getSelectedValue());
-    }
-    listForKey.add(remixerItem);
     remixerItem.setRemixer(this);
+    listForKey.add(remixerItem);
     remixerItems.add(remixerItem);
   }
 
@@ -132,6 +135,34 @@ public class Remixer {
     return list;
   }
 
+  /**
+   * Notifies all other instances of variables with the same key that the value has changed and
+   * informs the synchronization mechanism as well.
+   */
+  void onValueChanged(Variable variable) {
+    synchronizationMechanism.onValueChanged(variable);
+    List<RemixerItem> itemList = getItemsWithKey(variable.getKey());
+    for (RemixerItem item : itemList) {
+      if (item != variable) {
+        ((Variable) item).setValueWithoutNotifyingOthers(variable.getSelectedValue());
+      }
+    }
+  }
+
+  /**
+   * Notifies all other instances of triggers with the same key that it has triggered and informs
+   * the synchronization mechanism as well.
+   */
+  void onTrigger(Trigger trigger) {
+    synchronizationMechanism.onTrigger(trigger);
+    List<RemixerItem> itemList = getItemsWithKey(trigger.getKey());
+    for (RemixerItem item : itemList) {
+      if (item != trigger) {
+        ((Trigger) item).triggerWithoutTriggeringOthers();
+      }
+    }
+  }
+
   public List<RemixerItem> getRemixerItems() {
     return remixerItems;
   }
@@ -144,7 +175,7 @@ public class Remixer {
   public List<RemixerItem> getRemixerItemsForParentObject(Object parent) {
     List<RemixerItem> result = new ArrayList<>();
     for (RemixerItem item : remixerItems) {
-      if (item.isParentObject(parent)) {
+      if (parent != null && item.getParentObject() == parent) {
         result.add(item);
       }
     }
@@ -152,14 +183,18 @@ public class Remixer {
   }
 
   /**
-   * Removes callbacks for all remixes whose parent object is {@code activity}. This makes sure
-   * {@code activity} doesn't leak through its callbacks.
+   * Handles the case in which an {@code activity} is destroyed by removing all its child remixes.
    */
-  public void cleanUpCallbacks(Object activity) {
+  public void onActivityDestroyed(Object activity) {
+    List<RemixerItem> itemsToRemove = new ArrayList<>();
     for (RemixerItem remixerItem : remixerItems) {
-      if (remixerItem.isParentObject(activity)) {
-        remixerItem.clearCallback();
+      if (activity.equals(remixerItem.getParentObject())) {
+        itemsToRemove.add(remixerItem);
       }
+    }
+    for (RemixerItem item : itemsToRemove) {
+      getItemsWithKey(item.getKey()).remove(item);
+      remixerItems.remove(item);
     }
   }
 }

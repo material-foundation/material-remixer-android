@@ -16,9 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import java.util.List;
-import java.util.Locale;
-
 /**
  * Base class for all Remixes that does not do any value checking. A variable takes care of calling
  * a callback when the value is changed. It does not support any sort of null values.
@@ -108,13 +105,13 @@ public class Variable<T> extends RemixerItem {
   }
 
   /**
-   * Sets the selected value to a new value without notifying other variables of this change. Only
-   * for internal use
+   * Sets the selected value to a new value without notifying other variables of this change.
+   * <b>Only for internal use!!</b>
    *
    * @param newValue Value to set. Cannot be null.
    * @throws IllegalArgumentException {@code newValue} is an invalid value for this Variable.
    */
-  void setValueWithoutNotifyingOthers(T newValue) {
+  public void setValueWithoutNotifyingOthers(T newValue) {
     checkValue(newValue);
     selectedValue = newValue;
     runCallback();
@@ -129,48 +126,12 @@ public class Variable<T> extends RemixerItem {
       // This instance hasn't been added to a Remixer, probably still being set up, abort.
       return;
     }
-    List<RemixerItem> itemList = remixer.getItemsWithKey(getKey());
-    for (RemixerItem item : itemList) {
-      if (item != this) {
-        ((Variable<T>) item).setValueWithoutNotifyingOthers(getSelectedValue());
-      }
-    }
+    remixer.onValueChanged(this);
   }
 
   private void runCallback() {
     if (callback != null) {
       callback.onValueSet(this);
-    }
-  }
-
-  @Override
-  void clearCallback() {
-    callback = null;
-  }
-
-  @Override
-  @SuppressWarnings("unchecked")
-  void assertIsCompatibleWith(RemixerItem item) {
-    if (item.getKey().equals(getKey())) {
-      if (item.getClass() != getClass()) {
-        throw new IncompatibleRemixerItemsWithSameKeyException(
-            String.format(
-                Locale.getDefault(),
-                "%s is incompatible with %s with same key %s",
-                getClass().getCanonicalName(),
-                item.getClass().getCanonicalName(),
-                getKey()));
-      }
-      Variable<T> variable = (Variable<T>) item;
-      if (variable.getVariableType() != getVariableType()) {
-        throw new IncompatibleRemixerItemsWithSameKeyException(
-            String.format(
-                Locale.getDefault(),
-                "Two variables with the same key, %s, have different types %s and %s",
-                getKey(),
-                getVariableType().getCanonicalName(),
-                variable.getVariableType().getCanonicalName()));
-      }
     }
   }
 

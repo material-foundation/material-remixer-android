@@ -16,8 +16,11 @@
 
 package com.google.android.libraries.remixer.storage.json;
 
+import com.google.android.libraries.remixer.IncompatibleRemixerItemsWithSameKeyException;
 import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,7 +31,7 @@ import java.util.Set;
  * callbacks, etc) to just focus on data. This object will be serialized to Json and back to get the
  * full status of Remixer across the entire app.
  */
-class SerializableRemixerContents {
+public class SerializableRemixerContents {
 
   /**
    * Mapping from Remixer Item ID to the item's representation in Serializable format.
@@ -44,7 +47,7 @@ class SerializableRemixerContents {
    */
   private Map<String, StoredVariable> keyToDataMap;
 
-  SerializableRemixerContents() {
+  public SerializableRemixerContents() {
     keyToDataMap = new HashMap<>();
   }
 
@@ -52,25 +55,44 @@ class SerializableRemixerContents {
    * Adds an item to the map, converting it to a StoredVariable.
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
+   *
+   * @throws IncompatibleRemixerItemsWithSameKeyException if the configuration for this item does
+   *     not exactly match that of the item that is already stored.
    */
-  void addItem(RemixerItem item) {
-    keyToDataMap.put(item.getKey(), StoredVariable.fromRemixerItem(item));
+  public void addItem(RemixerItem item) {
+    addItem(StoredVariable.fromRemixerItem(item));
   }
 
   /**
    * Adds an item to the map.
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
+   *
+   * @throws IncompatibleRemixerItemsWithSameKeyException if the configuration for this item does
+   *     not exactly match that of the item that is already stored.
    */
-  void addItem(StoredVariable item) {
-    keyToDataMap.put(item.key, item);
+  public void addItem(StoredVariable item) {
+    StoredVariable existingItem = keyToDataMap.get(item.key);
+    if (existingItem == null) {
+      keyToDataMap.put(item.key, item);
+    } else if (!existingItem.isCompatibleWith(item)) {
+      throw new IncompatibleRemixerItemsWithSameKeyException(
+          String.format(
+              Locale.getDefault(),
+              "Two variables with the same key, %s, have incompatible configurations " +
+                  "(data types %s, %s)",
+              item.key,
+              existingItem.dataType,
+              item.dataType));
+    }
+    // If it is already there and compatible we need to do nothing here. The syncing mechanism
   }
 
   Set<String> keySet() {
     return keyToDataMap.keySet();
   }
 
-  StoredVariable getItem(String key) {
+  public StoredVariable getItem(String key) {
     return keyToDataMap.get(key);
   }
 
@@ -88,5 +110,26 @@ class SerializableRemixerContents {
   @Override
   public int hashCode() {
     return keyToDataMap.hashCode();
+  }
+
+  /**
+   * Sets the value for the StoredVariable with key {@code variable.getKey()}. Must be called only
+   * after calling {@link #addItem(RemixerItem)} for a variable with this key.
+   */
+  @SuppressWarnings("unchecked")
+  public void setValue(Variable variable) {
+    StoredVariable storedVariable = StoredVariable.fromRemixerItem(variable);
+    StoredVariable existingStoredVariable = keyToDataMap.get(storedVariable.key);
+    if (!existingStoredVariable.isCompatibleWith(storedVariable)) {
+      throw new IncompatibleRemixerItemsWithSameKeyException(
+          String.format(
+              Locale.getDefault(),
+              "Setting value for key %s using incompatible variable. Existing data type is: %s, " +
+                  "new value data type is: %s",
+              storedVariable.key,
+              existingStoredVariable.dataType,
+              storedVariable.dataType));
+    }
+    existingStoredVariable.selectedValue = storedVariable.selectedValue;
   }
 }

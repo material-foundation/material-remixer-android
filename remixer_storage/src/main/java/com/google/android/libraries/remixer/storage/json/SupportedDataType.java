@@ -33,7 +33,7 @@ import com.google.gson.JsonPrimitive;
  * Each data dataTypeSerializableString has a dataTypeSerializableString identifier string and a {@link ValueConverter} which does most of the
  * heavywork for serialization.
  */
-enum SupportedDataType {
+public enum SupportedDataType {
 
   BOOLEAN("boolean", new ValueConverter<Boolean>("boolean") {
     @Override

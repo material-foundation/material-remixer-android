@@ -48,4 +48,5 @@ dependencies {
   compile project(':remixer_core')
   compile project(':remixer_ui')
   provided project(':remixer_annotation')
+  compile project(path: ':remixer_storage')
 }

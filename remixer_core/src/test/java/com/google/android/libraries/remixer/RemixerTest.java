@@ -48,58 +48,6 @@ public class RemixerTest {
     remixer.addItem(variable);
   }
 
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesWithDifferentTypes() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<Boolean> variableBoolean =
-        new Variable<>("name", "key", false, parent2, null, 0);
-
-    remixer.addItem(variableString);
-    remixer.addItem(variableBoolean);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesOneVariableOneTrigger() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Trigger trigger = new Trigger("name", "key", parent2, null, 0);
-
-    remixer.addItem(variableString);
-    remixer.addItem(trigger);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesOneVariableOneTriggerAfterParentObjectReclaimed() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Trigger trigger = new Trigger("name", "key", parent2, null, 0);
-
-    remixer.addItem(variableString);
-    // Simulate parent object reclaimed.
-    variableString.clearParentObject();
-    variableString.clearCallback();
-    remixer.addItem(trigger);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesWithDifferentTypesAfterParentObjectReclaimed() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<Boolean> variableBoolean =
-        new Variable<>("name", "key", false, parent2, null, 0);
-
-    remixer.addItem(variableString);
-    // Simulate parent object reclaimed.
-    variableString.clearParentObject();
-    variableString.clearCallback();
-    remixer.addItem(variableBoolean);
-  }
-
   /**
    * Replacement should only happen if the first parent object has been reclaimed and the remixer
    * item being added has a parent of the same class.
@@ -114,42 +62,13 @@ public class RemixerTest {
     // Add the first.
     remixer.addItem(variableString);
     // Simulate the first parent object is reclaimed.
-    variableString.clearParentObject();
-    variableString.clearCallback();
+    remixer.onActivityDestroyed(parent1);
     // Add the second, since the first object was "reclaimed" and they are compatible, the first
     // should be removed, and the second should be kept.
     remixer.addItem(variableString2);
     List<RemixerItem> list = remixer.getRemixerItems();
     Assert.assertEquals(1, list.size());
     Assert.assertEquals(variable2, list.get(0));
-  }
-
-  @Test
-  public void remixerUpdatesVariableValueWhenJustAdded() {
-    // Initialize two nearly identical variables with two different parent objects of the same class
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
-    remixer.addItem(variableString);
-    variableString.setValue("May the force be with you");
-    Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
-    remixer.addItem(variableString2);
-    Assert.assertEquals(variableString.getSelectedValue(), variableString2.getSelectedValue());
-  }
-
-  @Test
-  public void remixerUpdatesAllExistingVariableValuesWhenAnyOfThemChanges() {
-    // Initialize two nearly identical variables with two different parent objects of the same class
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
-    remixer.addItem(variableString);
-    remixer.addItem(variableString2);
-    variableString.setValue("May the force be with you");
-    Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
-    Assert.assertEquals(variableString.getSelectedValue(), variableString2.getSelectedValue());
   }
 
   @Test
