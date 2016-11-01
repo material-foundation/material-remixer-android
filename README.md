@@ -1,6 +1,6 @@
 # ![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
 
-Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself. 
+Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.
 
 This SDK for Android is currently in development.
 
@@ -27,6 +27,41 @@ The project is defined as a gradle project with submodules.
 * remixer_example: This is an example app.
   * main: the code for the example app
 
+## Try it in your app!
+
+__Disclaimer:__ Remixer still hasn't reached a stage that we consider is stable enough to commit to the current status of the API, it will be evolving quickly and we may commit breaking changes every once in a while. _That said_, we would love to have you try it out and tell us what you think is missing and what you'd like us to focus on.
+
+Using gradle it's super easy to start using Remixer following these instructions.
+
+In your main build.gradle file make sure you have the following dependencies and repositories set up:
+
+```gradle
+buildscript {
+  dependencies {
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+  }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+And in your modules, apply the `android-apt` plugin and add the remixer dependencies:
+```gradle
+apply plugin: 'android-apt'
+
+dependencies {
+    compile 'com.github.material-foundation:material-remixer-android:develop-SNAPSHOT'
+    provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
+}
+```
+
+Notice the dependency on `remixer_annotation` is a `provided` clause instead of `compile`, this is on purpose as this is not a regular dependency but a compiler plugin.
+
 ## Building
 
 1. Clone the repository
@@ -39,7 +74,7 @@ The project is defined as a gradle project with submodules.
       * If you use Android Studio on a mac that defaults to `/Users/<yourusername>/Library/Android/sdk`
       * In this case you can put `export ANDROID_HOME=/Users/<yourusername>/Library/Android/sdk` in your `~/.profile` or `~/.bash_profile` as appropriate.)
 
-## Installing the example app
+### Installing the example app
 
 If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
 ```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```
