@@ -18,6 +18,7 @@
 import org.gradle.internal.jvm.Jvm
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

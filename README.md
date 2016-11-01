@@ -1,6 +1,6 @@
 # ![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
 
-Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself. 
+Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.
 
 This SDK for Android is currently in development.
 
@@ -43,6 +43,48 @@ The project is defined as a gradle project with submodules.
 
 If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
 ```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```
+
+## Try it in your app!
+
+__Disclaimer:__ Remixer still hasn't reached a stage that we consider is stable enough to commit to the current status of the API, it will be evolving quickly and we may commit breaking changes every once in a while. _That said_, we would love to have you try it out and tell us what you think is missing and what you'd like us to focus on.
+
+Using gradle it's super easy to start using Remixer following these instructions.
+
+In your main build.gradle file make sure you have the following repositories set up:
+
+```gradle
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+And in your modules, add the dependencies you need from remixer, most likely these:
+```gradle
+dependencies {
+    compile 'com.github.material-foundation.material-remixer-android:remixer_core:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_ui:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_storage:develop-SNAPSHOT'
+}
+```
+
+### If you're using the annotation-based API
+
+_(You most-likely want to do this)_. You need to add a couple more dependencies.
+
+In your main build.gradle add `classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'`, probably leaving your dependencies like this:
+```gradle
+buildscript {
+  dependencies {
+    classpath 'com.android.tools.build:gradle:2.2.0'
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+  }
+}
+```
+
+On the modules where you will be using Remixer `apply plugin: 'android-apt'`, and add an extra dependency on `provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'`. Notice how the dependency is a `provided` clause instead of `compile`, this is on purpose as this is not a regular dependency but a compiler plugin.
 
 ## Repositories
 
