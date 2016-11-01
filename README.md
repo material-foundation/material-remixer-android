@@ -67,7 +67,7 @@ allprojects {
 }
 ```
 
-And in your modules, add the dependencies you need from remixer, most likely these:
+And in your modules, apply the `android-apt` plugin and add the remixer dependencies:
 ```gradle
 apply plugin: 'android-apt'
 
