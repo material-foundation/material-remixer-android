@@ -91,13 +91,27 @@ You need to add a few lines at the end of your `Activity.onCreate()`
   - A variation of `remixerFragment.attachToGesture(this, Direction.UP, 3);`, this example ties showing the Remixer Fragment on a 3-finger swipe up.
   - `remixerFragment.attachToButton(this, someButtonObject);`, this makes the OnClickListener for a button open the Remixer fragment
 
+Your `Activity.onCreate` may look like this:
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  //...
+  remixerButton = (Button) findViewById(R.id.button);
+  RemixerBinder.bind(this);
+  RemixerFragment remixerFragment = RemixerFragment.newInstance();
+  remixerFragment.attachToGesture(this, Direction.UP, 3);
+  remixerFragment.attachToButton(this, remixerButton);
+}
+```
+
 #### Define variables
 
 In order to define variables you only need to write methods that take one argument of the correct type and annotate them. The methods contain your logic to handle changes to these variables (update the UI accordingly). You can rest assured those methods will run in the main UI thread.
 
-There are a few very simple examples here, but you should look at the documentation for these annotations for more information.
+There are a few very simple examples here, but you should look at the [example](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/MainActivity.java) [activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/BoxActivity.java) and [documentation for these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
 
-A Range variable that goes from 15 to 70 and starts at 20 by default.
+A Range variable that goes from 15 to 70 and starts at 20 by default:
 ```java
 @RangeVariableMethod(
     minValue = 15, maxValue = 70, defaultValue = 20)
@@ -125,14 +139,14 @@ public void setTitleFont(String fontName) {
 }
 ```
 
-A String variable that sets freeform example text
+A String variable that sets freeform example text:
 ```java
 @StringVariableMethod
 public void setExampleText(String exampleText) {
 }
 ```
 
-A variable that lets you pick colors from a list.
+A variable that lets you pick colors from a list:
 ```java
 @IntegerListVariableMethod(
     title = "Title Color",
@@ -142,7 +156,7 @@ public void setTitleColor(Integer color) {
 }
 ```
 
-A trigger to simulate an event happening.
+A trigger to simulate an event happening:
 ```java
 @TriggerMethod
 public void simulateConnectionFailure() {
