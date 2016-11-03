@@ -23,7 +23,18 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Contains a list of {@link Variable}es.
+ * Contains a list of {@link Variable}s or {@link Trigger}s.
+ *
+ * <p>The Remixer object is the heart and soul of Remixer as a framework, it coordinates syncing and
+ * value changes.
+ *
+ * <p>For value and data syncing/persistence (both locally across activities, and persisting/saving
+ * to cloud backends, etc) and keeping a global state, the Remixer object relies on a {@link
+ * SynchronizationMechanism} set at initialization time (usually in your Application.onCreate()).
+ *
+ * <p>If you do not set a SynchronizationMechanism, remixer will not try to sync values across
+ * different contexts (activities) or check for consistency among those. It is recommended you
+ * always use one (even if it is just the LocalValueSyncing one) so you catch consistency errors.
  */
 public class Remixer {
 
@@ -74,8 +85,14 @@ public class Remixer {
    *
    * <p>Remixer relies on a SynchronizationMechanism instance to be the source of truth of the
    * values and configuration, so the user should always set a SynchronizationMechanism.
+   *
+   * @throws IllegalStateException if a SynchronizationMechanism has been already set.
    */
   public void setSynchronizationMechanism(SynchronizationMechanism synchronizationMechanism) {
+    if (this.synchronizationMechanism != null) {
+      throw new IllegalStateException(
+          "You can only set one synchronization mechanism in the app's lifetime");
+    }
     this.synchronizationMechanism = synchronizationMechanism;
     synchronizationMechanism.setRemixerInstance(this);
   }
