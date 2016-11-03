@@ -19,13 +19,11 @@
  * initialize Remixes.
  *
  * These annotations can only be used inside a public or default-access top-level class (No nested
- * classes) that extend android.app.Activity.
+ * classes) that extends android.app.Activity.
  *
- * If you decide to use Remixer Annotations in any class you must use @RemixerInstance to annotate
- * an instance of {@link com.google.android.libraries.remixer.Remixer}, and call {@link
+ * If you decide to use Remixer Annotations in any class you mus call {@link
  * com.google.android.libraries.remixer.annotation.RemixerBinder#bind(java.lang.Object)} from your
- * {@code onCreate(...)} passing the activity, this will set up Remixer for you, even creating the
- * instance.
+ * {@code onCreate(...)} passing the activity, this will set up Remixer for you.
  *
  * All of the other Remixer Method annotations in this package can be applied to any public or
  * default-access non-abstract instance method that takes one parameter of the right type (or no
