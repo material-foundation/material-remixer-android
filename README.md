@@ -111,6 +111,21 @@ In order to define variables you only need to write methods that take one argume
 
 There are a few very simple examples here, but you should look at the [example](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/MainActivity.java) [activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/BoxActivity.java) and [documentation for these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
 
+Once you add your annotated methods and build you should be able to invoke remixer (by doing a 3 finger swipe or clicking a button, depending on how you configured it in the section above), and tweak the variables or trigger the events guarded by the trigger.
+
+##### Range variables
+__Note:__ for the time being they only support Integers, not floats or doubles.
+
+They support the following properties:
+
+- `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
+- `title` the displayable name of the variable, if not set assumes `key`
+- `defaultValue` the initial value, if not set assumes 0 or `minValue` if 0 is out of range.
+- `minValue` the minimum value, if not set assumes 0
+- `maxValue` the maximum value, if not set assumes 100
+- `increment` the increment between two steps of the range, 1 by default.
+- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+
 A Range variable that goes from 15 to 70 and starts at 20 by default:
 ```java
 @RangeVariableMethod(
@@ -121,6 +136,14 @@ public void setFontSize(Integer fontSize) {
 
 (Notice how integer variables take `Integer` and not `int`, this is a limitation on the Java type system)
 
+##### Boolean Variable
+They support the following properties:
+
+- `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
+- `title` the displayable name of the variable, if not set assumes `key`
+- `defaultValue` the initial value, if not set assumes `false`
+- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+
 A Boolean variable that has true as a default value:
 ```java
 @BooleanVariableMethod(defaultValue = true, key = "someRemixerKey")
@@ -129,6 +152,15 @@ public void setUseNewDialog(Boolean useNewDialog) {
 ```
 
 (Notice how boolean variables take `Boolean` and not `boolean`, this is a limitation on the Java type system)
+
+##### String List Variable
+They support the following properties:
+
+- `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
+- `title` the displayable name of the variable, if not set assumes `key`
+- `defaultValue` the initial value, if not set assumes the first in the `possibleValues` list
+- `possibleValues` the list of possible values.
+- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
 
 A String List variable that sets fonts from a list and defaults to the first in the list:
 ```java
@@ -139,6 +171,13 @@ public void setTitleFont(String fontName) {
 }
 ```
 
+##### String Variable
+
+- `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
+- `title` the displayable name of the variable, if not set assumes `key`
+- `defaultValue` the initial value, if not set assumes the empty string.
+- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+
 A String variable that sets freeform example text:
 ```java
 @StringVariableMethod
@@ -146,7 +185,15 @@ public void setExampleText(String exampleText) {
 }
 ```
 
-A variable that lets you pick colors from a list:
+##### Integer List Variable
+
+- `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
+- `title` the displayable name of the variable, if not set assumes `key`
+- `defaultValue` the initial value, if not set assumes the first in the `possibleValues` list
+- `possibleValues` the list of possible values.
+- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+
+A variable that lets you pick colors from a list, this example uses a custom layout id to guarantee that it's treated as a Color:
 ```java
 @IntegerListVariableMethod(
     title = "Title Color",
@@ -156,14 +203,18 @@ public void setTitleColor(Integer color) {
 }
 ```
 
+##### Trigger
+
+- `key` the key for this trigger, you can use it to share the same value across activities, if not set it assumes the method name.
+- `title` the displayable name of the trigger, if not set assumes `key`
+- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+
 A trigger to simulate an event happening:
 ```java
 @TriggerMethod
 public void simulateConnectionFailure() {
 }
 ```
-
-Once you add your annotated methods and build you should be able to invoke remixer (by doing a 3 finger swipe or clicking a button, depending on how you configured it in the section above), and tweak the variables or trigger the events guarded by the trigger.
 
 ## Building
 
