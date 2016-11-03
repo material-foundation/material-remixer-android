@@ -31,6 +31,8 @@ The project is defined as a gradle project with submodules.
 
 __Disclaimer:__ Remixer still hasn't reached a stage that we consider is stable enough to commit to the current status of the API, it will be evolving quickly and we may commit breaking changes every once in a while. _That said_, we would love to have you try it out and tell us what you think is missing and what you'd like us to focus on.
 
+### Set up dependencies
+
 Using gradle it's super easy to start using Remixer following these instructions.
 
 In your main build.gradle file make sure you have the following dependencies and repositories set up:
@@ -55,12 +57,113 @@ And in your modules, apply the `android-apt` plugin and add the remixer dependen
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.material-foundation:material-remixer-android:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_core:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_ui:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_storage:develop-SNAPSHOT'
     provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
 }
 ```
 
 Notice the dependency on `remixer_annotation` is a `provided` clause instead of `compile`, this is on purpose as this is not a regular dependency but a compiler plugin.
+
+### Global remixer set up
+If you have not subclassed the application class it is recommended you do it since this is a one-time global initialization.
+
+In your application class you need to add RemixerCallbacks as an ActivityLifecycleCallbacks instance, so Remixer knows to remove old variables and triggers when activities are destroyed, to avoid leaks.
+```java
+class MyApplication extends android.app.Application {
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    registerActivityLifecycleCallbacks(RemixerCallbacks.getInstance());
+  }
+}
+```
+
+### How to use it in an activity
+
+__Only in the activities where you're using remixer__
+
+You need to add a few lines at the end of your `Activity.onCreate()`
+
+1. `RemixerBinder.bind(this);` creates, initializes and sets up all the Variables and trigger you define in this activity.
+2. `RemixerFragment remixerFragment = RemixerFragment.newInstance();` creates the fragment that will be shown when remixer is invoked, then you need at least one of the following:
+  - A variation of `remixerFragment.attachToGesture(this, Direction.UP, 3);`, this example ties showing the Remixer Fragment on a 3-finger swipe up.
+  - `remixerFragment.attachToButton(this, someButtonObject);`, this makes the OnClickListener for a button open the Remixer fragment.
+
+Your `Activity.onCreate` may look like this:
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  //...
+  remixerButton = (Button) findViewById(R.id.button);
+  RemixerBinder.bind(this);
+  RemixerFragment remixerFragment = RemixerFragment.newInstance();
+  remixerFragment.attachToGesture(this, Direction.UP, 3);
+  remixerFragment.attachToButton(this, remixerButton);
+}
+```
+
+#### Define variables
+
+In order to define variables you only need to write methods that take one argument of the correct type and annotate them. The methods contain your logic to handle changes to these variables (update the UI accordingly). You can rest assured those methods will run in the main UI thread.
+
+There are a few very simple examples here, but you should look at the [example](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/MainActivity.java) [activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/BoxActivity.java) and [documentation for these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
+
+A Range variable that goes from 15 to 70 and starts at 20 by default:
+```java
+@RangeVariableMethod(
+    minValue = 15, maxValue = 70, defaultValue = 20)
+public void setFontSize(Integer fontSize) {
+}
+```
+
+(Notice how integer variables take `Integer` and not `int`, this is a limitation on the Java type system)
+
+A Boolean variable that has true as a default value:
+```java
+@BooleanVariableMethod(defaultValue = true, key = "someRemixerKey")
+public void setUseNewDialog(Boolean useNewDialog) {
+}
+```
+
+(Notice how boolean variables take `Boolean` and not `boolean`, this is a limitation on the Java type system)
+
+A String List variable that sets fonts from a list and defaults to the first in the list:
+```java
+@StringListVariableMethod(
+    title = "Title font",
+    possibleValues = {"Roboto", "Roboto Mono", "Comic Sans MS"})
+public void setTitleFont(String fontName) {
+}
+```
+
+A String variable that sets freeform example text:
+```java
+@StringVariableMethod
+public void setExampleText(String exampleText) {
+}
+```
+
+A variable that lets you pick colors from a list:
+```java
+@IntegerListVariableMethod(
+    title = "Title Color",
+    possibleValues = {Color.parseColor("#000000"), Color.parseColor("#DCDCDC")},
+    layoutId = R.layout.color_list_variable_widget)
+public void setTitleColor(Integer color) {
+}
+```
+
+A trigger to simulate an event happening:
+```java
+@TriggerMethod
+public void simulateConnectionFailure() {
+}
+```
+
+Once you add your annotated methods and build you should be able to invoke remixer (by doing a 3 finger swipe or clicking a button, depending on how you configured it in the section above), and tweak the variables or trigger the events guarded by the trigger.
 
 ## Building
 
