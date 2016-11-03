@@ -16,8 +16,6 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
-import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.JavaFile;
 import java.io.IOException;

@@ -26,12 +26,11 @@ public class RemixerBindingException extends RuntimeException {
    * Advice to append at the end of messages.
    */
   private static final String ADVICE =
-      ". Make sure that you're using @RemixerInstance on an instance of this class and that you"
-          + " are not proguarding out this class' binder. Normally adding this to your proguard"
-          + " configuration should help: "
+      ". Make sure that you're using com.google.android.libraries.remixer.annotation. *Method"
+          + " annotations in this class, are not proguarding out this class' binder. Normally"
+          + " adding this to your proguard configuration should help: "
           + "-keep class * extends "
           + "com.google.google.android.libraries.remixer.annotation.RemixerBinder$Binder";
-
   public RemixerBindingException(String message, Throwable ex) {
     super(message + ADVICE, ex);
   }
