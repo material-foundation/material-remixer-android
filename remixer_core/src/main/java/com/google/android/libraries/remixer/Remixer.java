@@ -62,16 +62,15 @@ public class Remixer {
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    * Checks that the remixer item is compatible with the existing remixer items with the same key.
    *
-   * <p>This method also removes old remixer items whose parent objects have been reclaimed by the
-   * Garbage collector which are being replaced by items from the same class of parent objects.
-   * No items are removed until equivalent ones from the same parent object class are added to
+   * <p>This method also removes old remixer items whose contexts have been reclaimed by the
+   * Garbage collector which are being replaced by items from the same class of context.
+   * No items are removed until equivalent ones from the same context class are added to
    * replace them. This guarantees that no incompatible items for the same key are ever accepted.
    *
    * @param remixerItem The remixer item to be added.
    * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
-   *     added by other parent objects with incompatible types.
-   * @throws DuplicateKeyException Another item with the same key was added by the same parent
-   *     object.
+   *     added other contexts with incompatible types.
+   * @throws DuplicateKeyException Another item with the same key was added for the same context.
    */
   @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
@@ -79,23 +78,23 @@ public class Remixer {
     List<RemixerItem> itemsToRemove = new ArrayList<>();
     for (RemixerItem existingItem : listForKey) {
       existingItem.assertIsCompatibleWith(remixerItem);
-      if (!existingItem.hasParentObject()) {
-        // The parent activity has been reclaimed by the OS already. It has no callback and it's
+      if (!existingItem.hasContext()) {
+        // The context activity has been reclaimed by the OS already. It has no callback and it's
         // still around for keeping the value in sync, saving and checking consistency across types.
         // Since we're adding a new item that has been asserted to be compatible, it is not
         // necessary to keep this instance around.
         itemsToRemove.add(existingItem);
       } else {
-        // The parent activity is still alive and kicking.
-        if (existingItem.isParentObject(remixerItem.getParentObject())) {
-          // An object with the same key for the same parent object, this shouldn't happen so throw
+        // The context activity is still alive and kicking.
+        if (existingItem.isContext(remixerItem.getContext())) {
+          // An object with the same key for the same context, this shouldn't happen so throw
           // an exception.
           throw new DuplicateKeyException(
               String.format(
                   Locale.getDefault(),
                   "Duplicate key %s being used in class %s",
                   remixerItem.getKey(),
-                  remixerItem.getParentObject().getClass().getCanonicalName()
+                  remixerItem.getContext().getClass().getCanonicalName()
               ));
         }
       }
@@ -137,14 +136,13 @@ public class Remixer {
   }
 
   /**
-   * Gets all the Remixer Items associated with the parent object {@code parent}. {@code parent} is
-   * expected to be an Activity, it is Object here because remixer_core cannot depend on the Android
-   * SDK.
+   * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
+   * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
    */
-  public List<RemixerItem> getRemixerItemsForParentObject(Object parent) {
+  public List<RemixerItem> getRemixerItemsForContext(Object context) {
     List<RemixerItem> result = new ArrayList<>();
     for (RemixerItem item : remixerItems) {
-      if (item.isParentObject(parent)) {
+      if (item.isContext(context)) {
         result.add(item);
       }
     }
@@ -152,12 +150,12 @@ public class Remixer {
   }
 
   /**
-   * Removes callbacks for all remixes whose parent object is {@code activity}. This makes sure
+   * Removes callbacks for all remixes whose context is {@code activity}. This makes sure
    * {@code activity} doesn't leak through its callbacks.
    */
   public void cleanUpCallbacks(Object activity) {
     for (RemixerItem remixerItem : remixerItems) {
-      if (remixerItem.isParentObject(activity)) {
+      if (remixerItem.isContext(activity)) {
         remixerItem.clearCallback();
       }
     }

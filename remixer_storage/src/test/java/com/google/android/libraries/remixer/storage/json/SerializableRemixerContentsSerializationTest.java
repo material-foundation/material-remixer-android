@@ -50,12 +50,12 @@ public class SerializableRemixerContentsSerializationTest {
   public void setUp() {
     serializableRemixerContents = new SerializableRemixerContents();
     booleanVariable = new BooleanVariableBuilder()
-        .setParentObject(this)
+        .setContext(this)
         .setKey("boolean")
         .buildAndInit();
     serializableRemixerContents.addItem(booleanVariable);
     colorListVariable = new ItemListVariable.Builder<Integer>()
-        .setParentObject(this)
+        .setContext(this)
         .setKey("colorList")
         .setDefaultValue(Color.BLACK)
         .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
@@ -65,18 +65,18 @@ public class SerializableRemixerContentsSerializationTest {
     integerVariable  = new Variable.Builder<Integer>()
         .setDefaultValue(0)
         .setKey("integer")
-        .setParentObject(this)
+        .setContext(this)
         .buildAndInit();
     serializableRemixerContents.addItem(integerVariable);
     integerListVariable = new ItemListVariable.Builder<Integer>()
-        .setParentObject(this)
+        .setContext(this)
         .setKey("integerList")
         .setDefaultValue(Color.BLACK)
         .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
         .buildAndInit();
     serializableRemixerContents.addItem(integerListVariable);
     rangeVariable = new RangeVariable.Builder()
-        .setParentObject(this)
+        .setContext(this)
         .setKey("range")
         .setDefaultValue(10)
         .setMinValue(0)
@@ -85,12 +85,12 @@ public class SerializableRemixerContentsSerializationTest {
         .buildAndInit();
     serializableRemixerContents.addItem(rangeVariable);
     stringVariable = new StringVariableBuilder()
-        .setParentObject(this)
+        .setContext(this)
         .setKey("string")
         .buildAndInit();
     serializableRemixerContents.addItem(stringVariable);
     stringListVariable = new ItemListVariable.Builder<String>()
-        .setParentObject(this)
+        .setContext(this)
         .setKey("stringList")
         .setDefaultValue("a")
         .setPossibleValues(new String[]{"a", "b", "c"})

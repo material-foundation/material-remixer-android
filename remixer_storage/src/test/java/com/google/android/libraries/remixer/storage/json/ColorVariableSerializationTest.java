@@ -40,7 +40,7 @@ public class ColorVariableSerializationTest {
   @Before
   public void setUp() {
     colorListVariable = new ItemListVariable.Builder<Integer>()
-        .setParentObject(this)
+        .setContext(this)
         .setKey(KEY)
         .setDefaultValue(Color.BLACK)
         .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
