@@ -69,13 +69,13 @@ Notice the dependency on `remixer_annotation` is a `provided` clause instead of 
 ### Global remixer set up
 If you have not subclassed the application class it is recommended you do it since this is a one-time global initialization.
 
-In your application class you need to add RemixerCallbacks as an ActivityLifecycleCallbacks instance, so Remixer knows to remove old variables and triggers when activities are destroyed, to avoid leaks.
+In your application class you need to add RemixerActivityLifecycleCallbacks as an ActivityLifecycleCallbacks instance, so Remixer knows to remove old variables and triggers when activities are destroyed, to avoid leaks.
 ```java
 class MyApplication extends android.app.Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    registerActivityLifecycleCallbacks(RemixerCallbacks.getInstance());
+    registerActivityLifecycleCallbacks(RemixerActivityLifecycleCallbacks.getInstance());
   }
 }
 ```
