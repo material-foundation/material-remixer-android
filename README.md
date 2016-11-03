@@ -87,9 +87,9 @@ __Only in the activities where you're using remixer__
 You need to add a few lines at the end of your `Activity.onCreate()`
 
 1. `RemixerBinder.bind(this);` creates, initializes and sets up all the Variables and trigger you define in this activity.
-2. `RemixerFragment remixerFragment = RemixerFragment.newInstance();` Creates the fragment that will be shown when remixer is invoked, then you need at least one of the following:
+2. `RemixerFragment remixerFragment = RemixerFragment.newInstance();` creates the fragment that will be shown when remixer is invoked, then you need at least one of the following:
   - A variation of `remixerFragment.attachToGesture(this, Direction.UP, 3);`, this example ties showing the Remixer Fragment on a 3-finger swipe up.
-  - `remixerFragment.attachToButton(this, someButtonObject);`, this makes the OnClickListener for a button open the Remixer fragment
+  - `remixerFragment.attachToButton(this, someButtonObject);`, this makes the OnClickListener for a button open the Remixer fragment.
 
 Your `Activity.onCreate` may look like this:
 ```java
@@ -123,7 +123,7 @@ public void setFontSize(Integer fontSize) {
 
 A Boolean variable that has true as a default value:
 ```java
-@BooleanVariableMethod(defaultValue = true)
+@BooleanVariableMethod(defaultValue = true, key = "someRemixerKey")
 public void setUseNewDialog(Boolean useNewDialog) {
 }
 ```
