@@ -86,7 +86,7 @@ public class Remixer {
         itemsToRemove.add(existingItem);
       } else {
         // The context activity is still alive and kicking.
-        if (existingItem.isContext(remixerItem.getContext())) {
+        if (existingItem.matchesContext(remixerItem.getContext())) {
           // An object with the same key for the same context, this shouldn't happen so throw
           // an exception.
           throw new DuplicateKeyException(
@@ -142,7 +142,7 @@ public class Remixer {
   public List<RemixerItem> getRemixerItemsForContext(Object context) {
     List<RemixerItem> result = new ArrayList<>();
     for (RemixerItem item : remixerItems) {
-      if (item.isContext(context)) {
+      if (item.matchesContext(context)) {
         result.add(item);
       }
     }
@@ -155,7 +155,7 @@ public class Remixer {
    */
   public void cleanUpCallbacks(Object activity) {
     for (RemixerItem remixerItem : remixerItems) {
-      if (remixerItem.isContext(activity)) {
+      if (remixerItem.matchesContext(activity)) {
         remixerItem.clearCallback();
       }
     }

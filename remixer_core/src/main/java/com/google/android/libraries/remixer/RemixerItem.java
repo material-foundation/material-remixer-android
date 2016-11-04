@@ -45,8 +45,7 @@ public abstract class RemixerItem {
    * <p>It should be a reference to an activity, but it isn't since remixer_core cannot depend on
    * Android classes. It is a weak reference in order not to leak the activity accidentally.
    */
-  @SuppressWarnings("unchecked")
-  private final WeakReference context;
+  private final WeakReference<Object> context;
   /**
    * The remixer instance this RemixerItem has been attached to.
    */
@@ -55,18 +54,17 @@ public abstract class RemixerItem {
   /**
    * Constructs a new RemixerItem with the given key, title and layoutId.
    */
-  @SuppressWarnings("unchecked")
   protected RemixerItem(String title, String key, Object context, int layoutId) {
     this.title = title;
     this.key = key;
-    this.context = new WeakReference(context);
+    this.context = new WeakReference<Object>(context);
     this.layoutId = layoutId;
   }
 
   /**
    * Checks whether the context is the same as the parameter.
    */
-  public boolean isContext(Object object) {
+  public boolean matchesContext(Object object) {
     if (object == null) {
       return false;
     }
