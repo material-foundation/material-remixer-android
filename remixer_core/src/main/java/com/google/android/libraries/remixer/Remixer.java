@@ -138,6 +138,9 @@ public class Remixer {
     remixerItems.add(remixerItem);
   }
 
+  /**
+   * Gets the list of items that have the given key.
+   */
   public List<RemixerItem> getItemsWithKey(String key) {
     List<RemixerItem> list = null;
     if (keyMap.containsKey(key)) {
