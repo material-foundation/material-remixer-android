@@ -39,13 +39,13 @@ public abstract class RemixerItem {
    */
   private final int layoutId;
   /**
-   * A weak reference to the object that created this RemixerItem.
+   * A weak reference to this RemixerItem's context. The RemixerItem's lifecycle is tied to its
+   * contexts'.
    *
    * <p>It should be a reference to an activity, but it isn't since remixer_core cannot depend on
    * Android classes. It is a weak reference in order not to leak the activity accidentally.
    */
-  @SuppressWarnings("unchecked")
-  private final WeakReference parentObject;
+  private final WeakReference<Object> context;
   /**
    * The remixer instance this RemixerItem has been attached to.
    */
@@ -54,11 +54,10 @@ public abstract class RemixerItem {
   /**
    * Constructs a new RemixerItem with the given key, title and layoutId.
    */
-  @SuppressWarnings("unchecked")
-  protected RemixerItem(String title, String key, Object parentObject, int layoutId) {
+  protected RemixerItem(String title, String key, Object context, int layoutId) {
     this.title = title;
     this.key = key;
-    this.parentObject = new WeakReference(parentObject);
+    this.context = new WeakReference<>(context);
     this.layoutId = layoutId;
   }
 
@@ -78,10 +77,10 @@ public abstract class RemixerItem {
   }
 
   /**
-   * Returns the parent object, may be null if the parent object has been reclaimed.
+   * Returns the context.
    */
-  Object getParentObject() {
-    return parentObject.get();
+  Object getContext() {
+    return context.get();
   }
 
   /**

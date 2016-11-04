@@ -43,26 +43,26 @@ public class RemixerTest {
   }
 
   @Test(expected = DuplicateKeyException.class)
-  public void remixerRejectsDuplicatesForSameParentObject() {
+  public void remixerRejectsDuplicatesForSamecontext() {
     remixer.addItem(variable);
     remixer.addItem(variable);
   }
 
   /**
-   * Replacement should only happen if the first parent object has been reclaimed and the remixer
-   * item being added has a parent of the same class.
+   * Replacement should only happen if the first context has been reclaimed and the remixer
+   * item being added has a context of the same class.
    */
   public void remixerReplacesVariableCorrectly() {
-    // Initialize two nearly identical variables with two different parent objects of the same class
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
+    // Initialize two nearly identical variables with two different contexts of the same class
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
+    final Variable<String> variableString2 = new Variable<>("name", "key", "", context2, null, 0);
 
     // Add the first.
     remixer.addItem(variableString);
     // Simulate the first parent object is reclaimed.
-    remixer.onActivityDestroyed(parent1);
+    remixer.onActivityDestroyed(context1);
     // Add the second, since the first object was "reclaimed" and they are compatible, the first
     // should be removed, and the second should be kept.
     remixer.addItem(variableString2);

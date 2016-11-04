@@ -42,11 +42,11 @@ public class StringVariableSerializationTest {
   @Before
   public void setUp() {
     stringVariable = new StringVariableBuilder()
-        .setParentObject(this)
+        .setContext(this)
         .setKey(KEY)
         .buildAndInit();
     stringListVariable = new ItemListVariable.Builder<String>()
-        .setParentObject(this)
+        .setContext(this)
         .setKey(KEY)
         .setDefaultValue("a")
         .setPossibleValues(new String[]{"a", "b", "c"})

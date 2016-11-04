@@ -101,24 +101,22 @@ public class Remixer {
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    * Checks that the remixer item is compatible with the existing remixer items with the same key.
    *
-   * <p>This method also removes old remixer items whose parent objects have been reclaimed by the
-   * Garbage collector which are being replaced by items from the same class of parent objects.
-   * No items are removed until equivalent ones from the same parent object class are added to
+   * <p>This method also removes old remixer items whose contexts have been reclaimed by the
+   * Garbage collector which are being replaced by items from the same class of context.
+   * No items are removed until equivalent ones from the same context class are added to
    * replace them. This guarantees that no incompatible items for the same key are ever accepted.
    *
    * @param remixerItem The remixer item to be added.
    * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
-   *     added by other parent objects with incompatible types.
-   * @throws DuplicateKeyException Another item with the same key was added by the same parent
-   *     object.
+   *     added other contexts with incompatible types.
+   * @throws DuplicateKeyException Another item with the same key was added for the same context.
    */
   @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
     List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
-    List<RemixerItem> itemsToRemove = new ArrayList<>();
-    Object parentObject = remixerItem.getParentObject();
     for (RemixerItem existingItem : listForKey) {
-      if (parentObject != null && parentObject == existingItem.getParentObject()) {
+      if (remixerItem.getContext() != null
+          && remixerItem.getContext() == existingItem.getContext()) {
         // An object with the same key for the same parent object, this shouldn't happen so throw
         // an exception.
         throw new DuplicateKeyException(
@@ -126,10 +124,9 @@ public class Remixer {
                 Locale.getDefault(),
                 "Duplicate key %s being used in class %s",
                 remixerItem.getKey(),
-                remixerItem.getParentObject().getClass().getCanonicalName()
+                existingItem.getContext().getClass().getCanonicalName()
             ));
       }
-
     }
     if (synchronizationMechanism != null) {
       // Notify the synchronization mechanism, which will take care of keeping the values in sync
@@ -185,14 +182,13 @@ public class Remixer {
   }
 
   /**
-   * Gets all the Remixer Items associated with the parent object {@code parent}. {@code parent} is
-   * expected to be an Activity, it is Object here because remixer_core cannot depend on the Android
-   * SDK.
+   * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
+   * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
    */
-  public List<RemixerItem> getRemixerItemsForParentObject(Object parent) {
+  public List<RemixerItem> getRemixerItemsForContext(Object context) {
     List<RemixerItem> result = new ArrayList<>();
     for (RemixerItem item : remixerItems) {
-      if (parent != null && item.getParentObject() == parent) {
+      if (context != null && item.getContext() == context) {
         result.add(item);
       }
     }
@@ -205,7 +201,7 @@ public class Remixer {
   public void onActivityDestroyed(Object activity) {
     List<RemixerItem> itemsToRemove = new ArrayList<>();
     for (RemixerItem remixerItem : remixerItems) {
-      if (activity.equals(remixerItem.getParentObject())) {
+      if (activity.equals(remixerItem.getContext())) {
         itemsToRemove.add(remixerItem);
       }
     }

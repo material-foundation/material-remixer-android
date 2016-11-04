@@ -40,7 +40,7 @@ public class BooleanVariableSerializationTest {
   @Before
   public void setUp() {
     booleanVariable = new BooleanVariableBuilder()
-        .setParentObject(this)
+        .setContext(this)
         .setKey(KEY)
         .buildAndInit();
   }

@@ -24,12 +24,12 @@ package com.google.android.libraries.remixer;
 public class Trigger extends RemixerItem {
   private Runnable runnable;
 
-  public Trigger(String title, String key, Object parentObject, Runnable runnable) {
-    this(title, key, parentObject, runnable, 0);
+  public Trigger(String title, String key, Object context, Runnable runnable) {
+    this(title, key, context, runnable, 0);
   }
 
-  public Trigger(String title, String key, Object parentObject, Runnable runnable, int layoutId) {
-    super(title, key, parentObject, layoutId);
+  public Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
+    super(title, key, context, layoutId);
     this.runnable = runnable;
   }
 
