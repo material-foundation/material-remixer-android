@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/material-motion/material-motion-runtime-android.svg?branch=develop)](https://travis-ci.org/material-motion/material-motion-runtime-android) [![codecov](https://codecov.io/gh/material-motion/material-motion-runtime-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-motion/material-motion-runtime-android)
 # ![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
 
 Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.

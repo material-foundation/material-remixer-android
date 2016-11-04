@@ -22,7 +22,7 @@ before_install:
   - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
 script:
-  - ./gradlew check
+  - ./gradlew build test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
