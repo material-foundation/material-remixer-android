@@ -43,18 +43,18 @@ public class RemixerTest {
   }
 
   @Test(expected = DuplicateKeyException.class)
-  public void remixerRejectsDuplicatesForSameParentObject() {
+  public void remixerRejectsDuplicatesForSamecontext() {
     remixer.addItem(variable);
     remixer.addItem(variable);
   }
 
   @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
   public void remixerRejectsDuplicatesWithDifferentTypes() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
     final Variable<Boolean> variableBoolean =
-        new Variable<>("name", "key", false, parent2, null, 0);
+        new Variable<>("name", "key", false, context2, null, 0);
 
     remixer.addItem(variableString);
     remixer.addItem(variableBoolean);
@@ -62,59 +62,59 @@ public class RemixerTest {
 
   @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
   public void remixerRejectsDuplicatesOneVariableOneTrigger() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Trigger trigger = new Trigger("name", "key", parent2, null, 0);
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
+    final Trigger trigger = new Trigger("name", "key", context2, null, 0);
 
     remixer.addItem(variableString);
     remixer.addItem(trigger);
   }
 
   @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesOneVariableOneTriggerAfterParentObjectReclaimed() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Trigger trigger = new Trigger("name", "key", parent2, null, 0);
+  public void remixerRejectsDuplicatesOneVariableOneTriggerAftercontextReclaimed() {
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
+    final Trigger trigger = new Trigger("name", "key", context2, null, 0);
 
     remixer.addItem(variableString);
-    // Simulate parent object reclaimed.
-    variableString.clearParentObject();
+    // Simulate context reclaimed.
+    variableString.clearContext();
     variableString.clearCallback();
     remixer.addItem(trigger);
   }
 
   @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesWithDifferentTypesAfterParentObjectReclaimed() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
+  public void remixerRejectsDuplicatesWithDifferentTypesAftercontextReclaimed() {
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
     final Variable<Boolean> variableBoolean =
-        new Variable<>("name", "key", false, parent2, null, 0);
+        new Variable<>("name", "key", false, context2, null, 0);
 
     remixer.addItem(variableString);
-    // Simulate parent object reclaimed.
-    variableString.clearParentObject();
+    // Simulate context reclaimed.
+    variableString.clearContext();
     variableString.clearCallback();
     remixer.addItem(variableBoolean);
   }
 
   /**
-   * Replacement should only happen if the first parent object has been reclaimed and the remixer
-   * item being added has a parent of the same class.
+   * Replacement should only happen if the first context has been reclaimed and the remixer
+   * item being added has a context of the same class.
    */
   public void remixerReplacesVariableCorrectly() {
-    // Initialize two nearly identical variables with two different parent objects of the same class
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
+    // Initialize two nearly identical variables with two different contexts of the same class
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
+    final Variable<String> variableString2 = new Variable<>("name", "key", "", context2, null, 0);
 
     // Add the first.
     remixer.addItem(variableString);
-    // Simulate the first parent object is reclaimed.
-    variableString.clearParentObject();
+    // Simulate the first context is reclaimed.
+    variableString.clearContext();
     variableString.clearCallback();
     // Add the second, since the first object was "reclaimed" and they are compatible, the first
     // should be removed, and the second should be kept.
@@ -126,11 +126,11 @@ public class RemixerTest {
 
   @Test
   public void remixerUpdatesVariableValueWhenJustAdded() {
-    // Initialize two nearly identical variables with two different parent objects of the same class
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
+    // Initialize two nearly identical variables with two different contexts of the same class
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
+    final Variable<String> variableString2 = new Variable<>("name", "key", "", context2, null, 0);
     remixer.addItem(variableString);
     variableString.setValue("May the force be with you");
     Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
@@ -140,11 +140,11 @@ public class RemixerTest {
 
   @Test
   public void remixerUpdatesAllExistingVariableValuesWhenAnyOfThemChanges() {
-    // Initialize two nearly identical variables with two different parent objects of the same class
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", parent1, null, 0);
-    final Variable<String> variableString2 = new Variable<>("name", "key", "", parent2, null, 0);
+    // Initialize two nearly identical variables with two different contexts of the same class
+    final Object context1 = new Object();
+    final Object context2 = new Object();
+    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
+    final Variable<String> variableString2 = new Variable<>("name", "key", "", context2, null, 0);
     remixer.addItem(variableString);
     remixer.addItem(variableString2);
     variableString.setValue("May the force be with you");

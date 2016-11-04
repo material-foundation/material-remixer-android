@@ -36,7 +36,7 @@ public class ItemListVariable<T> extends Variable<T> {
    * @param key The key used to store this Variable.
    * @param defaultValue The default value to use if none has been set.
    * @param values List of valid values.
-   * @param parentObject the object which created this variable, should be an activity.
+   * @param context the object which created this variable, should be an activity.
    * @param callback Callback to run once the value is set. Can be null.
    * @param layoutId A layout id that renders this control on screen.
    */
@@ -45,10 +45,10 @@ public class ItemListVariable<T> extends Variable<T> {
       String key,
       T defaultValue,
       List<T> values,
-      Object parentObject,
+      Object context,
       Callback<T> callback,
       int layoutId) {
-    super(title, key, defaultValue, parentObject, callback, layoutId);
+    super(title, key, defaultValue, context, callback, layoutId);
     this.valueList = values;
   }
 
@@ -81,7 +81,7 @@ public class ItemListVariable<T> extends Variable<T> {
     private String title;
     private T defaultValue;
     private List<T> possibleValues;
-    private Object parentObject;
+    private Object context;
     private Callback<T> callback;
     private int layoutId = 0;
 
@@ -93,8 +93,8 @@ public class ItemListVariable<T> extends Variable<T> {
       return this;
     }
 
-    public Builder<T> setParentObject(Object parentObject) {
-      this.parentObject = parentObject;
+    public Builder<T> setContext(Object context) {
+      this.context = context;
       return this;
     }
 
@@ -139,8 +139,8 @@ public class ItemListVariable<T> extends Variable<T> {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for ItemListVariable");
       }
-      if (parentObject == null) {
-        throw new IllegalArgumentException("parentObject cannot be unset for RangeVariable");
+      if (context == null) {
+        throw new IllegalArgumentException("context cannot be unset for RangeVariable");
       }
       if (possibleValues == null || possibleValues.isEmpty()) {
         throw new IllegalArgumentException(
@@ -153,7 +153,7 @@ public class ItemListVariable<T> extends Variable<T> {
         title = key;
       }
       ItemListVariable<T> variable = new ItemListVariable<T>(
-          title, key, defaultValue, possibleValues, parentObject, callback, layoutId);
+          title, key, defaultValue, possibleValues, context, callback, layoutId);
       variable.init();
       return variable;
     }
