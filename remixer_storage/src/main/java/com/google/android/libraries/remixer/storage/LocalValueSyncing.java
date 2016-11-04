@@ -24,6 +24,7 @@ import com.google.android.libraries.remixer.storage.json.SerializableRemixerCont
 import com.google.android.libraries.remixer.storage.json.StoredVariable;
 import com.google.android.libraries.remixer.storage.json.SupportedDataType;
 import com.google.android.libraries.remixer.sync.SynchronizationMechanism;
+import java.util.List;
 
 /**
  * A purely-local implementation of a Synchronization Mechanism. This handles keeping values in sync
@@ -52,12 +53,24 @@ public class LocalValueSyncing implements SynchronizationMechanism {
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public void onValueChanged(Variable variable) {
     serializableRemixerContents.setValue(variable);
+    List<RemixerItem> itemList = remixer.getItemsWithKey(variable.getKey());
+    for (RemixerItem item : itemList) {
+      if (item != variable) {
+        ((Variable) item).setValueWithoutNotifyingOthers(variable.getSelectedValue());
+      }
+    }
   }
 
   @Override
   public void onTrigger(Trigger trigger) {
-    // Triggers don' have values so
+    List<RemixerItem> itemList = remixer.getItemsWithKey(trigger.getKey());
+    for (RemixerItem item : itemList) {
+      if (item != trigger) {
+        ((Trigger) item).triggerWithoutTriggeringOthers();
+      }
+    }
   }
 }

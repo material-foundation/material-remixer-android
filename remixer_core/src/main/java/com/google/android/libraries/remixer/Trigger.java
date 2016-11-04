@@ -44,8 +44,10 @@ public class Trigger extends RemixerItem {
 
   /**
    * 'Pulls the trigger' and runs the enclosed runnable without triggering other triggers.
+   *
+   * <b>Internal use only. Users should never call this method.</b>
    */
-  void triggerWithoutTriggeringOthers() {
+  public void triggerWithoutTriggeringOthers() {
     if (runnable != null) {
       runnable.run();
     }

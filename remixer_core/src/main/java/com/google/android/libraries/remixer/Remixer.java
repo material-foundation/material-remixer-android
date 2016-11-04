@@ -138,7 +138,7 @@ public class Remixer {
     remixerItems.add(remixerItem);
   }
 
-  List<RemixerItem> getItemsWithKey(String key) {
+  public List<RemixerItem> getItemsWithKey(String key) {
     List<RemixerItem> list = null;
     if (keyMap.containsKey(key)) {
       list = keyMap.get(key);
@@ -150,31 +150,17 @@ public class Remixer {
   }
 
   /**
-   * Notifies all other instances of variables with the same key that the value has changed and
-   * informs the synchronization mechanism as well.
+   * Notifies the synchronization mechanism that this variable's value has changed.
    */
   void onValueChanged(Variable variable) {
     synchronizationMechanism.onValueChanged(variable);
-    List<RemixerItem> itemList = getItemsWithKey(variable.getKey());
-    for (RemixerItem item : itemList) {
-      if (item != variable) {
-        ((Variable) item).setValueWithoutNotifyingOthers(variable.getSelectedValue());
-      }
-    }
   }
 
   /**
-   * Notifies all other instances of triggers with the same key that it has triggered and informs
-   * the synchronization mechanism as well.
+   * Notifies the synchronization mechanism that a trigger was just triggered.
    */
   void onTrigger(Trigger trigger) {
     synchronizationMechanism.onTrigger(trigger);
-    List<RemixerItem> itemList = getItemsWithKey(trigger.getKey());
-    for (RemixerItem item : itemList) {
-      if (item != trigger) {
-        ((Trigger) item).triggerWithoutTriggeringOthers();
-      }
-    }
   }
 
   public List<RemixerItem> getRemixerItems() {
