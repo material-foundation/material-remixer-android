@@ -17,7 +17,7 @@ licenses:
   - 'android-sdk-license-.+'
 
 script:
-  - ./gradlew build test
+  - ./gradlew check
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
