@@ -12,6 +12,7 @@ android:
     - tools
     - android-24
     - build-tools-24.0.1
+    - extra-android-support
 
 licenses:
   - 'android-sdk-license-.+'
