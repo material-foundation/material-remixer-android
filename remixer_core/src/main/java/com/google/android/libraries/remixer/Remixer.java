@@ -64,7 +64,7 @@ public class Remixer {
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    * Checks that the remixer item is compatible with the existing remixer items with the same key.
    *
-   * <p>This method also removes old remixer items whose contexts have been reclaimed by the Garbage
+   * <p>This method also removes old remixer items whose contexts have been reclaimed by the garbage
    * collector which are being replaced by items from the same class of context. No items are
    * removed until equivalent ones from the same context class are added to replace them. This
    * guarantees that no incompatible items for the same key are ever accepted.
@@ -103,8 +103,8 @@ public class Remixer {
     }
     for (RemixerItem remove : itemsToRemove) {
       listForKey.remove(remove);
-      // no need to remove from contextMap since that will be cleared just by the context being
-      // reclaimed, that's why it's a WeakHashMap.
+      // no need to remove from contextMap, contextMap has already removed the whole list of items
+      // with that context that was reclaimed, see cleanUpCallbacks().
     }
     if (remixerItem instanceof Variable && listForKey.size() > 0) {
       // Make sure that variables use their current value if it has been modified in another
