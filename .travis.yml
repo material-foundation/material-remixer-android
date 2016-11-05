@@ -12,14 +12,9 @@ android:
     - tools
     - android-24
     - build-tools-24.0.1
-    - extra-android-support
-    - extra-android-m2repository
 
 licenses:
   - 'android-sdk-license-.+'
-
-before_install:
-  - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
 script:
   - ./gradlew build test
