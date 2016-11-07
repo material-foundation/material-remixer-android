@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.WeakHashMap;
 
 /**
  * Contains a list of {@link Variable}es.
@@ -40,7 +39,7 @@ public class Remixer {
   /**
    * This is a map of contexts to a list of remixer items for the given context.
    */
-  private WeakHashMap<Object, List<RemixerItem>> contextMap;
+  private HashMap<Object, List<RemixerItem>> contextMap;
 
   /**
    * Gets the singleton for Remixer.
@@ -57,7 +56,7 @@ public class Remixer {
 
   Remixer() {
     keyMap = new HashMap<>();
-    contextMap = new WeakHashMap<>();
+    contextMap = new HashMap<>();
   }
 
   /**
@@ -69,9 +68,10 @@ public class Remixer {
    * removed until equivalent ones from the same context class are added to replace them. This
    * guarantees that no incompatible items for the same key are ever accepted.
    *
-   * @param remixerItem The remixer item to be added.
+   * @param remixerItem The remixer item to be added. It must have a context object otherwise it
+   *     will never be displayed, and thus not be editable.
    * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
-   * added other contexts with incompatible types.
+   *     added other contexts with incompatible types.
    * @throws DuplicateKeyException Another item with the same key was added for the same context.
    */
   @SuppressWarnings("unchecked")
