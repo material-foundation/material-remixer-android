@@ -35,10 +35,11 @@ public class Remixer {
    * different activities and the value has to be shared across those.
    */
   private HashMap<String, List<RemixerItem>> keyMap;
+
   /**
-   * A list of all the Remixer Items added to the Remixer.
+   * This is a map of contexts to a list of remixer items for the given context.
    */
-  private List<RemixerItem> remixerItems;
+  private HashMap<Object, List<RemixerItem>> contextMap;
 
   /**
    * Gets the singleton for Remixer.
@@ -55,19 +56,20 @@ public class Remixer {
 
   Remixer() {
     keyMap = new HashMap<>();
-    remixerItems = new ArrayList<>();
+    contextMap = new HashMap<>();
   }
 
   /**
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    * Checks that the remixer item is compatible with the existing remixer items with the same key.
    *
-   * <p>This method also removes old remixer items whose contexts have been reclaimed by the
-   * Garbage collector which are being replaced by items from the same class of context.
-   * No items are removed until equivalent ones from the same context class are added to
-   * replace them. This guarantees that no incompatible items for the same key are ever accepted.
+   * <p>This method also removes old remixer items whose contexts have been reclaimed by the garbage
+   * collector which are being replaced by items from the same class of context. No items are
+   * removed until equivalent ones from the same context class are added to replace them. This
+   * guarantees that no incompatible items for the same key are ever accepted.
    *
-   * @param remixerItem The remixer item to be added.
+   * @param remixerItem The remixer item to be added. It must have a context object otherwise it
+   *     will never be displayed, and thus not be editable.
    * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
    *     added other contexts with incompatible types.
    * @throws DuplicateKeyException Another item with the same key was added for the same context.
@@ -101,7 +103,8 @@ public class Remixer {
     }
     for (RemixerItem remove : itemsToRemove) {
       listForKey.remove(remove);
-      remixerItems.remove(remove);
+      // no need to remove from contextMap, contextMap has already removed the whole list of items
+      // with that context that was reclaimed, see cleanUpCallbacks().
     }
     if (remixerItem instanceof Variable && listForKey.size() > 0) {
       // Make sure that variables use their current value if it has been modified in another
@@ -117,7 +120,7 @@ public class Remixer {
     }
     listForKey.add(remixerItem);
     remixerItem.setRemixer(this);
-    remixerItems.add(remixerItem);
+    getRemixerItemsForContext(remixerItem.getContext()).add(remixerItem);
   }
 
   List<RemixerItem> getItemsWithKey(String key) {
@@ -131,33 +134,31 @@ public class Remixer {
     return list;
   }
 
-  public List<RemixerItem> getRemixerItems() {
-    return remixerItems;
-  }
-
   /**
    * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
    * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
    */
   public List<RemixerItem> getRemixerItemsForContext(Object context) {
-    List<RemixerItem> result = new ArrayList<>();
-    for (RemixerItem item : remixerItems) {
-      if (item.matchesContext(context)) {
-        result.add(item);
-      }
+    List<RemixerItem> list = null;
+    if (contextMap.containsKey(context)) {
+      list = contextMap.get(context);
+    } else {
+      list = new ArrayList<>();
+      contextMap.put(context, list);
     }
-    return result;
+    return list;
   }
 
   /**
-   * Removes callbacks for all remixes whose context is {@code activity}. This makes sure
-   * {@code activity} doesn't leak through its callbacks.
+   * Removes callbacks for all remixes whose context is {@code activity}. This makes sure {@code
+   * activity} doesn't leak through its callbacks.
    */
   public void cleanUpCallbacks(Object activity) {
-    for (RemixerItem remixerItem : remixerItems) {
-      if (remixerItem.matchesContext(activity)) {
-        remixerItem.clearCallback();
-      }
+    for (RemixerItem remixerItem : contextMap.get(activity)) {
+      remixerItem.clearCallback();
+      remixerItem.clearContext();
     }
+    contextMap.remove(activity);
   }
 }
+
