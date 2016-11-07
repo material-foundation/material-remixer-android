@@ -76,7 +76,7 @@ public class Remixer {
    */
   @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
-    List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
+    List<RemixerItem> listForKey = getOrCreateItemList(remixerItem.getKey(), keyMap);
     List<RemixerItem> itemsToRemove = new ArrayList<>();
     for (RemixerItem existingItem : listForKey) {
       existingItem.assertIsCompatibleWith(remixerItem);
@@ -120,31 +120,38 @@ public class Remixer {
     }
     listForKey.add(remixerItem);
     remixerItem.setRemixer(this);
-    getRemixerItemsForContext(remixerItem.getContext()).add(remixerItem);
+    getOrCreateItemList(remixerItem.getContext(), contextMap).add(remixerItem);
   }
 
+  /**
+   * Gets the list of items that have the given key.
+   */
   List<RemixerItem> getItemsWithKey(String key) {
-    List<RemixerItem> list = null;
-    if (keyMap.containsKey(key)) {
-      list = keyMap.get(key);
-    } else {
-      list = new ArrayList<>();
-      keyMap.put(key, list);
-    }
-    return list;
+    return keyMap.containsKey(key);
   }
 
   /**
    * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
    * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
    */
-  public List<RemixerItem> getRemixerItemsForContext(Object context) {
+  public List<RemixerItem> getItemsWithContext(Object context) {
+    return contextMap.get(context);
+  }
+
+
+
+  /**
+   * Gets a list of RemixerItems for the given {@code key} from the {@code map} passed in, if such a
+   * mapping does not exist, it adds a mapping to a new empty list.
+   */
+  private static <T> List<RemixerItem> getOrCreateItemList(
+      T key, HashMap<T, List<RemixerItem>> map) {
     List<RemixerItem> list = null;
-    if (contextMap.containsKey(context)) {
-      list = contextMap.get(context);
+    if (map.containsKey(key)) {
+      list = map.get(key);
     } else {
       list = new ArrayList<>();
-      contextMap.put(context, list);
+      map.put(key, list);
     }
     return list;
   }
@@ -154,11 +161,13 @@ public class Remixer {
    * activity} doesn't leak through its callbacks.
    */
   public void cleanUpCallbacks(Object activity) {
-    for (RemixerItem remixerItem : contextMap.get(activity)) {
-      remixerItem.clearCallback();
-      remixerItem.clearContext();
+    if (contextMap.containsKey(activity)) {
+      for (RemixerItem remixerItem : contextMap.get(activity)) {
+        remixerItem.clearCallback();
+        remixerItem.clearContext();
+      }
+      contextMap.remove(activity);
     }
-    contextMap.remove(activity);
   }
 }
 
