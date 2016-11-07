@@ -47,10 +47,11 @@ public class Remixer {
    * different activities and the value has to be shared across those.
    */
   private HashMap<String, List<RemixerItem>> keyMap;
+
   /**
-   * A list of all the Remixer Items added to the Remixer.
+   * This is a map of contexts to a list of remixer items for the given context.
    */
-  private List<RemixerItem> remixerItems;
+  private HashMap<Object, List<RemixerItem>> contextMap;
 
   /**
    * The synchronization mechanism used to keep values in sync across different instances of the
@@ -76,7 +77,7 @@ public class Remixer {
    */
   public Remixer() {
     keyMap = new HashMap<>();
-    remixerItems = new ArrayList<>();
+    contextMap = new HashMap<>();
   }
 
   /**
@@ -101,12 +102,13 @@ public class Remixer {
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    * Checks that the remixer item is compatible with the existing remixer items with the same key.
    *
-   * <p>This method also removes old remixer items whose contexts have been reclaimed by the
-   * Garbage collector which are being replaced by items from the same class of context.
-   * No items are removed until equivalent ones from the same context class are added to
-   * replace them. This guarantees that no incompatible items for the same key are ever accepted.
+   * <p>This method also removes old remixer items whose contexts have been reclaimed by the garbage
+   * collector which are being replaced by items from the same class of context. No items are
+   * removed until equivalent ones from the same context class are added to replace them. This
+   * guarantees that no incompatible items for the same key are ever accepted.
    *
-   * @param remixerItem The remixer item to be added.
+   * @param remixerItem The remixer item to be added. It must have a context object otherwise it
+   *     will never be displayed, and thus not be editable.
    * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
    *     added other contexts with incompatible types.
    * @throws DuplicateKeyException Another item with the same key was added for the same context.
@@ -135,7 +137,7 @@ public class Remixer {
     }
     remixerItem.setRemixer(this);
     listForKey.add(remixerItem);
-    remixerItems.add(remixerItem);
+    getRemixerItemsForContext(remixerItem.getContext()).add(remixerItem);
   }
 
   /**
@@ -166,37 +168,29 @@ public class Remixer {
     synchronizationMechanism.onTrigger(trigger);
   }
 
-  public List<RemixerItem> getRemixerItems() {
-    return remixerItems;
-  }
-
   /**
    * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
    * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
    */
   public List<RemixerItem> getRemixerItemsForContext(Object context) {
-    List<RemixerItem> result = new ArrayList<>();
-    for (RemixerItem item : remixerItems) {
-      if (context != null && item.getContext() == context) {
-        result.add(item);
-      }
+    List<RemixerItem> list = null;
+    if (contextMap.containsKey(context)) {
+      list = contextMap.get(context);
+    } else {
+      list = new ArrayList<>();
+      contextMap.put(context, list);
     }
-    return result;
+    return list;
   }
 
   /**
    * Handles the case in which an {@code activity} is destroyed by removing all its child remixes.
    */
   public void onActivityDestroyed(Object activity) {
-    List<RemixerItem> itemsToRemove = new ArrayList<>();
-    for (RemixerItem remixerItem : remixerItems) {
-      if (activity.equals(remixerItem.getContext())) {
-        itemsToRemove.add(remixerItem);
-      }
+    for (RemixerItem remixerItem : getRemixerItemsForContext(activity)) {
+      getItemsWithKey(remixerItem.getKey()).remove(remixerItem);
     }
-    for (RemixerItem item : itemsToRemove) {
-      getItemsWithKey(item.getKey()).remove(item);
-      remixerItems.remove(item);
-    }
+    contextMap.remove(activity);
   }
 }
+

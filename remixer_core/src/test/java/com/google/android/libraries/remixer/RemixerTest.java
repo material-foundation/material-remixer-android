@@ -66,16 +66,18 @@ public class RemixerTest {
     // Add the second, since the first object was "reclaimed" and they are compatible, the first
     // should be removed, and the second should be kept.
     remixer.addItem(variableString2);
-    List<RemixerItem> list = remixer.getRemixerItems();
-    Assert.assertEquals(1, list.size());
-    Assert.assertEquals(variable2, list.get(0));
+    List<RemixerItem> list1 = remixer.getRemixerItemsForContext(context1);
+    List<RemixerItem> list2 = remixer.getRemixerItemsForContext(context2);
+    Assert.assertEquals(0, list1.size());
+    Assert.assertEquals(1, list2.size());
+    Assert.assertEquals(variable2, list2.get(0));
   }
 
   @Test
   public void remixerReturnsListInOrder() {
     remixer.addItem(variable);
     remixer.addItem(variable2);
-    List<RemixerItem> remixerItemList = remixer.getRemixerItems();
+    List<RemixerItem> remixerItemList = remixer.getRemixerItemsForContext(this);
     Assert.assertEquals(variable, remixerItemList.get(0));
     Assert.assertEquals(variable2, remixerItemList.get(1));
   }

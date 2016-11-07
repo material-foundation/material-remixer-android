@@ -86,4 +86,17 @@ public class RangeVariableMethodAnnotationTest {
         .generatesSources(JavaFileObjects
             .forResource("outputs/RangeVariableMethodAnnotationTest/FixesDefaultValue.java"));
   }
+
+  @Test
+  public void correct() {
+    JavaFileObject file = JavaFileObjects
+        .forResource("inputs/RangeVariableMethodAnnotationTest/Correct.java");
+    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
+        .that(file)
+        .processedWith(allProcessors)
+        .compilesWithoutError()
+        .and()
+        .generatesSources(JavaFileObjects
+            .forResource("outputs/RangeVariableMethodAnnotationTest/Correct.java"));
+  }
 }
