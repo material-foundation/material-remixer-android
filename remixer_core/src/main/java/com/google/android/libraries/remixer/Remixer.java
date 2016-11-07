@@ -162,7 +162,6 @@ public class Remixer {
   private static <T> List<RemixerItem> getOrCreateItemList(
       T key, HashMap<T, List<RemixerItem>> map) {
     List<RemixerItem> list = null;
-    map.get(key);
     if (map.containsKey(key)) {
       list = map.get(key);
     } else {
