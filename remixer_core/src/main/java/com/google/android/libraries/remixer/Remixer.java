@@ -115,7 +115,7 @@ public class Remixer {
    */
   @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
-    List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
+    List<RemixerItem> listForKey = getOrCreateItemList(remixerItem.getKey(), keyMap);
     for (RemixerItem existingItem : listForKey) {
       if (remixerItem.getContext() != null
           && remixerItem.getContext() == existingItem.getContext()) {
@@ -137,19 +137,37 @@ public class Remixer {
     }
     remixerItem.setRemixer(this);
     listForKey.add(remixerItem);
-    getRemixerItemsForContext(remixerItem.getContext()).add(remixerItem);
+    getOrCreateItemList(remixerItem.getContext(), contextMap).add(remixerItem);
   }
 
   /**
    * Gets the list of items that have the given key.
    */
   public List<RemixerItem> getItemsWithKey(String key) {
+    return keyMap.get(key);
+  }
+
+  /**
+   * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
+   * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
+   */
+  public List<RemixerItem> getItemsWithContext(Object context) {
+    return contextMap.get(context);
+  }
+
+  /**
+   * Gets a list of RemixerItems for the given {@code key} from the {@code map} passed in, if such a
+   * mapping does not exist, it adds a mapping to a new empty list.
+   */
+  private static <T> List<RemixerItem> getOrCreateItemList(
+      T key, HashMap<T, List<RemixerItem>> map) {
     List<RemixerItem> list = null;
-    if (keyMap.containsKey(key)) {
-      list = keyMap.get(key);
+    map.get(key);
+    if (map.containsKey(key)) {
+      list = map.get(key);
     } else {
       list = new ArrayList<>();
-      keyMap.put(key, list);
+      map.put(key, list);
     }
     return list;
   }
@@ -169,28 +187,16 @@ public class Remixer {
   }
 
   /**
-   * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
-   * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
-   */
-  public List<RemixerItem> getRemixerItemsForContext(Object context) {
-    List<RemixerItem> list = null;
-    if (contextMap.containsKey(context)) {
-      list = contextMap.get(context);
-    } else {
-      list = new ArrayList<>();
-      contextMap.put(context, list);
-    }
-    return list;
-  }
-
-  /**
    * Handles the case in which an {@code activity} is destroyed by removing all its child remixes.
    */
   public void onActivityDestroyed(Object activity) {
-    for (RemixerItem remixerItem : getRemixerItemsForContext(activity)) {
-      getItemsWithKey(remixerItem.getKey()).remove(remixerItem);
+    List<RemixerItem> list = getItemsWithContext(activity);
+    if (list != null) {
+      for (RemixerItem remixerItem : list) {
+        getItemsWithKey(remixerItem.getKey()).remove(remixerItem);
+      }
+      contextMap.remove(activity);
     }
-    contextMap.remove(activity);
   }
 }
 
