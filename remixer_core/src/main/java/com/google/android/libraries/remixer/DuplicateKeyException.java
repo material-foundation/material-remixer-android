@@ -17,7 +17,7 @@
 package com.google.android.libraries.remixer;
 
 /**
- * Thrown if two items are added with the same key for the same parent object.
+ * Thrown if two items are added with the same key for the same context.
  */
 public class DuplicateKeyException extends RuntimeException {
 

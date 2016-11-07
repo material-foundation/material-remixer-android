@@ -17,7 +17,6 @@
 package somepackage;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
-import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 public class InvalidIdentifierKey {
   /**

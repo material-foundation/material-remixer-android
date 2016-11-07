@@ -19,13 +19,13 @@ apply plugin: 'android-apt'
 
 
 android {
-  compileSdkVersion 24
-  buildToolsVersion '24.0.1'
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
 
   defaultConfig {
     applicationId "com.google.android.apps.remixer"
-    minSdkVersion 15
-    targetSdkVersion 24
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
   }
@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-  compile 'com.android.support:appcompat-v7:24.2.1'
+  compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
   compile project(':remixer_core')
   compile project(':remixer_ui')
   provided project(':remixer_annotation')

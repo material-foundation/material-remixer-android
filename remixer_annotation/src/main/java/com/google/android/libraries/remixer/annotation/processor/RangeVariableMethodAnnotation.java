@@ -50,6 +50,7 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
     minValue = annotation.minValue();
     maxValue = annotation.maxValue();
     increment = annotation.increment();
+    defaultValue = annotation.defaultValue();
     if (minValue > maxValue) {
       throw new RemixerAnnotationException(sourceMethod,
           "minValue cannot be greater than maxValue");

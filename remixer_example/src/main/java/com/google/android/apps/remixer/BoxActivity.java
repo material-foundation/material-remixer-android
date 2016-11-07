@@ -64,7 +64,8 @@ public class BoxActivity extends AppCompatActivity {
 
   @IntegerListVariableMethod(
       key = "boxColor", title = "Box color",
-      possibleValues = {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN}
+      possibleValues = {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN},
+      layoutId = R.layout.color_list_variable_widget
   )
   void setBoxColor(Integer color) {
     box.setBackgroundColor(color);

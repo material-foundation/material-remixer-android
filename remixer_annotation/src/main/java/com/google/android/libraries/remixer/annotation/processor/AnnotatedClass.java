@@ -18,7 +18,6 @@ package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
-import com.google.android.libraries.remixer.annotation.RemixerInstance;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -34,18 +33,14 @@ import java.util.Set;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
 
 /**
  * A class that has members annotated with any of the
  * {@link com.google.android.libraries.remixer.annotation} annotations.
  *
- * <p>Every instance of this object keeps track of all methods annotated with @*Method annotations
- * and the name of the {@link Remixer} instance annotated with {@link RemixerInstance}. It assumes
- * that there is only one such field in this class.
+ * <p>Every instance of this object keeps track of all methods annotated with @*Method annotations.
  *
  * <p>While adding methods, this also makes sure that their remixer keys are not duplicated.
  */
@@ -88,7 +83,6 @@ class AnnotatedClass {
    * Constructor
    * @param sourceClass The TypeElement that represent the class that contains members annotated by
    *     Remixer annotations.
-   * @param remixerInstance The field that is annotated with @RemixerInstance.
    */
   AnnotatedClass(TypeElement sourceClass) {
     this.sourceClass = sourceClass;

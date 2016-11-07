@@ -26,6 +26,7 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:2.2.0'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
   }
 }
 
@@ -49,3 +50,11 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
+ext {
+  // Sdk and tools
+  minSdkVersion = 15
+  targetSdkVersion = 24
+  compileSdkVersion = 24
+  buildToolsVersion = '24.0.1'
+  supportLibraryVersion = '24.2.1'
+}

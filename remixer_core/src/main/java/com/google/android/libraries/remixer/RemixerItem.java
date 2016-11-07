@@ -39,20 +39,13 @@ public abstract class RemixerItem {
    */
   private final int layoutId;
   /**
-   * A weak reference to the object that created this RemixerItem.
+   * A weak reference to this RemixerItem's context. The RemixerItem's lifecycle is tied to its
+   * contexts'.
    *
    * <p>It should be a reference to an activity, but it isn't since remixer_core cannot depend on
    * Android classes. It is a weak reference in order not to leak the activity accidentally.
    */
-  @SuppressWarnings("unchecked")
-  private final WeakReference parentObject;
-  /**
-   * A copy of the parent object's class object. This will be necessary to know whether an object
-   * is of the same class as the parent object, even after the parent object has been reclaimed by
-   * the Garbage Collector.
-   */
-  @SuppressWarnings("unchecked")
-  private final Class parentObjectClass;
+  private final WeakReference<Object> context;
   /**
    * The remixer instance this RemixerItem has been attached to.
    */
@@ -61,38 +54,28 @@ public abstract class RemixerItem {
   /**
    * Constructs a new RemixerItem with the given key, title and layoutId.
    */
-  @SuppressWarnings("unchecked")
-  protected RemixerItem(String title, String key, Object parentObject, int layoutId) {
+  protected RemixerItem(String title, String key, Object context, int layoutId) {
     this.title = title;
     this.key = key;
-    this.parentObject = new WeakReference(parentObject);
-    this.parentObjectClass = parentObject.getClass();
+    this.context = new WeakReference<Object>(context);
     this.layoutId = layoutId;
   }
 
   /**
-   * Checks whether the parent object is the same as the parameter.
+   * Checks whether the context is the same as the parameter.
    */
-  public boolean isParentObject(Object object) {
+  public boolean matchesContext(Object object) {
     if (object == null) {
       return false;
     }
-    return parentObject.get() == object;
+    return context.get() == object;
   }
 
   /**
-   * Checks whether the parent object has been reclaimed.
+   * Checks whether the context has been reclaimed.
    */
-  public boolean hasParentObject() {
-    return parentObject.get() != null;
-  }
-
-  /**
-   * Checks whether the parameter is of the same class as the (possibly already reclaimed) parent
-   * object.
-   */
-  public boolean isSameClassAsParentObject(Object object) {
-    return parentObjectClass == object.getClass();
+  public boolean hasContext() {
+    return context.get() != null;
   }
 
   public String getTitle() {
@@ -124,19 +107,19 @@ public abstract class RemixerItem {
   abstract void assertIsCompatibleWith(RemixerItem item);
 
   /**
-   * Returns the parent object.
+   * Returns the context.
    */
-  Object getParentObject() {
-    return parentObject.get();
+  Object getContext() {
+    return context.get();
   }
 
   /**
-   * Clears the parent object reference to simulate reclaiming the parent object in tests.
+   * Clears the context reference to simulate reclaiming the context in tests.
    *
    * <p><b>Visible only for testing.</b>
    */
-  void clearParentObject() {
-    parentObject.clear();
+  void clearContext() {
+    context.clear();
   }
 
   /**

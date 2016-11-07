@@ -18,7 +18,6 @@ package somepackage;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
-import com.google.android.libraries.remixer.annotation.RemixerInstance;
 
 /**
  * Two methods have the remixer key "key", should fail.

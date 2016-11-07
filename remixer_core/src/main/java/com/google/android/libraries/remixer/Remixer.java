@@ -35,10 +35,11 @@ public class Remixer {
    * different activities and the value has to be shared across those.
    */
   private HashMap<String, List<RemixerItem>> keyMap;
+
   /**
-   * A list of all the Remixer Items added to the Remixer.
+   * This is a map of contexts to a list of remixer items for the given context.
    */
-  private List<RemixerItem> remixerItems;
+  private HashMap<Object, List<RemixerItem>> contextMap;
 
   /**
    * Gets the singleton for Remixer.
@@ -55,54 +56,55 @@ public class Remixer {
 
   Remixer() {
     keyMap = new HashMap<>();
-    remixerItems = new ArrayList<>();
+    contextMap = new HashMap<>();
   }
 
   /**
    * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
    * Checks that the remixer item is compatible with the existing remixer items with the same key.
    *
-   * <p>This method also removes old remixer items whose parent objects have been reclaimed by the
-   * Garbage collector which are being replaced by items from the same class of parent objects.
-   * No items are removed until equivalent ones from the same parent object class are added to
-   * replace them. This guarantees that no incompatible items for the same key are ever accepted.
+   * <p>This method also removes old remixer items whose contexts have been reclaimed by the garbage
+   * collector which are being replaced by items from the same class of context. No items are
+   * removed until equivalent ones from the same context class are added to replace them. This
+   * guarantees that no incompatible items for the same key are ever accepted.
    *
-   * @param remixerItem The remixer item to be added.
+   * @param remixerItem The remixer item to be added. It must have a context object otherwise it
+   *     will never be displayed, and thus not be editable.
    * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
-   *     added by other parent objects with incompatible types.
-   * @throws DuplicateKeyException Another item with the same key was added by the same parent
-   *     object.
+   *     added other contexts with incompatible types.
+   * @throws DuplicateKeyException Another item with the same key was added for the same context.
    */
   @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
-    List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
+    List<RemixerItem> listForKey = getOrCreateItemList(remixerItem.getKey(), keyMap);
     List<RemixerItem> itemsToRemove = new ArrayList<>();
     for (RemixerItem existingItem : listForKey) {
       existingItem.assertIsCompatibleWith(remixerItem);
-      if (!existingItem.hasParentObject()) {
-        // The parent activity has been reclaimed by the OS already. It has no callback and it's
+      if (!existingItem.hasContext()) {
+        // The context activity has been reclaimed by the OS already. It has no callback and it's
         // still around for keeping the value in sync, saving and checking consistency across types.
         // Since we're adding a new item that has been asserted to be compatible, it is not
         // necessary to keep this instance around.
         itemsToRemove.add(existingItem);
       } else {
-        // The parent activity is still alive and kicking.
-        if (existingItem.isParentObject(remixerItem.getParentObject())) {
-          // An object with the same key for the same parent object, this shouldn't happen so throw
+        // The context activity is still alive and kicking.
+        if (existingItem.matchesContext(remixerItem.getContext())) {
+          // An object with the same key for the same context, this shouldn't happen so throw
           // an exception.
           throw new DuplicateKeyException(
               String.format(
                   Locale.getDefault(),
                   "Duplicate key %s being used in class %s",
                   remixerItem.getKey(),
-                  remixerItem.getParentObject().getClass().getCanonicalName()
+                  remixerItem.getContext().getClass().getCanonicalName()
               ));
         }
       }
     }
     for (RemixerItem remove : itemsToRemove) {
       listForKey.remove(remove);
-      remixerItems.remove(remove);
+      // no need to remove from contextMap, contextMap has already removed the whole list of items
+      // with that context that was reclaimed, see cleanUpCallbacks().
     }
     if (remixerItem instanceof Variable && listForKey.size() > 0) {
       // Make sure that variables use their current value if it has been modified in another
@@ -118,48 +120,54 @@ public class Remixer {
     }
     listForKey.add(remixerItem);
     remixerItem.setRemixer(this);
-    remixerItems.add(remixerItem);
+    getOrCreateItemList(remixerItem.getContext(), contextMap).add(remixerItem);
   }
 
+  /**
+   * Gets the list of items that have the given key.
+   */
   List<RemixerItem> getItemsWithKey(String key) {
+    return keyMap.get(key);
+  }
+
+  /**
+   * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
+   * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
+   */
+  public List<RemixerItem> getItemsWithContext(Object context) {
+    return contextMap.get(context);
+  }
+
+
+
+  /**
+   * Gets a list of RemixerItems for the given {@code key} from the {@code map} passed in, if such a
+   * mapping does not exist, it adds a mapping to a new empty list.
+   */
+  private static <T> List<RemixerItem> getOrCreateItemList(
+      T key, HashMap<T, List<RemixerItem>> map) {
     List<RemixerItem> list = null;
-    if (keyMap.containsKey(key)) {
-      list = keyMap.get(key);
+    if (map.containsKey(key)) {
+      list = map.get(key);
     } else {
       list = new ArrayList<>();
-      keyMap.put(key, list);
+      map.put(key, list);
     }
     return list;
   }
 
-  public List<RemixerItem> getRemixerItems() {
-    return remixerItems;
-  }
-
   /**
-   * Gets all the Remixer Items associated with the parent object {@code parent}. {@code parent} is
-   * expected to be an Activity, it is Object here because remixer_core cannot depend on the Android
-   * SDK.
-   */
-  public List<RemixerItem> getRemixerItemsForParentObject(Object parent) {
-    List<RemixerItem> result = new ArrayList<>();
-    for (RemixerItem item : remixerItems) {
-      if (item.isParentObject(parent)) {
-        result.add(item);
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Removes callbacks for all remixes whose parent object is {@code activity}. This makes sure
-   * {@code activity} doesn't leak through its callbacks.
+   * Removes callbacks for all remixes whose context is {@code activity}. This makes sure {@code
+   * activity} doesn't leak through its callbacks.
    */
   public void cleanUpCallbacks(Object activity) {
-    for (RemixerItem remixerItem : remixerItems) {
-      if (remixerItem.isParentObject(activity)) {
+    if (contextMap.containsKey(activity)) {
+      for (RemixerItem remixerItem : contextMap.get(activity)) {
         remixerItem.clearCallback();
+        remixerItem.clearContext();
       }
+      contextMap.remove(activity);
     }
   }
 }
+

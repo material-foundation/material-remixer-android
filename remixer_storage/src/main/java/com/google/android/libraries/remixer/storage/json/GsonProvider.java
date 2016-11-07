@@ -14,18 +14,27 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.annotation;
+package com.google.android.libraries.remixer.storage.json;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
- * Annotation to apply to a Remixer field in an activity. It automatically generates code to make
- * the activity a RemixerActivity using this field as the Remixer instance.
+ * Provides a configured Gson instance.
  */
-@Target(ElementType.FIELD)
-@Retention(RetentionPolicy.CLASS)
-public @interface RemixerInstance {
+final class GsonProvider {
+
+  private static final Gson instance;
+
+  static {
+    instance = new GsonBuilder()
+        .disableHtmlEscaping()
+        .registerTypeAdapter(SerializableRemixerContents.class, new RemixerContentsSerializer())
+        .registerTypeAdapter(StoredVariable.class, new StoredVariableSerializer())
+        .create();
+  }
+
+  static Gson getInstance() {
+    return instance;
+  }
 }
