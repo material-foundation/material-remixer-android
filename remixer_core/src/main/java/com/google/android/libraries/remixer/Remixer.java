@@ -189,9 +189,8 @@ public class Remixer {
    * Handles the case in which an {@code activity} is destroyed by removing all its child remixes.
    */
   public void onActivityDestroyed(Object activity) {
-    List<RemixerItem> list = getItemsWithContext(activity);
-    if (list != null) {
-      for (RemixerItem remixerItem : list) {
+    if (contextMap.containsKey(activity)) {
+      for (RemixerItem remixerItem : contextMap.get(activity)) {
         getItemsWithKey(remixerItem.getKey()).remove(remixerItem);
       }
       contextMap.remove(activity);
