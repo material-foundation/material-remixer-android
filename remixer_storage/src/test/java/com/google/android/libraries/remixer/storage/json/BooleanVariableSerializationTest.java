@@ -42,7 +42,7 @@ public class BooleanVariableSerializationTest {
     booleanVariable = new BooleanVariableBuilder()
         .setContext(this)
         .setKey(KEY)
-        .buildAndInit();
+        .build();
   }
 
   @Test

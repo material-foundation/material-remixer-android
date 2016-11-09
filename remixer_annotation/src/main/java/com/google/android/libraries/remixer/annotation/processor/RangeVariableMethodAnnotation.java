@@ -18,6 +18,7 @@ package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
+import com.google.common.collect.Range;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
@@ -29,15 +30,6 @@ import javax.lang.model.element.TypeElement;
  */
 class RangeVariableMethodAnnotation extends MethodAnnotation {
 
-  /**
-   * Statement to create a new RangeVariable.
-   *
-   * <p>Would expand to {@code RangeVariable variableName = new RangeVariable(title, key,
-   * defaultValue, minValue, maxValue, activity, callback, layoutId)}.
-   */
-  private static final String NEW_RANGE_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $L, $L, $L, $L, $L, $L, $L)";
-
   private final int minValue;
   private int defaultValue;
   private final int increment;
@@ -46,7 +38,13 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
   RangeVariableMethodAnnotation(
       TypeElement sourceClass, ExecutableElement sourceMethod, RangeVariableMethod annotation)
       throws RemixerAnnotationException {
-    super(sourceClass, sourceMethod, annotation.key(), annotation.title(), annotation.layoutId());
+    super(
+        sourceClass,
+        sourceMethod,
+        ClassName.get(RangeVariable.Builder.class),
+        annotation.key(),
+        annotation.title(),
+        annotation.layoutId());
     minValue = annotation.minValue();
     maxValue = annotation.maxValue();
     increment = annotation.increment();
@@ -66,29 +64,11 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
   }
 
   @Override
-  public void addSetupStatements(MethodSpec.Builder methodBuilder) {
-    String callbackName = key + CALLBACK_NAME_SUFFIX;
-    String variableName = key + VARIABLE_SUFFIX;
-    methodBuilder
-        .addStatement(
-            NEW_CALLBACK_STATEMENT,
-            generatedClassName, callbackName, generatedClassName)
-        .addStatement(
-            NEW_RANGE_VARIABLE_STATEMENT,
-            RangeVariable.class,
-            variableName,
-            RangeVariable.class,
-            title,
-            key,
-            defaultValue,
-            minValue,
-            maxValue,
-            increment,
-            ACTIVITY_NAME,
-            callbackName,
-            layoutId)
-        .addStatement(INIT_VARIABLE_STATEMENT, variableName)
-        .addStatement(ADD_VARIABLE_STATEMENT, variableName);
+  protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
+    methodBuilder.addStatement("$L.setMinValue($L)", remixerItemName, minValue);
+    methodBuilder.addStatement("$L.setMaxValue($L)", remixerItemName, maxValue);
+    methodBuilder.addStatement("$L.setDefaultValue($L)", remixerItemName, defaultValue);
+    methodBuilder.addStatement("$L.setIncrement($L)", remixerItemName, increment);
   }
 
   @Override

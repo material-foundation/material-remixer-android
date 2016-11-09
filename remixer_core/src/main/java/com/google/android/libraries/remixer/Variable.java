@@ -183,65 +183,27 @@ public class Variable<T> extends RemixerItem {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key is mandatory. If it's missing, an {@link IllegalArgumentException}
-   * will be thrown.
+   * <p>On the other hand: key and context are mandatory. If either is missing, an
+   * {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder<T> {
+  public static class Builder<T> extends RemixerItem.Builder<Variable<T>, Callback<T>> {
 
-    private String key;
-    private String title;
     private T defaultValue;
-    private Object context;
-    private Callback<T> callback;
-    private int layoutId = 0;
 
     public Builder() {}
-
-    public Builder<T> setKey(String key) {
-      this.key = key;
-      return this;
-    }
-
-    public Builder<T> setTitle(String title) {
-      this.title = title;
-      return this;
-    }
 
     public Builder<T> setDefaultValue(T defaultValue) {
       this.defaultValue = defaultValue;
       return this;
     }
 
-    public Builder<T> setContext(Object context) {
-      this.context = context;
-      return this;
-    }
-
-    public Builder<T> setCallback(Callback<T> callback) {
-      this.callback = callback;
-      return this;
-    }
-
-    public Builder<T> setLayoutId(int layoutId) {
-      this.layoutId = layoutId;
-      return this;
-    }
-
     /**
      * Returns a new Variable created with the configuration stored in this builder instance.
      *
-     * @throws IllegalArgumentException If key is missing
+     * @throws IllegalArgumentException If key or context is missing
      */
-    public Variable<T> buildAndInit() {
-      if (key == null) {
-        throw new IllegalArgumentException("key cannot be unset for Variable");
-      }
-      if (context == null) {
-        throw new IllegalArgumentException("context cannot be unset for Variable");
-      }
-      if (title == null) {
-        title = key;
-      }
+    public Variable<T> build() {
+     checkBaseFields();
       Variable<T> variable =
           new Variable<T>(title, key, defaultValue, context, callback, layoutId);
       variable.init();

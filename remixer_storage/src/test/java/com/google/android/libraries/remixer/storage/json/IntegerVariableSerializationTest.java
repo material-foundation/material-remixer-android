@@ -47,21 +47,21 @@ public class IntegerVariableSerializationTest {
         .setDefaultValue(0)
         .setKey(KEY)
         .setContext(this)
-        .buildAndInit();
+        .build();
     integerListVariable = new ItemListVariable.Builder<Integer>()
-        .setContext(this)
-        .setKey(KEY)
-        .setDefaultValue(Color.BLACK)
         .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
-        .buildAndInit();
-    rangeVariable = new RangeVariable.Builder()
+        .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey(KEY)
-        .setDefaultValue(10)
+        .build();
+    rangeVariable = new RangeVariable.Builder()
         .setMinValue(0)
-        .setIncrement(10)
         .setMaxValue(100)
-        .buildAndInit();
+        .setIncrement(10)
+        .setDefaultValue(10)
+        .setContext(this)
+        .setKey(KEY)
+        .build();
   }
 
   @Test
