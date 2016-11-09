@@ -32,7 +32,7 @@ public class Trigger extends RemixerItem {
   }
 
   public Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
-    super(title, key, context, layoutId);
+    super(title, key, context, layoutId, DataType.TRIGGER);
     this.runnable = runnable;
   }
 

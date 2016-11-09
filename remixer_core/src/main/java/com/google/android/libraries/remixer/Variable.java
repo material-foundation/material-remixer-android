@@ -42,6 +42,7 @@ public class Variable<T> extends RemixerItem {
    * @param context the object which created this variable, should be an activity.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
    * @param layoutId A layout to inflate when displaying this Variable in the UI.
+   * @param dataType The data type this variable contains.
    */
   // TODO(miguely): Add default value semantics to the defaultValue, currently it behaves mostly
   // as an initial value. It should be used in cases when the value is set to an invalid value from
@@ -52,8 +53,9 @@ public class Variable<T> extends RemixerItem {
       T defaultValue,
       Object context,
       Callback<T> callback,
-      int layoutId) {
-    super(title, key, context, layoutId);
+      int layoutId,
+      DataType dataType) {
+    super(title, key, context, layoutId, dataType);
     // TODO(miguely): pull this out of SharedPreferences.
     this.selectedValue = defaultValue;
     this.callback = callback;
@@ -78,10 +80,6 @@ public class Variable<T> extends RemixerItem {
 
   public T getSelectedValue() {
     return selectedValue;
-  }
-
-  public Class getVariableType() {
-    return selectedValue.getClass();
   }
 
   /**
@@ -162,14 +160,14 @@ public class Variable<T> extends RemixerItem {
                 getKey()));
       }
       Variable<T> variable = (Variable<T>) item;
-      if (variable.getVariableType() != getVariableType()) {
+      if (variable.getDataType().equals(getDataType())) {
         throw new IncompatibleRemixerItemsWithSameKeyException(
             String.format(
                 Locale.getDefault(),
                 "Two variables with the same key, %s, have different types %s and %s",
                 getKey(),
-                getVariableType().getCanonicalName(),
-                variable.getVariableType().getCanonicalName()));
+                getDataType().getName(),
+                variable.getDataType().getName()));
       }
     }
   }
@@ -183,8 +181,8 @@ public class Variable<T> extends RemixerItem {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key is mandatory. If it's missing, an {@link IllegalArgumentException}
-   * will be thrown.
+   * <p>On the other hand: key, dataType and context are mandatory. If they're missing, an
+   * {@link IllegalArgumentException} will be thrown.
    */
   public static class Builder<T> {
 
@@ -193,6 +191,7 @@ public class Variable<T> extends RemixerItem {
     private T defaultValue;
     private Object context;
     private Callback<T> callback;
+    private DataType dataType;
     private int layoutId = 0;
 
     public Builder() {}
@@ -227,6 +226,11 @@ public class Variable<T> extends RemixerItem {
       return this;
     }
 
+    public Builder<T> setDataType(DataType dataType) {
+      this.dataType = dataType;
+      return this;
+    }
+
     /**
      * Returns a new Variable created with the configuration stored in this builder instance.
      *
@@ -236,6 +240,9 @@ public class Variable<T> extends RemixerItem {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for Variable");
       }
+      if (dataType == null) {
+        throw new IllegalArgumentException("dataType cannot be unset for Variable");
+      }
       if (context == null) {
         throw new IllegalArgumentException("context cannot be unset for Variable");
       }
@@ -243,7 +250,7 @@ public class Variable<T> extends RemixerItem {
         title = key;
       }
       Variable<T> variable =
-          new Variable<T>(title, key, defaultValue, context, callback, layoutId);
+          new Variable<T>(title, key, defaultValue, context, callback, layoutId, dataType);
       variable.init();
       return variable;
     }

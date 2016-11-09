@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.ui.R;
@@ -62,7 +63,8 @@ public class StringVariableWidgetTest {
         DEFAULT_VALUE,
         this,
         mockCallback,
-        R.layout.string_variable_widget);
+        R.layout.string_variable_widget,
+        DataType.STRING);
     variable.init();
     view = (StringVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.string_variable_widget, null);

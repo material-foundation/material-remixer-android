@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.ui.R;

@@ -17,7 +17,9 @@
 package com.google.android.apps.remixer;
 
 import android.app.Application;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.ui.RemixerCallbacks;
+import com.google.android.libraries.remixer.ui.RemixerInitialization;
 
 /**
  * The Remixer Application registers the RemixerCallbacks for Activity Lifecycle Callbacks. This
@@ -28,6 +30,6 @@ public class RemixerApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    registerActivityLifecycleCallbacks(RemixerCallbacks.getInstance());
+    RemixerInitialization.initRemixer(Remixer.getInstance(), this);
   }
 }

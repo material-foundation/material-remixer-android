@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Variable;
 import com.google.common.base.Strings;
 import com.squareup.javapoet.ClassName;
@@ -73,6 +74,10 @@ abstract class MethodAnnotation {
    */
   private final TypeElement sourceClass;
   /**
+   * The data type this RemixerItem has.
+   */
+  protected final DataType dataType;
+  /**
    * The key for this Variable. If the annotation has an empty key then it uses the source method's
    * name as key.
    */
@@ -102,11 +107,13 @@ abstract class MethodAnnotation {
   MethodAnnotation(
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
+      DataType dataType,
       String key,
       String title,
       int layoutId) throws RemixerAnnotationException {
     this.sourceClass = sourceClass;
     this.sourceMethod = sourceMethod;
+    this.dataType = dataType;
     this.key = Strings.isNullOrEmpty(key) ? sourceMethod.getSimpleName().toString() : key;
     key = this.key;
     if (!KeyChecker.isValidKey(key)) {

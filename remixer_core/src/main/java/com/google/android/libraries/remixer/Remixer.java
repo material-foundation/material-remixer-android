@@ -17,9 +17,11 @@
 package com.google.android.libraries.remixer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import javax.xml.crypto.Data;
 
 /**
  * Contains a list of {@link Variable}es.
@@ -42,6 +44,11 @@ public class Remixer {
   private HashMap<Object, List<RemixerItem>> contextMap;
 
   /**
+   * Datatypes keyed by their serializable name.
+   */
+  private HashMap<String, DataType> registeredDataTypes;
+
+  /**
    * Gets the singleton for Remixer.
    *
    * <p><b>Note this operation is not thread safe and should only be called from the main
@@ -57,6 +64,7 @@ public class Remixer {
   Remixer() {
     keyMap = new HashMap<>();
     contextMap = new HashMap<>();
+    registeredDataTypes = new HashMap<>();
   }
 
   /**
@@ -154,6 +162,22 @@ public class Remixer {
       map.put(key, list);
     }
     return list;
+  }
+
+  /**
+   * Register a new data type that can be used with Remixer.
+   * @param dataType
+   */
+  public void registerDataType(DataType dataType) {
+    if (registeredDataTypes.containsKey(dataType.getName())) {
+      throw new IllegalStateException("Adding a data type that has already been added, name: "
+          + dataType.getName() );
+    }
+    registeredDataTypes.put(dataType.getName(), dataType);
+  }
+
+  public Collection<DataType> getRegisteredDataType() {
+    return registeredDataTypes.values();
   }
 
   /**

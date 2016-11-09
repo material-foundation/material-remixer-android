@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.ui.R;
@@ -73,7 +74,8 @@ public class ItemListVariableWidgetTest {
         Arrays.asList(ITEM_LIST),
         this,
         mockCallback,
-        R.layout.item_list_variable_widget);
+        R.layout.item_list_variable_widget,
+        DataType.STRING);
     variable.init();
     view = (ItemListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.item_list_variable_widget, null);

@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 import android.view.LayoutInflater;
 import android.widget.Switch;
 import android.widget.TextView;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.ui.R;
@@ -62,7 +63,8 @@ public class BooleanVariableWidgetTest {
         DEFAULT_VALUE,
         this,
         mockCallback,
-        R.layout.boolean_variable_widget);
+        R.layout.boolean_variable_widget,
+        DataType.BOOLEAN);
     variable.init();
     view = (BooleanVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.boolean_variable_widget, null);

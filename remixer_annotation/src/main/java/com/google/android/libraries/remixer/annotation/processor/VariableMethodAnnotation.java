@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
@@ -70,6 +71,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
     return new VariableMethodAnnotation<>(
         sourceClass,
         sourceMethod,
+        DataType.BOOLEAN,
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
@@ -82,6 +84,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
     return new VariableMethodAnnotation<>(
         sourceClass,
         sourceMethod,
+        DataType.STRING,
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
@@ -91,6 +94,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
   private VariableMethodAnnotation(
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
+      DataType dataType,
       String key,
       String title,
       int layoutId,

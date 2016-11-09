@@ -50,15 +50,24 @@ public abstract class RemixerItem {
    * The remixer instance this RemixerItem has been attached to.
    */
   protected Remixer remixer;
+  /**
+   * The data type held in this RemixerItem
+   */
+  private DataType dataType;
 
   /**
    * Constructs a new RemixerItem with the given key, title and layoutId.
    */
-  protected RemixerItem(String title, String key, Object context, int layoutId) {
+  protected RemixerItem(String title, String key, Object context, int layoutId, DataType dataType) {
     this.title = title;
     this.key = key;
     this.context = new WeakReference<Object>(context);
     this.layoutId = layoutId;
+    this.dataType = dataType;
+  }
+
+  public DataType getDataType() {
+    return dataType;
   }
 
   /**

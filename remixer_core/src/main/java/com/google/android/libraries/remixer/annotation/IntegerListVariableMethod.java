@@ -16,6 +16,8 @@
 
 package com.google.android.libraries.remixer.annotation;
 
+import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.RemixerItem;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -69,4 +71,11 @@ public @interface IntegerListVariableMethod {
    * <p>Its root element must implement {@code RemixerItemWidget&lt;Variable&lt;String&gt;&gt;}.
    */
   int layoutId() default 0;
+
+  /**
+   * If set to true, the {@link RemixerItem#dataType} will be set to {@link DataType#COLOR} instead
+   * of {@link DataType#}
+   *
+   */
+  boolean isColor default false;
 }

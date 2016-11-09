@@ -25,6 +25,7 @@ public class StringVariableBuilder extends Variable.Builder<String> {
   public StringVariableBuilder() {
     // Assume the empty string to be the default value
     setDefaultValue("");
+    setDataType(DataType.STRING);
   }
 
 }
