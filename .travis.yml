@@ -8,8 +8,10 @@ env:
 
 android:
   components:
-    - tools
-    - tools #update to latest, cannot control version
+    - tools # to get the new `repository-11.xml`
+    - tools # to install Android SDK tools 25+, latest, cannot get more granular control than this
+    # See https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943 for more
+    # details.
     - platform-tools #latest
     - build-tools-24.0.1
     - android-24
