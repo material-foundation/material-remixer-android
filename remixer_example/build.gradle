@@ -17,7 +17,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
-
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
