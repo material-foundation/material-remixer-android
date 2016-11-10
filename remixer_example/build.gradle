@@ -43,8 +43,9 @@ android {
   }
 
   lintOptions {
-    abortOnError false
     disable 'GradleDependency'
+    textReport true
+    textOutput 'stdout'
   }
 }
 

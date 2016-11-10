@@ -40,6 +40,8 @@ android {
     // Disable gradle dependency check for new versions.
     // Many of these have been chosen to work with Google Tools.
     disable 'GradleDependency'
+    textReport true
+    textOutput 'stdout'
   }
 }
 
