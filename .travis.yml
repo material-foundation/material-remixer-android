@@ -1,0 +1,30 @@
+sudo: false
+language: android
+jdk: oraclejdk8
+
+env:
+  matrix:
+    - ANDROID_TARGET=android-24
+
+android:
+  components:
+    - tools # to get the new `repository-11.xml`
+    - tools # to install Android SDK tools 25+, latest, cannot get more granular control than this
+    # See https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943 for more
+    # details.
+    - platform-tools #latest
+    - build-tools-24.0.1
+    - android-24
+    - extra-android-m2repository
+
+before_install:
+  - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
+
+licenses:
+  - 'android-sdk-license-.+'
+
+script:
+  - ./gradlew check
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
