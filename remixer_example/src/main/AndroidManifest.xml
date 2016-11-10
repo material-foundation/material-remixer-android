@@ -20,6 +20,15 @@
   package="com.google.android.apps.remixer"
   tools:ignore="GoogleAppIndexingWarning">
 
+  <!--
+  The uses-sdk element is unnecessary while building with Gradle but necessary if using Bazel.
+  Furthermore it is necessary when using Robolectric.
+  -->
+  <uses-sdk
+    android:minSdkVersion="15"
+    android:targetSdkVersion="24"
+    tools:ignore="GradleOverrides,OldTargetApi"/>
+
   <application
     android:name=".RemixerApplication"
     android:allowBackup="false"
@@ -39,14 +48,16 @@
     </activity>
     <activity
       android:name=".MainActivity"
-      android:parentActivityName=".MenuActivity">
+      android:parentActivityName=".MenuActivity"
+      tools:ignore="UnusedAttribute">
       <meta-data
         android:name="android.support.PARENT_ACTIVITY"
         android:value=".MenuActivity" />
     </activity>
     <activity
       android:name=".BoxActivity"
-      android:parentActivityName=".MenuActivity">
+      android:parentActivityName=".MenuActivity"
+      tools:ignore="UnusedAttribute">
       <meta-data
         android:name="android.support.PARENT_ACTIVITY"
         android:value=".MenuActivity" />

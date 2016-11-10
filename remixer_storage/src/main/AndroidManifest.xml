@@ -14,9 +14,19 @@
   ~ limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.google.android.remixer.examples.remixerstorage">
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.google.android.remixer.examples.remixerstorage"
+  xmlns:tools="http://schemas.android.com/tools">
 
+  <!--
+  The uses-sdk element is unnecessary while building with Gradle but necessary if using Bazel.
+  Furthermore it is necessary when using Robolectric.
+  -->
+  <uses-sdk
+    android:minSdkVersion="15"
+    android:targetSdkVersion="24"
+    tools:ignore="GradleOverrides,OldTargetApi"/>
   <application android:allowBackup="true"
                android:label="@string/app_name"
                android:supportsRtl="true">
