@@ -8,11 +8,11 @@ env:
 
 android:
   components:
-    - platform-tools
     - tools
-    - android-24
+    - tools #update to latest, cannot control version
+    - platform-tools #latest
     - build-tools-24.0.1
-    - extra-android-support
+    - android-24
     - extra-android-m2repository
 
 before_install:
