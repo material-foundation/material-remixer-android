@@ -86,4 +86,13 @@ public class Trigger extends RemixerItem {
               getKey()));
     }
   }
+
+  public static class Builder extends RemixerItem.Builder<Trigger, Runnable> {
+
+    @Override
+    public Trigger build() {
+      checkBaseFields();
+      return new Trigger(title, key, context, callback, layoutId);
+    }
+  }
 }

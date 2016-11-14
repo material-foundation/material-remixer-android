@@ -138,4 +138,67 @@ public abstract class RemixerItem {
   public void setRemixer(Remixer remixer) {
     this.remixer = remixer;
   }
+
+  public abstract static class Builder<T extends RemixerItem, C> {
+
+    protected String key;
+    protected String title;
+    protected Object context;
+    protected int layoutId = 0;
+    protected C callback;
+    protected DataType dataType;
+
+    public Builder<T, C> setKey(String key) {
+      this.key = key;
+      return this;
+    }
+
+    public Builder<T, C>  setTitle(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder<T, C>  setLayoutId(int layoutId) {
+      this.layoutId = layoutId;
+      return this;
+    }
+
+    public Builder<T, C>  setContext(Object context) {
+      this.context = context;
+      return this;
+    }
+
+    public Builder<T, C>  setCallback(C callback) {
+      this.callback = callback;
+      return this;
+    }
+
+    public Builder<T, C>  setDataType(DataType dataType) {
+      this.dataType = dataType;
+      return this;
+    }
+
+    protected void checkBaseFields() {
+      if (key == null) {
+        throw new IllegalArgumentException("key cannot be unset for RemixerItem");
+      }
+      if (context == null) {
+        throw new IllegalArgumentException("context cannot be unset for RemixerItem");
+      }
+      if (dataType == null) {
+        throw new IllegalArgumentException("dataType cannot be unset for RemixerItem");
+      }
+      if (title == null) {
+        title = key;
+      }
+    }
+
+    /**
+     * Returns the built RemixerItem. Implementors must call {@link #checkBaseFields()}.
+     * @throws IllegalArgumentException if the minimally required fields were not set or their
+     *    configuration is invalid.
+     */
+    public abstract T build();
+  }
+
 }

@@ -77,5 +77,5 @@ public @interface IntegerListVariableMethod {
    * of {@link DataType#}
    *
    */
-  boolean isColor default false;
+  boolean isColor() default false;
 }

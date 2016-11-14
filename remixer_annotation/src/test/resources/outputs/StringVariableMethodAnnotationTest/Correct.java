@@ -18,6 +18,7 @@ package somepackage;
 
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Override;
@@ -30,9 +31,14 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
   public void bindInstance(Correct activity) {
     Remixer remixer = Remixer.getInstance();
     Generated_correct correct_callback = new Generated_correct(activity);
-    Variable<String> correct_variable = new Variable<String>("correct", "correct", "", activity, correct_callback, 0);
-    correct_variable.init();
-    remixer.addItem(correct_variable);
+    StringVariableBuilder correct_remixer_item = new StringVariableBuilder();
+    correct_remixer_item.setKey("correct");
+    correct_remixer_item.setTitle("correct");
+    correct_remixer_item.setLayoutId(0);
+    correct_remixer_item.setContext(activity);
+    correct_remixer_item.setCallback(correct_callback);
+    correct_remixer_item.setDefaultValue("");
+    remixer.addItem(correct_remixer_item.build());
   }
 
   static class Generated_correct implements Callback<String> {

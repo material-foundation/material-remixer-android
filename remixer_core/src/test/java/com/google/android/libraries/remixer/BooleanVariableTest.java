@@ -37,14 +37,26 @@ public class BooleanVariableTest {
 
   @Test
   public void initCallsCallback() {
-    Variable<Boolean> variable = new Variable<>("name", "key", false, this, mockCallback, 0);
+    Variable<Boolean> variable =
+        new BooleanVariableBuilder()
+            .setTitle("name")
+            .setKey("key")
+            .setContext(this)
+            .setCallback(mockCallback)
+            .build();
     variable.init();
     Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(variable);
   }
 
   @Test
   public void setValueCallsCallback() {
-    Variable<Boolean> variable = new Variable<>("name", "key", false, this, mockCallback, 0);
+    Variable<Boolean> variable =
+        new BooleanVariableBuilder()
+            .setTitle("name")
+            .setKey("key")
+            .setContext(this)
+            .setCallback(mockCallback)
+            .build();
     variable.init();
     variable.setValue(true);
     Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(variable);
@@ -52,7 +64,12 @@ public class BooleanVariableTest {
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    Variable<Boolean> variable = new Variable<>("name", "key", false, this, null, 0);
+    Variable<Boolean> variable =
+        new BooleanVariableBuilder()
+            .setTitle("name")
+            .setKey("key")
+            .setContext(this)
+            .build();
     variable.init();
     variable.setValue(true);
   }

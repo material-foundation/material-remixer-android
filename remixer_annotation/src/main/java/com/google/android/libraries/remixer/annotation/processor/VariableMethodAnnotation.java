@@ -17,12 +17,12 @@
 package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.DataType;
-import com.google.android.libraries.remixer.Variable;
+import com.google.android.libraries.remixer.BooleanVariableBuilder;
+import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
@@ -72,6 +72,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
         sourceClass,
         sourceMethod,
         DataType.BOOLEAN,
+        ClassName.get(BooleanVariableBuilder.class),
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
@@ -85,6 +86,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
         sourceClass,
         sourceMethod,
         DataType.STRING,
+        ClassName.get(StringVariableBuilder.class),
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
@@ -95,47 +97,22 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
       DataType dataType,
+      TypeName builderType,
       String key,
       String title,
       int layoutId,
       T defaultValue)
       throws RemixerAnnotationException {
-    super(sourceClass, sourceMethod, key, title, layoutId);
+    super(sourceClass, sourceMethod, dataType, builderType, key, title, layoutId);
     this.defaultValue = defaultValue;
   }
 
-  @Override
-  public void addSetupStatements(MethodSpec.Builder methodBuilder) {
-    String callbackVariable = key + CALLBACK_NAME_SUFFIX;
-    String variableName = key + VARIABLE_SUFFIX;
-    ParameterizedTypeName variableClass = ParameterizedTypeName.get(
-        ClassName.get(Variable.class), getVariableType());
-    methodBuilder
-        .addStatement(
-            NEW_CALLBACK_STATEMENT,
-            generatedClassName, callbackVariable, generatedClassName)
-        .addStatement(
-            getNewVariableStatement(),
-            variableClass,
-            variableName,
-            variableClass,
-            title,
-            key,
-            defaultValue,
-            ACTIVITY_NAME,
-            callbackVariable,
-            layoutId)
-        .addStatement(INIT_VARIABLE_STATEMENT, variableName)
-        .addStatement(ADD_VARIABLE_STATEMENT, variableName);
-  }
-
-  private String getNewVariableStatement() {
-    return defaultValue.getClass().equals(String.class)
-        ? NEW_STRING_VARIABLE_STATEMENT : NEW_VARIABLE_STATEMENT;
-  }
 
   @Override
-  protected TypeName getVariableType() {
-    return ClassName.get(defaultValue.getClass());
+  protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
+    methodBuilder.addStatement(
+        defaultValue.getClass().equals(String.class) ?
+            "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
+        remixerItemName, defaultValue);
   }
 }

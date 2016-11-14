@@ -176,6 +176,10 @@ public class Remixer {
     registeredDataTypes.put(dataType.getName(), dataType);
   }
 
+  public DataType getDataType(String name) {
+    return registeredDataTypes.get(name);
+  }
+
   public Collection<DataType> getRegisteredDataType() {
     return registeredDataTypes.values();
   }

@@ -155,38 +155,17 @@ public class RangeVariable extends Variable<Integer> {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key, context, minValue and maxValue are mandatory. If any of these are
-   * missing or the settings are incorrect according to the logic of {@link RangeVariable} an
-   * {@link IllegalArgumentException} will be thrown.
+   * <p>On the other hand: key, minValue, maxValue, dataType and context are mandatory. If any of
+   * these are missing or the settings are incorrect according to the logic of {@link RangeVariable}
+   * an {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder {
+  public static class Builder extends RemixerItem.Builder<RangeVariable, Callback<Integer>> {
 
-    private String key;
-    private String title;
     private Integer defaultValue;
     private Integer minValue;
     private Integer maxValue;
     private int increment = 1;
-    private Object context;
-    private Callback<Integer> callback;
-    private int layoutId = 0;
 
-    public Builder() {}
-
-    public Builder setKey(String key) {
-      this.key = key;
-      return this;
-    }
-
-    public Builder setContext(Object context) {
-      this.context = context;
-      return this;
-    }
-
-    public Builder setTitle(String title) {
-      this.title = title;
-      return this;
-    }
 
     public Builder setMinValue(int minValue) {
       this.minValue = minValue;
@@ -208,38 +187,20 @@ public class RangeVariable extends Variable<Integer> {
       return this;
     }
 
-    public Builder setCallback(Callback<Integer> callback) {
-      this.callback = callback;
-      return this;
-    }
-
-    public Builder setLayoutId(int layoutId) {
-      this.layoutId = layoutId;
-      return this;
-    }
-
     /**
      * Returns a new RangeVariable created with the configuration stored in this builder instance.
      *
      * @throws IllegalArgumentException If key, minValue or maxValue are missing, or if these
      *     settings are incorrect for {@link RangeVariable}
      */
-    public RangeVariable buildAndInit() {
+    public RangeVariable build() {
       if (minValue == null || maxValue == null) {
         throw new IllegalArgumentException("minValue and maxValue must not be null");
       }
       if (defaultValue == null) {
         defaultValue = minValue;
       }
-      if (key == null) {
-        throw new IllegalArgumentException("key cannot be unset for RangeVariable");
-      }
-      if (context == null) {
-        throw new IllegalArgumentException("context cannot be unset for RangeVariable");
-      }
-      if (title == null) {
-        title = key;
-      }
+      checkBaseFields();
       RangeVariable variable = new RangeVariable(
           title, key, defaultValue, minValue, maxValue, increment, context, callback,
           layoutId);

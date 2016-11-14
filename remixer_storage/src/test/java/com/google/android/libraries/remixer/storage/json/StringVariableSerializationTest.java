@@ -44,13 +44,13 @@ public class StringVariableSerializationTest {
     stringVariable = new StringVariableBuilder()
         .setContext(this)
         .setKey(KEY)
-        .buildAndInit();
+        .build();
     stringListVariable = new ItemListVariable.Builder<String>()
-        .setContext(this)
-        .setKey(KEY)
         .setDefaultValue("a")
         .setPossibleValues(new String[]{"a", "b", "c"})
-        .buildAndInit();
+        .setContext(this)
+        .setKey(KEY)
+        .build();
   }
 
   @Test
