@@ -43,7 +43,7 @@ public class ItemListVariableTest {
             .setKey("key")
             .setContext(this)
             .setCallback(mockCallback)
-            .buildAndInit();
+            .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -54,7 +54,7 @@ public class ItemListVariableTest {
             .setDefaultValue("Something else")
             .setKey("key")
             .setContext(this)
-            .buildAndInit();
+            .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -81,7 +81,7 @@ public class ItemListVariableTest {
             .setDefaultValue("A")
             .setKey("key")
             .setContext(this)
-            .buildAndInit();
+            .build();
     variable.setValue("B");
   }
 }

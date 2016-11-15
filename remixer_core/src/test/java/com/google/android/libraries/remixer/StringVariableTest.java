@@ -35,7 +35,7 @@ public class StringVariableTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     variableWithCallback = new StringVariableBuilder()
-        .setKey("key").setContext(this).setCallback(mockCallback).buildAndInit();
+        .setKey("key").setContext(this).setCallback(mockCallback).build();
   }
 
   @Test
@@ -52,7 +52,7 @@ public class StringVariableTest {
   @Test
   public void doesNotCrashOnNullCallback() {
     Variable<String> variable =
-        new StringVariableBuilder().setKey("key").setContext(this).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(this).build();
     variable.init();
     variable.setValue("B");
   }

@@ -109,8 +109,8 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
   @Override
   protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
     methodBuilder.addStatement(
-        defaultValue.getClass().equals(String.class) ?
-            "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
+        defaultValue.getClass().equals(String.class)
+            ? "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
         remixerItemName, defaultValue);
   }
 

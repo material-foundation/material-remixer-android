@@ -35,9 +35,9 @@ public class RemixerTest {
    */
   @Before
   public void setUp() {
-    variable = new StringVariableBuilder().setKey("key").setContext(this).buildAndInit();
+    variable = new StringVariableBuilder().setKey("key").setContext(this).build();
     variable.init();
-    variable2 = new StringVariableBuilder().setKey("key2").setContext(this).buildAndInit();
+    variable2 = new StringVariableBuilder().setKey("key2").setContext(this).build();
     variable2.init();
     remixer = new Remixer();
   }
@@ -53,9 +53,9 @@ public class RemixerTest {
     final Object context1 = new Object();
     final Object context2 = new Object();
     final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
     final Variable<Boolean> variableBoolean =
-        new BooleanVariableBuilder().setKey("key").setContext(context2).buildAndInit();
+        new BooleanVariableBuilder().setKey("key").setContext(context2).build();
 
     remixer.addItem(variableString);
     remixer.addItem(variableBoolean);
@@ -66,7 +66,7 @@ public class RemixerTest {
     final Object context1 = new Object();
     final Object context2 = new Object();
     final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
     final Trigger trigger = new Trigger("name", "key", context2, null, 0);
 
     remixer.addItem(variableString);
@@ -93,9 +93,9 @@ public class RemixerTest {
     final Object context1 = new Object();
     final Object context2 = new Object();
     final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
     final Variable<Boolean> variableBoolean =
-        new BooleanVariableBuilder().setKey("key").setContext(context2).buildAndInit();
+        new BooleanVariableBuilder().setKey("key").setContext(context2).build();
 
     remixer.addItem(variableString);
     // Simulate context reclaimed.
@@ -113,9 +113,9 @@ public class RemixerTest {
     final Object context1 = new Object();
     final Object context2 = new Object();
     final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
     final Variable<String> variableString2 =
-        new StringVariableBuilder().setKey("key").setContext(context2).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context2).build();
 
     // Add the first.
     remixer.addItem(variableString);
@@ -137,9 +137,9 @@ public class RemixerTest {
     final Object context1 = new Object();
     final Object context2 = new Object();
     final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
     final Variable<String> variableString2 =
-        new StringVariableBuilder().setKey("key").setContext(context2).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context2).build();
     remixer.addItem(variableString);
     variableString.setValue("May the force be with you");
     Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
@@ -153,9 +153,9 @@ public class RemixerTest {
     final Object context1 = new Object();
     final Object context2 = new Object();
     final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
     final Variable<String> variableString2 =
-        new StringVariableBuilder().setKey("key").setContext(context2).buildAndInit();
+        new StringVariableBuilder().setKey("key").setContext(context2).build();
     remixer.addItem(variableString);
     remixer.addItem(variableString2);
     variableString.setValue("May the force be with you");

@@ -39,7 +39,7 @@ public class BooleanVariableTest {
         .setKey("key")
         .setContext(this)
         .setCallback(mockCallback)
-        .buildAndInit();
+        .build();
   }
 
   @Test
@@ -58,7 +58,7 @@ public class BooleanVariableTest {
     Variable<Boolean> variable = new BooleanVariableBuilder()
         .setKey("key")
         .setContext(this)
-        .buildAndInit();
+        .build();
     variable.init();
     variable.setValue(true);
   }
