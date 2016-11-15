@@ -16,8 +16,8 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
-import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.BooleanVariableBuilder;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
@@ -111,8 +111,8 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
   @Override
   protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
     methodBuilder.addStatement(
-        defaultValue.getClass().equals(String.class) ?
-            "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
+        defaultValue.getClass().equals(String.class)
+            ? "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
         remixerItemName, defaultValue);
   }
 }

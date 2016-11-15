@@ -109,11 +109,6 @@ public class Remixer {
         }
       }
     }
-    for (RemixerItem remove : itemsToRemove) {
-      listForKey.remove(remove);
-      // no need to remove from contextMap, contextMap has already removed the whole list of items
-      // with that context that was reclaimed, see cleanUpCallbacks().
-    }
     if (remixerItem instanceof Variable && listForKey.size() > 0) {
       // Make sure that variables use their current value if it has been modified in another
       // context.
@@ -125,6 +120,11 @@ public class Remixer {
       // Make newVariable have the current value found in variables that have already been added to
       // the Remixer.
       newVariable.setValueWithoutNotifyingOthers(otherVariable.getSelectedValue());
+    }
+    for (RemixerItem remove : itemsToRemove) {
+      listForKey.remove(remove);
+      // no need to remove from contextMap, contextMap has already removed the whole list of items
+      // with that context that was reclaimed, see cleanUpCallbacks().
     }
     listForKey.add(remixerItem);
     remixerItem.setRemixer(this);
@@ -166,7 +166,6 @@ public class Remixer {
 
   /**
    * Register a new data type that can be used with Remixer.
-   * @param dataType
    */
   public void registerDataType(DataType dataType) {
     if (registeredDataTypes.containsKey(dataType.getName())) {

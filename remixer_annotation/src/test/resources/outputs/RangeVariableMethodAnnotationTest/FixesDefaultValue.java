@@ -32,6 +32,7 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     Remixer remixer = Remixer.getInstance();
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
     RangeVariable.Builder fixValue_remixer_item = new RangeVariable.Builder();
+    fixValue_remixer_item.setDataType(Remixer.getInstance().getDataType("number"));
     fixValue_remixer_item.setKey("fixValue");
     fixValue_remixer_item.setTitle("fixValue");
     fixValue_remixer_item.setLayoutId(0);

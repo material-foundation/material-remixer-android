@@ -16,15 +16,16 @@
 
 package com.google.android.libraries.remixer.ui.widget;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import android.view.LayoutInflater;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.google.android.libraries.remixer.DataType;
-import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.ui.R;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,10 +34,6 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(
@@ -49,7 +46,7 @@ public class SeekBarRangeVariableWidgetTest {
   private static final int MIN = 4;
   private static final int MAX = 20;
   private static final int DEFAULT_VALUE = 8;
-  private static final int STEPPING = 1;
+  private static final int INCREMENT = 1;
 
   @Mock
   Callback<Integer> mockCallback;
@@ -63,17 +60,16 @@ public class SeekBarRangeVariableWidgetTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    variable = new RangeVariable(
-        TITLE,
-        KEY,
-        DEFAULT_VALUE,
-        MIN,
-        MAX,
-        STEPPING,
-        this,
-        mockCallback,
-        R.layout.seekbar_range_variable_widget);
-    variable.init();
+    variable = new RangeVariable.Builder()
+        .setMinValue(MIN)
+        .setMaxValue(MAX)
+        .setIncrement(INCREMENT)
+        .setDefaultValue(DEFAULT_VALUE)
+        .setTitle(TITLE)
+        .setKey(KEY)
+        .setContext(this)
+        .setCallback(mockCallback)
+        .build();
     view = (SeekBarRangeVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.seekbar_range_variable_widget, null);
     view.bindRemixerItem(variable);

@@ -51,7 +51,7 @@ enum SupportedDataType {
     StoredVariable<Boolean> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getDataType().equals(DataType.BOOLEAN)) {
+        if (var.getDataType().getName().equals(DataType.BOOLEAN.getName())) {
           StoredVariable<Boolean> storage = new StoredVariable<>();
           storage.dataType = BOOLEAN.getDataTypeSerializableString();
           storage.selectedValue = (Boolean) var.getSelectedValue();
@@ -88,7 +88,7 @@ enum SupportedDataType {
     StoredVariable<Integer> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getDataType().equals(DataType.COLOR)) {
+        if (var.getDataType().getName().equals(DataType.COLOR.getName())) {
           StoredVariable<Integer> storage = new StoredVariable<>();
           storage.dataType = COLOR.getDataTypeSerializableString();
           storage.selectedValue = (Integer) var.getSelectedValue();
@@ -120,7 +120,7 @@ enum SupportedDataType {
     StoredVariable<Integer> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getDataType().equals(DataType.NUMBER)) {
+        if (var.getDataType().getName().equals(DataType.NUMBER.getName())) {
           StoredVariable<Integer> storage = new StoredVariable<>();
           storage.dataType = NUMBER.getDataTypeSerializableString();
           storage.selectedValue = (Integer) var.getSelectedValue();
@@ -156,7 +156,7 @@ enum SupportedDataType {
     StoredVariable<String> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getDataType().equals(DataType.STRING)) {
+        if (var.getDataType().getName().equals(DataType.STRING.getName())) {
           StoredVariable<String> storage = new StoredVariable<>();
           storage.dataType = STRING.getDataTypeSerializableString();
           storage.selectedValue = (String) var.getSelectedValue();

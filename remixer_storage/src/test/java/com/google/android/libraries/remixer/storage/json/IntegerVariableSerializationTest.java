@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.storage.json;
 
 import android.graphics.Color;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Variable;
@@ -47,12 +48,14 @@ public class IntegerVariableSerializationTest {
         .setDefaultValue(0)
         .setKey(KEY)
         .setContext(this)
+        .setDataType(DataType.NUMBER)
         .build();
     integerListVariable = new ItemListVariable.Builder<Integer>()
         .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
         .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey(KEY)
+        .setDataType(DataType.NUMBER)
         .build();
     rangeVariable = new RangeVariable.Builder()
         .setMinValue(0)
@@ -61,6 +64,7 @@ public class IntegerVariableSerializationTest {
         .setDefaultValue(10)
         .setContext(this)
         .setKey(KEY)
+        .setDataType(DataType.NUMBER)
         .build();
   }
 

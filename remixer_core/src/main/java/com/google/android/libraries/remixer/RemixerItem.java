@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer;
 
 import java.lang.ref.WeakReference;
+import java.util.Locale;
 
 /**
  * An item that can be displayed on Remixer's interfaces.
@@ -51,7 +52,7 @@ public abstract class RemixerItem {
    */
   protected Remixer remixer;
   /**
-   * The data type held in this RemixerItem
+   * The data type held in this RemixerItem.
    */
   private DataType dataType;
 
@@ -113,7 +114,15 @@ public abstract class RemixerItem {
    * @throws IncompatibleRemixerItemsWithSameKeyException if {@code item} has the same key as this
    *     object, and they are of different types or otherwise incompatible.
    */
-  abstract void assertIsCompatibleWith(RemixerItem item);
+  final void assertIsCompatibleWith(RemixerItem item) {
+    if (item.getKey().equals(key) && !dataType.equals(item.dataType)) {
+      throw new IncompatibleRemixerItemsWithSameKeyException(String.format(
+          Locale.getDefault(),
+          "Trying to add two remixer items with key %s and incompatible types %s and %s",
+          key, dataType.getName(), item.getDataType().getName()));
+
+    }
+  }
 
   /**
    * Returns the context.
@@ -196,7 +205,7 @@ public abstract class RemixerItem {
     /**
      * Returns the built RemixerItem. Implementors must call {@link #checkBaseFields()}.
      * @throws IllegalArgumentException if the minimally required fields were not set or their
-     *    configuration is invalid.
+     *     configuration is invalid.
      */
     public abstract T build();
   }

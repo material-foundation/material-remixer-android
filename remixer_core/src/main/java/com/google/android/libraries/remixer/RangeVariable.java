@@ -166,6 +166,9 @@ public class RangeVariable extends Variable<Integer> {
     private Integer maxValue;
     private int increment = 1;
 
+    public Builder() {
+      setDataType(DataType.NUMBER);
+    }
 
     public Builder setMinValue(int minValue) {
       this.minValue = minValue;

@@ -18,6 +18,7 @@ package com.google.android.libraries.remixer.storage.json;
 
 import android.graphics.Color;
 import com.google.android.libraries.remixer.BooleanVariableBuilder;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.StringVariableBuilder;
@@ -59,13 +60,14 @@ public class SerializableRemixerContentsSerializationTest {
         .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey("colorList")
-        .setLayoutId(com.google.android.libraries.remixer.ui.R.layout.color_list_variable_widget)
+        .setDataType(DataType.COLOR)
         .build();
     serializableRemixerContents.addItem(colorListVariable);
     integerVariable  = new Variable.Builder<Integer>()
         .setDefaultValue(0)
         .setKey("integer")
         .setContext(this)
+        .setDataType(DataType.NUMBER)
         .build();
     serializableRemixerContents.addItem(integerVariable);
     integerListVariable = new ItemListVariable.Builder<Integer>()
@@ -73,6 +75,7 @@ public class SerializableRemixerContentsSerializationTest {
         .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey("integerList")
+        .setDataType(DataType.NUMBER)
         .build();
     serializableRemixerContents.addItem(integerListVariable);
     rangeVariable = new RangeVariable.Builder()
@@ -94,6 +97,7 @@ public class SerializableRemixerContentsSerializationTest {
         .setDefaultValue("a")
         .setContext(this)
         .setKey("stringList")
+        .setDataType(DataType.STRING)
         .build();
     serializableRemixerContents.addItem(stringListVariable);
   }

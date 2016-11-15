@@ -146,32 +146,6 @@ public class Variable<T> extends RemixerItem {
     callback = null;
   }
 
-  @Override
-  @SuppressWarnings("unchecked")
-  void assertIsCompatibleWith(RemixerItem item) {
-    if (item.getKey().equals(getKey())) {
-      if (item.getClass() != getClass()) {
-        throw new IncompatibleRemixerItemsWithSameKeyException(
-            String.format(
-                Locale.getDefault(),
-                "%s is incompatible with %s with same key %s",
-                getClass().getCanonicalName(),
-                item.getClass().getCanonicalName(),
-                getKey()));
-      }
-      Variable<T> variable = (Variable<T>) item;
-      if (variable.getDataType().equals(getDataType())) {
-        throw new IncompatibleRemixerItemsWithSameKeyException(
-            String.format(
-                Locale.getDefault(),
-                "Two variables with the same key, %s, have different types %s and %s",
-                getKey(),
-                getDataType().getName(),
-                variable.getDataType().getName()));
-      }
-    }
-  }
-
   /**
    * Convenience builder for Variable.
    *
@@ -201,7 +175,7 @@ public class Variable<T> extends RemixerItem {
      * @throws IllegalArgumentException If key or context is missing
      */
     public Variable<T> build() {
-     checkBaseFields();
+      checkBaseFields();
       Variable<T> variable =
           new Variable<T>(title, key, defaultValue, context, callback, layoutId, dataType);
       variable.init();

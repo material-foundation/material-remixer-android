@@ -48,7 +48,7 @@ public class RemixerInitialization {
     DataType.STRING.setLayoutIdForRemixerItemType(
         ItemListVariable.class, R.layout.item_list_variable_widget);
     DataType.STRING.setLayoutIdForRemixerItemType(
-        RangeVariable.class, R.layout.string_variable_widget);
+        Variable.class, R.layout.string_variable_widget);
     remixer.registerDataType(DataType.STRING);
 
     // Triggers are only supported in Trigger objects.

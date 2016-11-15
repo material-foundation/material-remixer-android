@@ -24,22 +24,26 @@ public class DataType {
    * <p>The key for this map is the specific RemixerItem subclass, and the value is the default
    * layout to use when a RemixerItem of the specific subclass has this data type.
    */
-  private final HashMap<Class<? extends RemixerItem>, Integer> layoutIdForRemixerItemType;
+  private final HashMap<Class<? extends RemixerItem>, Integer> layoutIdForRemixerItemType =
+      new HashMap<>();
 
   public DataType(String name, Class valueClass) {
     this.name = name;
     this.valueClass = valueClass;
-    this.layoutIdForRemixerItemType = new HashMap<>();
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    DataType dataType = (DataType) o;
-
-    if (!name.equals(dataType.name)) return false;
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
+    DataType dataType = (DataType) obj;
+    if (!name.equals(dataType.name)) {
+      return false;
+    }
     return valueClass.equals(dataType.valueClass);
 
   }

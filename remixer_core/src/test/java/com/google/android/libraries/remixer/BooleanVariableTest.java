@@ -30,46 +30,35 @@ public class BooleanVariableTest {
   @Mock
   Callback<Boolean> mockCallback;
 
+  private Variable<Boolean> correctVariableWithCallback;
+
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
+    correctVariableWithCallback = new BooleanVariableBuilder()
+        .setKey("key")
+        .setContext(this)
+        .setCallback(mockCallback)
+        .build();
   }
 
   @Test
   public void initCallsCallback() {
-    Variable<Boolean> variable =
-        new BooleanVariableBuilder()
-            .setTitle("name")
-            .setKey("key")
-            .setContext(this)
-            .setCallback(mockCallback)
-            .build();
-    variable.init();
-    Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(variable);
+    Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(correctVariableWithCallback);
   }
 
   @Test
   public void setValueCallsCallback() {
-    Variable<Boolean> variable =
-        new BooleanVariableBuilder()
-            .setTitle("name")
-            .setKey("key")
-            .setContext(this)
-            .setCallback(mockCallback)
-            .build();
-    variable.init();
-    variable.setValue(true);
-    Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(variable);
+    correctVariableWithCallback.setValue(true);
+    Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(correctVariableWithCallback);
   }
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    Variable<Boolean> variable =
-        new BooleanVariableBuilder()
-            .setTitle("name")
-            .setKey("key")
-            .setContext(this)
-            .build();
+    Variable<Boolean> variable = new BooleanVariableBuilder()
+        .setKey("key")
+        .setContext(this)
+        .build();
     variable.init();
     variable.setValue(true);
   }
