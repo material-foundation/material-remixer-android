@@ -32,8 +32,8 @@ public class RangeVariableTest {
   @Mock
   Callback<Integer> increments5Callback;
 
-  RangeVariable singleIncrements;
-  RangeVariable increments5;
+  private RangeVariable singleIncrements;
+  private RangeVariable increments5;
 
   /**
    * Sets up the test.
@@ -41,43 +41,100 @@ public class RangeVariableTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    singleIncrements = new RangeVariable(
-        "name", "key", 15, 0, 20, 1, this, singleIncrementsCallback, 0);
-    singleIncrements.init();
-    increments5 = new RangeVariable("name", "key", 15, 0, 20, 5, this, increments5Callback, 0);
-    increments5.init();
+    singleIncrements =
+        new RangeVariable.Builder()
+            .setMinValue(0)
+            .setMaxValue(20)
+            .setIncrement(1)
+            .setDefaultValue(15)
+            .setCallback(singleIncrementsCallback)
+            .setKey("key")
+            .setContext(this)
+            .buildAndInit();
+    increments5 =
+        new RangeVariable.Builder()
+            .setMinValue(0)
+            .setMaxValue(20)
+            .setIncrement(5)
+            .setDefaultValue(15)
+            .setCallback(increments5Callback)
+            .setKey("key")
+            .setContext(this)
+            .buildAndInit();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void initDoesNotAcceptDefaultValueGreaterThanMax() {
-    new RangeVariable("name", "key", 15, 0, 10, 1, this, null, 0).init();
+    new RangeVariable.Builder()
+        .setMinValue(0)
+        .setMaxValue(10)
+        .setIncrement(5)
+        .setDefaultValue(15)
+        .setKey("key")
+        .setContext(this)
+        .buildAndInit();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void initDoesNotAcceptDefaultValueLessThanMin() {
-    new RangeVariable("name", "key", 15, 20, 30, 1, this, null, 0).init();
+    new RangeVariable.Builder()
+        .setMinValue(10)
+        .setMaxValue(20)
+        .setIncrement(5)
+        .setDefaultValue(5)
+        .setKey("key")
+        .setContext(this)
+        .buildAndInit();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptInvalidRanges() {
-    new RangeVariable("name", "key", 15, 50, 20, 1, this, null, 0).init();
+    new RangeVariable.Builder()
+        .setMinValue(50)
+        .setMaxValue(20)
+        .setIncrement(1)
+        .setDefaultValue(15)
+        .setKey("key")
+        .setContext(this)
+        .buildAndInit();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptNegativeStepping() {
-    new RangeVariable("name", "key", 15, 50, 20, -1, this, null, 0).init();
+    new RangeVariable.Builder()
+        .setMinValue(0)
+        .setMaxValue(20)
+        .setIncrement(-1)
+        .setDefaultValue(15)
+        .setKey("key")
+        .setContext(this)
+        .buildAndInit();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void constructorDoesNotAcceptInvalidStepping() {
     // Stepping is invalid because maxValue 52 cannot be reached from 15 in steps of 5
-    new RangeVariable("name", "key", 15, 0, 52, 5, this, null, 0).init();
+    new RangeVariable.Builder()
+        .setMinValue(0)
+        .setMaxValue(52)
+        .setIncrement(5)
+        .setDefaultValue(15)
+        .setKey("key")
+        .setContext(this)
+        .buildAndInit();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void initDoesNotAcceptInvalidSteppingToDefaultValue() {
     // Stepping is invalid because defaultValue 22 cannot be reached from 15 in steps of 5
-    new RangeVariable("name", "key", 22, 0, 50, 5, this, null, 0).init();
+    new RangeVariable.Builder()
+        .setMinValue(0)
+        .setMaxValue(50)
+        .setIncrement(5)
+        .setDefaultValue(22)
+        .setKey("key")
+        .setContext(this)
+        .buildAndInit();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -110,8 +167,15 @@ public class RangeVariableTest {
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    RangeVariable variable = new RangeVariable("name", "key", 15, 0, 20, 1, this, null, 0);
-    variable.init();
+    RangeVariable variable =
+        new RangeVariable.Builder()
+            .setMinValue(0)
+            .setMaxValue(20)
+            .setIncrement(1)
+            .setDefaultValue(15)
+            .setKey("key")
+            .setContext(this)
+            .buildAndInit();
     variable.setValue(18);
   }
 }
