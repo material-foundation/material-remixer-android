@@ -42,28 +42,17 @@ class TriggerMethodAnnotation extends MethodAnnotation {
   TriggerMethodAnnotation(
       TypeElement sourceClass, ExecutableElement sourceMethod, TriggerMethod annotation)
       throws RemixerAnnotationException {
-    super(sourceClass, sourceMethod, annotation.key(), annotation.title(), annotation.layoutId());
+    super(
+        sourceClass,
+        sourceMethod,
+        ClassName.get(Trigger.Builder.class),
+        annotation.key(),
+        annotation.title(),
+        annotation.layoutId());
   }
 
   @Override
-  public void addSetupStatements(MethodSpec.Builder methodBuilder) {
-    String callbackVariable = key + CALLBACK_NAME_SUFFIX;
-    String triggerVariable = key + TRIGGER_VAR_SUFFIX;
-    methodBuilder
-        .addStatement(
-            NEW_CALLBACK_STATEMENT,
-            generatedClassName, callbackVariable, generatedClassName)
-        .addStatement(
-            NEW_TRIGGER_STATEMENT,
-            Trigger.class,
-            triggerVariable,
-            Trigger.class,
-            title,
-            key,
-            ACTIVITY_NAME,
-            callbackVariable,
-            layoutId)
-        .addStatement(ADD_VARIABLE_STATEMENT, triggerVariable);
+  protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
   }
 
   @Override

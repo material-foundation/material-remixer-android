@@ -31,13 +31,19 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
   @Override
   public void bindInstance(FixesDefaultValue activity) {
     Remixer remixer = Remixer.getInstance();
+    Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
+    ItemListVariable.Builder<String> fixValue_remixer_item = new ItemListVariable.Builder<String>();
+    fixValue_remixer_item.setKey("fixValue");
+    fixValue_remixer_item.setTitle("fixValue");
+    fixValue_remixer_item.setLayoutId(0);
+    fixValue_remixer_item.setContext(activity);
+    fixValue_remixer_item.setCallback(fixValue_callback);
     ArrayList<String> fixValue_variable_list = new ArrayList<String>();
     fixValue_variable_list.add("hello");
     fixValue_variable_list.add("world");
-    Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
-    ItemListVariable<String> fixValue_variable = new ItemListVariable<String>("fixValue", "fixValue", "hello", fixValue_variable_list, activity, fixValue_callback, 0);
-    fixValue_variable.init();
-    remixer.addItem(fixValue_variable);
+    fixValue_remixer_item.setPossibleValues(fixValue_variable_list);
+    fixValue_remixer_item.setDefaultValue("hello");
+    remixer.addItem(fixValue_remixer_item.build());
   }
 
   static class Generated_fixValue implements Callback<String> {

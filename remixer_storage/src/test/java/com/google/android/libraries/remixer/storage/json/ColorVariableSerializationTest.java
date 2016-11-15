@@ -40,12 +40,12 @@ public class ColorVariableSerializationTest {
   @Before
   public void setUp() {
     colorListVariable = new ItemListVariable.Builder<Integer>()
+        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
+        .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey(KEY)
-        .setDefaultValue(Color.BLACK)
-        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
         .setLayoutId(com.google.android.libraries.remixer.ui.R.layout.color_list_variable_widget)
-        .buildAndInit();
+        .build();
   }
 
   @Test
