@@ -40,7 +40,7 @@ public class ItemListVariable<T> extends Variable<T> {
    * @param callback Callback to run once the value is set. Can be null.
    * @param layoutId A layout id that renders this control on screen.
    */
-  public ItemListVariable(
+  private ItemListVariable(
       String title,
       String key,
       T defaultValue,

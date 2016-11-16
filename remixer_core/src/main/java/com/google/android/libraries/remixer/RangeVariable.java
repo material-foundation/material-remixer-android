@@ -60,7 +60,7 @@ public class RangeVariable extends Variable<Integer> {
    *     (maxValue - minValue) % increment != 0} which means the current increment setting can't
    *     possibly get from minValue to maxValue.
    */
-  public RangeVariable(
+  private RangeVariable(
       String title,
       String key,
       int defaultValue,
