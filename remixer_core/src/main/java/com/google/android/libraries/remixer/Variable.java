@@ -47,7 +47,7 @@ public class Variable<T> extends RemixerItem {
   // TODO(miguely): Add default value semantics to the defaultValue, currently it behaves mostly
   // as an initial value. It should be used in cases when the value is set to an invalid value from
   // SharedPreferences or Firebase.
-  public Variable(
+  protected Variable(
       String title,
       String key,
       T defaultValue,
