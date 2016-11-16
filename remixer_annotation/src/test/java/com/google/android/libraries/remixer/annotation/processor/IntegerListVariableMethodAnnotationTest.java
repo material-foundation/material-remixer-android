@@ -77,6 +77,19 @@ public class IntegerListVariableMethodAnnotationTest {
   }
 
   @Test
+  public void buildsCorrectColorList() {
+    JavaFileObject file = JavaFileObjects
+        .forResource("inputs/IntegerListVariableMethodAnnotationTest/CorrectColorList.java");
+    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
+        .that(file)
+        .processedWith(allProcessors)
+        .compilesWithoutError()
+        .and()
+        .generatesSources(JavaFileObjects
+            .forResource("outputs/IntegerListVariableMethodAnnotationTest/CorrectColorList.java"));
+  }
+
+  @Test
   public void buildsAndFixesDefaultValue() {
     JavaFileObject file = JavaFileObjects
         .forResource("inputs/IntegerListVariableMethodAnnotationTest/FixesDefaultValue.java");

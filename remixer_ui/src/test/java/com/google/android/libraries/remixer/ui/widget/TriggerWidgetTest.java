@@ -51,10 +51,10 @@ public class TriggerWidgetTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     Trigger trigger = new Trigger.Builder()
-        .setTitle(TITLE)
         .setKey(KEY)
-        .setContext(this)
+        .setTitle(TITLE)
         .setCallback(mockCallback)
+        .setContext(this)
         .build();
     TriggerWidget view = (TriggerWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.trigger_widget, null);

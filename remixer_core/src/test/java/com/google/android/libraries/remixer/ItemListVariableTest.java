@@ -43,6 +43,7 @@ public class ItemListVariableTest {
             .setKey("key")
             .setContext(this)
             .setCallback(mockCallback)
+            .setDataType(DataType.STRING)
             .build();
   }
 
@@ -54,6 +55,7 @@ public class ItemListVariableTest {
             .setDefaultValue("Something else")
             .setKey("key")
             .setContext(this)
+            .setDataType(DataType.STRING)
             .build();
   }
 
@@ -81,6 +83,7 @@ public class ItemListVariableTest {
             .setDefaultValue("A")
             .setKey("key")
             .setContext(this)
+            .setDataType(DataType.STRING)
             .build();
     variable.setValue("B");
   }

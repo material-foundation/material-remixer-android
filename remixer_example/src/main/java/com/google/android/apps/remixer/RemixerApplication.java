@@ -19,7 +19,7 @@ package com.google.android.apps.remixer;
 import android.app.Application;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.storage.LocalValueSyncing;
-import com.google.android.libraries.remixer.ui.RemixerActivityLifecycleCallbacks;
+import com.google.android.libraries.remixer.ui.RemixerInitialization;
 
 /**
  * The Remixer Application sets up Remixer.
@@ -39,7 +39,7 @@ public class RemixerApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    registerActivityLifecycleCallbacks(RemixerActivityLifecycleCallbacks.getInstance());
+    RemixerInitialization.initRemixer(Remixer.getInstance(), this);
     Remixer.getInstance().setSynchronizationMechanism(new LocalValueSyncing());
   }
 }

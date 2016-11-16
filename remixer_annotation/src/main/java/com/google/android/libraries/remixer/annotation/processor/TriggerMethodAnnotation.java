@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import com.squareup.javapoet.ClassName;
@@ -45,6 +46,7 @@ class TriggerMethodAnnotation extends MethodAnnotation {
     super(
         sourceClass,
         sourceMethod,
+        DataType.TRIGGER,
         ClassName.get(Trigger.Builder.class),
         annotation.key(),
         annotation.title(),
@@ -53,12 +55,6 @@ class TriggerMethodAnnotation extends MethodAnnotation {
 
   @Override
   protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
-  }
-
-  @Override
-  protected TypeName getVariableType() {
-    // This does not apply to Triggers, they're basically typeless remixes
-    return null;
   }
 
   @Override

@@ -30,6 +30,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     Remixer remixer = Remixer.getInstance();
     Generated_correct correct_callback = new Generated_correct(activity);
     Trigger.Builder correct_remixer_item = new Trigger.Builder();
+    correct_remixer_item.setDataType(Remixer.getInstance().getDataType("trigger"));
     correct_remixer_item.setKey("correct");
     correct_remixer_item.setTitle("correct");
     correct_remixer_item.setLayoutId(0);
@@ -37,7 +38,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     correct_remixer_item.setCallback(correct_callback);
     remixer.addItem(correct_remixer_item.build());
   }
-  
+
   static class Generated_correct implements Runnable {
     private final Correct activity;
 

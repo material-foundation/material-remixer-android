@@ -18,9 +18,11 @@ package com.google.android.libraries.remixer;
 
 import com.google.android.libraries.remixer.sync.SynchronizationMechanism;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import javax.xml.crypto.Data;
 
 /**
  * Contains a list of {@link Variable}s or {@link Trigger}s.
@@ -60,6 +62,12 @@ public class Remixer {
   private SynchronizationMechanism synchronizationMechanism;
 
   /**
+   * Datatypes keyed by their serializable name.
+   */
+  private HashMap<String, DataType> registeredDataTypes;
+
+
+  /**
    * Gets the singleton for Remixer.
    *
    * <p><b>Note this operation is not thread safe and should only be called from the main
@@ -78,6 +86,7 @@ public class Remixer {
   public Remixer() {
     keyMap = new HashMap<>();
     contextMap = new HashMap<>();
+    registeredDataTypes = new HashMap<>();
   }
 
   /**
@@ -186,7 +195,27 @@ public class Remixer {
   }
 
   /**
-   * Handles the case in which an {@code activity} is destroyed by removing all its child remixes.
+   * Register a new data type that can be used with Remixer.
+   */
+  public void registerDataType(DataType dataType) {
+    if (registeredDataTypes.containsKey(dataType.getName())) {
+      throw new IllegalStateException("Adding a data type that has already been added, name: "
+          + dataType.getName() );
+    }
+    registeredDataTypes.put(dataType.getName(), dataType);
+  }
+
+  public DataType getDataType(String name) {
+    return registeredDataTypes.get(name);
+  }
+
+  public Collection<DataType> getRegisteredDataType() {
+    return registeredDataTypes.values();
+  }
+
+  /**
+   * Removes remixer items whose context is {@code activity}. This makes sure {@code activity}
+   * doesn't leak through their callbacks.
    */
   public void onActivityDestroyed(Object activity) {
     if (contextMap.containsKey(activity)) {

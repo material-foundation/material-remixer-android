@@ -39,6 +39,7 @@ public class Variable<T> extends RemixerItem {
    * @param context the object which created this variable, should be an activity.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
    * @param layoutId A layout to inflate when displaying this Variable in the UI.
+   * @param dataType The data type this variable contains.
    */
   // TODO(miguely): Add default value semantics to the defaultValue, currently it behaves mostly
   // as an initial value. It should be used in cases when the value is set to an invalid value from
@@ -49,8 +50,9 @@ public class Variable<T> extends RemixerItem {
       T defaultValue,
       Object context,
       Callback<T> callback,
-      int layoutId) {
-    super(title, key, context, layoutId);
+      int layoutId,
+      DataType dataType) {
+    super(title, key, context, layoutId, dataType);
     // TODO(miguely): pull this out of SharedPreferences.
     this.selectedValue = defaultValue;
     this.callback = callback;
@@ -75,10 +77,6 @@ public class Variable<T> extends RemixerItem {
 
   public T getSelectedValue() {
     return selectedValue;
-  }
-
-  public Class getVariableType() {
-    return selectedValue.getClass();
   }
 
   /**
@@ -144,7 +142,7 @@ public class Variable<T> extends RemixerItem {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key and context are mandatory. If either is missing, an
+   * <p>On the other hand: key, dataType and context are mandatory. If they're missing, an
    * {@link IllegalArgumentException} will be thrown.
    */
   public static class Builder<T> extends RemixerItem.Builder<Variable<T>, Callback<T>> {
@@ -164,9 +162,9 @@ public class Variable<T> extends RemixerItem {
      * @throws IllegalArgumentException If key or context is missing
      */
     public Variable<T> build() {
-     checkBaseFields();
+      checkBaseFields();
       Variable<T> variable =
-          new Variable<T>(title, key, defaultValue, context, callback, layoutId);
+          new Variable<T>(title, key, defaultValue, context, callback, layoutId, dataType);
       variable.init();
       return variable;
     }

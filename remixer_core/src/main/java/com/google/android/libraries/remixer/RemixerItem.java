@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer;
 
 import java.lang.ref.WeakReference;
+import java.util.Locale;
 
 /**
  * An item that can be displayed on Remixer's interfaces.
@@ -50,15 +51,24 @@ public abstract class RemixerItem {
    * The remixer instance this RemixerItem has been attached to.
    */
   protected Remixer remixer;
+  /**
+   * The data type held in this RemixerItem.
+   */
+  private DataType dataType;
 
   /**
    * Constructs a new RemixerItem with the given key, title and layoutId.
    */
-  protected RemixerItem(String title, String key, Object context, int layoutId) {
+  protected RemixerItem(String title, String key, Object context, int layoutId, DataType dataType) {
     this.title = title;
     this.key = key;
     this.context = new WeakReference<>(context);
     this.layoutId = layoutId;
+    this.dataType = dataType;
+  }
+
+  public DataType getDataType() {
+    return dataType;
   }
 
   public String getTitle() {
@@ -98,6 +108,7 @@ public abstract class RemixerItem {
     protected Object context;
     protected int layoutId = 0;
     protected C callback;
+    protected DataType dataType;
 
     public Builder<T, C> setKey(String key) {
       this.key = key;
@@ -124,12 +135,20 @@ public abstract class RemixerItem {
       return this;
     }
 
+    public Builder<T, C>  setDataType(DataType dataType) {
+      this.dataType = dataType;
+      return this;
+    }
+
     protected void checkBaseFields() {
       if (key == null) {
         throw new IllegalArgumentException("key cannot be unset for RemixerItem");
       }
       if (context == null) {
         throw new IllegalArgumentException("context cannot be unset for RemixerItem");
+      }
+      if (dataType == null) {
+        throw new IllegalArgumentException("dataType cannot be unset for RemixerItem");
       }
       if (title == null) {
         title = key;
@@ -139,7 +158,7 @@ public abstract class RemixerItem {
     /**
      * Returns the built RemixerItem. Implementors must call {@link #checkBaseFields()}.
      * @throws IllegalArgumentException if the minimally required fields were not set or their
-     *    configuration is invalid.
+     *     configuration is invalid.
      */
     public abstract T build();
   }

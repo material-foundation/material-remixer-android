@@ -27,14 +27,14 @@ import java.util.Locale;
  */
 public class RangeVariable extends Variable<Integer> {
 
-  protected static final String INVALID_RANGE_ERROR_FORMAT =
+  private static final String INVALID_RANGE_ERROR_FORMAT =
       "Invalid range for Variable %s min: %d, max: %d";
-  protected static final String NEGATIVE_STEPPING_ERROR_FORMAT =
+  private static final String NEGATIVE_STEPPING_ERROR_FORMAT =
       "Stepping must be >= 1, Variable %s has increment %d";
-  protected static final String STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT =
+  private static final String STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT =
       "Variable %s: incorrect increment, can't get to %s %d from minValue %d using"
           + " increment %d";
-  protected static final String NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT =
+  private static final String NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT =
       "%d is out of bounds for Variable %s: min: %d, max: %d";
   private final int minValue;
   private final int maxValue;
@@ -70,7 +70,7 @@ public class RangeVariable extends Variable<Integer> {
       Object context,
       Callback<Integer> callback,
       int layoutId) {
-    super(title, key, defaultValue, context, callback, layoutId);
+    super(title, key, defaultValue, context, callback, layoutId, DataType.NUMBER);
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.increment = increment;
@@ -155,9 +155,9 @@ public class RangeVariable extends Variable<Integer> {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key, minValue, maxValue and context are mandatory. If any of these are
-   * missing or the settings are incorrect according to the logic of {@link RangeVariable} an
-   * {@link IllegalArgumentException} will be thrown.
+   * <p>On the other hand: key, minValue, maxValue, dataType and context are mandatory. If any of
+   * these are missing or the settings are incorrect according to the logic of {@link RangeVariable}
+   * an {@link IllegalArgumentException} will be thrown.
    */
   public static class Builder extends RemixerItem.Builder<RangeVariable, Callback<Integer>> {
 
@@ -166,6 +166,9 @@ public class RangeVariable extends Variable<Integer> {
     private Integer maxValue;
     private int increment = 1;
 
+    public Builder() {
+      setDataType(DataType.NUMBER);
+    }
 
     public Builder setMinValue(int minValue) {
       this.minValue = minValue;

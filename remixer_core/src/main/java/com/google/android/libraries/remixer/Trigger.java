@@ -25,7 +25,7 @@ public class Trigger extends RemixerItem {
   private Runnable runnable;
 
   private Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
-    super(title, key, context, layoutId);
+    super(title, key, context, layoutId, DataType.TRIGGER);
     this.runnable = runnable;
   }
 
@@ -61,6 +61,10 @@ public class Trigger extends RemixerItem {
   }
 
   public static class Builder extends RemixerItem.Builder<Trigger, Runnable> {
+
+    public Builder() {
+      setDataType(DataType.TRIGGER);
+    }
 
     @Override
     public Trigger build() {

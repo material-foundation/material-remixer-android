@@ -33,6 +33,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     Remixer remixer = Remixer.getInstance();
     Generated_correct correct_callback = new Generated_correct(activity);
     BooleanVariableBuilder correct_remixer_item = new BooleanVariableBuilder();
+    correct_remixer_item.setDataType(Remixer.getInstance().getDataType("boolean"));
     correct_remixer_item.setKey("correct");
     correct_remixer_item.setTitle("correct");
     correct_remixer_item.setLayoutId(0);

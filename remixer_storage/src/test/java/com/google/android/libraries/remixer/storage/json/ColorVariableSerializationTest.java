@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.storage.json;
 
 import android.graphics.Color;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.gson.Gson;
 import org.junit.Assert;
@@ -44,7 +45,7 @@ public class ColorVariableSerializationTest {
         .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey(KEY)
-        .setLayoutId(com.google.android.libraries.remixer.ui.R.layout.color_list_variable_widget)
+        .setDataType(DataType.COLOR)
         .build();
   }
 

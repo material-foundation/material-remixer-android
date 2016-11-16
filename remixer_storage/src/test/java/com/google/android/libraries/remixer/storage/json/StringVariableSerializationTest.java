@@ -16,6 +16,8 @@
 
 package com.google.android.libraries.remixer.storage.json;
 
+import android.provider.ContactsContract;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Variable;
@@ -50,6 +52,7 @@ public class StringVariableSerializationTest {
         .setPossibleValues(new String[]{"a", "b", "c"})
         .setContext(this)
         .setKey(KEY)
+        .setDataType(DataType.STRING)
         .build();
   }
 

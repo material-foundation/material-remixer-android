@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
@@ -68,6 +69,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
     return new ItemListVariableMethodAnnotation<>(
         sourceClass,
         sourceMethod,
+        DataType.STRING,
         ParameterizedTypeName.get(
             ClassName.get(ItemListVariable.Builder.class), ClassName.get(String.class)),
         annotation.key(),
@@ -90,6 +92,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
     return new ItemListVariableMethodAnnotation<>(
         sourceClass,
         sourceMethod,
+        annotation.isColor() ? DataType.COLOR : DataType.NUMBER,
         ParameterizedTypeName.get(
             ClassName.get(ItemListVariable.Builder.class), ClassName.get(Integer.class)),
         annotation.key(),
@@ -114,6 +117,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   private ItemListVariableMethodAnnotation(
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
+      DataType dataType,
       TypeName builderTypeName,
       String key,
       String title,
@@ -122,7 +126,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
       T defaultValue,
       T zeroValue)
       throws RemixerAnnotationException {
-    super(sourceClass, sourceMethod, builderTypeName, key, title, layoutId);
+    super(sourceClass, sourceMethod, dataType, builderTypeName, key, title, layoutId);
     this.possibleValues = possibleValues;
     if (possibleValues.length == 0) {
       throw new RemixerAnnotationException(sourceMethod, "List of possible values cannot be empty");
@@ -153,7 +157,8 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   public void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
     String listName = key + LIST_SUFFIX;
     TypeName listType =
-        ParameterizedTypeName.get(ClassName.get(ArrayList.class), getVariableType());
+        ParameterizedTypeName.get(ClassName.get(ArrayList.class),
+            ClassName.get(dataType.getValueClass()));
     methodBuilder.addStatement(CREATE_NEW_OBJECT, listType, listName, listType);
     String addValueStatement = getAddValueStatement();
     for (T value : possibleValues) {
@@ -165,11 +170,6 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         defaultValue.getClass().equals(String.class)
             ? "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
         remixerItemName, defaultValue);
-  }
-
-  @Override
-  protected TypeName getVariableType() {
-    return ClassName.get(defaultValue.getClass());
   }
 
   private String getAddValueStatement() {

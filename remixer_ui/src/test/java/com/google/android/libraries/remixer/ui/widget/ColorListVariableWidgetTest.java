@@ -25,10 +25,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.widget.color.ColorItem;
-import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,6 +70,7 @@ public class ColorListVariableWidgetTest {
         .setKey(KEY)
         .setContext(this)
         .setCallback(mockCallback)
+        .setDataType(DataType.COLOR)
         .build();
     ColorListVariableWidget view =
         (ColorListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
