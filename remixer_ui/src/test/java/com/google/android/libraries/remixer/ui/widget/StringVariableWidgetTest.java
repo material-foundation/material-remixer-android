@@ -23,8 +23,9 @@ import static org.mockito.Mockito.verify;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.StringVariableBuilder;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.ui.R;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,14 +57,13 @@ public class StringVariableWidgetTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    variable = new Variable<>(
-        TITLE,
-        KEY,
-        DEFAULT_VALUE,
-        this,
-        mockCallback,
-        R.layout.string_variable_widget);
-    variable.init();
+    variable = new StringVariableBuilder()
+        .setDefaultValue(DEFAULT_VALUE)
+        .setTitle(TITLE)
+        .setKey(KEY)
+        .setContext(this)
+        .setCallback(mockCallback)
+        .build();
     view = (StringVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.string_variable_widget, null);
     view.bindRemixerItem(variable);

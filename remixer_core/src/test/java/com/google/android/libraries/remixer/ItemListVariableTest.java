@@ -31,47 +31,57 @@ public class ItemListVariableTest {
   @Mock
   Callback<String> mockCallback;
 
+  private ItemListVariable<String> correctVariableWithCallback;
+
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
+    correctVariableWithCallback =
+        new ItemListVariable.Builder<String>()
+            .setPossibleValues(Arrays.asList("A", "B"))
+            .setDefaultValue("A")
+            .setKey("key")
+            .setContext(this)
+            .setCallback(mockCallback)
+            .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void initFailsOnDefaultValueNotInList() {
-    new ItemListVariable<>(
-        "name", "key", "None", Arrays.asList("Something else"), this, null, 0).init();
+    Variable<String> variable =
+        new ItemListVariable.Builder<String>()
+            .setPossibleValues(Arrays.asList("Some", "possible", "values"))
+            .setDefaultValue("Something else")
+            .setKey("key")
+            .setContext(this)
+            .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void setValueRejectsUnknownString() {
-    ItemListVariable<String> variable =
-        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, null, 0);
-    variable.init();
-    variable.setValue("C");
+    correctVariableWithCallback.setValue("C");
   }
 
   @Test
   public void initCallsCallback() {
-    ItemListVariable<String> variable =
-        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, mockCallback, 0);
-    variable.init();
-    Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(variable);
+    Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(correctVariableWithCallback);
   }
 
   @Test
   public void setValueCallsCallback() {
-    ItemListVariable<String> variable =
-        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, mockCallback, 0);
-    variable.init();
-    variable.setValue("B");
-    Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(variable);
+    correctVariableWithCallback.setValue("B");
+    Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(correctVariableWithCallback);
   }
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    ItemListVariable<String> variable =
-        new ItemListVariable<>("name", "key", "A", Arrays.asList("A", "B"), this, null, 0);
-    variable.init();
+    Variable<String> variable =
+        new ItemListVariable.Builder<String>()
+            .setPossibleValues(Arrays.asList("A", "B"))
+            .setDefaultValue("A")
+            .setKey("key")
+            .setContext(this)
+            .build();
     variable.setValue("B");
   }
 }

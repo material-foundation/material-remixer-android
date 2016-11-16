@@ -63,15 +63,14 @@ public class ColorListVariableWidgetTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    variable = new ItemListVariable<Integer>(
-        TITLE,
-        KEY,
-        ITEM_LIST[DEFAULT_VALUE_INDEX],
-        Arrays.asList(ITEM_LIST),
-        this,
-        mockCallback,
-        R.layout.item_list_variable_widget);
-    variable.init();
+    variable = new ItemListVariable.Builder<Integer>()
+        .setPossibleValues(ITEM_LIST)
+        .setDefaultValue(ITEM_LIST[DEFAULT_VALUE_INDEX])
+        .setTitle(TITLE)
+        .setKey(KEY)
+        .setContext(this)
+        .setCallback(mockCallback)
+        .build();
     ColorListVariableWidget view =
         (ColorListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
             .inflate(R.layout.color_list_variable_widget, null);

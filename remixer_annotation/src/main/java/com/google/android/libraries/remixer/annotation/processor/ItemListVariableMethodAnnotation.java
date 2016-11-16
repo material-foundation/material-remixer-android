@@ -39,26 +39,6 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   private static final String LIST_SUFFIX = "_variable_list";
 
   /**
-   * Statement to create a new ItemListVariable&lt;T&gt;.
-   *
-   * <p>Would expand to {@code ItemListVariable&lt;T&gt; variable = new ItemListVariable&lt;T&gt;(
-   * title, key, defaultValue, possibleValues, activity, callback, layoutId)}.
-   */
-  private static final String NEW_ITEM_LIST_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $L, $L, $L, $L, $L)";
-
-  /**
-   * Statement to create a new ItemListVariable&lt;String&gt;.
-   *
-   * <p>Would expand to {@code ItemListVariable&lt;String&gt; variable = new ItemListVariable
-   * &lt;&gt;(title, key, "defaultValue", possibleValues, activity, callback, layoutId)}.
-   *
-   * <p>The difference lies in treating the defaultValue as a string (escaping it in quotes) instead
-   * of a literal (variable name or primitive constant).
-   */
-  private static final String NEW_STRING_LIST_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $S, $L, $L, $L, $L)";
-  /**
    * Statement to add a value to the list of possible values.
    */
   private static final String ADD_ITEM = "$L.add($L)";
@@ -88,6 +68,8 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
     return new ItemListVariableMethodAnnotation<>(
         sourceClass,
         sourceMethod,
+        ParameterizedTypeName.get(
+            ClassName.get(ItemListVariable.Builder.class), ClassName.get(String.class)),
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
@@ -108,6 +90,8 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
     return new ItemListVariableMethodAnnotation<>(
         sourceClass,
         sourceMethod,
+        ParameterizedTypeName.get(
+            ClassName.get(ItemListVariable.Builder.class), ClassName.get(Integer.class)),
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
@@ -130,6 +114,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   private ItemListVariableMethodAnnotation(
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
+      TypeName builderTypeName,
       String key,
       String title,
       int layoutId,
@@ -137,7 +122,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
       T defaultValue,
       T zeroValue)
       throws RemixerAnnotationException {
-    super(sourceClass, sourceMethod, key, title, layoutId);
+    super(sourceClass, sourceMethod, builderTypeName, key, title, layoutId);
     this.possibleValues = possibleValues;
     if (possibleValues.length == 0) {
       throw new RemixerAnnotationException(sourceMethod, "List of possible values cannot be empty");
@@ -165,48 +150,26 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   }
 
   @Override
-  public void addSetupStatements(MethodSpec.Builder methodBuilder) {
-    String callbackName = key + CALLBACK_NAME_SUFFIX;
-    String variableName = key + VARIABLE_SUFFIX;
+  public void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
     String listName = key + LIST_SUFFIX;
     TypeName listType =
         ParameterizedTypeName.get(ClassName.get(ArrayList.class), getVariableType());
-    TypeName variableType =
-        ParameterizedTypeName.get(ClassName.get(ItemListVariable.class), getVariableType());
     methodBuilder.addStatement(CREATE_NEW_OBJECT, listType, listName, listType);
     String addValueStatement = getAddValueStatement();
     for (T value : possibleValues) {
       methodBuilder.addStatement(addValueStatement, listName, value);
     }
+    methodBuilder.addStatement("$L.setPossibleValues($L)", remixerItemName, listName);
 
-    methodBuilder
-        .addStatement(
-            NEW_CALLBACK_STATEMENT,
-            generatedClassName, callbackName, generatedClassName)
-        .addStatement(
-            getNewVariableStatement(),
-            variableType,
-            variableName,
-            variableType,
-            title,
-            key,
-            defaultValue,
-            listName,
-            ACTIVITY_NAME,
-            callbackName,
-            layoutId)
-        .addStatement(INIT_VARIABLE_STATEMENT, variableName)
-        .addStatement(ADD_VARIABLE_STATEMENT, variableName);
+    methodBuilder.addStatement(
+        defaultValue.getClass().equals(String.class)
+            ? "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
+        remixerItemName, defaultValue);
   }
 
   @Override
   protected TypeName getVariableType() {
     return ClassName.get(defaultValue.getClass());
-  }
-
-  private String getNewVariableStatement() {
-    return defaultValue.getClass().equals(String.class)
-        ? NEW_STRING_LIST_VARIABLE_STATEMENT : NEW_ITEM_LIST_VARIABLE_STATEMENT;
   }
 
   private String getAddValueStatement() {

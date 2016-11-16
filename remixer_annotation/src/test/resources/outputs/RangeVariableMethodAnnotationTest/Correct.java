@@ -31,9 +31,17 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
   public void bindInstance(Correct activity) {
     Remixer remixer = Remixer.getInstance();
     Generated_correct correct_callback = new Generated_correct(activity);
-    RangeVariable correct_variable = new RangeVariable("correct", "correct", 17, 15, 20, 1, activity, correct_callback, 0);
-    correct_variable.init();
-    remixer.addItem(correct_variable);
+    RangeVariable.Builder correct_remixer_item = new RangeVariable.Builder();
+    correct_remixer_item.setKey("correct");
+    correct_remixer_item.setTitle("correct");
+    correct_remixer_item.setLayoutId(0);
+    correct_remixer_item.setContext(activity);
+    correct_remixer_item.setCallback(correct_callback);
+    correct_remixer_item.setMinValue(15);
+    correct_remixer_item.setMaxValue(20);
+    correct_remixer_item.setDefaultValue(17);
+    correct_remixer_item.setIncrement(1);
+    remixer.addItem(correct_remixer_item.build());
   }
 
   static class Generated_correct implements Callback<Integer> {

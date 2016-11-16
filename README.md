@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/material-foundation/material-remixer-android.svg?branch=develop)](https://travis-ci.org/material-foundation/material-remixer-android)
+[![codecov](https://codecov.io/gh/material-foundation/material-remixer-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-foundation/material-remixer-android)
+
 # ![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
 
 Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.
@@ -57,10 +60,10 @@ And in your modules, apply the `android-apt` plugin and add the remixer dependen
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.material-foundation.material-remixer-android:remixer_core:develop-SNAPSHOT'
-    compile 'com.github.material-foundation.material-remixer-android:remixer_ui:develop-SNAPSHOT'
-    compile 'com.github.material-foundation.material-remixer-android:remixer_storage:develop-SNAPSHOT'
-    provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_core:0.5.1'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_ui:0.5.1'
+    compile 'com.github.material-foundation.material-remixer-android:remixer_storage:0.5.1'
+    provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:0.5.1'
 }
 ```
 

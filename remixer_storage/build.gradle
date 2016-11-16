@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.vanniktech.android.junit.jacoco'
 
 group = 'com.github.material-foundation'
 
@@ -33,10 +34,19 @@ android {
 
   }
   buildTypes {
+    debug {
+      testCoverageEnabled true
+    }
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+  }
+
+  lintOptions {
+    disable 'GradleDependency'
+    textReport true
+    textOutput 'stdout'
   }
 }
 

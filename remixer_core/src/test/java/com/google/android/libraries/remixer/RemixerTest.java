@@ -35,9 +35,9 @@ public class RemixerTest {
    */
   @Before
   public void setUp() {
-    variable = new Variable<>("name", "key", "", this, null, 0);
+    variable = new StringVariableBuilder().setKey("key").setContext(this).build();
     variable.init();
-    variable2 = new Variable<>("name2", "key2", "", this, null, 0);
+    variable2 = new StringVariableBuilder().setKey("key2").setContext(this).build();
     variable2.init();
     remixer = new Remixer();
   }
@@ -56,8 +56,10 @@ public class RemixerTest {
     // Initialize two nearly identical variables with two different contexts of the same class
     final Object context1 = new Object();
     final Object context2 = new Object();
-    final Variable<String> variableString = new Variable<>("name", "key", "", context1, null, 0);
-    final Variable<String> variableString2 = new Variable<>("name", "key", "", context2, null, 0);
+    final Variable<String> variableString =
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
+    final Variable<String> variableString2 =
+        new StringVariableBuilder().setKey("key").setContext(context2).build();
 
     // Add the first.
     remixer.addItem(variableString);

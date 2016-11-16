@@ -29,30 +29,30 @@ public class StringVariableTest {
 
   @Mock
   Callback<String> mockCallback;
+  private Variable<String> variableWithCallback;
 
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
+    variableWithCallback = new StringVariableBuilder()
+        .setKey("key").setContext(this).setCallback(mockCallback).build();
   }
 
   @Test
   public void initCallsCallback() {
-    Variable<String> variable = new Variable<>("name", "key", "A", this, mockCallback, 0);
-    variable.init();
-    Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(variable);
+    Mockito.verify(mockCallback, Mockito.times(1)).onValueSet(variableWithCallback);
   }
 
   @Test
   public void setValueCallsCallback() {
-    Variable<String> variable = new Variable<>("name", "key", "A", this, mockCallback, 0);
-    variable.init();
-    variable.setValue("B");
-    Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(variable);
+    variableWithCallback.setValue("B");
+    Mockito.verify(mockCallback, Mockito.times(2)).onValueSet(variableWithCallback);
   }
 
   @Test
   public void doesNotCrashOnNullCallback() {
-    Variable<String> variable = new Variable<>("name", "key", "A", this, null, 0);
+    Variable<String> variable =
+        new StringVariableBuilder().setKey("key").setContext(this).build();
     variable.init();
     variable.setValue("B");
   }

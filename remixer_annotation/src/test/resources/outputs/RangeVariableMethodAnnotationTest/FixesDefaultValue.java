@@ -31,9 +31,17 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
   public void bindInstance(FixesDefaultValue activity) {
     Remixer remixer = Remixer.getInstance();
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
-    RangeVariable fixValue_variable = new RangeVariable("fixValue", "fixValue", 15, 15, 100, 1, activity, fixValue_callback, 0);
-    fixValue_variable.init();
-    remixer.addItem(fixValue_variable);
+    RangeVariable.Builder fixValue_remixer_item = new RangeVariable.Builder();
+    fixValue_remixer_item.setKey("fixValue");
+    fixValue_remixer_item.setTitle("fixValue");
+    fixValue_remixer_item.setLayoutId(0);
+    fixValue_remixer_item.setContext(activity);
+    fixValue_remixer_item.setCallback(fixValue_callback);
+    fixValue_remixer_item.setMinValue(15);
+    fixValue_remixer_item.setMaxValue(100);
+    fixValue_remixer_item.setDefaultValue(15);
+    fixValue_remixer_item.setIncrement(1);
+    remixer.addItem(fixValue_remixer_item.build());
   }
 
   static class Generated_fixValue implements Callback<Integer> {

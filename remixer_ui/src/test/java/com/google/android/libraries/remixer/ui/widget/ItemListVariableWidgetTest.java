@@ -66,15 +66,14 @@ public class ItemListVariableWidgetTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    variable = new ItemListVariable<String>(
-        TITLE,
-        KEY,
-        ITEM_LIST[DEFAULT_VALUE_INDEX],
-        Arrays.asList(ITEM_LIST),
-        this,
-        mockCallback,
-        R.layout.item_list_variable_widget);
-    variable.init();
+    variable = new ItemListVariable.Builder<String>()
+        .setPossibleValues(ITEM_LIST)
+        .setDefaultValue(ITEM_LIST[DEFAULT_VALUE_INDEX])
+        .setTitle(TITLE)
+        .setKey(KEY)
+        .setContext(this)
+        .setCallback(mockCallback)
+        .build();
     view = (ItemListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.item_list_variable_widget, null);
     view.bindRemixerItem(variable);

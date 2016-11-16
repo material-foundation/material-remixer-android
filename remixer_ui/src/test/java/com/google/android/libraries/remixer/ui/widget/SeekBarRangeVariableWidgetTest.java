@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.libraries.remixer.BooleanVariableBuilder;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.ui.R;
@@ -48,7 +49,7 @@ public class SeekBarRangeVariableWidgetTest {
   private static final int MIN = 4;
   private static final int MAX = 20;
   private static final int DEFAULT_VALUE = 8;
-  private static final int STEPPING = 1;
+  private static final int INCREMENT = 1;
 
   @Mock
   Callback<Integer> mockCallback;
@@ -62,17 +63,16 @@ public class SeekBarRangeVariableWidgetTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    variable = new RangeVariable(
-        TITLE,
-        KEY,
-        DEFAULT_VALUE,
-        MIN,
-        MAX,
-        STEPPING,
-        this,
-        mockCallback,
-        R.layout.seekbar_range_variable_widget);
-    variable.init();
+    variable = new RangeVariable.Builder()
+        .setMinValue(MIN)
+        .setMaxValue(MAX)
+        .setIncrement(INCREMENT)
+        .setDefaultValue(DEFAULT_VALUE)
+        .setTitle(TITLE)
+        .setKey(KEY)
+        .setContext(this)
+        .setCallback(mockCallback)
+        .build();
     view = (SeekBarRangeVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.seekbar_range_variable_widget, null);
     view.bindRemixerItem(variable);

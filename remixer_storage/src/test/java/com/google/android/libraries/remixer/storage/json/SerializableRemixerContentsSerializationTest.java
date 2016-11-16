@@ -52,49 +52,49 @@ public class SerializableRemixerContentsSerializationTest {
     booleanVariable = new BooleanVariableBuilder()
         .setContext(this)
         .setKey("boolean")
-        .buildAndInit();
+        .build();
     serializableRemixerContents.addItem(booleanVariable);
     colorListVariable = new ItemListVariable.Builder<Integer>()
+        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
+        .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey("colorList")
-        .setDefaultValue(Color.BLACK)
-        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
         .setLayoutId(com.google.android.libraries.remixer.ui.R.layout.color_list_variable_widget)
-        .buildAndInit();
+        .build();
     serializableRemixerContents.addItem(colorListVariable);
     integerVariable  = new Variable.Builder<Integer>()
         .setDefaultValue(0)
         .setKey("integer")
         .setContext(this)
-        .buildAndInit();
+        .build();
     serializableRemixerContents.addItem(integerVariable);
     integerListVariable = new ItemListVariable.Builder<Integer>()
+        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
+        .setDefaultValue(Color.BLACK)
         .setContext(this)
         .setKey("integerList")
-        .setDefaultValue(Color.BLACK)
-        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
-        .buildAndInit();
+        .build();
     serializableRemixerContents.addItem(integerListVariable);
     rangeVariable = new RangeVariable.Builder()
-        .setContext(this)
-        .setKey("range")
-        .setDefaultValue(10)
         .setMinValue(0)
         .setIncrement(10)
         .setMaxValue(100)
-        .buildAndInit();
+        .setDefaultValue(10)
+        .setContext(this)
+        .setKey("range")
+        .build();
     serializableRemixerContents.addItem(rangeVariable);
     stringVariable = new StringVariableBuilder()
         .setContext(this)
         .setKey("string")
-        .buildAndInit();
+        .build();
     serializableRemixerContents.addItem(stringVariable);
     stringListVariable = new ItemListVariable.Builder<String>()
+        .setPossibleValues(new String[]{"a", "b", "c"})
+        .setDefaultValue("a")
         .setContext(this)
         .setKey("stringList")
-        .setDefaultValue("a")
-        .setPossibleValues(new String[]{"a", "b", "c"})
-        .buildAndInit();
+        .build();
     serializableRemixerContents.addItem(stringListVariable);
   }
 

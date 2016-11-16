@@ -24,11 +24,7 @@ package com.google.android.libraries.remixer;
 public class Trigger extends RemixerItem {
   private Runnable runnable;
 
-  public Trigger(String title, String key, Object context, Runnable runnable) {
-    this(title, key, context, runnable, 0);
-  }
-
-  public Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
+  private Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
     super(title, key, context, layoutId);
     this.runnable = runnable;
   }
@@ -62,5 +58,14 @@ public class Trigger extends RemixerItem {
       return;
     }
     remixer.onTrigger(this);
+  }
+
+  public static class Builder extends RemixerItem.Builder<Trigger, Runnable> {
+
+    @Override
+    public Trigger build() {
+      checkBaseFields();
+      return new Trigger(title, key, context, callback, layoutId);
+    }
   }
 }

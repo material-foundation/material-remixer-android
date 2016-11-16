@@ -16,9 +16,16 @@
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+jacocoTestReport {
+  reports {
+    xml.enabled true
+  }
+}
 
 dependencies {
   testCompile 'junit:junit:4.12'
