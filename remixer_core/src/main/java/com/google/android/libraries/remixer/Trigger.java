@@ -27,10 +27,6 @@ import java.util.Locale;
 public class Trigger extends RemixerItem {
   private Runnable runnable;
 
-  public Trigger(String title, String key, Object context, Runnable runnable) {
-    this(title, key, context, runnable, 0);
-  }
-
   public Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
     super(title, key, context, layoutId, DataType.TRIGGER);
     this.runnable = runnable;

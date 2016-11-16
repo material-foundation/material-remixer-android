@@ -155,6 +155,19 @@ abstract class MethodAnnotation {
     return sourceMethod;
   }
 
+  private void createBuilder(MethodSpec.Builder methodBuilder) {
+    // Create the callback variable.
+    methodBuilder.addStatement(
+        "$L $L = new $L(activity)", generatedClassName, callbackName, generatedClassName);
+    // Create the builder and start filling common things.
+    methodBuilder.addStatement("$T $L = new $T()", builderType, remixerItemName, builderType);
+    methodBuilder.addStatement("$L.setKey($S)", remixerItemName, key);
+    methodBuilder.addStatement("$L.setTitle($S)", remixerItemName, title);
+    methodBuilder.addStatement("$L.setLayoutId($L)", remixerItemName, layoutId);
+    methodBuilder.addStatement("$L.setContext(activity)", remixerItemName);
+    methodBuilder.addStatement("$L.setCallback($L)", remixerItemName, callbackName);
+  }
+
   /**
    * Adds all the code statements necessary to initialize a {@link RemixerItem} that corresponds to
    * the annotation.

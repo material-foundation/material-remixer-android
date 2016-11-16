@@ -61,6 +61,7 @@ public class SerializableRemixerContentsSerializationTest {
         .setContext(this)
         .setKey("colorList")
         .setDataType(DataType.COLOR)
+        .setLayoutId(com.google.android.libraries.remixer.ui.R.layout.color_list_variable_widget)
         .build();
     serializableRemixerContents.addItem(colorListVariable);
     integerVariable  = new Variable.Builder<Integer>()

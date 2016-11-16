@@ -74,8 +74,13 @@ public class ItemListVariable<T> extends Variable<T> {
    * set, the default layout will be used. <li>If the title is not set, the key will be used as
    * title </ul>
    *
+<<<<<<< HEAD
    * <p>On the other hand: key, dataType, context and possibleValues are mandatory. If either is
    * missing, an {@link IllegalArgumentException} will be thrown.
+=======
+   * <p>On the other hand: key, possibleValues and context are mandatory. If either is missing, an
+   * {@link IllegalArgumentException} will be thrown.
+>>>>>>> develop
    */
   public static class Builder<T> extends RemixerItem.Builder<ItemListVariable<T>, Callback<T>> {
 

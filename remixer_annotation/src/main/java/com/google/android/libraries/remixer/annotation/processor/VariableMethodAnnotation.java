@@ -107,7 +107,6 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
     this.defaultValue = defaultValue;
   }
 
-
   @Override
   protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
     methodBuilder.addStatement(
