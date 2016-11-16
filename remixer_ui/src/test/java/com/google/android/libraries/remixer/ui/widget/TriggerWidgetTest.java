@@ -50,12 +50,12 @@ public class TriggerWidgetTest {
   @Before
   public void setUp() {
     MockitoAnnotations.initMocks(this);
-    Trigger trigger = new Trigger(
-        TITLE,
-        KEY,
-        this,
-        mockCallback,
-        R.layout.string_variable_widget);
+    Trigger trigger = new Trigger.Builder()
+        .setTitle(TITLE)
+        .setKey(KEY)
+        .setContext(this)
+        .setCallback(mockCallback)
+        .build();
     TriggerWidget view = (TriggerWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.trigger_widget, null);
     view.bindRemixerItem(trigger);
