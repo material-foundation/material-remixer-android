@@ -73,7 +73,7 @@ public class ItemListVariableWidgetTest {
         .setKey(KEY)
         .setContext(this)
         .setCallback(mockCallback)
-        .buildAndInit();
+        .build();
     view = (ItemListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.item_list_variable_widget, null);
     view.bindRemixerItem(variable);

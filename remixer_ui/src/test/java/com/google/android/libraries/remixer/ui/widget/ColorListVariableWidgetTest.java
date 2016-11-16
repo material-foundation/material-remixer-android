@@ -70,7 +70,7 @@ public class ColorListVariableWidgetTest {
         .setKey(KEY)
         .setContext(this)
         .setCallback(mockCallback)
-        .buildAndInit();
+        .build();
     ColorListVariableWidget view =
         (ColorListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
             .inflate(R.layout.color_list_variable_widget, null);

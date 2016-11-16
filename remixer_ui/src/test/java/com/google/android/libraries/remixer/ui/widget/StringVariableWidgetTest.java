@@ -63,7 +63,7 @@ public class StringVariableWidgetTest {
         .setKey(KEY)
         .setContext(this)
         .setCallback(mockCallback)
-        .buildAndInit();
+        .build();
     view = (StringVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.string_variable_widget, null);
     view.bindRemixerItem(variable);

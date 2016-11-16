@@ -50,7 +50,7 @@ public class RangeVariableTest {
             .setCallback(singleIncrementsCallback)
             .setKey("key")
             .setContext(this)
-            .buildAndInit();
+            .build();
     increments5 =
         new RangeVariable.Builder()
             .setMinValue(0)
@@ -60,7 +60,7 @@ public class RangeVariableTest {
             .setCallback(increments5Callback)
             .setKey("key")
             .setContext(this)
-            .buildAndInit();
+            .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -72,7 +72,7 @@ public class RangeVariableTest {
         .setDefaultValue(15)
         .setKey("key")
         .setContext(this)
-        .buildAndInit();
+        .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -84,7 +84,7 @@ public class RangeVariableTest {
         .setDefaultValue(5)
         .setKey("key")
         .setContext(this)
-        .buildAndInit();
+        .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -96,7 +96,7 @@ public class RangeVariableTest {
         .setDefaultValue(15)
         .setKey("key")
         .setContext(this)
-        .buildAndInit();
+        .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -108,7 +108,7 @@ public class RangeVariableTest {
         .setDefaultValue(15)
         .setKey("key")
         .setContext(this)
-        .buildAndInit();
+        .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -121,7 +121,7 @@ public class RangeVariableTest {
         .setDefaultValue(15)
         .setKey("key")
         .setContext(this)
-        .buildAndInit();
+        .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -134,7 +134,7 @@ public class RangeVariableTest {
         .setDefaultValue(22)
         .setKey("key")
         .setContext(this)
-        .buildAndInit();
+        .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -175,7 +175,7 @@ public class RangeVariableTest {
             .setDefaultValue(15)
             .setKey("key")
             .setContext(this)
-            .buildAndInit();
+            .build();
     variable.setValue(18);
   }
 }

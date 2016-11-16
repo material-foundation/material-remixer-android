@@ -72,7 +72,7 @@ public class SeekBarRangeVariableWidgetTest {
         .setKey(KEY)
         .setContext(this)
         .setCallback(mockCallback)
-        .buildAndInit();
+        .build();
     view = (SeekBarRangeVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.seekbar_range_variable_widget, null);
     view.bindRemixerItem(variable);

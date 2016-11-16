@@ -63,7 +63,7 @@ public class BooleanVariableWidgetTest {
         .setKey(KEY)
         .setContext(this)
         .setCallback(mockCallback)
-        .buildAndInit();
+        .build();
     view = (BooleanVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.boolean_variable_widget, null);
     view.bindRemixerItem(variable);
