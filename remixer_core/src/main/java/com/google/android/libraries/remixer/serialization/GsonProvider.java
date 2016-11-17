@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
+import com.google.android.libraries.remixer.serialization.SerializableRemixerContents;
+import com.google.android.libraries.remixer.serialization.StoredVariable;
+import com.google.android.libraries.remixer.serialization.StoredVariableSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

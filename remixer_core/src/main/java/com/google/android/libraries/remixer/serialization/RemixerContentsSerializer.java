@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
@@ -28,7 +28,8 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 class RemixerContentsSerializer
-    implements JsonSerializer<SerializableRemixerContents>, JsonDeserializer<SerializableRemixerContents> {
+    implements JsonSerializer<SerializableRemixerContents>,
+    JsonDeserializer<SerializableRemixerContents> {
 
   @Override
   public SerializableRemixerContents deserialize(

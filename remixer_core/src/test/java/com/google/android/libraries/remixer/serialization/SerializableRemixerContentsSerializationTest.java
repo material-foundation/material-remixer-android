@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
-import android.graphics.Color;
 import com.google.android.libraries.remixer.BooleanVariableBuilder;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Variable;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.junit.runners.JUnit4;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(
-    sdk = 21,
-    manifest = "src/main/AndroidManifest.xml")
+@RunWith(JUnit4.class)
 public class SerializableRemixerContentsSerializationTest {
+
+  private static final int BLACK = 0x00000000;
+  private static final int BLUE = 0xFF0000FF;
 
   private Variable<Boolean> booleanVariable;
   private ItemListVariable<Integer> colorListVariable;
@@ -47,6 +47,11 @@ public class SerializableRemixerContentsSerializationTest {
   private SerializableRemixerContents serializableRemixerContents;
   private Gson gson = GsonProvider.getInstance();
 
+  @BeforeClass
+  public static void oneTimeSetUp() {
+    InitializationHelper.init(Remixer.getInstance());
+  }
+
   @Before
   public void setUp() {
     serializableRemixerContents = new SerializableRemixerContents();
@@ -56,12 +61,11 @@ public class SerializableRemixerContentsSerializationTest {
         .build();
     serializableRemixerContents.addItem(booleanVariable);
     colorListVariable = new ItemListVariable.Builder<Integer>()
-        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
-        .setDefaultValue(Color.BLACK)
+        .setPossibleValues(new Integer[]{BLACK, BLUE})
+        .setDefaultValue(BLACK)
         .setContext(this)
         .setKey("colorList")
         .setDataType(DataType.COLOR)
-        .setLayoutId(com.google.android.libraries.remixer.ui.R.layout.color_list_variable_widget)
         .build();
     serializableRemixerContents.addItem(colorListVariable);
     integerVariable  = new Variable.Builder<Integer>()
@@ -72,8 +76,8 @@ public class SerializableRemixerContentsSerializationTest {
         .build();
     serializableRemixerContents.addItem(integerVariable);
     integerListVariable = new ItemListVariable.Builder<Integer>()
-        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
-        .setDefaultValue(Color.BLACK)
+        .setPossibleValues(new Integer[]{12, 24})
+        .setDefaultValue(12)
         .setContext(this)
         .setKey("integerList")
         .setDataType(DataType.NUMBER)

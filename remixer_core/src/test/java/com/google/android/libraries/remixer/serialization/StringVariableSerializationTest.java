@@ -14,25 +14,22 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
-import android.provider.ContactsContract;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Variable;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.junit.runners.JUnit4;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(
-    sdk = 21,
-    manifest = "src/main/AndroidManifest.xml")
+@RunWith(JUnit4.class)
 public class StringVariableSerializationTest {
 
   private static String KEY = "key";
@@ -40,6 +37,11 @@ public class StringVariableSerializationTest {
   private Variable<String> stringVariable;
   private ItemListVariable<String> stringListVariable;
   private Gson gson = GsonProvider.getInstance();
+
+  @BeforeClass
+  public static void oneTimeSetUp() {
+    InitializationHelper.init(Remixer.getInstance());
+  }
 
   @Before
   public void setUp() {
@@ -59,7 +61,7 @@ public class StringVariableSerializationTest {
   @Test
   public void stringVariableConvertsToStorageTest() {
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.STRING.getName(), result.dataType);
     CompareHelper.assertEqualsVariable(result, stringVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -69,7 +71,7 @@ public class StringVariableSerializationTest {
   public void modifiedStringVariableConvertsToStorageTest() {
     stringVariable.setValue("heythere");
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.STRING.getName(), result.dataType);
     CompareHelper.assertEqualsVariable(result, stringVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -78,7 +80,7 @@ public class StringVariableSerializationTest {
   @Test
   public void stringListVariableConvertsToStorageTest() {
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringListVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.STRING.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, stringListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -88,7 +90,7 @@ public class StringVariableSerializationTest {
   public void modifiedStringListariableConvertsToStorageTest() {
     stringListVariable.setValue("b");
     StoredVariable<String> result = StoredVariable.fromRemixerItem(stringListVariable);
-    Assert.assertEquals(SupportedDataType.STRING.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.STRING.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, stringListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));

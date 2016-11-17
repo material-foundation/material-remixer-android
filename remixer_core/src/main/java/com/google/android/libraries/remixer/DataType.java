@@ -1,12 +1,18 @@
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.serialization.ValueConverter;
+import com.google.android.libraries.remixer.serialization.converters.BooleanValueConverter;
+import com.google.android.libraries.remixer.serialization.converters.ColorValueConverter;
+import com.google.android.libraries.remixer.serialization.converters.IntegerValueConverter;
+import com.google.android.libraries.remixer.serialization.converters.StringValueConverter;
+import com.google.android.libraries.remixer.serialization.converters.TriggerValueConverter;
 import java.util.HashMap;
 
 /**
  * The data type for each RemixerItem. The data type is used to determine default layoutIDs and to
  * help serialization.
  */
-public class DataType {
+public class DataType<T> {
 
   /**
    * The serializable, unique name for this data type.
@@ -19,6 +25,10 @@ public class DataType {
   private final Class valueClass;
 
   /**
+   * The value converter that aids in the serialization process.
+   */
+  private final ValueConverter<T> converter;
+  /**
    * Map of default layout ids for this datatype when used with a specific RemixerItem class.
    *
    * <p>The key for this map is the specific RemixerItem subclass, and the value is the default
@@ -27,9 +37,17 @@ public class DataType {
   private final HashMap<Class<? extends RemixerItem>, Integer> layoutIdForRemixerItemType =
       new HashMap<>();
 
-  public DataType(String name, Class valueClass) {
+  /**
+   * Constructs a datatype with the given {@code name}, that takes values of type {@code valueClass}
+   * and uses {@code converter} to serialize.
+   *
+   * <p>Note {@code converter} has a {@link ValueConverter#dataType} field that must be initialized
+   * to the same as {@code name}.
+   */
+  public DataType(String name, Class<T> valueClass, ValueConverter<T> converter) {
     this.name = name;
     this.valueClass = valueClass;
+    this.converter = converter;
   }
 
   @Override
@@ -70,15 +88,25 @@ public class DataType {
   public Class getValueClass() {
     return valueClass;
   }
+
+  public ValueConverter<T> getConverter() {
+    return converter;
+  }
+
   // ======= Default data types defined here.
 
-  public static final DataType BOOLEAN = new DataType("boolean", Boolean.class);
+  public static final DataType<Boolean> BOOLEAN = new DataType<>(
+      "boolean", Boolean.class, new BooleanValueConverter("boolean"));
 
-  public static final DataType COLOR = new DataType("color", Integer.class);
+  public static final DataType<Integer> COLOR = new DataType<>(
+      "color", Integer.class, new ColorValueConverter("color"));
 
-  public static final DataType NUMBER = new DataType("number", Integer.class);
+  public static final DataType<Integer> NUMBER = new DataType<>(
+      "number", Integer.class, new IntegerValueConverter("number"));
 
-  public static final DataType STRING = new DataType("string", String.class);
+  public static final DataType<String> STRING = new DataType<>(
+      "string", String.class, new StringValueConverter("string"));
 
-  public static final DataType TRIGGER = new DataType("trigger", Void.class);
+  public static final DataType<Void> TRIGGER = new DataType<>(
+      "trigger", Void.class, new TriggerValueConverter("trigger"));
 }

@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import org.junit.Assert;
 
 public class CompareHelper {
