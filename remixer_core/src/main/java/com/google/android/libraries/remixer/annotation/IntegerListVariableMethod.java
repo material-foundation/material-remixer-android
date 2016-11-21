@@ -16,6 +16,8 @@
 
 package com.google.android.libraries.remixer.annotation;
 
+import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.RemixerItem;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -28,9 +30,7 @@ import java.lang.annotation.Target;
  * unspecified and 0 is not part of the possible values, then the first value in the list of
  * possible values is assumed as default.
  *
- * <p>Note: It has to be used on a public or default-access method in the same class that has a
- *
- * @RemixerInstance annotated field.
+ * <p>Note: It has to be used on a public or default-access method.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
@@ -69,4 +69,10 @@ public @interface IntegerListVariableMethod {
    * <p>Its root element must implement {@code RemixerItemWidget&lt;Variable&lt;String&gt;&gt;}.
    */
   int layoutId() default 0;
+
+  /**
+   * If set to true, the {@link RemixerItem#dataType} will be set to {@link DataType#COLOR} instead
+   * of {@link DataType#}.
+   */
+  boolean isColor() default false;
 }

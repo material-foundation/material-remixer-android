@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.ui.view;
 
 import android.support.annotation.Nullable;
+import android.support.annotation.PluralsRes;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Variable;
@@ -34,27 +35,8 @@ public final class RemixerItemWidgetHelper {
   private RemixerItemWidgetHelper() {}
 
   private static final String UNKNOWN_DEFAULT_ERROR_FORMAT =
-      "Variable with key %s has no mapping to a layout resource. Cannot display it.";
-
-  private static final HashMap<String, Integer> mapping;
-
-  private static String getKey(Class variableClass, @Nullable Class variableType) {
-    String result = variableClass.getCanonicalName();
-    if (variableType != null) {
-      result = String.format(
-          Locale.getDefault(),  "%s,%s", result, variableType.getCanonicalName());
-    }
-    return result;
-  }
-
-  static {
-    mapping = new HashMap<>();
-    mapping.put(getKey(Variable.class, Boolean.class), R.layout.boolean_variable_widget);
-    mapping.put(getKey(ItemListVariable.class, null), R.layout.item_list_variable_widget);
-    mapping.put(getKey(RangeVariable.class, null), R.layout.seekbar_range_variable_widget);
-    mapping.put(getKey(Variable.class, String.class), R.layout.string_variable_widget);
-    mapping.put(getKey(Trigger.class, null), R.layout.trigger_widget);
-  }
+      "Variable with key %s, data type %s and class %s has no mapping to a layout resource."
+      + " Cannot display it.";
 
   /**
    * Returns the layout id to inflate for this Variable.
@@ -71,21 +53,17 @@ public final class RemixerItemWidgetHelper {
       // This instance has a preferred layout.
       return layoutId;
     }
-    String key;
-    if (instance instanceof Variable) {
-      Variable variable = (Variable) instance;
-      key = getKey(variable.getClass(), variable.getVariableType());
-      if (mapping.containsKey(key)) {
-        return mapping.get(key);
-      }
+    try {
+      return instance.getDataType().getLayoutIdForRemixerItemType(instance.getClass());
+    } catch (NullPointerException ex) {
+      // There is no mapping, there is no layoutId whatsoever. What do we do? Throw an informative
+      // exception.
+      throw new IllegalArgumentException(
+          String.format(
+              Locale.getDefault(),
+              UNKNOWN_DEFAULT_ERROR_FORMAT,
+              instance.getKey(), instance.getDataType().getName(), instance.getClass().getName()),
+          ex);
     }
-    key = getKey(instance.getClass(), null);
-    if (mapping.containsKey(key)) {
-      return mapping.get(key);
-    }
-    // There is no mapping, there is no layoutId whatsoever. What do we do? Throw an informative
-    // exception.
-    throw new IllegalArgumentException(
-        String.format(Locale.getDefault(), UNKNOWN_DEFAULT_ERROR_FORMAT, instance.getKey()));
   }
 }

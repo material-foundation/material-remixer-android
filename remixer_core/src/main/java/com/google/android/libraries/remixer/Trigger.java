@@ -28,7 +28,7 @@ public class Trigger extends RemixerItem {
   private Runnable runnable;
 
   private Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
-    super(title, key, context, layoutId);
+    super(title, key, context, layoutId, DataType.TRIGGER);
     this.runnable = runnable;
   }
 
@@ -71,19 +71,11 @@ public class Trigger extends RemixerItem {
     runnable = null;
   }
 
-  @Override
-  void assertIsCompatibleWith(RemixerItem item) {
-    if (item.getKey().equals(getKey()) && item.getClass() != this.getClass()) {
-      throw new IncompatibleRemixerItemsWithSameKeyException(
-          String.format(
-              Locale.getDefault(),
-              "%s is incompatible with Trigger with same key %s",
-              item.getClass().getCanonicalName(),
-              getKey()));
-    }
-  }
-
   public static class Builder extends RemixerItem.Builder<Trigger, Runnable> {
+
+    public Builder() {
+      setDataType(DataType.TRIGGER);
+    }
 
     @Override
     public Trigger build() {

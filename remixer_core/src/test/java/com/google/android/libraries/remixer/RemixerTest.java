@@ -67,7 +67,7 @@ public class RemixerTest {
     final Object context2 = new Object();
     final Variable<String> variableString =
         new StringVariableBuilder().setKey("key").setContext(context1).build();
-    final Trigger trigger = new Trigger.Builder().setContext(context2).setKey("key").build();
+    final Trigger trigger = new Trigger.Builder().setKey("key").setContext(context2).build();
 
     remixer.addItem(variableString);
     remixer.addItem(trigger);
@@ -78,8 +78,8 @@ public class RemixerTest {
     final Object context1 = new Object();
     final Object context2 = new Object();
     final Variable<String> variableString =
-        new Variable<>("name", "key", "", context1, null, 0);
-    final Trigger trigger = new Trigger.Builder().setContext(context2).setKey("key").build();
+        new StringVariableBuilder().setKey("key").setContext(context1).build();
+    final Trigger trigger = new Trigger.Builder().setKey("key").setContext(context2).build();
 
     remixer.addItem(variableString);
     // Simulate context reclaimed.

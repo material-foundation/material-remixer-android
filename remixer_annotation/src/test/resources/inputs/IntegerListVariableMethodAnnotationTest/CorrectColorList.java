@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer;
+package somepackage;
 
-/**
- * Convenience builder for Variable&lt;Boolean&gt; that assumes false to be the default value.
- */
-public class BooleanVariableBuilder extends Variable.Builder<Boolean> {
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 
-  public BooleanVariableBuilder() {
-    setDefaultValue(false);
-    setDataType(DataType.BOOLEAN);
-  }
+public class CorrectColorList {
 
+  /**
+   * Default value is implicitly 0, this has to move to 1
+   */
+  @IntegerListVariableMethod(possibleValues = {1, 2}, defaultValue = 1, isColor = true)
+  public void setColor(Integer i){}
 }

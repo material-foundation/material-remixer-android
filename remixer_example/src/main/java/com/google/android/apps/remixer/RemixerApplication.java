@@ -17,17 +17,20 @@
 package com.google.android.apps.remixer;
 
 import android.app.Application;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.ui.RemixerCallbacks;
+import com.google.android.libraries.remixer.ui.RemixerInitialization;
 
 /**
- * The Remixer Application registers the RemixerCallbacks for Activity Lifecycle Callbacks. This
- * avoids leaks.
+ * Remixer requires {@link RemixerInitialization#initRemixer(Remixer, Application)} to be called
+ * from the Application class' {@link Application#onCreate()}. This sets up the default data types
+ * and corresponding widgets and makes sure leaks are prevented by using RemixerCallbacks.
  */
 public class RemixerApplication extends Application {
 
   @Override
   public void onCreate() {
     super.onCreate();
-    registerActivityLifecycleCallbacks(RemixerCallbacks.getInstance());
+    RemixerInitialization.initRemixer(Remixer.getInstance(), this);
   }
 }

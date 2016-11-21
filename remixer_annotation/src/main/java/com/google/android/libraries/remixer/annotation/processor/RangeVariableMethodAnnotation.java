@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer.annotation.processor;
 
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.common.collect.Range;
@@ -41,6 +42,7 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
     super(
         sourceClass,
         sourceMethod,
+        DataType.NUMBER,
         ClassName.get(RangeVariable.Builder.class),
         annotation.key(),
         annotation.title(),
@@ -69,10 +71,5 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
     methodBuilder.addStatement("$L.setMaxValue($L)", remixerItemName, maxValue);
     methodBuilder.addStatement("$L.setDefaultValue($L)", remixerItemName, defaultValue);
     methodBuilder.addStatement("$L.setIncrement($L)", remixerItemName, increment);
-  }
-
-  @Override
-  public TypeName getVariableType() {
-    return ClassName.get(Integer.class);
   }
 }

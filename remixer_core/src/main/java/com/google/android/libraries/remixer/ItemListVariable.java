@@ -39,6 +39,7 @@ public class ItemListVariable<T> extends Variable<T> {
    * @param context the object which created this variable, should be an activity.
    * @param callback Callback to run once the value is set. Can be null.
    * @param layoutId A layout id that renders this control on screen.
+   * @param dataType The data type this variable contains.
    */
   private ItemListVariable(
       String title,
@@ -47,8 +48,9 @@ public class ItemListVariable<T> extends Variable<T> {
       List<T> values,
       Object context,
       Callback<T> callback,
-      int layoutId) {
-    super(title, key, defaultValue, context, callback, layoutId);
+      int layoutId,
+      DataType dataType) {
+    super(title, key, defaultValue, context, callback, layoutId, dataType);
     this.valueList = values;
   }
 
@@ -72,8 +74,8 @@ public class ItemListVariable<T> extends Variable<T> {
    * set, the default layout will be used. <li>If the title is not set, the key will be used as
    * title </ul>
    *
-   * <p>On the other hand: key, possibleValues and context are mandatory. If either is missing, an
-   * {@link IllegalArgumentException} will be thrown.
+   * <p>On the other hand: key, dataType, context, and possibleValues are mandatory. If either is
+   * missing, an {@link IllegalArgumentException} will be thrown.
    */
   public static class Builder<T> extends RemixerItem.Builder<ItemListVariable<T>, Callback<T>> {
 
@@ -112,7 +114,7 @@ public class ItemListVariable<T> extends Variable<T> {
         defaultValue = possibleValues.get(0);
       }
       ItemListVariable<T> variable = new ItemListVariable<T>(
-          title, key, defaultValue, possibleValues, context, callback, layoutId);
+          title, key, defaultValue, possibleValues, context, callback, layoutId, dataType);
       variable.init();
       return variable;
     }

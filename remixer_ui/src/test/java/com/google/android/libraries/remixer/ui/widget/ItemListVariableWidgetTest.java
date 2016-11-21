@@ -16,14 +16,17 @@
 
 package com.google.android.libraries.remixer.ui.widget;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import android.view.LayoutInflater;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.ui.R;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,12 +35,6 @@ import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-
-import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(
@@ -73,6 +70,7 @@ public class ItemListVariableWidgetTest {
         .setKey(KEY)
         .setContext(this)
         .setCallback(mockCallback)
+        .setDataType(DataType.STRING)
         .build();
     view = (ItemListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.item_list_variable_widget, null);

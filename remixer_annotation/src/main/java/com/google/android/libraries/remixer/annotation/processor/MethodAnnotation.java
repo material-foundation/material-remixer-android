@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.Callback;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
@@ -75,6 +76,10 @@ abstract class MethodAnnotation {
    */
   private final TypeElement sourceClass;
   /**
+   * The data type this RemixerItem has.
+   */
+  protected final DataType dataType;
+  /**
    * The key for this Variable. If the annotation has an empty key then it uses the source method's
    * name as key.
    */
@@ -118,12 +123,14 @@ abstract class MethodAnnotation {
   MethodAnnotation(
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
+      DataType dataType,
       TypeName builderType,
       String key,
       String title,
       int layoutId) throws RemixerAnnotationException {
     this.sourceClass = sourceClass;
     this.sourceMethod = sourceMethod;
+    this.dataType = dataType;
     this.builderType = builderType;
     this.key = Strings.isNullOrEmpty(key) ? sourceMethod.getSimpleName().toString() : key;
     key = this.key;
@@ -176,6 +183,12 @@ abstract class MethodAnnotation {
         "$L $L = new $L(activity)", generatedClassName, callbackName, generatedClassName);
     // Create the builder and start filling common things.
     methodBuilder.addStatement("$T $L = new $T()", builderType, remixerItemName, builderType);
+    // Since the data type passed during annotation is a compile-time version, and the runtime
+    // version may be different, get it at runtime using the registered data types for the Remixer
+    // instance.
+    methodBuilder.addStatement(
+        "$L.setDataType($T.getInstance().getDataType($S))",
+        remixerItemName, ClassName.get(Remixer.class), dataType.getName());
     methodBuilder.addStatement("$L.setKey($S)", remixerItemName, key);
     methodBuilder.addStatement("$L.setTitle($S)", remixerItemName, title);
     methodBuilder.addStatement("$L.setLayoutId($L)", remixerItemName, layoutId);
@@ -253,8 +266,8 @@ abstract class MethodAnnotation {
 
   /**
    * Returns the type to use to parametrize the Variable objects when generating code.
-   *
-   * <p>This must be implemented by the subclass depending on the annotation's type.
    */
-  protected abstract TypeName getVariableType();
+  private final TypeName getVariableType() {
+    return ClassName.get(dataType.getValueClass());
+  }
 }

@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.storage.json;
 
 import android.graphics.Color;
+import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.RemixerItem;
@@ -50,7 +51,7 @@ enum SupportedDataType {
     StoredVariable<Boolean> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getVariableType() == Boolean.class) {
+        if (var.getDataType().getName().equals(DataType.BOOLEAN.getName())) {
           StoredVariable<Boolean> storage = new StoredVariable<>();
           storage.dataType = BOOLEAN.getDataTypeSerializableString();
           storage.selectedValue = (Boolean) var.getSelectedValue();
@@ -87,8 +88,7 @@ enum SupportedDataType {
     StoredVariable<Integer> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getVariableType() == Integer.class
-            && var.getLayoutId() == R.layout.color_list_variable_widget) {
+        if (var.getDataType().getName().equals(DataType.COLOR.getName())) {
           StoredVariable<Integer> storage = new StoredVariable<>();
           storage.dataType = COLOR.getDataTypeSerializableString();
           storage.selectedValue = (Integer) var.getSelectedValue();
@@ -120,8 +120,7 @@ enum SupportedDataType {
     StoredVariable<Integer> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getVariableType() == Integer.class
-            && var.getLayoutId() != R.layout.color_list_variable_widget) {
+        if (var.getDataType().getName().equals(DataType.NUMBER.getName())) {
           StoredVariable<Integer> storage = new StoredVariable<>();
           storage.dataType = NUMBER.getDataTypeSerializableString();
           storage.selectedValue = (Integer) var.getSelectedValue();
@@ -157,7 +156,7 @@ enum SupportedDataType {
     StoredVariable<String> fromRemixerItem(RemixerItem item) {
       if (item instanceof Variable) {
         Variable var = (Variable) item;
-        if (var.getVariableType() == String.class) {
+        if (var.getDataType().getName().equals(DataType.STRING.getName())) {
           StoredVariable<String> storage = new StoredVariable<>();
           storage.dataType = STRING.getDataTypeSerializableString();
           storage.selectedValue = (String) var.getSelectedValue();
