@@ -31,7 +31,7 @@ public final class RemixerCallbacks implements Application.ActivityLifecycleCall
 
   private RemixerCallbacks() {}
 
-  public static RemixerCallbacks getInstance() {
+  static RemixerCallbacks getInstance() {
     return instance;
   }
 
