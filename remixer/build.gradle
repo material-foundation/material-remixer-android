@@ -14,26 +14,21 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.material-foundation'
 
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
 
   defaultConfig {
-    applicationId "com.google.android.apps.remixer"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
     versionCode 1
     versionName "1.0"
-  }
-
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    }
+    consumerProguardFiles 'proguard-rules.pro'
   }
 
   compileOptions {
@@ -42,6 +37,8 @@ android {
   }
 
   lintOptions {
+    // Disable gradle dependency check for new versions.
+    // Many of these have been chosen to work with Google Tools.
     disable 'GradleDependency'
     textReport true
     textOutput 'stdout'
@@ -49,6 +46,8 @@ android {
 }
 
 dependencies {
-  compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-  compile project(':remixer')
+  compile project(':remixer_annotation')
+  compile project(':remixer_core')
+  compile project(':remixer_storage')
+  compile project(':remixer_ui')
 }
