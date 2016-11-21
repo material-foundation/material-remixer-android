@@ -1,6 +1,7 @@
 package com.google.android.libraries.remixer;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The data type for each RemixerItem. The data type is used to determine default layoutIDs and to
@@ -24,7 +25,7 @@ public class DataType {
    * <p>The key for this map is the specific RemixerItem subclass, and the value is the default
    * layout to use when a RemixerItem of the specific subclass has this data type.
    */
-  private final HashMap<Class<? extends RemixerItem>, Integer> layoutIdForRemixerItemType =
+  private final Map<Class<? extends RemixerItem>, Integer> layoutIdForRemixerItemType =
       new HashMap<>();
 
   public DataType(String name, Class valueClass) {

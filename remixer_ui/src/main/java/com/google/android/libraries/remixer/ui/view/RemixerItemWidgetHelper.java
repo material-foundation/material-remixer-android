@@ -35,7 +35,8 @@ public final class RemixerItemWidgetHelper {
   private RemixerItemWidgetHelper() {}
 
   private static final String UNKNOWN_DEFAULT_ERROR_FORMAT =
-      "Variable with key %s has no mapping to a layout resource. Cannot display it.";
+      "Variable with key %s, data type %s and class %s has no mapping to a layout resource."
+      + " Cannot display it.";
 
   /**
    * Returns the layout id to inflate for this Variable.
@@ -58,7 +59,10 @@ public final class RemixerItemWidgetHelper {
       // There is no mapping, there is no layoutId whatsoever. What do we do? Throw an informative
       // exception.
       throw new IllegalArgumentException(
-          String.format(Locale.getDefault(), UNKNOWN_DEFAULT_ERROR_FORMAT, instance.getKey()),
+          String.format(
+              Locale.getDefault(),
+              UNKNOWN_DEFAULT_ERROR_FORMAT,
+              instance.getKey(), instance.getDataType().getName(), instance.getClass().getName()),
           ex);
     }
   }
