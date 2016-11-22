@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import javax.xml.crypto.Data;
+import java.util.Map;
 
 /**
  * Contains a list of {@link Variable}es.
@@ -36,18 +36,18 @@ public class Remixer {
    * <p>There may be several RemixerItems for the same key because the key can be reused in
    * different activities and the value has to be shared across those.
    */
-  private HashMap<String, List<RemixerItem>> keyMap;
+  private Map<String, List<RemixerItem>> keyMap;
 
   /**
    * This is a map of contexts to a list of remixer items for the given context.
    */
-  private HashMap<Object, List<RemixerItem>> contextMap;
+  private Map<Object, List<RemixerItem>> contextMap;
 
   /**
    * Datatypes keyed by their serializable name.
    */
-  private HashMap<String, DataType> registeredDataTypes;
-
+  private Map<String, DataType> registeredDataTypes;
+  
   /**
    * Gets the singleton for Remixer.
    *
@@ -153,7 +153,7 @@ public class Remixer {
    * mapping does not exist, it adds a mapping to a new empty list.
    */
   private static <T> List<RemixerItem> getOrCreateItemList(
-      T key, HashMap<T, List<RemixerItem>> map) {
+      T key, Map<T, List<RemixerItem>> map) {
     List<RemixerItem> list = null;
     if (map.containsKey(key)) {
       list = map.get(key);

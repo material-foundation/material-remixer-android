@@ -155,7 +155,7 @@ public class RangeVariable extends Variable<Integer> {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key, minValue, maxValue, dataType and context are mandatory. If any of
+   * <p>On the other hand: key, minValue, maxValue, dataType, and context are mandatory. If any of
    * these are missing or the settings are incorrect according to the logic of {@link RangeVariable}
    * an {@link IllegalArgumentException} will be thrown.
    */

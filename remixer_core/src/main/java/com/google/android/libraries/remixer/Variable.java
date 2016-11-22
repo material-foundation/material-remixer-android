@@ -155,7 +155,7 @@ public class Variable<T> extends RemixerItem {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key, dataType and context are mandatory. If they're missing, an
+   * <p>On the other hand: key, dataType, and context are mandatory. If they're missing, an
    * {@link IllegalArgumentException} will be thrown.
    */
   public static class Builder<T> extends RemixerItem.Builder<Variable<T>, Callback<T>> {
