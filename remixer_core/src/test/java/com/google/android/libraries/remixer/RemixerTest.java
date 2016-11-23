@@ -19,6 +19,7 @@ package com.google.android.libraries.remixer;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,6 +30,11 @@ public class RemixerTest {
   private Remixer remixer;
   private Variable variable;
   private Variable variable2;
+
+  @BeforeClass
+  public static void oneTimeSetUp() {
+    InitializationHelper.init();
+  }
 
   /**
    * Sets up the tests.
@@ -52,6 +58,7 @@ public class RemixerTest {
    * Replacement should only happen if the first context has been reclaimed and the remixer
    * item being added has a context of the same class.
    */
+  @Test
   public void remixerReplacesVariableCorrectly() {
     // Initialize two nearly identical variables with two different contexts of the same class
     final Object context1 = new Object();
@@ -70,9 +77,9 @@ public class RemixerTest {
     remixer.addItem(variableString2);
     List<RemixerItem> list1 = remixer.getItemsWithContext(context1);
     List<RemixerItem> list2 = remixer.getItemsWithContext(context2);
-    Assert.assertEquals(0, list1.size());
+    Assert.assertNull(list1);
     Assert.assertEquals(1, list2.size());
-    Assert.assertEquals(variable2, list2.get(0));
+    Assert.assertEquals(variableString2, list2.get(0));
   }
 
   @Test

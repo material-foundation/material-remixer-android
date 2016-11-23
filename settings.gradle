@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example',
+include ':remixer_core', ':remixer_ui', ':remixer_annotation', ':remixer_example', ':remixer',
   ':remixer_storage'

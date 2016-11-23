@@ -25,7 +25,7 @@ import com.google.android.libraries.remixer.Remixer;
  * Listens to activity lifecycle events to be able to clean up remixer when activities are
  * destroyed. This way we avoid leaks.
  */
-public final class RemixerActivityLifecycleCallbacks
+final class RemixerActivityLifecycleCallbacks
     implements Application.ActivityLifecycleCallbacks {
 
   private static RemixerActivityLifecycleCallbacks instance =
@@ -33,7 +33,8 @@ public final class RemixerActivityLifecycleCallbacks
 
   private RemixerActivityLifecycleCallbacks() {}
 
-  public static RemixerActivityLifecycleCallbacks getInstance() {
+
+  static RemixerActivityLifecycleCallbacks getInstance() {
     return instance;
   }
 

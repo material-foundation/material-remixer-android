@@ -16,13 +16,14 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.sync.LocalValueSyncing;
 import com.google.android.libraries.remixer.sync.SynchronizationMechanism;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import javax.xml.crypto.Data;
+import java.util.Map;
 
 /**
  * Contains a list of {@link Variable}s or {@link Trigger}s.
@@ -43,29 +44,28 @@ public class Remixer {
   private static Remixer instance;
 
   /**
+   * Datatypes keyed by their serializable name.
+   */
+  private static Map<String, DataType> registeredDataTypes = new HashMap<>();
+
+  /**
    * This is a map of Remixer Item keys to a list of remixer items that have that key.
    *
    * <p>There may be several RemixerItems for the same key because the key can be reused in
    * different activities and the value has to be shared across those.
    */
-  private HashMap<String, List<RemixerItem>> keyMap;
+  private Map<String, List<RemixerItem>> keyMap;
 
   /**
    * This is a map of contexts to a list of remixer items for the given context.
    */
-  private HashMap<Object, List<RemixerItem>> contextMap;
+  private Map<Object, List<RemixerItem>> contextMap;
 
   /**
    * The synchronization mechanism used to keep values in sync across different instances of the
    * variables and save/sync to other devices.
    */
   private SynchronizationMechanism synchronizationMechanism;
-
-  /**
-   * Datatypes keyed by their serializable name.
-   */
-  private HashMap<String, DataType> registeredDataTypes;
-
 
   /**
    * Gets the singleton for Remixer.
@@ -81,12 +81,38 @@ public class Remixer {
   }
 
   /**
+   * Register a new data type that can be used with Remixer.
+   */
+  public static void registerDataType(DataType dataType) {
+    if (registeredDataTypes.containsKey(dataType.getName())) {
+      throw new IllegalStateException("Adding a data type that has already been added, name: "
+          + dataType.getName() );
+    }
+    registeredDataTypes.put(dataType.getName(), dataType);
+  }
+
+  public static DataType getDataType(String name) {
+    return registeredDataTypes.get(name);
+  }
+
+  public static Collection<DataType> getRegisteredDataType() {
+    return registeredDataTypes.values();
+  }
+
+  /**
+   * Visible only for testing. Do not use.
+   */
+  public static void clearRegisteredDataTypes() {
+    registeredDataTypes.clear();
+  }
+
+  /**
    * Visible only for testing. Users should only use {@link #getInstance()}.
    */
   public Remixer() {
     keyMap = new HashMap<>();
     contextMap = new HashMap<>();
-    registeredDataTypes = new HashMap<>();
+    synchronizationMechanism = new LocalValueSyncing();
   }
 
   /**
@@ -100,11 +126,12 @@ public class Remixer {
    */
   public void setSynchronizationMechanism(SynchronizationMechanism synchronizationMechanism) {
     if (this.synchronizationMechanism != null) {
-      throw new IllegalStateException(
-          "You can only set one synchronization mechanism in the app's lifetime");
+      this.synchronizationMechanism.setRemixerInstance(null);
     }
     this.synchronizationMechanism = synchronizationMechanism;
-    synchronizationMechanism.setRemixerInstance(this);
+    if (synchronizationMechanism != null) {
+      synchronizationMechanism.setRemixerInstance(this);
+    }
   }
 
   /**
@@ -169,7 +196,7 @@ public class Remixer {
    * mapping does not exist, it adds a mapping to a new empty list.
    */
   private static <T> List<RemixerItem> getOrCreateItemList(
-      T key, HashMap<T, List<RemixerItem>> map) {
+      T key, Map<T, List<RemixerItem>> map) {
     List<RemixerItem> list = null;
     if (map.containsKey(key)) {
       list = map.get(key);
@@ -195,32 +222,17 @@ public class Remixer {
   }
 
   /**
-   * Register a new data type that can be used with Remixer.
-   */
-  public void registerDataType(DataType dataType) {
-    if (registeredDataTypes.containsKey(dataType.getName())) {
-      throw new IllegalStateException("Adding a data type that has already been added, name: "
-          + dataType.getName() );
-    }
-    registeredDataTypes.put(dataType.getName(), dataType);
-  }
-
-  public DataType getDataType(String name) {
-    return registeredDataTypes.get(name);
-  }
-
-  public Collection<DataType> getRegisteredDataType() {
-    return registeredDataTypes.values();
-  }
-
-  /**
    * Removes remixer items whose context is {@code activity}. This makes sure {@code activity}
    * doesn't leak through their callbacks.
    */
   public void onActivityDestroyed(Object activity) {
     if (contextMap.containsKey(activity)) {
       for (RemixerItem remixerItem : contextMap.get(activity)) {
-        getItemsWithKey(remixerItem.getKey()).remove(remixerItem);
+        List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
+        listForKey.remove(remixerItem);
+        if (listForKey.size() == 0) {
+          keyMap.remove(remixerItem.getKey());
+        }
       }
       contextMap.remove(activity);
     }

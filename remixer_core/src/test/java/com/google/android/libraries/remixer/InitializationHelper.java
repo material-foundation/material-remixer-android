@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'jacoco'
+package com.google.android.libraries.remixer;
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.Remixer;
+import java.util.HashSet;
 
-jacocoTestReport {
-  reports {
-    xml.enabled true
+/**
+ * Helper class to properly initialize remixer instances.
+ */
+public class InitializationHelper {
+
+  public static void init() {
+    Remixer.clearRegisteredDataTypes();
+    Remixer.registerDataType(DataType.BOOLEAN);
+    Remixer.registerDataType(DataType.COLOR);
+    Remixer.registerDataType(DataType.NUMBER);
+    Remixer.registerDataType(DataType.STRING);
+    Remixer.registerDataType(DataType.TRIGGER);
   }
-}
-
-dependencies {
-  compile 'com.google.code.gson:gson:2.7'
-  testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:1.9.5'
-
 }

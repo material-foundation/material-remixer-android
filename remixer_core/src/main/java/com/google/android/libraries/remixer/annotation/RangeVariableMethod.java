@@ -28,9 +28,7 @@ import java.lang.annotation.Target;
  * the default value as 0. Furthermore if you only move the range so that 0 is not included it will
  * set the default to be minValue.
  *
- * <p>Note: It has to be used on a public or default-access method in the same class that has a
- *
- * @RemixerInstance annotated field.
+ * <p>Note: It has to be used on a public or default-access method.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)

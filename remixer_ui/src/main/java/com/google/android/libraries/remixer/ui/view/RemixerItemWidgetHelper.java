@@ -16,26 +16,19 @@
 
 package com.google.android.libraries.remixer.ui.view;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.PluralsRes;
-import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.RangeVariable;
-import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.Trigger;
-import com.google.android.libraries.remixer.ui.R;
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
  * Utility class to determine what widget to inflate for a remixer item.
  */
-public final class RemixerItemWidgetHelper {
+final class RemixerItemWidgetHelper {
 
   private RemixerItemWidgetHelper() {}
 
   private static final String UNKNOWN_DEFAULT_ERROR_FORMAT =
-      "Variable with key %s has no mapping to a layout resource. Cannot display it.";
+      "Variable with key %s, data type %s and class %s has no mapping to a layout resource."
+      + " Cannot display it.";
 
   /**
    * Returns the layout id to inflate for this Variable.
@@ -46,7 +39,7 @@ public final class RemixerItemWidgetHelper {
    * @throws IllegalArgumentException if the Variable in question has no default layout associated
    *     with it and it is relying on a default.
    */
-  public static int getLayoutId(RemixerItem instance) {
+  static int getLayoutId(RemixerItem instance) {
     int layoutId = instance.getLayoutId();
     if (layoutId != 0) {
       // This instance has a preferred layout.
@@ -58,7 +51,10 @@ public final class RemixerItemWidgetHelper {
       // There is no mapping, there is no layoutId whatsoever. What do we do? Throw an informative
       // exception.
       throw new IllegalArgumentException(
-          String.format(Locale.getDefault(), UNKNOWN_DEFAULT_ERROR_FORMAT, instance.getKey()),
+          String.format(
+              Locale.getDefault(),
+              UNKNOWN_DEFAULT_ERROR_FORMAT,
+              instance.getKey(), instance.getDataType().getName(), instance.getClass().getName()),
           ex);
     }
   }

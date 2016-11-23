@@ -24,8 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation to apply to a method to turn it into a Trigger.
  *
- * <p>Note: It has to be used on a public or default-access method in the same class that has a
- * @RemixerInstance annotated field.
+ * <p>Note: It has to be used on a public or default-access method.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)

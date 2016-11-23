@@ -18,28 +18,22 @@ package com.google.android.apps.remixer;
 
 import android.app.Application;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.storage.LocalValueSyncing;
+import com.google.android.libraries.remixer.sync.LocalValueSyncing;
 import com.google.android.libraries.remixer.ui.RemixerInitialization;
 
 /**
- * The Remixer Application sets up Remixer.
+ * Remixer requires {@link RemixerInitialization#initRemixer(Application)} to be called
+ * from the Application class' {@link Application#onCreate()}. This sets up the default data types
+ * and corresponding widgets and makes sure leaks are prevented by using
+ * RemixerActivityLifecycleCallbacks.
  *
- * <b>There are two things that must be initialized:
- * <ul>
- *   <li>Register an instance of RemixerActivityLifecycleCallbacks for lifecycle callbacks, this
- *   ensures no leaks happen since it removes all RemixerItems associated with an activity when the
- *   latter is destroyed</li>
- *   <li>Sets the synchronization mechanism for Remixer, this tells Remixer what logic to use to
- *   keep values in sync. In this example we're using simple local-only syncing with no
- *   persistence.</li>
- * </ul>
+ * <p>This is also where you can set a synchronization mechanism other than the default.
  */
 public class RemixerApplication extends Application {
 
   @Override
   public void onCreate() {
     super.onCreate();
-    RemixerInitialization.initRemixer(Remixer.getInstance(), this);
-    Remixer.getInstance().setSynchronizationMechanism(new LocalValueSyncing());
+    RemixerInitialization.initRemixer(this);
   }
 }

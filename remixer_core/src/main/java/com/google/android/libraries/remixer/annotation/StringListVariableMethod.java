@@ -28,9 +28,7 @@ import java.lang.annotation.Target;
  * unspecified and the empty string is not part of the possible values, then the first value in the
  * list of possible values is assumed as default.
  *
- * <p>Note: It has to be used on a public or default-access method in the same class that has a
- *
- * @RemixerInstance annotated field.
+ * <p>Note: It has to be used on a public or default-access method.
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
