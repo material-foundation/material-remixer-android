@@ -79,8 +79,8 @@ public class SerializableRemixerContents {
       throw new IncompatibleRemixerItemsWithSameKeyException(
           String.format(
               Locale.getDefault(),
-              "Two variables with the same key, %s, have incompatible configurations " +
-                  "(data types %s, %s)",
+              "Two variables with the same key, %s, have incompatible configurations "
+               + "(data types %s, %s)",
               item.key,
               existingItem.dataType,
               item.dataType));
@@ -129,8 +129,8 @@ public class SerializableRemixerContents {
       throw new IncompatibleRemixerItemsWithSameKeyException(
           String.format(
               Locale.getDefault(),
-              "Setting value for key %s using incompatible variable. Existing data type is: %s, " +
-                  "new value data type is: %s",
+              "Setting value for key %s using incompatible variable. Existing data type is: %s, "
+              + "new value data type is: %s",
               storedVariable.key,
               existingStoredVariable.dataType,
               storedVariable.dataType));

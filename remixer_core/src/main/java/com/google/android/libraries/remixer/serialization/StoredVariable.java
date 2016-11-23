@@ -156,10 +156,11 @@ public class StoredVariable<T> {
     }
 
     StoredVariable<?> variable = (StoredVariable<?>) obj;
-    if (!isCompatibleWith(variable))
+    if (!isCompatibleWith(variable)) {
       return false;
-    return selectedValue != null ?
-        selectedValue.equals(variable.selectedValue) : variable.selectedValue == null;
+    }
+    return selectedValue != null
+        ? selectedValue.equals(variable.selectedValue) : variable.selectedValue == null;
   }
 
   /**
@@ -170,11 +171,19 @@ public class StoredVariable<T> {
   @SuppressWarnings("PMD.CollapsibleIfStatements")
   public boolean isCompatibleWith(StoredVariable<?> variable) {
 
-    if (!key.equals(variable.key)) return false;
-    if (title != null ? !title.equals(variable.title) : variable.title != null) return false;
-    if (!dataType.equals(variable.dataType)) return false;
-    if (possibleValues != null ?
-        !possibleValues.equals(variable.possibleValues) : variable.possibleValues != null)
+    if (!key.equals(variable.key)) {
+      return false;
+    }
+    if (title != null ? !title.equals(variable.title) : variable.title != null) {
+      return false;
+    }
+    if (!dataType.equals(variable.dataType)) {
+      return false;
+    }
+    if (possibleValues != null
+        ? !possibleValues.equals(variable.possibleValues) : variable.possibleValues != null) {
+      return false;
+    }
 
     if (!key.equals(variable.key)) {
       return false;
