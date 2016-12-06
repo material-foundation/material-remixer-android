@@ -74,7 +74,7 @@ class MyApplication extends android.app.Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    RemixerIntialization.initRemixer(Remixer.getInstance(), this);
+    RemixerInitialization.initRemixer(Remixer.getInstance(), this);
   }
 }
 ```
