@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
+import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -44,9 +46,9 @@ class StoredVariableSerializer
     JsonPrimitive jsonDataType = object.getAsJsonPrimitive(StoredVariable.DATA_TYPE);
     String dataType = jsonDataType.getAsString();
     StoredVariable variable = null;
-    for (SupportedDataType type : SupportedDataType.values()) {
-      if (dataType.equals(type.getDataTypeSerializableString())) {
-        variable = type.getValueConverter().deserialize(json);
+    for (DataType type : Remixer.getInstance().getRegisteredDataType()) {
+      if (dataType.equals(type.getName())) {
+        variable = type.getConverter().deserialize(json);
         break;
       }
     }
@@ -62,9 +64,9 @@ class StoredVariableSerializer
   public JsonElement serialize(
       StoredVariable src, Type typeOfSrc, JsonSerializationContext context) {
     ValueConverter converter = null;
-    for (SupportedDataType type : SupportedDataType.values()) {
-      if (src.dataType.equals(type.getDataTypeSerializableString())) {
-        converter = type.getValueConverter();
+    for (DataType type : Remixer.getInstance().getRegisteredDataType()) {
+      if (src.dataType.equals(type.getName())) {
+        converter = type.getConverter();
         break;
       }
     }

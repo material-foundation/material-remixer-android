@@ -14,35 +14,39 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
-import android.graphics.Color;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.junit.runners.JUnit4;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(
-    sdk = 21,
-    manifest = "src/main/AndroidManifest.xml")
+@RunWith(JUnit4.class)
 public class ColorVariableSerializationTest {
 
+  protected static final int BLACK = 0x00000000;
+  protected static final int BLUE = 0xFF0000FF;
   private static String KEY = "key";
 
   private ItemListVariable<Integer> colorListVariable;
   private Gson gson = GsonProvider.getInstance();
 
+  @BeforeClass
+  public static void oneTimeSetUp() {
+    InitializationHelper.init(Remixer.getInstance());
+  }
+
   @Before
   public void setUp() {
     colorListVariable = new ItemListVariable.Builder<Integer>()
-        .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE})
-        .setDefaultValue(Color.BLACK)
+        .setPossibleValues(new Integer[]{BLACK, BLUE})
+        .setDefaultValue(BLACK)
         .setContext(this)
         .setKey(KEY)
         .setDataType(DataType.COLOR)
@@ -52,7 +56,7 @@ public class ColorVariableSerializationTest {
   @Test
   public void colorListVariableConvertsToStorageTest() {
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(colorListVariable);
-    Assert.assertEquals(SupportedDataType.COLOR.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.COLOR.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, colorListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -60,9 +64,9 @@ public class ColorVariableSerializationTest {
 
   @Test
   public void modifiedColorListVariableConvertsToStorageTest() {
-    colorListVariable.setValue(Color.BLUE);
+    colorListVariable.setValue(BLUE);
     StoredVariable<Integer> result = StoredVariable.fromRemixerItem(colorListVariable);
-    Assert.assertEquals(SupportedDataType.COLOR.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.COLOR.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, colorListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));

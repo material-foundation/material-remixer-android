@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
-import com.google.android.libraries.remixer.RangeVariable;
+import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.RemixerItem;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import java.util.List;
  * a regular {@link com.google.android.libraries.remixer.RemixerItem} as soon as it's completely
  * parsed.
  */
-class StoredVariable<T> {
+public class StoredVariable<T> {
 
   // Json dictionary keys to serialize this object
   static final String KEY = "key";
@@ -51,7 +52,7 @@ class StoredVariable<T> {
   String title;
   /**
    * The data type this variable represents, it's the string representation of one of the {@link
-   * SupportedDataType}.
+   * DataType}.
    */
   String dataType;
 
@@ -81,26 +82,104 @@ class StoredVariable<T> {
    */
   T increment;
 
+  public String getKey() {
+    return key;
+  }
+
+  public void setKey(String key) {
+    this.key = key;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getDataType() {
+    return dataType;
+  }
+
+  public void setDataType(String dataType) {
+    this.dataType = dataType;
+  }
+
+  public T getSelectedValue() {
+    return selectedValue;
+  }
+
+  public void setSelectedValue(T selectedValue) {
+    this.selectedValue = selectedValue;
+  }
+
+  public List<T> getPossibleValues() {
+    return possibleValues;
+  }
+
+  public void setPossibleValues(List<T> possibleValues) {
+    this.possibleValues = possibleValues;
+  }
+
+  public T getMinValue() {
+    return minValue;
+  }
+
+  public void setMinValue(T minValue) {
+    this.minValue = minValue;
+  }
+
+  public T getMaxValue() {
+    return maxValue;
+  }
+
+  public void setMaxValue(T maxValue) {
+    this.maxValue = maxValue;
+  }
+
+  public T getIncrement() {
+    return increment;
+  }
+
+  public void setIncrement(T increment) {
+    this.increment = increment;
+  }
+
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
 
-    StoredVariable<?> variable = (StoredVariable<?>) o;
+    StoredVariable<?> variable = (StoredVariable<?>) obj;
 
-    if (!key.equals(variable.key)) return false;
-    if (title != null ? !title.equals(variable.title) : variable.title != null) return false;
-    if (!dataType.equals(variable.dataType)) return false;
-    if (selectedValue != null ?
-        !selectedValue.equals(variable.selectedValue) : variable.selectedValue != null)
+    if (!key.equals(variable.key)) {
       return false;
-    if (possibleValues != null ?
-        !possibleValues.equals(variable.possibleValues) : variable.possibleValues != null)
+    }
+    if (title != null ? !title.equals(variable.title) : variable.title != null) {
       return false;
-    if (minValue != null ? !minValue.equals(variable.minValue) : variable.minValue != null)
+    }
+    if (!dataType.equals(variable.dataType)) {
       return false;
-    if (maxValue != null ? !maxValue.equals(variable.maxValue) : variable.maxValue != null)
+    }
+    if (selectedValue != null
+        ? !selectedValue.equals(variable.selectedValue) : variable.selectedValue != null) {
       return false;
+    }
+    if (possibleValues != null
+        ? !possibleValues.equals(variable.possibleValues) : variable.possibleValues != null) {
+      return false;
+    }
+    if (minValue != null ? !minValue.equals(variable.minValue) : variable.minValue != null) {
+      return false;
+    }
+    if (maxValue != null ? !maxValue.equals(variable.maxValue) : variable.maxValue != null) {
+      return false;
+    }
     return increment != null ? increment.equals(variable.increment) : variable.increment == null;
   }
 
@@ -122,12 +201,13 @@ class StoredVariable<T> {
    */
   static StoredVariable fromRemixerItem(RemixerItem item) {
     StoredVariable storedVariable = null;
-    for (SupportedDataType type : SupportedDataType.values()) {
+    for (DataType type : Remixer.getInstance().getRegisteredDataType()) {
       try {
-        storedVariable = type.getValueConverter().fromRemixerItem(item);
+        storedVariable = type.getConverter().fromRemixerItem(item);
         break;
       } catch (IllegalArgumentException ex) {
         // Don't do anything, this just wasn't the right data type.
+        storedVariable = null;
       }
     }
     if (storedVariable == null) {

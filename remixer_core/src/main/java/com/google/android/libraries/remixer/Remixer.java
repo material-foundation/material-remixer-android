@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import javax.xml.crypto.Data;
 
 /**
  * Contains a list of {@link Variable}es.
@@ -48,7 +47,7 @@ public class Remixer {
    * Datatypes keyed by their serializable name.
    */
   private Map<String, DataType> registeredDataTypes;
-
+  
   /**
    * Gets the singleton for Remixer.
    *

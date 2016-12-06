@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
-import android.support.annotation.Nullable;
 import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,40 +29,45 @@ import java.util.ArrayList;
  * converting it from a java object into its JSON representation.
  * @param <T> the data type stored in the variable.
  */
-abstract class ValueConverter<T> {
+public abstract class ValueConverter<T> {
 
   /**
    * The data type this converter is used for.
    */
-  private final String dataType;
+  protected String dataType;
 
-  ValueConverter(String dataType) {
+  public ValueConverter(String dataType) {
     this.dataType = dataType;
+  }
+
+  /**
+   * Gets the data type name for this converter.
+   */
+  public String getDataType() {
+    return dataType;
   }
 
   /**
    * Returns an object of type T that holds the value in the current Json Element.
    */
-  @Nullable
-  abstract T parseValue(JsonElement element);
+  public abstract T parseValue(JsonElement element);
 
   /**
    * Returns a JsonElement that represents the value passed in.
    */
-  @Nullable
-  abstract JsonElement valueToJson(T value);
+  public abstract JsonElement valueToJson(T value);
 
   /**
    * Creates a StoredVariable that represents the data in {@code item} if {@code item} is of this
    * type. Returns null otherwise.
    * @throws IllegalArgumentException if {@code item} does not match this type.
    */
-  abstract StoredVariable<T> fromRemixerItem(RemixerItem item);
+  public abstract StoredVariable<T> fromRemixerItem(RemixerItem item);
 
   /**
    * Deserializes a JsonElement that contains a StoredVariable.
    */
-  StoredVariable<T> deserialize(JsonElement json) {
+  public StoredVariable<T> deserialize(JsonElement json) {
     StoredVariable<T> result = new StoredVariable<>();
     JsonObject object = json.getAsJsonObject();
     if (object.has(StoredVariable.SELECTED_VALUE)) {
@@ -91,7 +96,7 @@ abstract class ValueConverter<T> {
   /**
    * Serializes a StoredVariable into a JsonElement.
    */
-  JsonElement serialize(StoredVariable<T> src) {
+  public JsonElement serialize(StoredVariable<T> src) {
     JsonObject object = new JsonObject();
     object.add(StoredVariable.KEY, new JsonPrimitive(src.key));
     object.add(StoredVariable.TITLE, new JsonPrimitive(src.title));

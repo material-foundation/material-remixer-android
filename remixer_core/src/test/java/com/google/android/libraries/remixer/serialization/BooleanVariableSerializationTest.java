@@ -14,28 +14,32 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.BooleanVariableBuilder;
+import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.Variable;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.junit.runners.JUnit4;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(
-    sdk = 21,
-    manifest = "src/main/AndroidManifest.xml")
+@RunWith(JUnit4.class)
 public class BooleanVariableSerializationTest {
 
   private static String KEY = "key";
 
   private Variable<Boolean> booleanVariable;
   private Gson gson = GsonProvider.getInstance();
+
+  @BeforeClass
+  public static void oneTimeSetUp() {
+    InitializationHelper.init(Remixer.getInstance());
+  }
 
   @Before
   public void setUp() {
@@ -48,7 +52,7 @@ public class BooleanVariableSerializationTest {
   @Test
   public void booleanVariableConvertsToStorageTest() {
     StoredVariable<Boolean> result = StoredVariable.fromRemixerItem(booleanVariable);
-    Assert.assertEquals(SupportedDataType.BOOLEAN.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.BOOLEAN.getName(), result.dataType);
     CompareHelper.assertEqualsVariable(result, booleanVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
@@ -58,7 +62,7 @@ public class BooleanVariableSerializationTest {
   public void modifiedBooleanVariableConvertsToStorageTest() {
     booleanVariable.setValue(true);
     StoredVariable<Boolean> result = StoredVariable.fromRemixerItem(booleanVariable);
-    Assert.assertEquals(SupportedDataType.BOOLEAN.getDataTypeSerializableString(), result.dataType);
+    Assert.assertEquals(DataType.BOOLEAN.getName(), result.dataType);
     CompareHelper.assertEqualsVariable(result, booleanVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));

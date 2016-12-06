@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.libraries.remixer.storage.json;
+package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.RemixerItem;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import java.util.Set;
  * callbacks, etc) to just focus on data. This object will be serialized to Json and back to get the
  * full status of Remixer across the entire app.
  */
-class SerializableRemixerContents {
+public class SerializableRemixerContents {
 
   /**
    * Mapping from Remixer Item ID to the item's representation in Serializable format.
@@ -44,7 +44,7 @@ class SerializableRemixerContents {
    */
   private Map<String, StoredVariable> keyToDataMap;
 
-  SerializableRemixerContents() {
+  public SerializableRemixerContents() {
     keyToDataMap = new HashMap<>();
   }
 
@@ -53,7 +53,7 @@ class SerializableRemixerContents {
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
    */
-  void addItem(RemixerItem item) {
+  public void addItem(RemixerItem item) {
     keyToDataMap.put(item.getKey(), StoredVariable.fromRemixerItem(item));
   }
 
@@ -62,24 +62,28 @@ class SerializableRemixerContents {
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
    */
-  void addItem(StoredVariable item) {
+  public void addItem(StoredVariable item) {
     keyToDataMap.put(item.key, item);
   }
 
-  Set<String> keySet() {
+  public Set<String> keySet() {
     return keyToDataMap.keySet();
   }
 
-  StoredVariable getItem(String key) {
+  public StoredVariable getItem(String key) {
     return keyToDataMap.get(key);
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null || getClass() != obj.getClass()) {
+      return false;
+    }
 
-    SerializableRemixerContents serializableRemixerContents = (SerializableRemixerContents) o;
+    SerializableRemixerContents serializableRemixerContents = (SerializableRemixerContents) obj;
 
     return keyToDataMap.equals(serializableRemixerContents.keyToDataMap);
 

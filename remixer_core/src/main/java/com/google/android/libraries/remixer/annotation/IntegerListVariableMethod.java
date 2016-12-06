@@ -72,7 +72,7 @@ public @interface IntegerListVariableMethod {
 
   /**
    * If set to true, the {@link RemixerItem#dataType} will be set to {@link DataType#COLOR} instead
-   * of {@link DataType#}.
+   * of {@link DataType#NUMBER}
    */
   boolean isColor() default false;
 }

@@ -16,21 +16,13 @@
 
 package com.google.android.libraries.remixer.ui.view;
 
-import android.support.annotation.Nullable;
-import android.support.annotation.PluralsRes;
-import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.RangeVariable;
-import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.Trigger;
-import com.google.android.libraries.remixer.ui.R;
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
  * Utility class to determine what widget to inflate for a remixer item.
  */
-public final class RemixerItemWidgetHelper {
+final class RemixerItemWidgetHelper {
 
   private RemixerItemWidgetHelper() {}
 
@@ -47,7 +39,7 @@ public final class RemixerItemWidgetHelper {
    * @throws IllegalArgumentException if the Variable in question has no default layout associated
    *     with it and it is relying on a default.
    */
-  public static int getLayoutId(RemixerItem instance) {
+  static int getLayoutId(RemixerItem instance) {
     int layoutId = instance.getLayoutId();
     if (layoutId != 0) {
       // This instance has a preferred layout.
