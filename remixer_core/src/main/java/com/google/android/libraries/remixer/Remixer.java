@@ -113,6 +113,7 @@ public class Remixer {
     keyMap = new HashMap<>();
     contextMap = new HashMap<>();
     synchronizationMechanism = new LocalValueSyncing();
+    synchronizationMechanism.setRemixerInstance(this);
   }
 
   /**

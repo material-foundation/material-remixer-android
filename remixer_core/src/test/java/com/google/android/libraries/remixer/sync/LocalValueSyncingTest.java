@@ -119,6 +119,19 @@ public class LocalValueSyncingTest {
   }
 
   @Test
+  public void acceptsVariablesWithDifferentTitlesSameKeysAndDifferentContexts() {
+    // Initialize two nearly identical variables with two different parent objects of the same class
+    final Object parent1 = new Object();
+    final Object parent2 = new Object();
+    final Variable<String> variableString =
+        new StringVariableBuilder().setKey("key").setTitle("SomeTitle").setContext(parent1).build();
+    final Variable<String> variableString2 =
+        new StringVariableBuilder().setKey("key").setContext(parent2).build();
+    remixer.addItem(variableString);
+    remixer.addItem(variableString2);
+  }
+
+  @Test
   public void updatesAllExistingVariableValuesWhenAnyOfThemChanges() {
     // Initialize two nearly identical variables with two different parent objects of the same class
     final Object parent1 = new Object();

@@ -159,6 +159,10 @@ public class StoredVariable<T> {
     if (!isCompatibleWith(variable)) {
       return false;
     }
+
+    if (title != null ? !title.equals(variable.title) : variable.title != null) {
+      return false;
+    }
     return selectedValue != null
         ? selectedValue.equals(variable.selectedValue) : variable.selectedValue == null;
   }
@@ -172,23 +176,6 @@ public class StoredVariable<T> {
   public boolean isCompatibleWith(StoredVariable<?> variable) {
 
     if (!key.equals(variable.key)) {
-      return false;
-    }
-    if (title != null ? !title.equals(variable.title) : variable.title != null) {
-      return false;
-    }
-    if (!dataType.equals(variable.dataType)) {
-      return false;
-    }
-    if (possibleValues != null
-        ? !possibleValues.equals(variable.possibleValues) : variable.possibleValues != null) {
-      return false;
-    }
-
-    if (!key.equals(variable.key)) {
-      return false;
-    }
-    if (title != null ? !title.equals(variable.title) : variable.title != null) {
       return false;
     }
     if (!dataType.equals(variable.dataType)) {
