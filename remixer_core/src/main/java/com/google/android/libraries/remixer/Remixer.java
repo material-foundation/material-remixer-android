@@ -35,9 +35,8 @@ import java.util.Map;
  * to cloud backends, etc) and keeping a global state, the Remixer object relies on a {@link
  * SynchronizationMechanism} set at initialization time (usually in your Application.onCreate()).
  *
- * <p>If you do not set a SynchronizationMechanism, remixer will not try to sync values across
- * different contexts (activities) or check for consistency among those. It is recommended you
- * always use one (even if it is just the LocalValueSyncing one) so you catch consistency errors.
+ * <p>If you do not set a SynchronizationMechanism, remixer will use {@link LocalValueSyncing},
+ * which will not persist any data but will synchronize across activities.
  */
 public class Remixer {
 
