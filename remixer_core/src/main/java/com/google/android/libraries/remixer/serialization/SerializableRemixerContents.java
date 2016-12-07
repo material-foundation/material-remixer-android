@@ -55,9 +55,6 @@ public class SerializableRemixerContents {
    * Adds an item to the map, converting it to a StoredVariable.
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
-   *
-   * @throws IncompatibleRemixerItemsWithSameKeyException if the configuration for this item does
-   *     not exactly match that of the item that is already stored.
    */
   public void addItem(RemixerItem item) {
     addItem(StoredVariable.fromRemixerItem(item));
@@ -67,9 +64,6 @@ public class SerializableRemixerContents {
    * Adds an item to the map.
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
-   *
-   * @throws IncompatibleRemixerItemsWithSameKeyException if the configuration for this item does
-   *     not exactly match that of the item that is already stored.
    */
   public void addItem(StoredVariable item) {
     StoredVariable existingItem = keyToDataMap.get(item.key);
@@ -80,7 +74,7 @@ public class SerializableRemixerContents {
           String.format(
               Locale.getDefault(),
               "Two variables with the same key, %s, have incompatible configurations "
-               + "(data types %s, %s)",
+                  + "(data types %s, %s)",
               item.key,
               existingItem.dataType,
               item.dataType));
@@ -130,7 +124,7 @@ public class SerializableRemixerContents {
           String.format(
               Locale.getDefault(),
               "Setting value for key %s using incompatible variable. Existing data type is: %s, "
-              + "new value data type is: %s",
+                  + "new value data type is: %s",
               storedVariable.key,
               existingStoredVariable.dataType,
               storedVariable.dataType));

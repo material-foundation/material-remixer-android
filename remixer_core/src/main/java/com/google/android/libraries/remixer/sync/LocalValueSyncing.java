@@ -44,7 +44,7 @@ public class LocalValueSyncing implements SynchronizationMechanism {
   public void onAddingRemixerItem(RemixerItem item) {
     serializableRemixerContents.addItem(item);
     StoredVariable storedVariable = serializableRemixerContents.getItem(item.getKey());
-    if (!storedVariable.getDataType().equals(DataType.TRIGGER)) {
+    if (!storedVariable.getDataType().equals(DataType.TRIGGER.getName())) {
       // Check the value for updates.
       Variable variable = (Variable) item;
       variable.setValueWithoutNotifyingOthers(storedVariable.getSelectedValue());

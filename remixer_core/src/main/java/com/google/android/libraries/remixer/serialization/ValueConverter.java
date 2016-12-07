@@ -41,6 +41,13 @@ public abstract class ValueConverter<T> {
   }
 
   /**
+   * Gets the data type name for this converter.
+   */
+  public String getDataType() {
+    return dataType;
+  }
+
+  /**
    * Returns an object of type T that holds the value in the current Json Element.
    */
   public abstract T parseValue(JsonElement element);

@@ -7,6 +7,7 @@ import com.google.android.libraries.remixer.serialization.converters.IntegerValu
 import com.google.android.libraries.remixer.serialization.converters.StringValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.TriggerValueConverter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -23,7 +24,7 @@ public class DataType<T> {
   /**
    * The class of the values contained by this variable.
    */
-  private final Class valueClass;
+  private final Class<T> valueClass;
 
   /**
    * The value converter that aids in the serialization process.
@@ -49,6 +50,12 @@ public class DataType<T> {
     this.name = name;
     this.valueClass = valueClass;
     this.converter = converter;
+    if (!name.equals(converter.getDataType())) {
+      throw new AssertionError(String.format(
+          Locale.getDefault(),
+          "The data type %s has a converter whose data type doesn't match, %s",
+          name, converter.getDataType()));
+    }
   }
 
   @Override
@@ -86,7 +93,7 @@ public class DataType<T> {
     return name;
   }
 
-  public Class getValueClass() {
+  public Class<T> getValueClass() {
     return valueClass;
   }
 

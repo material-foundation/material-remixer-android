@@ -18,12 +18,14 @@ package com.google.android.libraries.remixer.sync;
 
 import com.google.android.libraries.remixer.BooleanVariableBuilder;
 import com.google.android.libraries.remixer.IncompatibleRemixerItemsWithSameKeyException;
+import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -33,6 +35,11 @@ public class LocalValueSyncingTest {
 
   private Remixer remixer;
   private LocalValueSyncing localValueSyncing;
+
+  @BeforeClass
+  public static void oneTimeSetUp() {
+    InitializationHelper.init();
+  }
 
   @Before
   public void setUp() {
