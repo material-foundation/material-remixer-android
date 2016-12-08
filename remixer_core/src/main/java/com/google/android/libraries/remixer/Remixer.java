@@ -120,9 +120,7 @@ public class Remixer {
    * external sources.
    *
    * <p>Remixer relies on a SynchronizationMechanism instance to be the source of truth of the
-   * values and configuration, so the user should always set a SynchronizationMechanism.
-   *
-   * @throws IllegalStateException if a SynchronizationMechanism has been already set.
+   * values and configuration.
    */
   public void setSynchronizationMechanism(SynchronizationMechanism synchronizationMechanism) {
     if (this.synchronizationMechanism != null) {
