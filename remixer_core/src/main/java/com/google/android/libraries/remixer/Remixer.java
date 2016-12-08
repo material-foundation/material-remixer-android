@@ -16,6 +16,8 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.sync.LocalValueSyncing;
+import com.google.android.libraries.remixer.sync.SynchronizationMechanism;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -24,11 +26,26 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Contains a list of {@link Variable}es.
+ * Contains a list of {@link Variable}s or {@link Trigger}s.
+ *
+ * <p>The Remixer object is the heart and soul of Remixer as a framework, it coordinates syncing and
+ * value changes.
+ *
+ * <p>For value and data syncing/persistence (both locally across activities, and persisting/saving
+ * to cloud backends, etc) and keeping a global state, the Remixer object relies on a {@link
+ * SynchronizationMechanism} set at initialization time (usually in your Application.onCreate()).
+ *
+ * <p>If you do not set a SynchronizationMechanism, remixer will use {@link LocalValueSyncing},
+ * which will not persist any data but will synchronize across activities.
  */
 public class Remixer {
 
   private static Remixer instance;
+
+  /**
+   * Datatypes keyed by their serializable name.
+   */
+  private static Map<String, DataType> registeredDataTypes = new HashMap<>();
 
   /**
    * This is a map of Remixer Item keys to a list of remixer items that have that key.
@@ -44,10 +61,11 @@ public class Remixer {
   private Map<Object, List<RemixerItem>> contextMap;
 
   /**
-   * Datatypes keyed by their serializable name.
+   * The synchronization mechanism used to keep values in sync across different instances of the
+   * variables and save/sync to other devices.
    */
-  private Map<String, DataType> registeredDataTypes;
-  
+  private SynchronizationMechanism synchronizationMechanism;
+
   /**
    * Gets the singleton for Remixer.
    *
@@ -61,10 +79,57 @@ public class Remixer {
     return instance;
   }
 
-  Remixer() {
+  /**
+   * Register a new data type that can be used with Remixer.
+   */
+  public static void registerDataType(DataType dataType) {
+    if (registeredDataTypes.containsKey(dataType.getName())) {
+      throw new IllegalStateException("Adding a data type that has already been added, name: "
+          + dataType.getName() );
+    }
+    registeredDataTypes.put(dataType.getName(), dataType);
+  }
+
+  public static DataType getDataType(String name) {
+    return registeredDataTypes.get(name);
+  }
+
+  public static Collection<DataType> getRegisteredDataType() {
+    return registeredDataTypes.values();
+  }
+
+  /**
+   * Visible only for testing. Do not use.
+   */
+  public static void clearRegisteredDataTypes() {
+    registeredDataTypes.clear();
+  }
+
+  /**
+   * Visible only for testing. Users should only use {@link #getInstance()}.
+   */
+  public Remixer() {
     keyMap = new HashMap<>();
     contextMap = new HashMap<>();
-    registeredDataTypes = new HashMap<>();
+    synchronizationMechanism = new LocalValueSyncing();
+    synchronizationMechanism.setRemixerInstance(this);
+  }
+
+  /**
+   * Set the synchronization mechanism to keep variables in sync locally and (possibly) with
+   * external sources.
+   *
+   * <p>Remixer relies on a SynchronizationMechanism instance to be the source of truth of the
+   * values and configuration.
+   */
+  public void setSynchronizationMechanism(SynchronizationMechanism synchronizationMechanism) {
+    if (this.synchronizationMechanism != null) {
+      this.synchronizationMechanism.setRemixerInstance(null);
+    }
+    this.synchronizationMechanism = synchronizationMechanism;
+    if (synchronizationMechanism != null) {
+      synchronizationMechanism.setRemixerInstance(this);
+    }
   }
 
   /**
@@ -85,56 +150,34 @@ public class Remixer {
   @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
     List<RemixerItem> listForKey = getOrCreateItemList(remixerItem.getKey(), keyMap);
-    List<RemixerItem> itemsToRemove = new ArrayList<>();
     for (RemixerItem existingItem : listForKey) {
-      existingItem.assertIsCompatibleWith(remixerItem);
-      if (!existingItem.hasContext()) {
-        // The context activity has been reclaimed by the OS already. It has no callback and it's
-        // still around for keeping the value in sync, saving and checking consistency across types.
-        // Since we're adding a new item that has been asserted to be compatible, it is not
-        // necessary to keep this instance around.
-        itemsToRemove.add(existingItem);
-      } else {
-        // The context activity is still alive and kicking.
-        if (existingItem.matchesContext(remixerItem.getContext())) {
-          // An object with the same key for the same context, this shouldn't happen so throw
-          // an exception.
-          throw new DuplicateKeyException(
-              String.format(
-                  Locale.getDefault(),
-                  "Duplicate key %s being used in class %s",
-                  remixerItem.getKey(),
-                  remixerItem.getContext().getClass().getCanonicalName()
-              ));
-        }
+      if (remixerItem.getContext() != null
+          && remixerItem.getContext() == existingItem.getContext()) {
+        // An object with the same key for the same parent object, this shouldn't happen so throw
+        // an exception.
+        throw new DuplicateKeyException(
+            String.format(
+                Locale.getDefault(),
+                "Duplicate key %s being used in class %s",
+                remixerItem.getKey(),
+                existingItem.getContext().getClass().getCanonicalName()
+            ));
       }
     }
-    if (remixerItem instanceof Variable && listForKey.size() > 0) {
-      // Make sure that variables use their current value if it has been modified in another
-      // context.
-      // If any modification has been made in any other context to the value of variables with the
-      // same key, otherVariable will have the newest value.
-      Variable otherVariable = (Variable) listForKey.get(0);
-      // At this point newVariable will have the default value only.
-      Variable newVariable = (Variable) remixerItem;
-      // Make newVariable have the current value found in variables that have already been added to
-      // the Remixer.
-      newVariable.setValueWithoutNotifyingOthers(otherVariable.getSelectedValue());
+    if (synchronizationMechanism != null) {
+      // Notify the synchronization mechanism, which will take care of keeping the values in sync
+      // and checking compatibility.
+      synchronizationMechanism.onAddingRemixerItem(remixerItem);
     }
-    for (RemixerItem remove : itemsToRemove) {
-      listForKey.remove(remove);
-      // no need to remove from contextMap, contextMap has already removed the whole list of items
-      // with that context that was reclaimed, see cleanUpCallbacks().
-    }
-    listForKey.add(remixerItem);
     remixerItem.setRemixer(this);
+    listForKey.add(remixerItem);
     getOrCreateItemList(remixerItem.getContext(), contextMap).add(remixerItem);
   }
 
   /**
    * Gets the list of items that have the given key.
    */
-  List<RemixerItem> getItemsWithKey(String key) {
+  public List<RemixerItem> getItemsWithKey(String key) {
     return keyMap.get(key);
   }
 
@@ -145,8 +188,6 @@ public class Remixer {
   public List<RemixerItem> getItemsWithContext(Object context) {
     return contextMap.get(context);
   }
-
-
 
   /**
    * Gets a list of RemixerItems for the given {@code key} from the {@code map} passed in, if such a
@@ -165,33 +206,31 @@ public class Remixer {
   }
 
   /**
-   * Register a new data type that can be used with Remixer.
+   * Notifies the synchronization mechanism that this variable's value has changed.
    */
-  public void registerDataType(DataType dataType) {
-    if (registeredDataTypes.containsKey(dataType.getName())) {
-      throw new IllegalStateException("Adding a data type that has already been added, name: "
-          + dataType.getName() );
-    }
-    registeredDataTypes.put(dataType.getName(), dataType);
-  }
-
-  public DataType getDataType(String name) {
-    return registeredDataTypes.get(name);
-  }
-
-  public Collection<DataType> getRegisteredDataType() {
-    return registeredDataTypes.values();
+  void onValueChanged(Variable variable) {
+    synchronizationMechanism.onValueChanged(variable);
   }
 
   /**
-   * Removes callbacks for all remixes whose context is {@code activity}. This makes sure {@code
-   * activity} doesn't leak through its callbacks.
+   * Notifies the synchronization mechanism that a trigger was just triggered.
    */
-  public void cleanUpCallbacks(Object activity) {
+  void onTrigger(Trigger trigger) {
+    synchronizationMechanism.onTrigger(trigger);
+  }
+
+  /**
+   * Removes remixer items whose context is {@code activity}. This makes sure {@code activity}
+   * doesn't leak through their callbacks.
+   */
+  public void onActivityDestroyed(Object activity) {
     if (contextMap.containsKey(activity)) {
       for (RemixerItem remixerItem : contextMap.get(activity)) {
-        remixerItem.clearCallback();
-        remixerItem.clearContext();
+        List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
+        listForKey.remove(remixerItem);
+        if (listForKey.size() == 0) {
+          keyMap.remove(remixerItem.getKey());
+        }
       }
       contextMap.remove(activity);
     }

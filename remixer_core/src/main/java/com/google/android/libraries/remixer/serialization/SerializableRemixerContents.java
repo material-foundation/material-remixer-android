@@ -16,8 +16,11 @@
 
 package com.google.android.libraries.remixer.serialization;
 
+import com.google.android.libraries.remixer.IncompatibleRemixerItemsWithSameKeyException;
 import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,7 +57,7 @@ public class SerializableRemixerContents {
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
    */
   public void addItem(RemixerItem item) {
-    keyToDataMap.put(item.getKey(), StoredVariable.fromRemixerItem(item));
+    addItem(StoredVariable.fromRemixerItem(item));
   }
 
   /**
@@ -63,7 +66,21 @@ public class SerializableRemixerContents {
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
    */
   public void addItem(StoredVariable item) {
-    keyToDataMap.put(item.key, item);
+    StoredVariable existingItem = keyToDataMap.get(item.key);
+    if (existingItem == null) {
+      keyToDataMap.put(item.key, item);
+    } else if (!existingItem.isCompatibleWith(item)) {
+      throw new IncompatibleRemixerItemsWithSameKeyException(
+          String.format(
+              Locale.getDefault(),
+              "Two variables with the same key, %s, have incompatible configurations "
+                  + "(data types %s, %s)",
+              item.key,
+              existingItem.dataType,
+              item.dataType));
+    }
+    // If it is already there and compatible we need to do nothing here. The syncing mechanism needs
+    // to sync the value across different instances though.
   }
 
   public Set<String> keySet() {
@@ -92,5 +109,26 @@ public class SerializableRemixerContents {
   @Override
   public int hashCode() {
     return keyToDataMap.hashCode();
+  }
+
+  /**
+   * Sets the value for the StoredVariable with key {@code variable.getKey()}. Must be called only
+   * after calling {@link #addItem(RemixerItem)} for a variable with this key.
+   */
+  @SuppressWarnings("unchecked")
+  public void setValue(Variable variable) {
+    StoredVariable storedVariable = StoredVariable.fromRemixerItem(variable);
+    StoredVariable existingStoredVariable = keyToDataMap.get(storedVariable.key);
+    if (!existingStoredVariable.isCompatibleWith(storedVariable)) {
+      throw new IncompatibleRemixerItemsWithSameKeyException(
+          String.format(
+              Locale.getDefault(),
+              "Setting value for key %s using incompatible variable. Existing data type is: %s, "
+                  + "new value data type is: %s",
+              storedVariable.key,
+              existingStoredVariable.dataType,
+              storedVariable.dataType));
+    }
+    existingStoredVariable.selectedValue = storedVariable.selectedValue;
   }
 }

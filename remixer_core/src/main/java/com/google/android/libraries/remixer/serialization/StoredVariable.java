@@ -156,18 +156,29 @@ public class StoredVariable<T> {
     }
 
     StoredVariable<?> variable = (StoredVariable<?>) obj;
+    if (!isCompatibleWith(variable)) {
+      return false;
+    }
+
+    if (title != null ? !title.equals(variable.title) : variable.title != null) {
+      return false;
+    }
+    return selectedValue != null
+        ? selectedValue.equals(variable.selectedValue) : variable.selectedValue == null;
+  }
+
+  /**
+   * Checks whether the configuration of this stored variable matches the configuration of the
+   * argument. The configuration explicitly excludes the value for comparison, the value may be
+   * synced later if the configurations are compatible
+   */
+  @SuppressWarnings("PMD.CollapsibleIfStatements")
+  public boolean isCompatibleWith(StoredVariable<?> variable) {
 
     if (!key.equals(variable.key)) {
       return false;
     }
-    if (title != null ? !title.equals(variable.title) : variable.title != null) {
-      return false;
-    }
     if (!dataType.equals(variable.dataType)) {
-      return false;
-    }
-    if (selectedValue != null
-        ? !selectedValue.equals(variable.selectedValue) : variable.selectedValue != null) {
       return false;
     }
     if (possibleValues != null
@@ -201,7 +212,7 @@ public class StoredVariable<T> {
    */
   static StoredVariable fromRemixerItem(RemixerItem item) {
     StoredVariable storedVariable = null;
-    for (DataType type : Remixer.getInstance().getRegisteredDataType()) {
+    for (DataType type : Remixer.getRegisteredDataType()) {
       try {
         storedVariable = type.getConverter().fromRemixerItem(item);
         break;

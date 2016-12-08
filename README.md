@@ -69,6 +69,7 @@ Notice the dependency on `remixer_annotation` is a `provided` clause instead of 
 If you have not subclassed the application class it is recommended you do it since this is a one-time global initialization.
 
 In your application class you need to call the Remixer initialization method.
+
 ```java
 class MyApplication extends android.app.Application {
   @Override

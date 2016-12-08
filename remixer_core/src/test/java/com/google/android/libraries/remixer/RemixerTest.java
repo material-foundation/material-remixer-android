@@ -19,6 +19,7 @@ package com.google.android.libraries.remixer;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,6 +30,11 @@ public class RemixerTest {
   private Remixer remixer;
   private Variable variable;
   private Variable variable2;
+
+  @BeforeClass
+  public static void oneTimeSetUp() {
+    InitializationHelper.init();
+  }
 
   /**
    * Sets up the tests.
@@ -48,66 +54,11 @@ public class RemixerTest {
     remixer.addItem(variable);
   }
 
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesWithDifferentTypes() {
-    final Object context1 = new Object();
-    final Object context2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).build();
-    final Variable<Boolean> variableBoolean =
-        new BooleanVariableBuilder().setKey("key").setContext(context2).build();
-
-    remixer.addItem(variableString);
-    remixer.addItem(variableBoolean);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesOneVariableOneTrigger() {
-    final Object context1 = new Object();
-    final Object context2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).build();
-    final Trigger trigger = new Trigger.Builder().setKey("key").setContext(context2).build();
-
-    remixer.addItem(variableString);
-    remixer.addItem(trigger);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesOneVariableOneTriggerAftercontextReclaimed() {
-    final Object context1 = new Object();
-    final Object context2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).build();
-    final Trigger trigger = new Trigger.Builder().setKey("key").setContext(context2).build();
-
-    remixer.addItem(variableString);
-    // Simulate context reclaimed.
-    variableString.clearContext();
-    variableString.clearCallback();
-    remixer.addItem(trigger);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void remixerRejectsDuplicatesWithDifferentTypesAftercontextReclaimed() {
-    final Object context1 = new Object();
-    final Object context2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).build();
-    final Variable<Boolean> variableBoolean =
-        new BooleanVariableBuilder().setKey("key").setContext(context2).build();
-
-    remixer.addItem(variableString);
-    // Simulate context reclaimed.
-    variableString.clearContext();
-    variableString.clearCallback();
-    remixer.addItem(variableBoolean);
-  }
-
   /**
    * Replacement should only happen if the first context has been reclaimed and the remixer
    * item being added has a context of the same class.
    */
+  @Test
   public void remixerReplacesVariableCorrectly() {
     // Initialize two nearly identical variables with two different contexts of the same class
     final Object context1 = new Object();
@@ -119,48 +70,16 @@ public class RemixerTest {
 
     // Add the first.
     remixer.addItem(variableString);
-    // Simulate the first context is reclaimed.
-    remixer.cleanUpCallbacks(context1);
+    // Simulate the first parent object is reclaimed.
+    remixer.onActivityDestroyed(context1);
     // Add the second, since the first object was "reclaimed" and they are compatible, the first
     // should be removed, and the second should be kept.
     remixer.addItem(variableString2);
     List<RemixerItem> list1 = remixer.getItemsWithContext(context1);
     List<RemixerItem> list2 = remixer.getItemsWithContext(context2);
-    Assert.assertEquals(0, list1.size());
+    Assert.assertNull(list1);
     Assert.assertEquals(1, list2.size());
-    Assert.assertEquals(variable2, list2.get(0));
-  }
-
-  @Test
-  public void remixerUpdatesVariableValueWhenJustAdded() {
-    // Initialize two nearly identical variables with two different contexts of the same class
-    final Object context1 = new Object();
-    final Object context2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).build();
-    final Variable<String> variableString2 =
-        new StringVariableBuilder().setKey("key").setContext(context2).build();
-    remixer.addItem(variableString);
-    variableString.setValue("May the force be with you");
-    Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
-    remixer.addItem(variableString2);
-    Assert.assertEquals(variableString.getSelectedValue(), variableString2.getSelectedValue());
-  }
-
-  @Test
-  public void remixerUpdatesAllExistingVariableValuesWhenAnyOfThemChanges() {
-    // Initialize two nearly identical variables with two different contexts of the same class
-    final Object context1 = new Object();
-    final Object context2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(context1).build();
-    final Variable<String> variableString2 =
-        new StringVariableBuilder().setKey("key").setContext(context2).build();
-    remixer.addItem(variableString);
-    remixer.addItem(variableString2);
-    variableString.setValue("May the force be with you");
-    Assert.assertEquals("May the force be with you", variableString.getSelectedValue());
-    Assert.assertEquals(variableString.getSelectedValue(), variableString2.getSelectedValue());
+    Assert.assertEquals(variableString2, list2.get(0));
   }
 
   @Test

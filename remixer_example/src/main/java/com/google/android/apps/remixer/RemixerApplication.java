@@ -18,19 +18,22 @@ package com.google.android.apps.remixer;
 
 import android.app.Application;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.ui.RemixerCallbacks;
+import com.google.android.libraries.remixer.sync.LocalValueSyncing;
 import com.google.android.libraries.remixer.ui.RemixerInitialization;
 
 /**
- * Remixer requires {@link RemixerInitialization#initRemixer(Remixer, Application)} to be called
+ * Remixer requires {@link RemixerInitialization#initRemixer(Application)} to be called
  * from the Application class' {@link Application#onCreate()}. This sets up the default data types
- * and corresponding widgets and makes sure leaks are prevented by using RemixerCallbacks.
+ * and corresponding widgets and makes sure leaks are prevented by using
+ * RemixerActivityLifecycleCallbacks.
+ *
+ * <p>This is also where you can set a synchronization mechanism other than the default.
  */
 public class RemixerApplication extends Application {
 
   @Override
   public void onCreate() {
     super.onCreate();
-    RemixerInitialization.initRemixer(Remixer.getInstance(), this);
+    RemixerInitialization.initRemixer(this);
   }
 }

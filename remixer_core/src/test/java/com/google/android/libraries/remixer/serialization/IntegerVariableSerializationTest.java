@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
@@ -41,12 +42,11 @@ public class IntegerVariableSerializationTest {
 
   @BeforeClass
   public static void oneTimeSetUp() {
-    InitializationHelper.init(Remixer.getInstance());
+    InitializationHelper.init();
   }
 
   @Before
   public void setUp() {
-    InitializationHelper.init(Remixer.getInstance());
     integerVariable  = new Variable.Builder<Integer>()
         .setDefaultValue(0)
         .setKey(KEY)

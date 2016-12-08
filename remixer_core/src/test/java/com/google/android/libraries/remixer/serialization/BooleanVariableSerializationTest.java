@@ -18,7 +18,7 @@ package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.BooleanVariableBuilder;
 import com.google.android.libraries.remixer.DataType;
-import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.Variable;
 import com.google.gson.Gson;
 import org.junit.Assert;
@@ -38,7 +38,7 @@ public class BooleanVariableSerializationTest {
 
   @BeforeClass
   public static void oneTimeSetUp() {
-    InitializationHelper.init(Remixer.getInstance());
+    InitializationHelper.init();
   }
 
   @Before

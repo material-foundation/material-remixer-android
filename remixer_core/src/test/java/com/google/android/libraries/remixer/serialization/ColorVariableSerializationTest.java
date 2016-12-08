@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.gson.Gson;
@@ -39,7 +40,7 @@ public class ColorVariableSerializationTest {
 
   @BeforeClass
   public static void oneTimeSetUp() {
-    InitializationHelper.init(Remixer.getInstance());
+    InitializationHelper.init();
   }
 
   @Before

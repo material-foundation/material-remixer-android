@@ -18,9 +18,9 @@ package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.BooleanVariableBuilder;
 import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
-import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Variable;
 import com.google.gson.Gson;
@@ -49,7 +49,7 @@ public class SerializableRemixerContentsSerializationTest {
 
   @BeforeClass
   public static void oneTimeSetUp() {
-    InitializationHelper.init(Remixer.getInstance());
+    InitializationHelper.init();
   }
 
   @Before
@@ -118,12 +118,12 @@ public class SerializableRemixerContentsSerializationTest {
   @Test
   public void modifiedRemixerContentsSerializesAndDeserializesTest() {
     booleanVariable.setValue(true);
-    serializableRemixerContents.addItem(booleanVariable);
+    serializableRemixerContents.setValue(booleanVariable);
     Assert.assertEquals(
         booleanVariable.getSelectedValue(),
         serializableRemixerContents.getItem(booleanVariable.getKey()).selectedValue);
     stringVariable.setValue("SOMENEWVALUE");
-    serializableRemixerContents.addItem(stringVariable);
+    serializableRemixerContents.setValue(stringVariable);
     Assert.assertEquals(
         stringVariable.getSelectedValue(),
         serializableRemixerContents.getItem(stringVariable.getKey()).selectedValue);

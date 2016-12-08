@@ -62,30 +62,13 @@ public abstract class RemixerItem {
   protected RemixerItem(String title, String key, Object context, int layoutId, DataType dataType) {
     this.title = title;
     this.key = key;
-    this.context = new WeakReference<Object>(context);
+    this.context = new WeakReference<>(context);
     this.layoutId = layoutId;
     this.dataType = dataType;
   }
 
   public DataType getDataType() {
     return dataType;
-  }
-
-  /**
-   * Checks whether the context is the same as the parameter.
-   */
-  public boolean matchesContext(Object object) {
-    if (object == null) {
-      return false;
-    }
-    return context.get() == object;
-  }
-
-  /**
-   * Checks whether the context has been reclaimed.
-   */
-  public boolean hasContext() {
-    return context.get() != null;
   }
 
   public String getTitle() {
@@ -104,40 +87,10 @@ public abstract class RemixerItem {
   }
 
   /**
-   * Removes the callback for this remixer item, it is used to avoid leaks through callbacks once
-   * activities are destroyed.
-   */
-  abstract void clearCallback();
-
-  /**
-   * Checks whether {@code item} is compatible with this RemixerItem.
-   * @throws IncompatibleRemixerItemsWithSameKeyException if {@code item} has the same key as this
-   *     object, and they are of different types or otherwise incompatible.
-   */
-  final void assertIsCompatibleWith(RemixerItem item) {
-    if (item.getKey().equals(key) && !dataType.equals(item.dataType)) {
-      throw new IncompatibleRemixerItemsWithSameKeyException(String.format(
-          Locale.getDefault(),
-          "Trying to add two remixer items with key %s and incompatible types %s and %s",
-          key, dataType.getName(), item.getDataType().getName()));
-
-    }
-  }
-
-  /**
    * Returns the context.
    */
   Object getContext() {
     return context.get();
-  }
-
-  /**
-   * Clears the context reference to simulate reclaiming the context in tests.
-   *
-   * <p><b>Visible only for testing.</b>
-   */
-  void clearContext() {
-    context.clear();
   }
 
   /**
