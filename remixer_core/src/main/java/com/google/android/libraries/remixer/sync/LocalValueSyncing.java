@@ -31,7 +31,8 @@ import java.util.List;
  */
 public class LocalValueSyncing implements SynchronizationMechanism {
 
-  private SerializableRemixerContents serializableRemixerContents = new SerializableRemixerContents();
+  protected SerializableRemixerContents serializableRemixerContents =
+      new SerializableRemixerContents();
   private Remixer remixer;
 
   @Override
