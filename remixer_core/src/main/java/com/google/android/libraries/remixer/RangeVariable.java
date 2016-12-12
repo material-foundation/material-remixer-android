@@ -27,14 +27,14 @@ import java.util.Locale;
  */
 public class RangeVariable extends Variable<Integer> {
 
-  protected static final String INVALID_RANGE_ERROR_FORMAT =
+  private static final String INVALID_RANGE_ERROR_FORMAT =
       "Invalid range for Variable %s min: %d, max: %d";
-  protected static final String NEGATIVE_STEPPING_ERROR_FORMAT =
+  private static final String NEGATIVE_STEPPING_ERROR_FORMAT =
       "Stepping must be >= 1, Variable %s has increment %d";
-  protected static final String STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT =
+  private static final String STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT =
       "Variable %s: incorrect increment, can't get to %s %d from minValue %d using"
           + " increment %d";
-  protected static final String NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT =
+  private static final String NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT =
       "%d is out of bounds for Variable %s: min: %d, max: %d";
   private final int minValue;
   private final int maxValue;
@@ -60,7 +60,7 @@ public class RangeVariable extends Variable<Integer> {
    *     (maxValue - minValue) % increment != 0} which means the current increment setting can't
    *     possibly get from minValue to maxValue.
    */
-  public RangeVariable(
+  private RangeVariable(
       String title,
       String key,
       int defaultValue,
@@ -70,7 +70,7 @@ public class RangeVariable extends Variable<Integer> {
       Object context,
       Callback<Integer> callback,
       int layoutId) {
-    super(title, key, defaultValue, context, callback, layoutId);
+    super(title, key, defaultValue, context, callback, layoutId, DataType.NUMBER);
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.increment = increment;
@@ -155,37 +155,19 @@ public class RangeVariable extends Variable<Integer> {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key, minValue and maxValue are mandatory. If any of these are missing or
-   * the settings are incorrect according to the logic of {@link RangeVariable} an
-   * {@link IllegalArgumentException} will be thrown.
+   * <p>On the other hand: key, minValue, maxValue, dataType, and context are mandatory. If any of
+   * these are missing or the settings are incorrect according to the logic of {@link RangeVariable}
+   * an {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder {
+  public static class Builder extends RemixerItem.Builder<RangeVariable, Callback<Integer>> {
 
-    private String key;
-    private String title;
     private Integer defaultValue;
     private Integer minValue;
     private Integer maxValue;
     private int increment = 1;
-    private Object context;
-    private Callback<Integer> callback;
-    private int layoutId = 0;
 
-    public Builder() {}
-
-    public Builder setKey(String key) {
-      this.key = key;
-      return this;
-    }
-
-    public Builder setContext(Object context) {
-      this.context = context;
-      return this;
-    }
-
-    public Builder setTitle(String title) {
-      this.title = title;
-      return this;
+    public Builder() {
+      setDataType(DataType.NUMBER);
     }
 
     public Builder setMinValue(int minValue) {
@@ -208,38 +190,20 @@ public class RangeVariable extends Variable<Integer> {
       return this;
     }
 
-    public Builder setCallback(Callback<Integer> callback) {
-      this.callback = callback;
-      return this;
-    }
-
-    public Builder setLayoutId(int layoutId) {
-      this.layoutId = layoutId;
-      return this;
-    }
-
     /**
      * Returns a new RangeVariable created with the configuration stored in this builder instance.
      *
      * @throws IllegalArgumentException If key, minValue or maxValue are missing, or if these
      *     settings are incorrect for {@link RangeVariable}
      */
-    public RangeVariable buildAndInit() {
+    public RangeVariable build() {
       if (minValue == null || maxValue == null) {
         throw new IllegalArgumentException("minValue and maxValue must not be null");
       }
       if (defaultValue == null) {
         defaultValue = minValue;
       }
-      if (key == null) {
-        throw new IllegalArgumentException("key cannot be unset for RangeVariable");
-      }
-      if (context == null) {
-        throw new IllegalArgumentException("context cannot be unset for RangeVariable");
-      }
-      if (title == null) {
-        title = key;
-      }
+      checkBaseFields();
       RangeVariable variable = new RangeVariable(
           title, key, defaultValue, minValue, maxValue, increment, context, callback,
           layoutId);

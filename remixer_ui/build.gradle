@@ -16,6 +16,7 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.vanniktech.android.junit.jacoco'
 
 group = 'com.github.material-foundation'
 
@@ -23,6 +24,11 @@ android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
 
+  buildTypes {
+    debug {
+      testCoverageEnabled true
+    }
+  }
   defaultConfig {
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
@@ -40,6 +46,8 @@ android {
     // Disable gradle dependency check for new versions.
     // Many of these have been chosen to work with Google Tools.
     disable 'GradleDependency'
+    textReport true
+    textOutput 'stdout'
   }
 }
 

@@ -16,9 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import java.util.List;
-import java.util.Locale;
-
 /**
  * Base class for all Remixes that does not do any value checking. A variable takes care of calling
  * a callback when the value is changed. It does not support any sort of null values.
@@ -42,18 +39,20 @@ public class Variable<T> extends RemixerItem {
    * @param context the object which created this variable, should be an activity.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
    * @param layoutId A layout to inflate when displaying this Variable in the UI.
+   * @param dataType The data type this variable contains.
    */
   // TODO(miguely): Add default value semantics to the defaultValue, currently it behaves mostly
   // as an initial value. It should be used in cases when the value is set to an invalid value from
   // SharedPreferences or Firebase.
-  public Variable(
+  protected Variable(
       String title,
       String key,
       T defaultValue,
       Object context,
       Callback<T> callback,
-      int layoutId) {
-    super(title, key, context, layoutId);
+      int layoutId,
+      DataType dataType) {
+    super(title, key, context, layoutId, dataType);
     // TODO(miguely): pull this out of SharedPreferences.
     this.selectedValue = defaultValue;
     this.callback = callback;
@@ -80,10 +79,6 @@ public class Variable<T> extends RemixerItem {
     return selectedValue;
   }
 
-  public Class getVariableType() {
-    return selectedValue.getClass();
-  }
-
   /**
    * Checks that the value passed in is a valid value, otherwise throws {@link
    * IllegalArgumentException}.
@@ -108,13 +103,13 @@ public class Variable<T> extends RemixerItem {
   }
 
   /**
-   * Sets the selected value to a new value without notifying other variables of this change. Only
-   * for internal use
+   * Sets the selected value to a new value without notifying other variables of this change.
+   * <b>Only for internal use!!</b>
    *
    * @param newValue Value to set. Cannot be null.
    * @throws IllegalArgumentException {@code newValue} is an invalid value for this Variable.
    */
-  void setValueWithoutNotifyingOthers(T newValue) {
+  public void setValueWithoutNotifyingOthers(T newValue) {
     checkValue(newValue);
     selectedValue = newValue;
     runCallback();
@@ -129,48 +124,12 @@ public class Variable<T> extends RemixerItem {
       // This instance hasn't been added to a Remixer, probably still being set up, abort.
       return;
     }
-    List<RemixerItem> itemList = remixer.getItemsWithKey(getKey());
-    for (RemixerItem item : itemList) {
-      if (item != this) {
-        ((Variable<T>) item).setValueWithoutNotifyingOthers(getSelectedValue());
-      }
-    }
+    remixer.onValueChanged(this);
   }
 
   private void runCallback() {
     if (callback != null) {
       callback.onValueSet(this);
-    }
-  }
-
-  @Override
-  void clearCallback() {
-    callback = null;
-  }
-
-  @Override
-  @SuppressWarnings("unchecked")
-  void assertIsCompatibleWith(RemixerItem item) {
-    if (item.getKey().equals(getKey())) {
-      if (item.getClass() != getClass()) {
-        throw new IncompatibleRemixerItemsWithSameKeyException(
-            String.format(
-                Locale.getDefault(),
-                "%s is incompatible with %s with same key %s",
-                getClass().getCanonicalName(),
-                item.getClass().getCanonicalName(),
-                getKey()));
-      }
-      Variable<T> variable = (Variable<T>) item;
-      if (variable.getVariableType() != getVariableType()) {
-        throw new IncompatibleRemixerItemsWithSameKeyException(
-            String.format(
-                Locale.getDefault(),
-                "Two variables with the same key, %s, have different types %s and %s",
-                getKey(),
-                getVariableType().getCanonicalName(),
-                variable.getVariableType().getCanonicalName()));
-      }
     }
   }
 
@@ -183,67 +142,29 @@ public class Variable<T> extends RemixerItem {
    * <li>If the title is not set, the key will be used as title
    * </ul>
    *
-   * <p>On the other hand: key is mandatory. If it's missing, an {@link IllegalArgumentException}
-   * will be thrown.
+   * <p>On the other hand: key, dataType, and context are mandatory. If they're missing, an
+   * {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder<T> {
+  public static class Builder<T> extends RemixerItem.Builder<Variable<T>, Callback<T>> {
 
-    private String key;
-    private String title;
     private T defaultValue;
-    private Object context;
-    private Callback<T> callback;
-    private int layoutId = 0;
 
     public Builder() {}
-
-    public Builder<T> setKey(String key) {
-      this.key = key;
-      return this;
-    }
-
-    public Builder<T> setTitle(String title) {
-      this.title = title;
-      return this;
-    }
 
     public Builder<T> setDefaultValue(T defaultValue) {
       this.defaultValue = defaultValue;
       return this;
     }
 
-    public Builder<T> setContext(Object context) {
-      this.context = context;
-      return this;
-    }
-
-    public Builder<T> setCallback(Callback<T> callback) {
-      this.callback = callback;
-      return this;
-    }
-
-    public Builder<T> setLayoutId(int layoutId) {
-      this.layoutId = layoutId;
-      return this;
-    }
-
     /**
      * Returns a new Variable created with the configuration stored in this builder instance.
      *
-     * @throws IllegalArgumentException If key is missing
+     * @throws IllegalArgumentException If key or context is missing
      */
-    public Variable<T> buildAndInit() {
-      if (key == null) {
-        throw new IllegalArgumentException("key cannot be unset for Variable");
-      }
-      if (context == null) {
-        throw new IllegalArgumentException("context cannot be unset for Variable");
-      }
-      if (title == null) {
-        title = key;
-      }
+    public Variable<T> build() {
+      checkBaseFields();
       Variable<T> variable =
-          new Variable<T>(title, key, defaultValue, context, callback, layoutId);
+          new Variable<T>(title, key, defaultValue, context, callback, layoutId, dataType);
       variable.init();
       return variable;
     }

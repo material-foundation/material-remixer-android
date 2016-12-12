@@ -19,9 +19,16 @@ import org.gradle.internal.jvm.Jvm
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+jacocoTestReport {
+  reports {
+    xml.enabled true
+  }
+}
 
 repositories {
   mavenCentral()

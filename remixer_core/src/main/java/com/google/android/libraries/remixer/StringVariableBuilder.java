@@ -23,8 +23,8 @@ package com.google.android.libraries.remixer;
 public class StringVariableBuilder extends Variable.Builder<String> {
 
   public StringVariableBuilder() {
-    // Assume the empty string to be the default value
     setDefaultValue("");
+    setDataType(DataType.STRING);
   }
 
 }

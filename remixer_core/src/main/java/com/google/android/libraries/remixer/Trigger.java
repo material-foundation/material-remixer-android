@@ -16,9 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import java.util.List;
-import java.util.Locale;
-
 /**
  * A runnable that can be triggered via any of the Remixer interfaces.
  *
@@ -27,12 +24,8 @@ import java.util.Locale;
 public class Trigger extends RemixerItem {
   private Runnable runnable;
 
-  public Trigger(String title, String key, Object context, Runnable runnable) {
-    this(title, key, context, runnable, 0);
-  }
-
-  public Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
-    super(title, key, context, layoutId);
+  private Trigger(String title, String key, Object context, Runnable runnable, int layoutId) {
+    super(title, key, context, layoutId, DataType.TRIGGER);
     this.runnable = runnable;
   }
 
@@ -47,8 +40,10 @@ public class Trigger extends RemixerItem {
 
   /**
    * 'Pulls the trigger' and runs the enclosed runnable without triggering other triggers.
+   *
+   * <b>Internal use only. Users should never call this method.</b>
    */
-  private void triggerWithoutTriggeringOthers() {
+  public void triggerWithoutTriggeringOthers() {
     if (runnable != null) {
       runnable.run();
     }
@@ -62,28 +57,19 @@ public class Trigger extends RemixerItem {
       // This instance hasn't been added to a Remixer, probably still being set up, abort.
       return;
     }
-    List<RemixerItem> itemList = remixer.getItemsWithKey(getKey());
-    for (RemixerItem item : itemList) {
-      if (item != this) {
-        ((Trigger) item).triggerWithoutTriggeringOthers();
-      }
+    remixer.onTrigger(this);
+  }
+
+  public static class Builder extends RemixerItem.Builder<Trigger, Runnable> {
+
+    public Builder() {
+      setDataType(DataType.TRIGGER);
     }
-  }
 
-  @Override
-  void clearCallback() {
-    runnable = null;
-  }
-
-  @Override
-  void assertIsCompatibleWith(RemixerItem item) {
-    if (item.getKey().equals(getKey()) && item.getClass() != this.getClass()) {
-      throw new IncompatibleRemixerItemsWithSameKeyException(
-          String.format(
-              Locale.getDefault(),
-              "%s is incompatible with Trigger with same key %s",
-              item.getClass().getCanonicalName(),
-              getKey()));
+    @Override
+    public Trigger build() {
+      checkBaseFields();
+      return new Trigger(title, key, context, callback, layoutId);
     }
   }
 }

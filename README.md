@@ -1,4 +1,6 @@
-# ![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
+![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
+
+[![Build Status](https://travis-ci.org/material-foundation/material-remixer-android.svg?branch=develop)](https://travis-ci.org/material-foundation/material-remixer-android) [![codecov](https://codecov.io/gh/material-foundation/material-remixer-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-foundation/material-remixer-android)
 
 Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.
 
@@ -52,15 +54,12 @@ allprojects {
 }
 ```
 
-And in your modules, apply the `android-apt` plugin and add the remixer dependencies:
+And in your modules, apply the `android-apt` plugin and add the remixer dependency:
 ```gradle
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.material-foundation.material-remixer-android:remixer_core:develop-SNAPSHOT'
-    compile 'com.github.material-foundation.material-remixer-android:remixer_ui:develop-SNAPSHOT'
-    compile 'com.github.material-foundation.material-remixer-android:remixer_storage:develop-SNAPSHOT'
-    provided 'com.github.material-foundation.material-remixer-android:remixer_annotation:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer:0.5.2'
 }
 ```
 
@@ -69,13 +68,14 @@ Notice the dependency on `remixer_annotation` is a `provided` clause instead of 
 ### Global remixer set up
 If you have not subclassed the application class it is recommended you do it since this is a one-time global initialization.
 
-In your application class you need to add RemixerCallbacks as an ActivityLifecycleCallbacks instance, so Remixer knows to remove old variables and triggers when activities are destroyed, to avoid leaks.
+In your application class you need to call the Remixer initialization method.
+
 ```java
 class MyApplication extends android.app.Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    registerActivityLifecycleCallbacks(RemixerCallbacks.getInstance());
+    RemixerInitialization.initRemixer(Remixer.getInstance(), this);
   }
 }
 ```
@@ -233,17 +233,24 @@ public void simulateConnectionFailure() {
 If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
 ```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```
 
+## State of development
+
+Visit our [State of Development](https://github.com/material-foundation/material-remixer/wiki/State-of-Development) wiki for the current roadmap and status of development for each platform.
+
 ## Repositories
+
+The main Remixer GitHub repo for documentation, project tracking, and general information:
+- [Remixer docs](https://github.com/material-foundation/material-remixer)
 
 Platform specific libraries and tools can be found in the following GitHub repos:
 
 - [iOS](https://github.com/material-foundation/material-remixer-ios) - Remixer for iOS.
-- Web - Remixer for Web (available soon).
-- Dashboard - Remixer web dashboard for all platforms (available soon).
+- [Web](https://github.com/material-foundation/material-remixer-web) - Remixer for Web.
+- Web Remote - Remixer web remote controller for all platforms (available soon).
 
-## Is Material Foundation affiliated with Google?
+## Is material-foundation affiliated with Google?
 
-Yes, the [Material Foundation](https://github.com/material-foundation) organization is one of Google's new homes for tools and frameworks related to our [Material Design](https://material.io) system. Please check out our blog post [Design is Never Done](https://design.google.com/articles/design-is-never-done/) for more information regarding Material Design and how Remixer integrates with the system.
+Yes, the [material-foundation](https://github.com/material-foundation) organization is one of Google's new homes for tools and frameworks related to our [Material Design](https://material.io) system. Please check out our blog post [Design is Never Done](https://design.google.com/articles/design-is-never-done/) for more information regarding Material Design and how Remixer integrates with the system.
 
 ## Contributing
 

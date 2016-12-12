@@ -31,6 +31,7 @@ public class RemixerBindingException extends RuntimeException {
           + " adding this to your proguard configuration should help: "
           + "-keep class * extends "
           + "com.google.google.android.libraries.remixer.annotation.RemixerBinder$Binder";
+
   public RemixerBindingException(String message, Throwable ex) {
     super(message + ADVICE, ex);
   }

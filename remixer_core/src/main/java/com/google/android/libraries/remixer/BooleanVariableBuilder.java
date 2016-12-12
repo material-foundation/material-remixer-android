@@ -22,8 +22,8 @@ package com.google.android.libraries.remixer;
 public class BooleanVariableBuilder extends Variable.Builder<Boolean> {
 
   public BooleanVariableBuilder() {
-    // Assume false to be the default value
     setDefaultValue(false);
+    setDataType(DataType.BOOLEAN);
   }
 
 }

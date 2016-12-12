@@ -16,6 +16,8 @@
 
 package somepackage;
 
+
+import com.google.android.libraries.remixer.BooleanVariableBuilder;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.Variable;
@@ -30,9 +32,15 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
   public void bindInstance(Correct activity) {
     Remixer remixer = Remixer.getInstance();
     Generated_correct correct_callback = new Generated_correct(activity);
-    Variable<Boolean> correct_variable = new Variable<Boolean>("correct", "correct", false, activity, correct_callback, 0);
-    correct_variable.init();
-    remixer.addItem(correct_variable);
+    BooleanVariableBuilder correct_remixer_item = new BooleanVariableBuilder();
+    correct_remixer_item.setDataType(Remixer.getInstance().getDataType("boolean"));
+    correct_remixer_item.setKey("correct");
+    correct_remixer_item.setTitle("correct");
+    correct_remixer_item.setLayoutId(0);
+    correct_remixer_item.setContext(activity);
+    correct_remixer_item.setCallback(correct_callback);
+    correct_remixer_item.setDefaultValue(false);
+    remixer.addItem(correct_remixer_item.build());
   }
 
   static class Generated_correct implements Callback<Boolean> {

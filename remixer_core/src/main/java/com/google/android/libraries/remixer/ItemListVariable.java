@@ -39,16 +39,18 @@ public class ItemListVariable<T> extends Variable<T> {
    * @param context the object which created this variable, should be an activity.
    * @param callback Callback to run once the value is set. Can be null.
    * @param layoutId A layout id that renders this control on screen.
+   * @param dataType The data type this variable contains.
    */
-  public ItemListVariable(
+  private ItemListVariable(
       String title,
       String key,
       T defaultValue,
       List<T> values,
       Object context,
       Callback<T> callback,
-      int layoutId) {
-    super(title, key, defaultValue, context, callback, layoutId);
+      int layoutId,
+      DataType dataType) {
+    super(title, key, defaultValue, context, callback, layoutId, dataType);
     this.valueList = values;
   }
 
@@ -72,36 +74,13 @@ public class ItemListVariable<T> extends Variable<T> {
    * set, the default layout will be used. <li>If the title is not set, the key will be used as
    * title </ul>
    *
-   * <p>On the other hand: key and possibleValues are mandatory. If either is missing, an {@link
-   * IllegalArgumentException} will be thrown.
+   * <p>On the other hand: key, dataType, context, and possibleValues are mandatory. If either is
+   * missing, an {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder<T> {
+  public static class Builder<T> extends RemixerItem.Builder<ItemListVariable<T>, Callback<T>> {
 
-    private String key;
-    private String title;
     private T defaultValue;
     private List<T> possibleValues;
-    private Object context;
-    private Callback<T> callback;
-    private int layoutId = 0;
-
-    public Builder() {
-    }
-
-    public Builder<T> setKey(String key) {
-      this.key = key;
-      return this;
-    }
-
-    public Builder<T> setContext(Object context) {
-      this.context = context;
-      return this;
-    }
-
-    public Builder<T> setTitle(String title) {
-      this.title = title;
-      return this;
-    }
 
     public Builder<T> setDefaultValue(T defaultValue) {
       this.defaultValue = defaultValue;
@@ -118,16 +97,6 @@ public class ItemListVariable<T> extends Variable<T> {
       return this;
     }
 
-    public Builder<T> setCallback(Callback<T> callback) {
-      this.callback = callback;
-      return this;
-    }
-
-    public Builder<T> setLayoutId(int layoutId) {
-      this.layoutId = layoutId;
-      return this;
-    }
-
     /**
      * Returns a new ItemListVariable created with the configuration stored in this builder
      * instance.
@@ -135,13 +104,8 @@ public class ItemListVariable<T> extends Variable<T> {
      * @throws IllegalArgumentException If key or possibleValues are missing or if the configuration
      *     is invalid for ItemListVariable.
      */
-    public ItemListVariable<T> buildAndInit() {
-      if (key == null) {
-        throw new IllegalArgumentException("key cannot be unset for ItemListVariable");
-      }
-      if (context == null) {
-        throw new IllegalArgumentException("context cannot be unset for RangeVariable");
-      }
+    public ItemListVariable<T> build() {
+      checkBaseFields();
       if (possibleValues == null || possibleValues.isEmpty()) {
         throw new IllegalArgumentException(
             "possibleValues cannot be unset or empty for ItemListVariable");
@@ -149,11 +113,8 @@ public class ItemListVariable<T> extends Variable<T> {
       if (defaultValue == null) {
         defaultValue = possibleValues.get(0);
       }
-      if (title == null) {
-        title = key;
-      }
       ItemListVariable<T> variable = new ItemListVariable<T>(
-          title, key, defaultValue, possibleValues, context, callback, layoutId);
+          title, key, defaultValue, possibleValues, context, callback, layoutId, dataType);
       variable.init();
       return variable;
     }
