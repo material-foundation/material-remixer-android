@@ -59,7 +59,7 @@ And in your modules, apply the `android-apt` plugin and add the remixer dependen
 apply plugin: 'android-apt'
 
 dependencies {
-    compile 'com.github.material-foundation.material-remixer-android:remixer:develop-SNAPSHOT'
+    compile 'com.github.material-foundation.material-remixer-android:remixer:0.5.2'
 }
 ```
 
