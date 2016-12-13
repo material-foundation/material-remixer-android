@@ -103,18 +103,24 @@ public class DataType<T> {
 
   // ======= Default data types defined here.
 
+  private static final String KEY_BOOLEAN = "__DataTypeBoolean__";
+  private static final String KEY_COLOR = "__DataTypeColor__";
+  private static final String KEY_NUMBER = "__DataTypeNumber__";
+  private static final String KEY_STRING = "__DataTypeString__";
+  private static final String KEY_TRIGGER = "__DataTypeTrigger__";
+
   public static final DataType<Boolean> BOOLEAN = new DataType<>(
-      "boolean", Boolean.class, new BooleanValueConverter("boolean"));
+      KEY_BOOLEAN, Boolean.class, new BooleanValueConverter(KEY_BOOLEAN));
 
   public static final DataType<Integer> COLOR = new DataType<>(
-      "color", Integer.class, new ColorValueConverter("color"));
+      KEY_COLOR, Integer.class, new ColorValueConverter(KEY_COLOR));
 
   public static final DataType<Integer> NUMBER = new DataType<>(
-      "number", Integer.class, new IntegerValueConverter("number"));
+      KEY_NUMBER, Integer.class, new IntegerValueConverter(KEY_NUMBER));
 
   public static final DataType<String> STRING = new DataType<>(
-      "string", String.class, new StringValueConverter("string"));
+      KEY_STRING, String.class, new StringValueConverter(KEY_STRING));
 
   public static final DataType<Void> TRIGGER = new DataType<>(
-      "trigger", Void.class, new TriggerValueConverter("trigger"));
+      KEY_TRIGGER, Void.class, new TriggerValueConverter(KEY_TRIGGER));
 }
