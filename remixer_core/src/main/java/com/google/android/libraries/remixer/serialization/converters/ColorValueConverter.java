@@ -1,8 +1,6 @@
 package com.google.android.libraries.remixer.serialization.converters;
 
-import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.serialization.StoredVariable;

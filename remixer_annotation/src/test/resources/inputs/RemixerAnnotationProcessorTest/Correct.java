@@ -15,7 +15,7 @@
  */
 
 package somepackage;
-import com.google.android.libraries.remixer.Remixer;
+
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;

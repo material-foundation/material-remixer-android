@@ -21,8 +21,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.ui.widget.RemixerItemWidget;
 import java.util.List;
 
