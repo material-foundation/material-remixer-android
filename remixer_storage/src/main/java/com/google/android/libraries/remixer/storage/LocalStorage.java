@@ -58,8 +58,6 @@ public class LocalStorage extends LocalValueSyncing {
   @Override
   public void onValueChanged(Variable variable) {
     super.onValueChanged(variable);
-    // TODO: Consider delaying these writes (all of them) to accomodate for fast changes.
-    // This may not be necessary since using SharedPreferences.Editor#apply() already delays writes.
     writeRemixerItem(variable.getKey());
   }
 }
