@@ -40,7 +40,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     Remixer remixer = Remixer.getInstance();
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
     BooleanVariableBuilder setBoolean_remixer_item = new BooleanVariableBuilder();
-    setBoolean_remixer_item.setDataType(Remixer.getInstance().getDataType("boolean"));
+    setBoolean_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeBoolean__"));
     setBoolean_remixer_item.setKey("setBoolean");
     setBoolean_remixer_item.setTitle("setBoolean");
     setBoolean_remixer_item.setLayoutId(0);
@@ -50,7 +50,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     remixer.addItem(setBoolean_remixer_item.build());
     Generated_setIntegerList setIntegerList_callback = new Generated_setIntegerList(activity);
     ItemListVariable.Builder<Integer> setIntegerList_remixer_item = new ItemListVariable.Builder<Integer>();
-    setIntegerList_remixer_item.setDataType(Remixer.getInstance().getDataType("number"));
+    setIntegerList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
     setIntegerList_remixer_item.setKey("setIntegerList");
     setIntegerList_remixer_item.setTitle("setIntegerList");
     setIntegerList_remixer_item.setLayoutId(0);
@@ -65,7 +65,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     remixer.addItem(setIntegerList_remixer_item.build());
     Generated_setInt setInt_callback = new Generated_setInt(activity);
     RangeVariable.Builder setInt_remixer_item = new RangeVariable.Builder();
-    setInt_remixer_item.setDataType(Remixer.getInstance().getDataType("number"));
+    setInt_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
     setInt_remixer_item.setKey("setInt");
     setInt_remixer_item.setTitle("setInt");
     setInt_remixer_item.setLayoutId(0);
@@ -78,7 +78,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     remixer.addItem(setInt_remixer_item.build());
     Generated_setString setString_callback = new Generated_setString(activity);
     StringVariableBuilder setString_remixer_item = new StringVariableBuilder();
-    setString_remixer_item.setDataType(Remixer.getInstance().getDataType("string"));
+    setString_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeString__"));
     setString_remixer_item.setKey("setString");
     setString_remixer_item.setTitle("setString");
     setString_remixer_item.setLayoutId(0);
@@ -88,7 +88,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     remixer.addItem(setString_remixer_item.build());
     Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
     ItemListVariable.Builder<String> setStringList_remixer_item = new ItemListVariable.Builder<String>();
-    setStringList_remixer_item.setDataType(Remixer.getInstance().getDataType("string"));
+    setStringList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeString__"));
     setStringList_remixer_item.setKey("setStringList");
     setStringList_remixer_item.setTitle("setStringList");
     setStringList_remixer_item.setLayoutId(0);
@@ -102,7 +102,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     remixer.addItem(setStringList_remixer_item.build());
     Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
     Trigger.Builder pullTrigger_remixer_item = new Trigger.Builder();
-    pullTrigger_remixer_item.setDataType(Remixer.getInstance().getDataType("trigger"));
+    pullTrigger_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeTrigger__"));
     pullTrigger_remixer_item.setKey("pullTrigger");
     pullTrigger_remixer_item.setTitle("pullTrigger");
     pullTrigger_remixer_item.setLayoutId(0);

@@ -33,7 +33,7 @@ public class CorrectColorList_RemixerBinder implements RemixerBinder.Binder<Corr
     Remixer remixer = Remixer.getInstance();
     Generated_setColor setColor_callback = new Generated_setColor(activity);
     ItemListVariable.Builder<Integer> setColor_remixer_item = new ItemListVariable.Builder<Integer>();
-    setColor_remixer_item.setDataType(Remixer.getInstance().getDataType("color"));
+    setColor_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeColor__"));
     setColor_remixer_item.setKey("setColor");
     setColor_remixer_item.setTitle("setColor");
     setColor_remixer_item.setLayoutId(0);
