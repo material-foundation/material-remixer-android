@@ -81,8 +81,7 @@ class MyApplication extends Application {
   public void onCreate() {
     super.onCreate();
     RemixerInitialization.initRemixer(Remixer.getInstance(), this);
-    Remixer.getInstance().setSynchronizationMechanism(
-        new LocalStorage(this, "Remixer"));
+    Remixer.getInstance().setSynchronizationMechanism(new LocalStorage(this));
   }
 }
 ```

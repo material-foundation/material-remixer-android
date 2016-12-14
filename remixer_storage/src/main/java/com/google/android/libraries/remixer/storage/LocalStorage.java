@@ -30,11 +30,13 @@ import com.google.gson.Gson;
  * in a SharedPreferences object.
  */
 public class LocalStorage extends LocalValueSyncing {
+
+  private static final String PREFERENCES_FILE_NAME = "remixer_local_storage";
   private final SharedPreferences preferences;
   private final Gson gson;
 
-  public LocalStorage(Context context, String preferenceFileName) {
-    preferences = context.getSharedPreferences(preferenceFileName, Context.MODE_PRIVATE);
+  public LocalStorage(Context context) {
+    preferences = context.getSharedPreferences(PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
     gson = GsonProvider.getInstance();
     for (Object data : preferences.getAll().values()) {
       // Assume all objects are actually JSON strings.

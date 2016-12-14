@@ -36,7 +36,6 @@ public class RemixerApplication extends Application {
   public void onCreate() {
     super.onCreate();
     RemixerInitialization.initRemixer(this);
-    Remixer.getInstance().setSynchronizationMechanism(
-        new LocalStorage(getApplicationContext(), "Remixer"));
+    Remixer.getInstance().setSynchronizationMechanism(new LocalStorage(getApplicationContext()));
   }
 }
