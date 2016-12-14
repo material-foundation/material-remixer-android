@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 
 public class NonPublicMethod {

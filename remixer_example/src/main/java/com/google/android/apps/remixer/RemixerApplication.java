@@ -19,7 +19,6 @@ package com.google.android.apps.remixer;
 import android.app.Application;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.storage.LocalStorage;
-import com.google.android.libraries.remixer.sync.LocalValueSyncing;
 import com.google.android.libraries.remixer.ui.RemixerInitialization;
 
 /**

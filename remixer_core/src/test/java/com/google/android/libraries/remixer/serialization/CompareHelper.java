@@ -21,7 +21,6 @@ import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
-import com.google.android.libraries.remixer.serialization.StoredVariable;
 import org.junit.Assert;
 
 public class CompareHelper {

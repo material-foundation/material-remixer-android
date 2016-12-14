@@ -16,10 +16,6 @@
 
 package com.google.android.libraries.remixer;
 
-import com.google.android.libraries.remixer.DataType;
-import com.google.android.libraries.remixer.Remixer;
-import java.util.HashSet;
-
 /**
  * Helper class to properly initialize remixer instances.
  */

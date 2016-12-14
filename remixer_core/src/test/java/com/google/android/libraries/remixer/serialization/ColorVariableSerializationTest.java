@@ -19,7 +19,6 @@ package com.google.android.libraries.remixer.serialization;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.Remixer;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;

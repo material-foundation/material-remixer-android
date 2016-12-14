@@ -17,7 +17,6 @@
 package com.google.android.libraries.remixer;
 
 import java.lang.ref.WeakReference;
-import java.util.Locale;
 
 /**
  * An item that can be displayed on Remixer's interfaces.

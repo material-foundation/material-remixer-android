@@ -1,23 +1,12 @@
 package com.google.android.apps.remixer;
 
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.google.android.libraries.remixer.BooleanVariableBuilder;
-import com.google.android.libraries.remixer.Callback;
-import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.RangeVariable;
-import com.google.android.libraries.remixer.Variable;
-import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.StringVariableBuilder;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
 import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
