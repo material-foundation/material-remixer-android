@@ -19,10 +19,8 @@ package com.google.android.libraries.remixer.annotation.processor;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
-import com.google.common.collect.Range;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 

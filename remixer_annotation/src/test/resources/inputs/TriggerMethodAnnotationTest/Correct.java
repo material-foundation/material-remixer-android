@@ -16,7 +16,6 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.annotation.TriggerMethod;
 
 public class Correct {

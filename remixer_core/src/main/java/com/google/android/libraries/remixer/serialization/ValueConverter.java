@@ -17,7 +17,6 @@
 package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.serialization.StoredVariable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

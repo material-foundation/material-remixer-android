@@ -1,13 +1,10 @@
 package com.google.android.libraries.remixer.serialization.converters;
 
-import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Trigger;
-import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.serialization.StoredVariable;
 import com.google.android.libraries.remixer.serialization.ValueConverter;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 
 /**
  * A value converter for triggers. Values are nonexistent but it is still necessary for
