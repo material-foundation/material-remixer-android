@@ -71,14 +71,22 @@ If you have not subclassed the application class it is recommended you do it sin
 In your application class you need to call the Remixer initialization method.
 
 ```java
-class MyApplication extends android.app.Application {
+import android.app.Application;
+import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.storage.LocalStorage;
+import com.google.android.libraries.remixer.ui.RemixerInitialization;
+
+class MyApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
     RemixerInitialization.initRemixer(Remixer.getInstance(), this);
+    Remixer.getInstance().setSynchronizationMechanism(new LocalStorage(getApplicationContext()));
   }
 }
 ```
+
+The line that calls `setSynchronizationMechanism` makes Remixer values persistent using SharedPreferences. If you would not like to persist values remove this line.
 
 ### How to use it in an activity
 

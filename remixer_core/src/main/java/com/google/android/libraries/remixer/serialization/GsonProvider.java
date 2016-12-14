@@ -22,7 +22,7 @@ import com.google.gson.GsonBuilder;
 /**
  * Provides a configured Gson instance.
  */
-final class GsonProvider {
+public final class GsonProvider {
 
   private static final Gson instance;
 
@@ -34,7 +34,7 @@ final class GsonProvider {
         .create();
   }
 
-  static Gson getInstance() {
+  public static Gson getInstance() {
     return instance;
   }
 }
