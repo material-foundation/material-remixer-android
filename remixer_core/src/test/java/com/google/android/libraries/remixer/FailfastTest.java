@@ -23,6 +23,7 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class FailfastTest {
+  
   @Test(expected = IllegalStateException.class)
   public void binderFailsFast() {
     RemixerBinder.bind(this);
