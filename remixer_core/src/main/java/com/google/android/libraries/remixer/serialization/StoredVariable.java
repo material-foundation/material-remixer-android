@@ -212,7 +212,7 @@ public class StoredVariable<T> {
    */
   static StoredVariable fromRemixerItem(RemixerItem item) {
     StoredVariable storedVariable = null;
-    for (DataType type : Remixer.getRegisteredDataType()) {
+    for (DataType type : Remixer.getRegisteredDataTypes()) {
       try {
         storedVariable = type.getConverter().fromRemixerItem(item);
         break;

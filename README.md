@@ -68,7 +68,7 @@ Notice the dependency on `remixer_annotation` is a `provided` clause instead of 
 ### Global remixer set up
 If you have not subclassed the application class it is recommended you do it since this is a one-time global initialization.
 
-In your application class you need to call the Remixer initialization method.
+In your application class you need to call the Remixer initialization method. Remember this application class MUST be (declared in your Android Manifest)[https://developer.android.com/guide/topics/manifest/application-element.html#nm].
 
 ```java
 import android.app.Application;

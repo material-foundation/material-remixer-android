@@ -94,7 +94,7 @@ public class Remixer {
     return registeredDataTypes.get(name);
   }
 
-  public static Collection<DataType> getRegisteredDataType() {
+  public static Collection<DataType> getRegisteredDataTypes() {
     return registeredDataTypes.values();
   }
 
@@ -149,6 +149,14 @@ public class Remixer {
    */
   @SuppressWarnings("unchecked")
   public void addItem(RemixerItem remixerItem) {
+    if (!registeredDataTypes.containsKey(remixerItem.getDataType().getName())) {
+      throw new IllegalStateException(String.format(
+          Locale.getDefault(),
+          "There is no registered data type that matches %s. Are you sure you ran "
+          + "RemixerInitialization.initRemixer in your application class? See the Remixer README "
+          + "for detailed instructions. If this is a custom data type you have to manually add it.",
+          remixerItem.getDataType().getName()));
+    }
     List<RemixerItem> listForKey = getOrCreateItemList(remixerItem.getKey(), keyMap);
     for (RemixerItem existingItem : listForKey) {
       if (remixerItem.getContext() != null
