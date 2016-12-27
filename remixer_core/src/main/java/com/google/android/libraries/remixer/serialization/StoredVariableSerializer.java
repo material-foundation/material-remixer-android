@@ -54,7 +54,7 @@ class StoredVariableSerializer
     }
     if (variable == null) {
       // Unknown data type! Throw an exception!
-      throw new JsonParseException("Unknown data type for variable/trigger, cannot parse.");
+      throw new JsonParseException("Unknown data type for variable, cannot parse.");
     }
     return variable;
   }

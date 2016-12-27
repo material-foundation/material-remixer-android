@@ -23,7 +23,7 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class FailfastTest {
-  
+
   @Test(expected = IllegalStateException.class)
   public void binderFailsFast() {
     RemixerBinder.bind(this);
@@ -31,6 +31,7 @@ public class FailfastTest {
 
   @Test(expected = IllegalStateException.class)
   public void remixerAddFailsFast() {
-    Remixer.getInstance().addItem(new Trigger.Builder().setContext(this).setKey("key").build());
+    Remixer.getInstance().addItem(
+        new StringVariableBuilder().setContext(this).setKey("key").build());
   }
 }

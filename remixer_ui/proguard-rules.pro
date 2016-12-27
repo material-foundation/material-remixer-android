@@ -28,9 +28,6 @@
 -keepnames class * {
    @com.google.android.libraries.remixer.annotation.StringListVariableMethod <methods>;
 }
--keepnames class * {
-   @com.google.android.libraries.remixer.annotation.TriggerMethod <methods>;
-}
 
 -keep class * implements com.google.android.libraries.remixer.annotation.RemixerBinder$Binder {
   *;

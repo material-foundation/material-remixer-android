@@ -20,12 +20,12 @@ import com.google.android.libraries.remixer.Remixer;
 import java.util.Locale;
 
 /**
- * Used to bind activities to their implicitly generated variables and triggers.
+ * Used to bind activities to their implicitly generated variables.
  */
 public class RemixerBinder {
 
   /**
-   * Binds an activity's remixer to its generated variables and triggers.
+   * Binds an activity's remixer to its generated variables.
    *
    * @throws RemixerBindingException When there is an issue instantiating the Binder class
    */
@@ -70,7 +70,7 @@ public class RemixerBinder {
   public interface Binder<T> {
 
     /**
-     * Bind an activity's remixer instance to its generated variables and triggers.
+     * Bind an activity's remixer instance to its generated variables.
      */
     void bindInstance(T activity);
   }

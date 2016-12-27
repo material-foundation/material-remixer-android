@@ -19,7 +19,7 @@ The project is defined as a gradle project with submodules.
 * remixer_ui: The code that shows remixes in the UI.
   * main
     * `com.google.android.libraries.remixer.ui.view` is  the code to display the UI as a BottomSheetFragmentDialog
-    * `com.google.android.libraries.remixer.ui.widget` is a family of widgets that can display each individual Remixer item (variable or trigger).
+    * `com.google.android.libraries.remixer.ui.widget` is a family of widgets that can display each individual Remixer items (variables).
     * `com.google.android.libraries.remixer.ui.widget.RemixerItemWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
     * `com.google.android.libraries.remixer.ui.RemixerCallbacks` is an implementation of `Application.ActivityLifecycleCallbacks` that clears up callbacks once the corresponding activity is destroyed so it doesn't leak. It needs to be registered in the `Application.onCreate()` method.
   * tests: JUnit/Robolectric tests.
@@ -94,7 +94,7 @@ __Only in the activities where you're using remixer__
 
 You need to add a few lines at the end of your `Activity.onCreate()`
 
-1. `RemixerBinder.bind(this);` creates, initializes and sets up all the Variables and trigger you define in this activity.
+1. `RemixerBinder.bind(this);` creates, initializes and sets up all the Variables you define in this activity.
 2. `RemixerFragment remixerFragment = RemixerFragment.newInstance();` creates the fragment that will be shown when remixer is invoked, then you need at least one of the following:
   - A variation of `remixerFragment.attachToGesture(this, Direction.UP, 3);`, this example ties showing the Remixer Fragment on a 3-finger swipe up.
   - `remixerFragment.attachToButton(this, someButtonObject);`, this makes the OnClickListener for a button open the Remixer fragment.
@@ -119,7 +119,7 @@ In order to define variables you only need to write methods that take one argume
 
 There are a few very simple examples here, but you should look at the [example](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/MainActivity.java) [activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/BoxActivity.java) and [documentation for these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
 
-Once you add your annotated methods and build you should be able to invoke remixer (by doing a 3 finger swipe or clicking a button, depending on how you configured it in the section above), and tweak the variables or trigger the events guarded by the trigger.
+Once you add your annotated methods and build you should be able to invoke remixer (by doing a 3 finger swipe or clicking a button, depending on how you configured it in the section above), and tweak the variables.
 
 ##### Range variables
 __Note:__ for the time being they only support Integers, not floats or doubles.
@@ -208,19 +208,6 @@ A variable that lets you pick colors from a list, this example uses a custom lay
     possibleValues = {Color.parseColor("#000000"), Color.parseColor("#DCDCDC")},
     layoutId = R.layout.color_list_variable_widget)
 public void setTitleColor(Integer color) {
-}
-```
-
-##### Trigger
-
-- `key` the key for this trigger, you can use it to share the same value across activities, if not set it assumes the method name.
-- `title` the displayable name of the trigger, if not set assumes `key`
-- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
-
-A trigger to simulate an event happening:
-```java
-@TriggerMethod
-public void simulateConnectionFailure() {
 }
 ```
 

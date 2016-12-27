@@ -21,7 +21,6 @@ import com.google.android.libraries.remixer.IncompatibleRemixerItemsWithSameKeyE
 import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,32 +58,6 @@ public class LocalValueSyncingTest {
 
     remixer.addItem(variableString);
     remixer.addItem(variableBoolean);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void rejectsDuplicatesOneVariableOneTrigger() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(parent1).build();
-    final Trigger trigger = new Trigger.Builder().setKey("key").setContext(parent2).build();
-
-    remixer.addItem(variableString);
-    remixer.addItem(trigger);
-  }
-
-  @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)
-  public void rejectsDuplicatesOneVariableOneTriggerAfterParentObjectReclaimed() {
-    final Object parent1 = new Object();
-    final Object parent2 = new Object();
-    final Variable<String> variableString =
-        new StringVariableBuilder().setKey("key").setContext(parent1).build();
-    final Trigger trigger = new Trigger.Builder().setKey("key").setContext(parent2).build();
-
-    remixer.addItem(variableString);
-    // Simulate parent object was reclaimed for variableString
-    remixer.onActivityDestroyed(parent1);
-    remixer.addItem(trigger);
   }
 
   @Test(expected = IncompatibleRemixerItemsWithSameKeyException.class)

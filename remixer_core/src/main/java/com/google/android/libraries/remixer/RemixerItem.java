@@ -20,8 +20,6 @@ import java.lang.ref.WeakReference;
 
 /**
  * An item that can be displayed on Remixer's interfaces.
- *
- * <p>These are either {@link Variable}es or {@link Trigger}s.
  */
 public abstract class RemixerItem {
 

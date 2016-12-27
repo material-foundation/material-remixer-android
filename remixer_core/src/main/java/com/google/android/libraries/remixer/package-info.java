@@ -16,8 +16,7 @@
 
 /**
  * The main remixer package contains all of the logic for Remixes and a main point of entry class,
- * {@link com.google.android.libraries.remixer.Remixer}, which contains all of the active Variables
- * and triggers.
+ * {@link com.google.android.libraries.remixer.Remixer}, which contains all of the active Variables.
  *
  * <p>Most of the logic is implemented by the base class
  * {@link com.google.android.libraries.remixer.Variable}. Subclasses are tasked with checking

@@ -21,7 +21,6 @@ import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
-import com.google.android.libraries.remixer.annotation.TriggerMethod;
 
 /**
  * This ends up testing defaults for all remixes, and that sorting works.
@@ -42,7 +41,4 @@ public class Correct {
 
   @StringListVariableMethod(possibleValues = {"hello", "world"})
   public void setStringList(String i) {}
-
-  @TriggerMethod
-  public void pullTrigger() {}
 }

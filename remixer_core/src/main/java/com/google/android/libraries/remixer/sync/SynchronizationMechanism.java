@@ -18,7 +18,6 @@ package com.google.android.libraries.remixer.sync;
 
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
 
 /**
@@ -54,12 +53,4 @@ public interface SynchronizationMechanism {
    * cache/save/sync the new value.
    */
   void onValueChanged(Variable variable);
-
-  /**
-   * Called whenever a trigger is triggered.
-   *
-   * <p>The SynchronizationMechanism must alert other instances of the trigger.
-   */
-  void onTrigger(Trigger trigger);
-
 }

@@ -26,9 +26,8 @@
  * {@code onCreate(...)} passing the activity, this will set up Remixer for you.
  *
  * All of the other Remixer Method annotations in this package can be applied to any public or
- * default-access non-abstract instance method that takes one parameter of the right type (or no
- * parameters in the case of TriggerMethod). They all have sensible, convenient defaults explained
- * in their own documentation.
+ * default-access non-abstract instance method that takes one parameter of the right type.
+ * They all have sensible, convenient defaults explained in their own documentation.
  *
  * You can control the order in which remixes are added by moving the annotated methods in code,
  * Remixer will respect the order in which the methods are defined.

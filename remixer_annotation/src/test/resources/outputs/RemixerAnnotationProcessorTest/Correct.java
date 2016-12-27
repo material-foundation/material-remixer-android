@@ -22,13 +22,11 @@ import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Override;
-import java.lang.Runnable;
 import java.lang.String;
 import java.util.ArrayList;
 
@@ -100,15 +98,6 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setStringList_remixer_item.setPossibleValues(setStringList_variable_list);
     setStringList_remixer_item.setDefaultValue("hello");
     remixer.addItem(setStringList_remixer_item.build());
-    Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
-    Trigger.Builder pullTrigger_remixer_item = new Trigger.Builder();
-    pullTrigger_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeTrigger__"));
-    pullTrigger_remixer_item.setKey("pullTrigger");
-    pullTrigger_remixer_item.setTitle("pullTrigger");
-    pullTrigger_remixer_item.setLayoutId(0);
-    pullTrigger_remixer_item.setContext(activity);
-    pullTrigger_remixer_item.setCallback(pullTrigger_callback);
-    remixer.addItem(pullTrigger_remixer_item.build());
   }
 
   static class Generated_setBoolean implements Callback<Boolean> {
@@ -173,19 +162,6 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     @Override
     public void onValueSet(Variable<String> variable) {
       activity.setStringList(variable.getSelectedValue());
-    }
-  }
-
-  static class Generated_pullTrigger implements Runnable {
-    private final Correct activity;
-
-    Generated_pullTrigger(Correct activity) {
-      this.activity = activity;
-    }
-
-    @Override
-    public void run() {
-      activity.pullTrigger();
     }
   }
 }

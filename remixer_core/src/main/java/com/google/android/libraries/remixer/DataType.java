@@ -5,7 +5,6 @@ import com.google.android.libraries.remixer.serialization.converters.BooleanValu
 import com.google.android.libraries.remixer.serialization.converters.ColorValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.IntegerValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.StringValueConverter;
-import com.google.android.libraries.remixer.serialization.converters.TriggerValueConverter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -107,7 +106,6 @@ public class DataType<T> {
   private static final String KEY_COLOR = "__DataTypeColor__";
   private static final String KEY_NUMBER = "__DataTypeNumber__";
   private static final String KEY_STRING = "__DataTypeString__";
-  private static final String KEY_TRIGGER = "__DataTypeTrigger__";
 
   public static final DataType<Boolean> BOOLEAN = new DataType<>(
       KEY_BOOLEAN, Boolean.class, new BooleanValueConverter(KEY_BOOLEAN));
@@ -120,7 +118,4 @@ public class DataType<T> {
 
   public static final DataType<String> STRING = new DataType<>(
       KEY_STRING, String.class, new StringValueConverter(KEY_STRING));
-
-  public static final DataType<Void> TRIGGER = new DataType<>(
-      KEY_TRIGGER, Void.class, new TriggerValueConverter(KEY_TRIGGER));
 }
