@@ -21,7 +21,6 @@ import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
 
 /**
@@ -66,10 +65,5 @@ public class RemixerInitialization {
     DataType.STRING.setLayoutIdForRemixerItemType(
         Variable.class, R.layout.string_variable_widget);
     Remixer.registerDataType(DataType.STRING);
-
-    // Triggers are only supported in Trigger objects.
-    DataType.TRIGGER.setLayoutIdForRemixerItemType(
-        Trigger.class, R.layout.trigger_widget);
-    Remixer.registerDataType(DataType.TRIGGER);
   }
 }

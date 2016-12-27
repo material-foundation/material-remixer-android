@@ -21,7 +21,6 @@ import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
-import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import java.lang.annotation.Annotation;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
@@ -76,15 +75,6 @@ enum SupportedMethodAnnotation {
         throws RemixerAnnotationException {
       StringVariableMethod annotation = (StringVariableMethod) baseAnnotation;
       return VariableMethodAnnotation.forStringVariableMethod(clazz, method, annotation);
-    }
-  },
-  TRIGGER(TriggerMethod.class, null) {
-    @Override
-    public MethodAnnotation getMethodAnnotation(
-        TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
-        throws RemixerAnnotationException {
-      TriggerMethod annotation = (TriggerMethod) baseAnnotation;
-      return new TriggerMethodAnnotation(clazz, method, annotation);
     }
   };
 

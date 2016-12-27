@@ -36,9 +36,6 @@ import javax.lang.model.element.TypeElement;
  * RangeVariableMethodAnnotation nor ItemListVariableMethodAnnotation extend this class), since
  * these classes handle mostly the Variable objects' initialization and those are fairly different
  * for each of those classes.
- *
- * <p>Most of what can be shared is shared in MethodAnnotation and also applies to @TriggerMethod
- * annotations as well.
  */
 class VariableMethodAnnotation<T> extends MethodAnnotation {
 

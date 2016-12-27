@@ -56,7 +56,6 @@ public class StoredVariable<T> {
    */
   String dataType;
 
-  // From here, this only applies to Variables, not triggers.
   /**
    * The currently selected value for the variable.
    */

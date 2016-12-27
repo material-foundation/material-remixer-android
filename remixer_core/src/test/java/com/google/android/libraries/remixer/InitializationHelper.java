@@ -27,6 +27,5 @@ public class InitializationHelper {
     Remixer.registerDataType(DataType.COLOR);
     Remixer.registerDataType(DataType.NUMBER);
     Remixer.registerDataType(DataType.STRING);
-    Remixer.registerDataType(DataType.TRIGGER);
   }
 }

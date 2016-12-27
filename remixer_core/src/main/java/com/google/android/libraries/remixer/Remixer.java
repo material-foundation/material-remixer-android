@@ -26,7 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Contains a list of {@link Variable}s or {@link Trigger}s.
+ * Contains a list of {@link Variable}s.
  *
  * <p>The Remixer object is the heart and soul of Remixer as a framework, it coordinates syncing and
  * value changes.
@@ -133,8 +133,8 @@ public class Remixer {
   }
 
   /**
-   * This adds a remixer item ({@link Variable} or {@link Trigger}) to be tracked and displayed.
-   * Checks that the remixer item is compatible with the existing remixer items with the same key.
+   * This adds a {@link Variable} to be tracked and displayed.
+   * Checks that the variable is compatible with the existing variables with the same key.
    *
    * <p>This method also removes old remixer items whose contexts have been reclaimed by the garbage
    * collector which are being replaced by items from the same class of context. No items are
@@ -218,13 +218,6 @@ public class Remixer {
    */
   void onValueChanged(Variable variable) {
     synchronizationMechanism.onValueChanged(variable);
-  }
-
-  /**
-   * Notifies the synchronization mechanism that a trigger was just triggered.
-   */
-  void onTrigger(Trigger trigger) {
-    synchronizationMechanism.onTrigger(trigger);
   }
 
   /**
