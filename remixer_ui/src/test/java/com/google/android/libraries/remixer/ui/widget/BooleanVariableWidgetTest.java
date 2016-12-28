@@ -85,4 +85,13 @@ public class BooleanVariableWidgetTest {
     // After changing the text, check that the callback was called once again
     verify(mockCallback, times(2)).onValueSet(variable);
   }
+
+  @Test
+  public void callbackIsCalledOnNameClick() {
+    // Check that the callback  was called. This should've happened during setUp()
+    verify(mockCallback, times(1)).onValueSet(variable);
+    name.performClick();
+    // After changing the text, check that the callback was called once again
+    verify(mockCallback, times(2)).onValueSet(variable);
+  }
 }

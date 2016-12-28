@@ -20,6 +20,7 @@ import android.content.Context;
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -54,6 +55,12 @@ public class BooleanVariableWidget extends RelativeLayout
     super.onFinishInflate();
     variableSwitch = (Switch) findViewById(R.id.variableSwitch);
     nameText = (TextView) findViewById(R.id.variableName);
+    nameText.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        variableSwitch.toggle();
+      }
+    });
   }
 
   @Override
