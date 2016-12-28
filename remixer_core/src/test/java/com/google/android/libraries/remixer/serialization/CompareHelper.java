@@ -18,7 +18,6 @@ package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
-import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
 import org.junit.Assert;
 
@@ -53,7 +52,7 @@ public class CompareHelper {
     Assert.assertEquals(variable.getIncrement(), storage.increment);
   }
 
-  private static void assertConsistent(StoredVariable storage, RemixerItem item) {
+  private static void assertConsistent(StoredVariable storage, Variable item) {
     Assert.assertEquals(item.getKey(), storage.key);
     Assert.assertEquals(item.getTitle(), storage.title);
   }

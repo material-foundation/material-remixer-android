@@ -72,7 +72,7 @@ public class SeekBarRangeVariableWidgetTest {
         .build();
     view = (SeekBarRangeVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.seekbar_range_variable_widget, null);
-    view.bindRemixerItem(variable);
+    view.bindVariable(variable);
     seekbar = (SeekBar) view.findViewById(R.id.variableSeekBar);
     currentValue = (TextView) view.findViewById(R.id.rangeVariableCurrentValue);
     name = (TextView) view.findViewById(R.id.variableName);

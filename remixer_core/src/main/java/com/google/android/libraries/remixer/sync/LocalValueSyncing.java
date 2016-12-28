@@ -16,9 +16,7 @@
 
 package com.google.android.libraries.remixer.sync;
 
-import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.serialization.SerializableRemixerContents;
 import com.google.android.libraries.remixer.serialization.StoredVariable;
@@ -41,11 +39,10 @@ public class LocalValueSyncing implements SynchronizationMechanism {
 
   @Override
   @SuppressWarnings("unchecked")
-  public void onAddingRemixerItem(RemixerItem item) {
-    serializableRemixerContents.addItem(item);
-    StoredVariable storedVariable = serializableRemixerContents.getItem(item.getKey());
+  public void onAddingVariable(Variable variable) {
+    serializableRemixerContents.addItem(variable);
+    StoredVariable storedVariable = serializableRemixerContents.getItem(variable.getKey());
     // Check the value for updates.
-    Variable variable = (Variable) item;
     variable.setValueWithoutNotifyingOthers(storedVariable.getSelectedValue());
   }
 
@@ -53,8 +50,8 @@ public class LocalValueSyncing implements SynchronizationMechanism {
   @SuppressWarnings("unchecked")
   public void onValueChanged(Variable variable) {
     serializableRemixerContents.setValue(variable);
-    List<RemixerItem> itemList = remixer.getItemsWithKey(variable.getKey());
-    for (RemixerItem item : itemList) {
+    List<Variable> itemList = remixer.getVariablesWithKey(variable.getKey());
+    for (Variable item : itemList) {
       if (item != variable) {
         ((Variable) item).setValueWithoutNotifyingOthers(variable.getSelectedValue());
       }

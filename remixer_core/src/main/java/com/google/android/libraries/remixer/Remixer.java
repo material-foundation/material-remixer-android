@@ -48,17 +48,17 @@ public class Remixer {
   private static Map<String, DataType> registeredDataTypes = new HashMap<>();
 
   /**
-   * This is a map of Remixer Item keys to a list of remixer items that have that key.
+   * This is a map of Remixer keys to a list of variables that have that key.
    *
-   * <p>There may be several RemixerItems for the same key because the key can be reused in
+   * <p>There may be several variables for the same key because the key can be reused in
    * different activities and the value has to be shared across those.
    */
-  private Map<String, List<RemixerItem>> keyMap;
+  private Map<String, List<Variable>> keyMap;
 
   /**
-   * This is a map of contexts to a list of remixer items for the given context.
+   * This is a map of contexts to a list of variables for the given context.
    */
-  private Map<Object, List<RemixerItem>> contextMap;
+  private Map<Object, List<Variable>> contextMap;
 
   /**
    * The synchronization mechanism used to keep values in sync across different instances of the
@@ -136,38 +136,38 @@ public class Remixer {
    * This adds a {@link Variable} to be tracked and displayed.
    * Checks that the variable is compatible with the existing variables with the same key.
    *
-   * <p>This method also removes old remixer items whose contexts have been reclaimed by the garbage
+   * <p>This method also removes old variables whose contexts have been reclaimed by the garbage
    * collector which are being replaced by items from the same class of context. No items are
    * removed until equivalent ones from the same context class are added to replace them. This
    * guarantees that no incompatible items for the same key are ever accepted.
    *
-   * @param remixerItem The remixer item to be added. It must have a context object otherwise it
+   * @param variable The variable to be added. It must have a context object otherwise it
    *     will never be displayed, and thus not be editable.
    * @throws IncompatibleRemixerItemsWithSameKeyException Other items with the same key have been
    *     added other contexts with incompatible types.
    * @throws DuplicateKeyException Another item with the same key was added for the same context.
    */
   @SuppressWarnings("unchecked")
-  public void addItem(RemixerItem remixerItem) {
-    if (!registeredDataTypes.containsKey(remixerItem.getDataType().getName())) {
+  public void addItem(Variable variable) {
+    if (!registeredDataTypes.containsKey(variable.getDataType().getName())) {
       throw new IllegalStateException(String.format(
           Locale.getDefault(),
           "There is no registered data type that matches %s. Are you sure you ran "
           + "RemixerInitialization.initRemixer in your application class? See the Remixer README "
           + "for detailed instructions. If this is a custom data type you have to manually add it.",
-          remixerItem.getDataType().getName()));
+          variable.getDataType().getName()));
     }
-    List<RemixerItem> listForKey = getOrCreateItemList(remixerItem.getKey(), keyMap);
-    for (RemixerItem existingItem : listForKey) {
-      if (remixerItem.getContext() != null
-          && remixerItem.getContext() == existingItem.getContext()) {
+    List<Variable> listForKey = getOrCreateVariableList(variable.getKey(), keyMap);
+    for (Variable existingItem : listForKey) {
+      if (variable.getContext() != null
+          && variable.getContext() == existingItem.getContext()) {
         // An object with the same key for the same parent object, this shouldn't happen so throw
         // an exception.
         throw new DuplicateKeyException(
             String.format(
                 Locale.getDefault(),
                 "Duplicate key %s being used in class %s",
-                remixerItem.getKey(),
+                variable.getKey(),
                 existingItem.getContext().getClass().getCanonicalName()
             ));
       }
@@ -175,25 +175,25 @@ public class Remixer {
     if (synchronizationMechanism != null) {
       // Notify the synchronization mechanism, which will take care of keeping the values in sync
       // and checking compatibility.
-      synchronizationMechanism.onAddingRemixerItem(remixerItem);
+      synchronizationMechanism.onAddingVariable(variable);
     }
-    remixerItem.setRemixer(this);
-    listForKey.add(remixerItem);
-    getOrCreateItemList(remixerItem.getContext(), contextMap).add(remixerItem);
+    variable.setRemixer(this);
+    listForKey.add(variable);
+    getOrCreateVariableList(variable.getContext(), contextMap).add(variable);
   }
 
   /**
    * Gets the list of items that have the given key.
    */
-  public List<RemixerItem> getItemsWithKey(String key) {
+  public List<Variable> getVariablesWithKey(String key) {
     return keyMap.get(key);
   }
 
   /**
-   * Gets all the Remixer Items associated with {@code context}. {@code context} is expected to be
+   * Gets all the variables associated with {@code context}. {@code context} is expected to be
    * an Activity, it is Object here because remixer_core cannot depend on the Android SDK.
    */
-  public List<RemixerItem> getItemsWithContext(Object context) {
+  public List<Variable> getVariablesWithContext(Object context) {
     return contextMap.get(context);
   }
 
@@ -201,9 +201,9 @@ public class Remixer {
    * Gets a list of RemixerItems for the given {@code key} from the {@code map} passed in, if such a
    * mapping does not exist, it adds a mapping to a new empty list.
    */
-  private static <T> List<RemixerItem> getOrCreateItemList(
-      T key, Map<T, List<RemixerItem>> map) {
-    List<RemixerItem> list = null;
+  private static <T> List<Variable> getOrCreateVariableList(
+      T key, Map<T, List<Variable>> map) {
+    List<Variable> list = null;
     if (map.containsKey(key)) {
       list = map.get(key);
     } else {
@@ -221,16 +221,16 @@ public class Remixer {
   }
 
   /**
-   * Removes remixer items whose context is {@code activity}. This makes sure {@code activity}
+   * Removes variables whose context is {@code activity}. This makes sure {@code activity}
    * doesn't leak through their callbacks.
    */
   public void onActivityDestroyed(Object activity) {
     if (contextMap.containsKey(activity)) {
-      for (RemixerItem remixerItem : contextMap.get(activity)) {
-        List<RemixerItem> listForKey = getItemsWithKey(remixerItem.getKey());
-        listForKey.remove(remixerItem);
+      for (Variable variable : contextMap.get(activity)) {
+        List<Variable> listForKey = getVariablesWithKey(variable.getKey());
+        listForKey.remove(variable);
         if (listForKey.size() == 0) {
-          keyMap.remove(remixerItem.getKey());
+          keyMap.remove(variable.getKey());
         }
       }
       contextMap.remove(activity);

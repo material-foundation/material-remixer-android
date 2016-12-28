@@ -75,7 +75,7 @@ public class ColorListVariableWidgetTest {
     ColorListVariableWidget view =
         (ColorListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
             .inflate(R.layout.color_list_variable_widget, null);
-    view.bindRemixerItem(variable);
+    view.bindVariable(variable);
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.colorList);
     name = (TextView) view.findViewById(R.id.variableName);
     adapter = (ColorListVariableWidget.Adapter) recyclerView.getAdapter();

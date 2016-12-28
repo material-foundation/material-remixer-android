@@ -18,22 +18,22 @@ package com.google.android.libraries.remixer.ui.widget;
 
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
-import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
 /**
- * An interface that all remixer item widgets must implement.
+ * An interface that all remixer widgets must implement.
  *
- * <p>This lets the {@link RemixerFragment} bind them to a {@link RemixerItem} when they are
+ * <p>This lets the {@link RemixerFragment} bind them to a {@link Variable} when they are
  * inflated.
  */
 @Keep
-public interface RemixerItemWidget<T extends RemixerItem> {
+public interface RemixerWidget<T extends Variable> {
   /**
-   * Binds the remixer item to the widget in question.
+   * Binds the variable item to the widget in question.
    *
    * <p>Subclasses need to set up all the callbacks from the UI to set the appropriate value on the
    * backing Variable.
    */
-  void bindRemixerItem(@NonNull T remixerItem);
+  void bindVariable(@NonNull T variable);
 }

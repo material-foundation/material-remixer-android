@@ -16,7 +16,7 @@
 
 package com.google.android.libraries.remixer.serialization;
 
-import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -57,11 +57,11 @@ public abstract class ValueConverter<T> {
   public abstract JsonElement valueToJson(T value);
 
   /**
-   * Creates a StoredVariable that represents the data in {@code item} if {@code item} is of this
-   * type. Returns null otherwise.
+   * Creates a StoredVariable that represents the data in {@code variable} if {@code item} is of
+   * this type.
    * @throws IllegalArgumentException if {@code item} does not match this type.
    */
-  public abstract StoredVariable<T> fromRemixerItem(RemixerItem item);
+  public abstract StoredVariable<T> fromVariable(Variable<?> variable);
 
   /**
    * Deserializes a JsonElement that contains a StoredVariable.

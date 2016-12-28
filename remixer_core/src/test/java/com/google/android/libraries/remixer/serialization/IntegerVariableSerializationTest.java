@@ -72,7 +72,7 @@ public class IntegerVariableSerializationTest {
 
   @Test
   public void integerListVariableConvertsToStorageTest() {
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerListVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(integerListVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, integerListVariable);
     // Check that it converts to Json and back with no data loss.
@@ -83,7 +83,7 @@ public class IntegerVariableSerializationTest {
   @Test
   public void modifiedIntegerListVariableConvertsToStorageTest() {
     integerListVariable.setValue(154);
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerListVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(integerListVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, integerListVariable);
     // Check that it converts to Json and back with no data loss.
@@ -93,7 +93,7 @@ public class IntegerVariableSerializationTest {
 
   @Test
   public void integerVariableConvertsToStorageTest() {
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(integerVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsVariable(result, integerVariable);
     // Check that it converts to Json and back with no data loss.
@@ -104,7 +104,7 @@ public class IntegerVariableSerializationTest {
   @Test
   public void modifiedIntegerVariableConvertsToStorageTest() {
     integerListVariable.setValue(154);
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(integerVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(integerVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsVariable(result, integerVariable);
     // Check that it converts to Json and back with no data loss.
@@ -114,7 +114,7 @@ public class IntegerVariableSerializationTest {
 
   @Test
   public void rangeVariableConvertsToStorageTest() {
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(rangeVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(rangeVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsRangeVariable(result, rangeVariable);
     // Check that it converts to Json and back with no data loss.
@@ -125,7 +125,7 @@ public class IntegerVariableSerializationTest {
   @Test
   public void modifiedRangeVariableConvertsToStorageTest() {
     rangeVariable.setValue(20);
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(rangeVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(rangeVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsRangeVariable(result, rangeVariable);
     // Check that it converts to Json and back with no data loss.

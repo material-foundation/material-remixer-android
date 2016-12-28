@@ -16,13 +16,45 @@
 
 package com.google.android.libraries.remixer;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Base class for all Remixes that does not do any value checking. A variable takes care of calling
  * a callback when the value is changed. It does not support any sort of null values.
  *
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
-public class Variable<T> extends RemixerItem {
+public class Variable<T> {
+
+  /**
+   * The name to display in the UI for this variable.
+   */
+  private final String title;
+  /**
+   * The key to use to identify this item across storage and all the interfaces.
+   */
+  private final String key;
+  /**
+   * The layout to inflate to display this variable. If set to 0, the default layout associated
+   * with the variable type will be used.
+   */
+  private final int layoutId;
+  /**
+   * A weak reference to this RemixerItem's context. The RemixerItem's lifecycle is tied to its
+   * contexts'.
+   *
+   * <p>It should be a reference to an activity, but it isn't since remixer_core cannot depend on
+   * Android classes. It is a weak reference in order not to leak the activity accidentally.
+   */
+  private final WeakReference<Object> context;
+  /**
+   * The remixer instance this RemixerItem has been attached to.
+   */
+  protected Remixer remixer;
+  /**
+   * The data type held in this RemixerItem.
+   */
+  private DataType dataType;
 
   /**
    * The callback to be executed when the value is updated.
@@ -52,8 +84,11 @@ public class Variable<T> extends RemixerItem {
       Callback<T> callback,
       int layoutId,
       DataType dataType) {
-    super(title, key, context, layoutId, dataType);
-    // TODO(miguely): pull this out of SharedPreferences.
+    this.title = title;
+    this.key = key;
+    this.context = new WeakReference<>(context);
+    this.layoutId = layoutId;
+    this.dataType = dataType;
     this.selectedValue = defaultValue;
     this.callback = callback;
   }
@@ -68,6 +103,40 @@ public class Variable<T> extends RemixerItem {
   public final void init() {
     checkValue(selectedValue);
     runCallback();
+  }
+
+  public DataType getDataType() {
+    return dataType;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public String getKey() {
+    return key;
+  }
+
+  /**
+   * Returns the layout id to inflate when displaying this variable.
+   */
+  public int getLayoutId() {
+    return layoutId;
+  }
+
+  /**
+   * Returns the context.
+   */
+  Object getContext() {
+    return context.get();
+  }
+
+  /**
+   * Set the current remixer instance. This allows the variable to notify other variables with the
+   * same key.
+   */
+  public void setRemixer(Remixer remixer) {
+    this.remixer = remixer;
   }
 
   /**
@@ -145,22 +214,9 @@ public class Variable<T> extends RemixerItem {
    * <p>On the other hand: key, dataType, and context are mandatory. If they're missing, an
    * {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder<T> extends RemixerItem.Builder<Variable<T>, Callback<T>> {
+  public static class Builder<T> extends BaseVariableBuilder<Variable<T>, T> {
 
-    private T defaultValue;
-
-    public Builder() {}
-
-    public Builder<T> setDefaultValue(T defaultValue) {
-      this.defaultValue = defaultValue;
-      return this;
-    }
-
-    /**
-     * Returns a new Variable created with the configuration stored in this builder instance.
-     *
-     * @throws IllegalArgumentException If key or context is missing
-     */
+    @Override
     public Variable<T> build() {
       checkBaseFields();
       Variable<T> variable =
@@ -168,5 +224,7 @@ public class Variable<T> extends RemixerItem {
       variable.init();
       return variable;
     }
+
+    public Builder() {}
   }
 }

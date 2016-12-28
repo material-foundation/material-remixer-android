@@ -20,7 +20,7 @@ The project is defined as a gradle project with submodules.
   * main
     * `com.google.android.libraries.remixer.ui.view` is  the code to display the UI as a BottomSheetFragmentDialog
     * `com.google.android.libraries.remixer.ui.widget` is a family of widgets that can display each individual Remixer items (variables).
-    * `com.google.android.libraries.remixer.ui.widget.RemixerItemWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
+    * `com.google.android.libraries.remixer.ui.widget.RemixerWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
     * `com.google.android.libraries.remixer.ui.RemixerCallbacks` is an implementation of `Application.ActivityLifecycleCallbacks` that clears up callbacks once the corresponding activity is destroyed so it doesn't leak. It needs to be registered in the `Application.onCreate()` method.
   * tests: JUnit/Robolectric tests.
 * remixer_annotation: An annotation processor to make it easier to add remixes to your code.
@@ -132,7 +132,7 @@ They support the following properties:
 - `minValue` the minimum value, if not set assumes 0
 - `maxValue` the maximum value, if not set assumes 100
 - `increment` the increment between two steps of the range, 1 by default.
-- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A Range variable that goes from 15 to 70 and starts at 20 by default:
 ```java
@@ -150,7 +150,7 @@ They support the following properties:
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
 - `defaultValue` the initial value, if not set assumes `false`
-- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A Boolean variable that has true as a default value:
 ```java
@@ -168,7 +168,7 @@ They support the following properties:
 - `title` the displayable name of the variable, if not set assumes `key`
 - `defaultValue` the initial value, if not set assumes the first in the `possibleValues` list
 - `possibleValues` the list of possible values.
-- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A String List variable that sets fonts from a list and defaults to the first in the list:
 ```java
@@ -184,7 +184,7 @@ public void setTitleFont(String fontName) {
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
 - `defaultValue` the initial value, if not set assumes the empty string.
-- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A String variable that sets freeform example text:
 ```java
@@ -199,7 +199,7 @@ public void setExampleText(String exampleText) {
 - `title` the displayable name of the variable, if not set assumes `key`
 - `defaultValue` the initial value, if not set assumes the first in the `possibleValues` list
 - `possibleValues` the list of possible values.
-- `layoutId` a layoutId to display this, must implement RemixerItemWidget. It assumes a sensible default if unset.
+- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A variable that lets you pick colors from a list, this example uses a custom layout id to guarantee that it's treated as a Color:
 ```java

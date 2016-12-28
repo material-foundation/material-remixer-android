@@ -103,7 +103,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
 
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.remixerList);
     recyclerView.setAdapter(
-        new RemixerAdapter(remixer.getItemsWithContext(getActivity())));
+        new RemixerAdapter(remixer.getVariablesWithContext(getActivity())));
     return view;
   }
 

@@ -66,7 +66,7 @@ public class BooleanVariableWidgetTest {
         .build();
     view = (BooleanVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.boolean_variable_widget, null);
-    view.bindRemixerItem(variable);
+    view.bindVariable(variable);
     variableSwitch = (Switch) view.findViewById(R.id.variableSwitch);
     name = (TextView) view.findViewById(R.id.variableName);
   }

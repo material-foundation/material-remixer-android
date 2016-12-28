@@ -33,7 +33,7 @@ import com.google.android.libraries.remixer.ui.R;
  */
 @Keep
 public class StringVariableWidget extends RelativeLayout
-    implements RemixerItemWidget<Variable<String>> {
+    implements RemixerWidget<Variable<String>> {
 
   private TextView nameText;
   private EditText text;
@@ -58,7 +58,7 @@ public class StringVariableWidget extends RelativeLayout
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final Variable<String> variable) {
+  public void bindVariable(@NonNull final Variable<String> variable) {
     nameText.setText(variable.getTitle());
     text.setText(variable.getSelectedValue());
     text.addTextChangedListener(new TextWatcher() {

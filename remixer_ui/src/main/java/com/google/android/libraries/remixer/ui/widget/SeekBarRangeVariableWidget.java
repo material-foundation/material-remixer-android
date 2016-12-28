@@ -31,7 +31,7 @@ import com.google.android.libraries.remixer.ui.R;
  */
 @Keep
 public class SeekBarRangeVariableWidget
-    extends RelativeLayout implements RemixerItemWidget<RangeVariable> {
+    extends RelativeLayout implements RemixerWidget<RangeVariable> {
 
   private SeekBar seekBar;
   private TextView nameText;
@@ -59,7 +59,7 @@ public class SeekBarRangeVariableWidget
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final RangeVariable variable) {
+  public void bindVariable(@NonNull final RangeVariable variable) {
     this.variable = variable;
     nameText.setText(variable.getTitle());
     int maxProgress = variable.getMaxValue() - variable.getMinValue();

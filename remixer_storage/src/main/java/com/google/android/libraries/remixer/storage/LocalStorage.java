@@ -18,7 +18,6 @@ package com.google.android.libraries.remixer.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.serialization.GsonProvider;
 import com.google.android.libraries.remixer.serialization.StoredVariable;
@@ -45,21 +44,21 @@ public class LocalStorage extends LocalValueSyncing {
     }
   }
 
-  private void writeRemixerItem(final String key) {
+  private void writeVariable(final String key) {
     SharedPreferences.Editor editor = preferences.edit();
     editor.putString(key, gson.toJson(serializableRemixerContents.getItem(key)));
     editor.apply();
   }
 
   @Override
-  public void onAddingRemixerItem(RemixerItem item) {
-    super.onAddingRemixerItem(item);
-    writeRemixerItem(item.getKey());
+  public void onAddingVariable(Variable variable) {
+    super.onAddingVariable(variable);
+    writeVariable(variable.getKey());
   }
 
   @Override
   public void onValueChanged(Variable variable) {
     super.onValueChanged(variable);
-    writeRemixerItem(variable.getKey());
+    writeVariable(variable.getKey());
   }
 }

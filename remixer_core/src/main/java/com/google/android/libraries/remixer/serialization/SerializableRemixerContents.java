@@ -17,7 +17,6 @@
 package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.IncompatibleRemixerItemsWithSameKeyException;
-import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
 import java.util.HashMap;
 import java.util.Locale;
@@ -34,7 +33,7 @@ import java.util.Set;
 public class SerializableRemixerContents {
 
   /**
-   * Mapping from Remixer Item ID to the item's representation in Serializable format.
+   * Mapping from variable key to the variable's representation in Serializable format.
    *
    * <p>Notice that while {@link com.google.android.libraries.remixer.Remixer#keyMap} contains more
    * than one item per key, all of those items contain the same data (same value for variables), so
@@ -56,8 +55,8 @@ public class SerializableRemixerContents {
    *
    * <p>It only keeps one per key, as explained in {@link #keyToDataMap}
    */
-  public void addItem(RemixerItem item) {
-    addItem(StoredVariable.fromRemixerItem(item));
+  public void addItem(Variable item) {
+    addItem(StoredVariable.fromVariable(item));
   }
 
   /**
@@ -117,7 +116,7 @@ public class SerializableRemixerContents {
    */
   @SuppressWarnings("unchecked")
   public void setValue(Variable variable) {
-    StoredVariable storedVariable = StoredVariable.fromRemixerItem(variable);
+    StoredVariable storedVariable = StoredVariable.fromVariable(variable);
     StoredVariable existingStoredVariable = keyToDataMap.get(storedVariable.key);
     if (!existingStoredVariable.isCompatibleWith(storedVariable)) {
       throw new IncompatibleRemixerItemsWithSameKeyException(

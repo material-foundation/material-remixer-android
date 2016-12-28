@@ -33,6 +33,6 @@
  * Remixer will respect the order in which the methods are defined.
  *
  * It is possible to use both annotations and explicit Variable instantiations, you just have to add
- * your explicit remixer item instantiations after the call to RemixerBinder.bind.
+ * your explicit variable instantiations after the call to RemixerBinder.bind.
  */
 package com.google.android.libraries.remixer.annotation;

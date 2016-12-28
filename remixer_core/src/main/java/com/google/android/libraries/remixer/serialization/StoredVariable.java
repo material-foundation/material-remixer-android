@@ -18,7 +18,7 @@ package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ import java.util.List;
  * protocol.
  *
  * <p>This is never used for anything other than storage and syncing and is meant to be converted to
- * a regular {@link com.google.android.libraries.remixer.RemixerItem} as soon as it's completely
+ * a regular {@link com.google.android.libraries.remixer.Variable} as soon as it's completely
  * parsed.
  */
 public class StoredVariable<T> {
@@ -41,7 +41,6 @@ public class StoredVariable<T> {
   static final String MAX_VALUE = "maxValue";
   static final String INCREMENT = "increment";
 
-  // This first section applies to every Remixer item.
   /**
    * The RemixerItem's key.
    */
@@ -209,11 +208,11 @@ public class StoredVariable<T> {
   /**
    * Creates a Stored variable from a existing RemixerItem.
    */
-  static StoredVariable fromRemixerItem(RemixerItem item) {
+  static StoredVariable fromVariable(Variable item) {
     StoredVariable storedVariable = null;
     for (DataType type : Remixer.getRegisteredDataTypes()) {
       try {
-        storedVariable = type.getConverter().fromRemixerItem(item);
+        storedVariable = type.getConverter().fromVariable(item);
         break;
       } catch (IllegalArgumentException ex) {
         // Don't do anything, this just wasn't the right data type.
