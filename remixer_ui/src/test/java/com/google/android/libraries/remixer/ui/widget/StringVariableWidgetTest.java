@@ -66,7 +66,7 @@ public class StringVariableWidgetTest {
         .build();
     view = (StringVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.string_variable_widget, null);
-    view.bindRemixerItem(variable);
+    view.bindVariable(variable);
     text = (EditText) view.findViewById(R.id.stringVariableText);
     name = (TextView) view.findViewById(R.id.variableName);
   }

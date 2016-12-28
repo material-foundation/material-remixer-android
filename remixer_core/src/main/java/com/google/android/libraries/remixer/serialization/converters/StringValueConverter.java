@@ -1,7 +1,6 @@
 package com.google.android.libraries.remixer.serialization.converters;
 
 import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.serialization.StoredVariable;
 import com.google.android.libraries.remixer.serialization.ValueConverter;
@@ -29,18 +28,15 @@ public class StringValueConverter extends ValueConverter<String> {
 
   @Override
   @SuppressWarnings("unchecked")
-  public StoredVariable<String> fromRemixerItem(RemixerItem item) {
-    if (item instanceof Variable) {
-      Variable var = (Variable) item;
-      if (var.getDataType().getName().equals(dataType)) {
-        StoredVariable<String> storage = new StoredVariable<>();
-        storage.setDataType(dataType);
-        storage.setSelectedValue((String) var.getSelectedValue());
-        if (var instanceof ItemListVariable) {
-          storage.setPossibleValues(((ItemListVariable<String>) var).getValueList());
-        }
-        return storage;
+  public StoredVariable<String> fromVariable(Variable<?> var) {
+    if (var.getDataType().getName().equals(dataType)) {
+      StoredVariable<String> storage = new StoredVariable<>();
+      storage.setDataType(dataType);
+      storage.setSelectedValue((String) var.getSelectedValue());
+      if (var instanceof ItemListVariable) {
+        storage.setPossibleValues(((ItemListVariable<String>) var).getValueList());
       }
+      return storage;
     }
     throw new IllegalArgumentException(
         "Passed an incompatible object to convert to StoredVariable<String>");

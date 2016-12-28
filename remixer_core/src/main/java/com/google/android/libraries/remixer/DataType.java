@@ -35,7 +35,7 @@ public class DataType<T> {
    * <p>The key for this map is the specific RemixerItem subclass, and the value is the default
    * layout to use when a RemixerItem of the specific subclass has this data type.
    */
-  private final Map<Class<? extends RemixerItem>, Integer> layoutIdForRemixerItemType =
+  private final Map<Class<? extends Variable>, Integer> layoutIdForVariableType =
       new HashMap<>();
 
   /**
@@ -80,12 +80,12 @@ public class DataType<T> {
     return result;
   }
 
-  public void setLayoutIdForRemixerItemType(Class<? extends RemixerItem> clazz, int layoutId) {
-    layoutIdForRemixerItemType.put(clazz, layoutId);
+  public void setLayoutIdForVariableType(Class<? extends Variable> clazz, int layoutId) {
+    layoutIdForVariableType.put(clazz, layoutId);
   }
 
-  public int getLayoutIdForRemixerItemType(Class<? extends RemixerItem> clazz) {
-    return layoutIdForRemixerItemType.get(clazz);
+  public int getLayoutIdForVariableType(Class<? extends Variable> clazz) {
+    return layoutIdForVariableType.get(clazz);
   }
 
   public String getName() {

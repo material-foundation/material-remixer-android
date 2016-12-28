@@ -41,28 +41,28 @@ public class RemixerInitialization {
     }
 
     // Boolean values only make sense in Variables, not in ItemListVariables or Range Variables.
-    DataType.BOOLEAN.setLayoutIdForRemixerItemType(
+    DataType.BOOLEAN.setLayoutIdForVariableType(
         Variable.class, R.layout.boolean_variable_widget);
     Remixer.registerDataType(DataType.BOOLEAN);
 
     // Color values are currently only supported in ItemListVariable. Support should be coming for
     // Variables. RangeVariable doesn't make sense for Color.
-    DataType.COLOR.setLayoutIdForRemixerItemType(
+    DataType.COLOR.setLayoutIdForVariableType(
         ItemListVariable.class, R.layout.boolean_variable_widget);
     Remixer.registerDataType(DataType.COLOR);
 
     // Number values are only supported in ItemListVariable or RangeVariable
-    DataType.NUMBER.setLayoutIdForRemixerItemType(
+    DataType.NUMBER.setLayoutIdForVariableType(
         ItemListVariable.class, R.layout.item_list_variable_widget);
-    DataType.NUMBER.setLayoutIdForRemixerItemType(
+    DataType.NUMBER.setLayoutIdForVariableType(
         RangeVariable.class, R.layout.seekbar_range_variable_widget);
     Remixer.registerDataType(DataType.NUMBER);
 
     // String values are supported in Variable and ItemListVariable. Range Variable doesn't quite
     // make sens
-    DataType.STRING.setLayoutIdForRemixerItemType(
+    DataType.STRING.setLayoutIdForVariableType(
         ItemListVariable.class, R.layout.item_list_variable_widget);
-    DataType.STRING.setLayoutIdForRemixerItemType(
+    DataType.STRING.setLayoutIdForVariableType(
         Variable.class, R.layout.string_variable_widget);
     Remixer.registerDataType(DataType.STRING);
   }

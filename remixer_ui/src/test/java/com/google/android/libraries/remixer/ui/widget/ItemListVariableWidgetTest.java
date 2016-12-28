@@ -74,7 +74,7 @@ public class ItemListVariableWidgetTest {
         .build();
     view = (ItemListVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.item_list_variable_widget, null);
-    view.bindRemixerItem(variable);
+    view.bindVariable(variable);
     spinner = (Spinner) view.findViewById(R.id.variableSpinner);
     name = (TextView) view.findViewById(R.id.variableName);
   }

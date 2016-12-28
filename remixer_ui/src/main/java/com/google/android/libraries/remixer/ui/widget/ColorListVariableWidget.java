@@ -44,7 +44,7 @@ import java.util.List;
  * indicated with a contrasting checkmark.
  */
 public class ColorListVariableWidget extends LinearLayout
-    implements RemixerItemWidget<ItemListVariable<Integer>> {
+    implements RemixerWidget<ItemListVariable<Integer>> {
 
   private final Adapter adapter = new Adapter();
   private TextView nameText;
@@ -72,7 +72,7 @@ public class ColorListVariableWidget extends LinearLayout
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final ItemListVariable<Integer> variable) {
+  public void bindVariable(@NonNull final ItemListVariable<Integer> variable) {
     adapter.setVariable(variable);
     nameText.setText(variable.getTitle());
   }

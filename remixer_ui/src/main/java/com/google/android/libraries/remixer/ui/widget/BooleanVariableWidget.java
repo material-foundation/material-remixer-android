@@ -32,7 +32,7 @@ import com.google.android.libraries.remixer.ui.R;
  */
 @Keep
 public class BooleanVariableWidget extends RelativeLayout
-    implements RemixerItemWidget<Variable<Boolean>> {
+    implements RemixerWidget<Variable<Boolean>> {
 
   private TextView nameText;
   private Switch variableSwitch;
@@ -57,7 +57,7 @@ public class BooleanVariableWidget extends RelativeLayout
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final Variable<Boolean> variable) {
+  public void bindVariable(@NonNull final Variable<Boolean> variable) {
     nameText.setText(variable.getTitle());
     variableSwitch.setChecked(variable.getSelectedValue());
     variableSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

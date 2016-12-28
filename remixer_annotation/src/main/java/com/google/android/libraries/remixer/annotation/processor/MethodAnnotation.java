@@ -19,7 +19,6 @@ package com.google.android.libraries.remixer.annotation.processor;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.RemixerItem;
 import com.google.android.libraries.remixer.Variable;
 import com.google.common.base.Strings;
 import com.squareup.javapoet.ClassName;
@@ -63,7 +62,7 @@ abstract class MethodAnnotation {
    */
   static final String INIT_VARIABLE_STATEMENT = "$L.init()";
   /**
-   * Statement to add a remixer item instance to the current remixer.
+   * Statement to add a variable to the current remixer.
    */
   static final String ADD_VARIABLE_STATEMENT = "remixer.addItem($L)";
   protected static final String ACTIVITY_NAME = "activity";

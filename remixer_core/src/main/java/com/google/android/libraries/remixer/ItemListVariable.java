@@ -77,15 +77,9 @@ public class ItemListVariable<T> extends Variable<T> {
    * <p>On the other hand: key, dataType, context, and possibleValues are mandatory. If either is
    * missing, an {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder<T> extends RemixerItem.Builder<ItemListVariable<T>, Callback<T>> {
+  public static class Builder<T> extends BaseVariableBuilder<ItemListVariable<T>, T> {
 
-    private T defaultValue;
     private List<T> possibleValues;
-
-    public Builder<T> setDefaultValue(T defaultValue) {
-      this.defaultValue = defaultValue;
-      return this;
-    }
 
     public Builder<T> setPossibleValues(List<T> possibleValues) {
       this.possibleValues = possibleValues;
@@ -104,6 +98,7 @@ public class ItemListVariable<T> extends Variable<T> {
      * @throws IllegalArgumentException If key or possibleValues are missing or if the configuration
      *     is invalid for ItemListVariable.
      */
+    @Override
     public ItemListVariable<T> build() {
       checkBaseFields();
       if (possibleValues == null || possibleValues.isEmpty()) {

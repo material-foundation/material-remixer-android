@@ -159,9 +159,8 @@ public class RangeVariable extends Variable<Integer> {
    * these are missing or the settings are incorrect according to the logic of {@link RangeVariable}
    * an {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder extends RemixerItem.Builder<RangeVariable, Callback<Integer>> {
+  public static class Builder extends BaseVariableBuilder<RangeVariable, Integer> {
 
-    private Integer defaultValue;
     private Integer minValue;
     private Integer maxValue;
     private int increment = 1;
@@ -182,11 +181,6 @@ public class RangeVariable extends Variable<Integer> {
 
     public Builder setIncrement(int increment) {
       this.increment = increment;
-      return this;
-    }
-
-    public Builder setDefaultValue(int defaultValue) {
-      this.defaultValue = defaultValue;
       return this;
     }
 

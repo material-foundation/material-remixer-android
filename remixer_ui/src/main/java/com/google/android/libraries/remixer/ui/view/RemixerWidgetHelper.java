@@ -16,15 +16,15 @@
 
 package com.google.android.libraries.remixer.ui.view;
 
-import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
 import java.util.Locale;
 
 /**
- * Utility class to determine what widget to inflate for a remixer item.
+ * Utility class to determine what widget to inflate for a variable.
  */
-final class RemixerItemWidgetHelper {
+final class RemixerWidgetHelper {
 
-  private RemixerItemWidgetHelper() {}
+  private RemixerWidgetHelper() {}
 
   private static final String UNKNOWN_DEFAULT_ERROR_FORMAT =
       "Variable with key %s, data type %s and class %s has no mapping to a layout resource."
@@ -33,20 +33,20 @@ final class RemixerItemWidgetHelper {
   /**
    * Returns the layout id to inflate for this Variable.
    *
-   * <p>If no layout has been specified for the remixer item (it is 0), it tries to fall back to
+   * <p>If no layout has been specified for the variable (it is 0), it tries to fall back to
    * known default layout ids.
    *
    * @throws IllegalArgumentException if the Variable in question has no default layout associated
    *     with it and it is relying on a default.
    */
-  static int getLayoutId(RemixerItem instance) {
+  static int getLayoutId(Variable instance) {
     int layoutId = instance.getLayoutId();
     if (layoutId != 0) {
       // This instance has a preferred layout.
       return layoutId;
     }
     try {
-      return instance.getDataType().getLayoutIdForRemixerItemType(instance.getClass());
+      return instance.getDataType().getLayoutIdForVariableType(instance.getClass());
     } catch (NullPointerException ex) {
       // There is no mapping, there is no layoutId whatsoever. What do we do? Throw an informative
       // exception.
