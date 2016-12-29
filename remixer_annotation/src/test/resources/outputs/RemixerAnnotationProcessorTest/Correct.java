@@ -25,6 +25,7 @@ import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Boolean;
+import java.lang.Float;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
@@ -46,34 +47,49 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setBoolean_remixer_item.setCallback(setBoolean_callback);
     setBoolean_remixer_item.setDefaultValue(false);
     remixer.addItem(setBoolean_remixer_item.build());
-    Generated_setIntegerList setIntegerList_callback = new Generated_setIntegerList(activity);
-    ItemListVariable.Builder<Integer> setIntegerList_remixer_item = new ItemListVariable.Builder<Integer>();
-    setIntegerList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
-    setIntegerList_remixer_item.setKey("setIntegerList");
-    setIntegerList_remixer_item.setTitle("setIntegerList");
-    setIntegerList_remixer_item.setLayoutId(0);
-    setIntegerList_remixer_item.setContext(activity);
-    setIntegerList_remixer_item.setCallback(setIntegerList_callback);
-    ArrayList<Integer> setIntegerList_variable_list = new ArrayList<Integer>();
-    setIntegerList_variable_list.add(1);
-    setIntegerList_variable_list.add(2);
-    setIntegerList_variable_list.add(3);
-    setIntegerList_remixer_item.setPossibleValues(setIntegerList_variable_list);
-    setIntegerList_remixer_item.setDefaultValue(1);
-    remixer.addItem(setIntegerList_remixer_item.build());
-    Generated_setInt setInt_callback = new Generated_setInt(activity);
-    RangeVariable.Builder setInt_remixer_item = new RangeVariable.Builder();
-    setInt_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
-    setInt_remixer_item.setKey("setInt");
-    setInt_remixer_item.setTitle("setInt");
-    setInt_remixer_item.setLayoutId(0);
-    setInt_remixer_item.setContext(activity);
-    setInt_remixer_item.setCallback(setInt_callback);
-    setInt_remixer_item.setMinValue(0);
-    setInt_remixer_item.setMaxValue(100);
-    setInt_remixer_item.setDefaultValue(0);
-    setInt_remixer_item.setIncrement(1);
-    remixer.addItem(setInt_remixer_item.build());
+    Generated_setFloatList setFloatList_callback = new Generated_setFloatList(activity);
+    ItemListVariable.Builder<Float> setFloatList_remixer_item = new ItemListVariable.Builder<Float>();
+    setFloatList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
+    setFloatList_remixer_item.setKey("setFloatList");
+    setFloatList_remixer_item.setTitle("setFloatList");
+    setFloatList_remixer_item.setLayoutId(0);
+    setFloatList_remixer_item.setContext(activity);
+    setFloatList_remixer_item.setCallback(setFloatList_callback);
+    ArrayList<Float> setFloatList_variable_list = new ArrayList<Float>();
+    setFloatList_variable_list.add(1f);
+    setFloatList_variable_list.add(2f);
+    setFloatList_variable_list.add(3f);
+    setFloatList_remixer_item.setPossibleValues(setFloatList_variable_list);
+    setFloatList_remixer_item.setDefaultValue(1f);
+    remixer.addItem(setFloatList_remixer_item.build());
+    Generated_setColorList setColorList_callback = new Generated_setColorList(activity);
+    ItemListVariable.Builder<Integer> setColorList_remixer_item = new ItemListVariable.Builder<Integer>();
+    setColorList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeColor__"));
+    setColorList_remixer_item.setKey("setColorList");
+    setColorList_remixer_item.setTitle("setColorList");
+    setColorList_remixer_item.setLayoutId(0);
+    setColorList_remixer_item.setContext(activity);
+    setColorList_remixer_item.setCallback(setColorList_callback);
+    ArrayList<Integer> setColorList_variable_list = new ArrayList<Integer>();
+    setColorList_variable_list.add(1);
+    setColorList_variable_list.add(2);
+    setColorList_variable_list.add(3);
+    setColorList_remixer_item.setPossibleValues(setColorList_variable_list);
+    setColorList_remixer_item.setDefaultValue(1);
+    remixer.addItem(setColorList_remixer_item.build());
+    Generated_setFloat setFloat_callback = new Generated_setFloat(activity);
+    RangeVariable.Builder setFloat_remixer_item = new RangeVariable.Builder();
+    setFloat_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
+    setFloat_remixer_item.setKey("setFloat");
+    setFloat_remixer_item.setTitle("setFloat");
+    setFloat_remixer_item.setLayoutId(0);
+    setFloat_remixer_item.setContext(activity);
+    setFloat_remixer_item.setCallback(setFloat_callback);
+    setFloat_remixer_item.setMinValue(0f);
+    setFloat_remixer_item.setMaxValue(100f);
+    setFloat_remixer_item.setDefaultValue(0f);
+    setFloat_remixer_item.setIncrement(1f);
+    remixer.addItem(setFloat_remixer_item.build());
     Generated_setString setString_callback = new Generated_setString(activity);
     StringVariableBuilder setString_remixer_item = new StringVariableBuilder();
     setString_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeString__"));
@@ -113,29 +129,42 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
   }
 
-  static class Generated_setIntegerList implements Callback<Integer> {
+  static class Generated_setFloatList implements Callback<Float> {
     private final Correct activity;
 
-    Generated_setIntegerList(Correct activity) {
+    Generated_setFloatList(Correct activity) {
       this.activity = activity;
     }
 
     @Override
-    public void onValueSet(Variable<Integer> variable) {
-      activity.setIntegerList(variable.getSelectedValue());
+    public void onValueSet(Variable<Float> variable) {
+      activity.setFloatList(variable.getSelectedValue());
     }
   }
 
-  static class Generated_setInt implements Callback<Integer> {
+  static class Generated_setColorList implements Callback<Integer> {
     private final Correct activity;
 
-    Generated_setInt(Correct activity) {
+    Generated_setColorList(Correct activity) {
       this.activity = activity;
     }
 
     @Override
     public void onValueSet(Variable<Integer> variable) {
-      activity.setInt(variable.getSelectedValue());
+      activity.setColorList(variable.getSelectedValue());
+    }
+  }
+
+  static class Generated_setFloat implements Callback<Float> {
+    private final Correct activity;
+
+    Generated_setFloat(Correct activity) {
+      this.activity = activity;
+    }
+
+    @Override
+    public void onValueSet(Variable<Float> variable) {
+      activity.setFloat(variable.getSelectedValue());
     }
   }
 

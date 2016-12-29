@@ -17,8 +17,9 @@
 package somepackage;
 
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
-import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
+import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
 
@@ -30,11 +31,14 @@ public class Correct {
   @BooleanVariableMethod
   public void setBoolean(Boolean i) {}
 
-  @IntegerListVariableMethod(possibleValues = {1, 2, 3})
-  public void setIntegerList(Integer i) {}
+  @NumberListVariableMethod(possibleValues = {1, 2, 3})
+  public void setFloatList(Float i) {}
+
+  @ColorListVariableMethod(possibleValues = {1, 2, 3})
+  public void setColorList(Integer i) {}
 
   @RangeVariableMethod
-  public void setInt(Integer i) {}
+  public void setFloat(Float i) {}
 
   @StringVariableMethod
   public void setString(String i) {}

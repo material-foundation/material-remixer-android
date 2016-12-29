@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class RangeVariableMethodAnnotationTest {
+public class ColorListVariableMethodAnnotationTest {
 
   private ArrayList<Processor> allProcessors;
 
@@ -41,62 +41,64 @@ public class RangeVariableMethodAnnotationTest {
   @Test
   public void failsMethodWithWrongParameter() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeVariableMethodAnnotationTest/MethodWithWrongParameter.java");
+        .forResource(
+            "inputs/ColorListVariableMethodAnnotationTest/MethodWithWrongParameter.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("Float")
-        .in(file);
-  }
-
-  @Test
-  public void failsWrongRange() {
-    JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeVariableMethodAnnotationTest/WrongRange.java");
-    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
-        .that(file)
-        .processedWith(allProcessors)
-        .failsToCompile()
-        .withErrorContaining("minValue cannot be greater than maxValue")
+        .withErrorContaining("Integer")
         .in(file);
   }
 
   @Test
   public void failsExplicitWrongDefault() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeVariableMethodAnnotationTest/ExplicitWrongDefault.java");
+        .forResource(
+            "inputs/ColorListVariableMethodAnnotationTest/ExplicitWrongDefault.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("defaultValue was explicitly set out of bounds")
+        .withErrorContaining("Default value explicitly set to unknown value")
         .in(file);
+  }
+
+  @Test
+  public void failsEmptyList() {
+    JavaFileObject file = JavaFileObjects
+        .forResource("inputs/ColorListVariableMethodAnnotationTest/EmptyList.java");
+    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
+        .that(file)
+        .processedWith(allProcessors)
+        .failsToCompile()
+        .withErrorContaining("List of possible values cannot be empty")
+        .in(file);
+  }
+
+  @Test
+  public void buildsCorrectColorList() {
+    JavaFileObject file = JavaFileObjects
+        .forResource("inputs/ColorListVariableMethodAnnotationTest/Correct.java");
+    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
+        .that(file)
+        .processedWith(allProcessors)
+        .compilesWithoutError()
+        .and()
+        .generatesSources(JavaFileObjects
+            .forResource("outputs/ColorListVariableMethodAnnotationTest/Correct.java"));
   }
 
   @Test
   public void buildsAndFixesDefaultValue() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeVariableMethodAnnotationTest/FixesDefaultValue.java");
+        .forResource("inputs/ColorListVariableMethodAnnotationTest/FixesDefaultValue.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/RangeVariableMethodAnnotationTest/FixesDefaultValue.java"));
-  }
-
-  @Test
-  public void correct() {
-    JavaFileObject file = JavaFileObjects
-        .forResource("inputs/RangeVariableMethodAnnotationTest/Correct.java");
-    Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
-        .that(file)
-        .processedWith(allProcessors)
-        .compilesWithoutError()
-        .and()
-        .generatesSources(JavaFileObjects
-            .forResource("outputs/RangeVariableMethodAnnotationTest/Correct.java"));
+            .forResource("outputs/ColorListVariableMethodAnnotationTest/FixesDefaultValue.java"));
   }
 }

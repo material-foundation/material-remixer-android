@@ -16,13 +16,13 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 
-public class ExplicitWrongDefault {
+public class Correct {
 
   /**
-   * Default value is explicitly out of range, should fail.
+   * Default value is implicitly 0, this has to move to 1
    */
-  @RangeVariableMethod(defaultValue = -15)
-  public void fixValue(Float i){}
+  @ColorListVariableMethod(possibleValues = {1, 2}, defaultValue = 1)
+  public void setColor(Integer i){}
 }

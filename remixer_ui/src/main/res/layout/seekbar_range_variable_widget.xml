@@ -41,7 +41,7 @@
     android:textAlignment="viewEnd"
     tools:ignore="UnusedAttribute"/>
 
-  <SeekBar
+  <com.google.android.libraries.remixer.ui.widget.number.FloatSeekBar
     android:id="@+id/variableSeekBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

@@ -25,7 +25,7 @@ import java.util.Locale;
  *
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
-public class RangeVariable extends Variable<Integer> {
+public class RangeVariable extends Variable<Float> {
 
   private static final String INVALID_RANGE_ERROR_FORMAT =
       "Invalid range for Variable %s min: %d, max: %d";
@@ -36,9 +36,9 @@ public class RangeVariable extends Variable<Integer> {
           + " increment %d";
   private static final String NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT =
       "%d is out of bounds for Variable %s: min: %d, max: %d";
-  private final int minValue;
-  private final int maxValue;
-  private final int increment;
+  private final float minValue;
+  private final float maxValue;
+  private final float increment;
 
   /**
    * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
@@ -63,12 +63,12 @@ public class RangeVariable extends Variable<Integer> {
   private RangeVariable(
       String title,
       String key,
-      int defaultValue,
-      int minValue,
-      int maxValue,
-      int increment,
+      float defaultValue,
+      float minValue,
+      float maxValue,
+      float increment,
       Object context,
-      Callback<Integer> callback,
+      Callback<Float> callback,
       int layoutId) {
     super(title, key, defaultValue, context, callback, layoutId, DataType.NUMBER);
     this.minValue = minValue;
@@ -102,7 +102,7 @@ public class RangeVariable extends Variable<Integer> {
     checkValueAndStep(maxValue, "maxValue");
   }
 
-  private void checkValueAndStep(int value, String valueName) {
+  private void checkValueAndStep(float value, String valueName) {
     if ((value - minValue) % increment != 0) {
       throw new IllegalArgumentException(
           String.format(
@@ -117,7 +117,7 @@ public class RangeVariable extends Variable<Integer> {
   }
 
   @Override
-  protected void checkValue(Integer newValue) {
+  protected void checkValue(Float newValue) {
     if (newValue < minValue || newValue > maxValue) {
       throw new IllegalArgumentException(
           String.format(
@@ -131,15 +131,15 @@ public class RangeVariable extends Variable<Integer> {
     checkValueAndStep(newValue, "newValue");
   }
 
-  public int getMinValue() {
+  public float getMinValue() {
     return minValue;
   }
 
-  public int getMaxValue() {
+  public float getMaxValue() {
     return maxValue;
   }
 
-  public int getIncrement() {
+  public float getIncrement() {
     return increment;
   }
 
@@ -159,27 +159,27 @@ public class RangeVariable extends Variable<Integer> {
    * these are missing or the settings are incorrect according to the logic of {@link RangeVariable}
    * an {@link IllegalArgumentException} will be thrown.
    */
-  public static class Builder extends BaseVariableBuilder<RangeVariable, Integer> {
+  public static class Builder extends BaseVariableBuilder<RangeVariable, Float> {
 
-    private Integer minValue;
-    private Integer maxValue;
-    private int increment = 1;
+    private Float minValue;
+    private Float maxValue;
+    private float increment = 1;
 
     public Builder() {
       setDataType(DataType.NUMBER);
     }
 
-    public Builder setMinValue(int minValue) {
+    public Builder setMinValue(float minValue) {
       this.minValue = minValue;
       return this;
     }
 
-    public Builder setMaxValue(int maxValue) {
+    public Builder setMaxValue(float maxValue) {
       this.maxValue = maxValue;
       return this;
     }
 
-    public Builder setIncrement(int increment) {
+    public Builder setIncrement(float increment) {
       this.increment = increment;
       return this;
     }

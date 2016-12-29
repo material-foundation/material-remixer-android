@@ -16,13 +16,13 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 
-public class CorrectColorList {
+public class FixesDefaultValue {
 
   /**
    * Default value is implicitly 0, this has to move to 1
    */
-  @IntegerListVariableMethod(possibleValues = {1, 2}, defaultValue = 1, isColor = true)
-  public void setColor(Integer i){}
+  @ColorListVariableMethod(possibleValues = {1, 2})
+  public void fixValue(Integer i){}
 }

@@ -24,5 +24,5 @@ public class WrongRange {
    * minValue > maxValue, should fail.
    */
   @RangeVariableMethod(minValue = 15, maxValue = 0)
-  public void fail(Integer i){}
+  public void fail(Float i){}
 }

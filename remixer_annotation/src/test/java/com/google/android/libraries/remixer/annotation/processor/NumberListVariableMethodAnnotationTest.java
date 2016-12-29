@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class IntegerListVariableMethodAnnotationTest {
+public class NumberListVariableMethodAnnotationTest {
 
   private ArrayList<Processor> allProcessors;
 
@@ -42,12 +42,12 @@ public class IntegerListVariableMethodAnnotationTest {
   public void failsMethodWithWrongParameter() {
     JavaFileObject file = JavaFileObjects
         .forResource(
-            "inputs/IntegerListVariableMethodAnnotationTest/MethodWithWrongParameter.java");
+            "inputs/NumberListVariableMethodAnnotationTest/MethodWithWrongParameter.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("Integer")
+        .withErrorContaining("Float")
         .in(file);
   }
 
@@ -55,7 +55,7 @@ public class IntegerListVariableMethodAnnotationTest {
   public void failsExplicitWrongDefault() {
     JavaFileObject file = JavaFileObjects
         .forResource(
-            "inputs/IntegerListVariableMethodAnnotationTest/ExplicitWrongDefault.java");
+            "inputs/NumberListVariableMethodAnnotationTest/ExplicitWrongDefault.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -67,7 +67,7 @@ public class IntegerListVariableMethodAnnotationTest {
   @Test
   public void failsEmptyList() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/IntegerListVariableMethodAnnotationTest/EmptyList.java");
+        .forResource("inputs/NumberListVariableMethodAnnotationTest/EmptyList.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
@@ -79,26 +79,26 @@ public class IntegerListVariableMethodAnnotationTest {
   @Test
   public void buildsCorrectColorList() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/IntegerListVariableMethodAnnotationTest/CorrectColorList.java");
+        .forResource("inputs/NumberListVariableMethodAnnotationTest/Correct.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/IntegerListVariableMethodAnnotationTest/CorrectColorList.java"));
+            .forResource("outputs/NumberListVariableMethodAnnotationTest/Correct.java"));
   }
 
   @Test
   public void buildsAndFixesDefaultValue() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/IntegerListVariableMethodAnnotationTest/FixesDefaultValue.java");
+        .forResource("inputs/NumberListVariableMethodAnnotationTest/FixesDefaultValue.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/IntegerListVariableMethodAnnotationTest/FixesDefaultValue.java"));
+            .forResource("outputs/NumberListVariableMethodAnnotationTest/FixesDefaultValue.java"));
   }
 }

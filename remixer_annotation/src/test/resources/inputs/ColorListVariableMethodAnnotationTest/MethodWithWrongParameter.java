@@ -16,12 +16,12 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 
-public class EmptyList {
+public class MethodWithWrongParameter {
   /**
-   * List is empty explicitly! Fail
+   * This method should take a string parameter, fail
    */
-  @IntegerListVariableMethod(possibleValues = {})
-  public void fail(Integer i){}
+  @ColorListVariableMethod(possibleValues = {1, 2})
+  public void fail(String i){}
 }

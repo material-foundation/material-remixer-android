@@ -21,7 +21,7 @@ import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
-import java.lang.Integer;
+import java.lang.Float;
 import java.lang.Override;
 
 /**
@@ -38,14 +38,14 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     correct_remixer_item.setLayoutId(0);
     correct_remixer_item.setContext(activity);
     correct_remixer_item.setCallback(correct_callback);
-    correct_remixer_item.setMinValue(15);
-    correct_remixer_item.setMaxValue(20);
-    correct_remixer_item.setDefaultValue(17);
-    correct_remixer_item.setIncrement(1);
+    correct_remixer_item.setMinValue(15f);
+    correct_remixer_item.setMaxValue(20f);
+    correct_remixer_item.setDefaultValue(17f);
+    correct_remixer_item.setIncrement(1f);
     remixer.addItem(correct_remixer_item.build());
   }
 
-  static class Generated_correct implements Callback<Integer> {
+  static class Generated_correct implements Callback<Float> {
     private final Correct activity;
 
     Generated_correct(Correct activity) {
@@ -53,7 +53,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
 
     @Override
-    public void onValueSet(Variable<Integer> variable) {
+    public void onValueSet(Variable<Float> variable) {
       activity.correct(variable.getSelectedValue());
     }
   }
