@@ -16,13 +16,12 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
 
-public class FixesDefaultValue {
-
+public class MethodWithWrongParameter {
   /**
-   * Default value is implicitly 0, this has to move to 1
+   * This method should take a string parameter, fail
    */
-  @IntegerListVariableMethod(possibleValues = {1, 2})
-  public void fixValue(Integer i){}
+  @NumberListVariableMethod(possibleValues = {1, 2})
+  public void fail(String i){}
 }

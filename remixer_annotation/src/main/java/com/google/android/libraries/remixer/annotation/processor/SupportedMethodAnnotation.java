@@ -17,7 +17,8 @@
 package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
-import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
+import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
@@ -39,17 +40,27 @@ enum SupportedMethodAnnotation {
       return VariableMethodAnnotation.forBooleanVariableMethod(clazz, method, annotation);
     }
   },
-  INTEGER_LIST_VARIABLE(IntegerListVariableMethod.class, Integer.class) {
+  COLOR_LIST_VARIABLE(ColorListVariableMethod.class, Integer.class) {
     @Override
     public MethodAnnotation getMethodAnnotation(
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
         throws RemixerAnnotationException {
-      IntegerListVariableMethod annotation = (IntegerListVariableMethod) baseAnnotation;
+      ColorListVariableMethod annotation = (ColorListVariableMethod) baseAnnotation;
       return
-          ItemListVariableMethodAnnotation.forIntegerListVariableMethod(clazz, method, annotation);
+          ItemListVariableMethodAnnotation.forColorListVariableMethod(clazz, method, annotation);
     }
   },
-  RANGE_VARIABLE(RangeVariableMethod.class, Integer.class) {
+  NUMBER_LIST_VARIABLE(NumberListVariableMethod.class, Float.class) {
+    @Override
+    public MethodAnnotation getMethodAnnotation(
+        TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)
+        throws RemixerAnnotationException {
+      NumberListVariableMethod annotation = (NumberListVariableMethod) baseAnnotation;
+      return
+          ItemListVariableMethodAnnotation.forNumberListVariableMethod(clazz, method, annotation);
+    }
+  },
+  RANGE_VARIABLE(RangeVariableMethod.class, Float.class) {
     @Override
     public MethodAnnotation getMethodAnnotation(
         TypeElement clazz, ExecutableElement method, Annotation baseAnnotation)

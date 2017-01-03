@@ -39,8 +39,8 @@ public class SerializableRemixerContentsSerializationTest {
 
   private Variable<Boolean> booleanVariable;
   private ItemListVariable<Integer> colorListVariable;
-  private Variable<Integer> integerVariable;
-  private ItemListVariable<Integer> integerListVariable;
+  private Variable<Float> floatVariable;
+  private ItemListVariable<Float> floatListVariable;
   private RangeVariable rangeVariable;
   private ItemListVariable<String> stringListVariable;
   private Variable<String> stringVariable;
@@ -68,26 +68,26 @@ public class SerializableRemixerContentsSerializationTest {
         .setDataType(DataType.COLOR)
         .build();
     serializableRemixerContents.addItem(colorListVariable);
-    integerVariable  = new Variable.Builder<Integer>()
-        .setDefaultValue(0)
-        .setKey("integer")
+    floatVariable  = new Variable.Builder<Float>()
+        .setDefaultValue(0f)
+        .setKey("float")
         .setContext(this)
         .setDataType(DataType.NUMBER)
         .build();
-    serializableRemixerContents.addItem(integerVariable);
-    integerListVariable = new ItemListVariable.Builder<Integer>()
-        .setPossibleValues(new Integer[]{12, 24})
-        .setDefaultValue(12)
+    serializableRemixerContents.addItem(floatVariable);
+    floatListVariable = new ItemListVariable.Builder<Float>()
+        .setPossibleValues(new Float[]{12f, 24f})
+        .setDefaultValue(12f)
         .setContext(this)
-        .setKey("integerList")
+        .setKey("floatList")
         .setDataType(DataType.NUMBER)
         .build();
-    serializableRemixerContents.addItem(integerListVariable);
+    serializableRemixerContents.addItem(floatListVariable);
     rangeVariable = new RangeVariable.Builder()
-        .setMinValue(0)
-        .setIncrement(10)
-        .setMaxValue(100)
-        .setDefaultValue(10)
+        .setMinValue(0f)
+        .setIncrement(10f)
+        .setMaxValue(100f)
+        .setDefaultValue(10f)
         .setContext(this)
         .setKey("range")
         .build();

@@ -18,18 +18,20 @@ package com.google.android.libraries.remixer.annotation.processor;
 
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
+import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
 /**
- * Generates code to support {@link StringListVariableMethod} and {@link IntegerListVariableMethod}
+ * Generates code to support {@link StringListVariableMethod} and {@link ColorListVariableMethod}
  * annotations.
  */
 class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
@@ -40,16 +42,25 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   private static final String LIST_SUFFIX = "_variable_list";
 
   /**
-   * Statement to add a value to the list of possible values.
+   * Statement format for String.format to add a value to the list of possible values.
    */
-  private static final String ADD_ITEM = "$L.add($L)";
+  private static final String ADD_ITEM_FORMAT = "$L.add(%s)";
   /**
-   * Statement to add a string value to the list of possible values.
-   *
-   * <p>The difference lies in treating the value as a string (escaping it in quotes) instead
-   * of a literal (variable name or primitive constant).
+   * Statement format for String.format to set the default value.
    */
-  private static final String ADD_STRING_ITEM = "$L.add($S)";
+  private static final String SET_DEFAULT_FORMAT = "$L.setDefaultValue(%s)";
+  /**
+   * Javapoet format escaping for float values
+   */
+  private static final String FLOAT_JAVAPOET_ESCAPING = "$Lf";
+  /**
+   * Javapoet format escaping for integer values
+   */
+  private static final String INTEGER_JAVAPOET_ESCAPING = "$L";
+  /**
+   * Javapoet format escaping for string values
+   */
+  private static final String STRING_JAVAPOET_ESCAPING = "$S";
   /**
    * Statement to create an object through a no-parameter constructor.
    *
@@ -80,10 +91,10 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         "");
   }
 
-  static ItemListVariableMethodAnnotation<Integer> forIntegerListVariableMethod(
+  static ItemListVariableMethodAnnotation<Integer> forColorListVariableMethod(
       TypeElement sourceClass,
       ExecutableElement sourceMethod,
-      IntegerListVariableMethod annotation)
+      ColorListVariableMethod annotation)
       throws RemixerAnnotationException {
     Integer[] possibleValues = new Integer[annotation.possibleValues().length];
     for (int i = 0; i < annotation.possibleValues().length; i++) {
@@ -92,7 +103,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
     return new ItemListVariableMethodAnnotation<>(
         sourceClass,
         sourceMethod,
-        annotation.isColor() ? DataType.COLOR : DataType.NUMBER,
+        DataType.COLOR,
         ParameterizedTypeName.get(
             ClassName.get(ItemListVariable.Builder.class), ClassName.get(Integer.class)),
         annotation.key(),
@@ -101,6 +112,29 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         possibleValues,
         annotation.defaultValue(),
         0);
+  }
+
+  static ItemListVariableMethodAnnotation<Float> forNumberListVariableMethod(
+      TypeElement sourceClass,
+      ExecutableElement sourceMethod,
+      NumberListVariableMethod annotation)
+      throws RemixerAnnotationException {
+    Float[] possibleValues = new Float[annotation.possibleValues().length];
+    for (int i = 0; i < annotation.possibleValues().length; i++) {
+      possibleValues[i] = annotation.possibleValues()[i];
+    }
+    return new ItemListVariableMethodAnnotation<>(
+        sourceClass,
+        sourceMethod,
+        DataType.NUMBER,
+        ParameterizedTypeName.get(
+            ClassName.get(ItemListVariable.Builder.class), ClassName.get(Float.class)),
+        annotation.key(),
+        annotation.title(),
+        annotation.layoutId(),
+        possibleValues,
+        annotation.defaultValue(),
+        0f);
   }
 
   /**
@@ -160,19 +194,26 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         ParameterizedTypeName.get(ClassName.get(ArrayList.class),
             ClassName.get(dataType.getValueClass()));
     methodBuilder.addStatement(CREATE_NEW_OBJECT, listType, listName, listType);
-    String addValueStatement = getAddValueStatement();
+    String addValueStatement =
+        String.format(Locale.getDefault(), ADD_ITEM_FORMAT, getJavaPoetEscaping());
     for (T value : possibleValues) {
       methodBuilder.addStatement(addValueStatement, listName, value);
     }
     methodBuilder.addStatement("$L.setPossibleValues($L)", remixerItemName, listName);
 
-    methodBuilder.addStatement(
-        defaultValue.getClass().equals(String.class)
-            ? "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
-        remixerItemName, defaultValue);
+    String setDefaultValueStatement =
+        String.format(Locale.getDefault(), SET_DEFAULT_FORMAT, getJavaPoetEscaping());
+    methodBuilder.addStatement(setDefaultValueStatement, remixerItemName, defaultValue);
   }
 
-  private String getAddValueStatement() {
-    return defaultValue.getClass().equals(String.class) ? ADD_STRING_ITEM : ADD_ITEM;
+  private String getJavaPoetEscaping() {
+    if (dataType.getName().equals(DataType.STRING.getName()))
+      return STRING_JAVAPOET_ESCAPING;
+    if (dataType.getName().equals(DataType.COLOR.getName()))
+      return INTEGER_JAVAPOET_ESCAPING;
+    // If it is an item list it can only be either String, Color or a number, since it's neither
+    // color nor number at this point, just assume that it's a number so return
+    // FLOAT_JAVAPOET_ESCAPING.
+    return FLOAT_JAVAPOET_ESCAPING;
   }
 }

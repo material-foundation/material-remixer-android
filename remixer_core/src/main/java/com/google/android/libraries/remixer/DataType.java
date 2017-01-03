@@ -3,7 +3,7 @@ package com.google.android.libraries.remixer;
 import com.google.android.libraries.remixer.serialization.ValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.BooleanValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.ColorValueConverter;
-import com.google.android.libraries.remixer.serialization.converters.IntegerValueConverter;
+import com.google.android.libraries.remixer.serialization.converters.FloatValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.StringValueConverter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -113,8 +113,8 @@ public class DataType<T> {
   public static final DataType<Integer> COLOR = new DataType<>(
       KEY_COLOR, Integer.class, new ColorValueConverter(KEY_COLOR));
 
-  public static final DataType<Integer> NUMBER = new DataType<>(
-      KEY_NUMBER, Integer.class, new IntegerValueConverter(KEY_NUMBER));
+  public static final DataType<Float> NUMBER = new DataType<>(
+      KEY_NUMBER, Float.class, new FloatValueConverter(KEY_NUMBER));
 
   public static final DataType<String> STRING = new DataType<>(
       KEY_STRING, String.class, new StringValueConverter(KEY_STRING));

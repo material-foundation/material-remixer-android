@@ -16,14 +16,14 @@
 
 package com.google.android.libraries.remixer.annotation;
 
-import com.google.android.libraries.remixer.DataType;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to apply to a method to turn it into a {@code ItemListVariable&lt;Integer&gt;}.
+ * Annotation to apply to a method to turn it into a {@code ItemListVariable&lt;Integer&gt;} for
+ * colors.
  *
  * <p>It is set up in a way that you don't need to explicitly set the default value, if it is left
  * unspecified and 0 is not part of the possible values, then the first value in the list of
@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface IntegerListVariableMethod {
+public @interface ColorListVariableMethod {
 
   /**
    * The key for the variable, may be left empty and the method name will be used instead.
@@ -68,10 +68,4 @@ public @interface IntegerListVariableMethod {
    * <p>Its root element must implement {@code RemixerItemWidget&lt;Variable&lt;String&gt;&gt;}.
    */
   int layoutId() default 0;
-
-  /**
-   * If set to true, the {@link RemixerItem#dataType} will be set to {@link DataType#COLOR} instead
-   * of {@link DataType#NUMBER}
-   */
-  boolean isColor() default false;
 }

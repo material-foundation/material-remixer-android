@@ -11,40 +11,40 @@ import com.google.gson.JsonPrimitive;
 /**
  * A value converter for integer values.
  */
-public class IntegerValueConverter extends ValueConverter<Integer> {
+public class FloatValueConverter extends ValueConverter<Float> {
 
-  public IntegerValueConverter(String dataType) {
+  public FloatValueConverter(String dataType) {
     super(dataType);
   }
 
   @Override
-  public Integer parseValue(JsonElement element) {
-    return element.getAsInt();
+  public Float parseValue(JsonElement element) {
+    return element.getAsFloat();
   }
 
   @Override
-  public JsonElement valueToJson(Integer value) {
+  public JsonElement valueToJson(Float value) {
     return new JsonPrimitive(value);
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public StoredVariable<Integer> fromVariable(Variable<?> var) {
+  public StoredVariable<Float> fromVariable(Variable<?> var) {
     if (var.getDataType().getName().equals(dataType)) {
-      StoredVariable<Integer> storage = new StoredVariable<>();
+      StoredVariable<Float> storage = new StoredVariable<>();
       storage.setDataType(dataType);
-      storage.setSelectedValue((Integer) var.getSelectedValue());
+      storage.setSelectedValue((Float) var.getSelectedValue());
       if (var instanceof RangeVariable) {
         RangeVariable range = (RangeVariable) var;
         storage.setMinValue(range.getMinValue());
         storage.setMaxValue(range.getMaxValue());
         storage.setIncrement(range.getIncrement());
       } else if (var instanceof ItemListVariable) {
-        storage.setPossibleValues(((ItemListVariable<Integer>) var).getValueList());
+        storage.setPossibleValues(((ItemListVariable<Float>) var).getValueList());
       }
       return storage;
     }
     throw new IllegalArgumentException(
-        "Passed an incompatible object to convert to StoredVariable<Integer>");
+        "Passed an incompatible object to convert to StoredVariable<Float>");
   }
 }

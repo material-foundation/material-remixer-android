@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.libraries.remixer.annotation.BooleanVariableMethod;
-import com.google.android.libraries.remixer.annotation.IntegerListVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
@@ -42,7 +42,7 @@ public class BoxActivity extends AppCompatActivity {
       key = "titleTextSize", title = "(Shared) title text size",
       minValue = 16, maxValue = 72, increment = 4
   )
-  public void setTitleTextSize(Integer size) {
+  public void setTitleTextSize(Float size) {
     titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
   }
 
@@ -51,7 +51,7 @@ public class BoxActivity extends AppCompatActivity {
     box.setVisibility(show ? View.VISIBLE : View.GONE);
   }
 
-  @IntegerListVariableMethod(
+  @ColorListVariableMethod(
       key = "boxColor", title = "Box color",
       possibleValues = {Color.DKGRAY, Color.LTGRAY, Color.MAGENTA, Color.CYAN},
       layoutId = R.layout.color_list_variable_widget

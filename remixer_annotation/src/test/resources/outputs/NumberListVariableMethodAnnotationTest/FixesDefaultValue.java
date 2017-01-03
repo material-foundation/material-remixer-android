@@ -21,7 +21,7 @@ import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
-import java.lang.Integer;
+import java.lang.Float;
 import java.lang.Override;
 import java.util.ArrayList;
 
@@ -32,22 +32,22 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
   public void bindInstance(FixesDefaultValue activity) {
     Remixer remixer = Remixer.getInstance();
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
-    ItemListVariable.Builder<Integer> fixValue_remixer_item = new ItemListVariable.Builder<Integer>();
+    ItemListVariable.Builder<Float> fixValue_remixer_item = new ItemListVariable.Builder<Float>();
     fixValue_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
     fixValue_remixer_item.setKey("fixValue");
     fixValue_remixer_item.setTitle("fixValue");
     fixValue_remixer_item.setLayoutId(0);
     fixValue_remixer_item.setContext(activity);
     fixValue_remixer_item.setCallback(fixValue_callback);
-    ArrayList<Integer> fixValue_variable_list = new ArrayList<Integer>();
-    fixValue_variable_list.add(1);
-    fixValue_variable_list.add(2);
+    ArrayList<Float> fixValue_variable_list = new ArrayList<Float>();
+    fixValue_variable_list.add(1f);
+    fixValue_variable_list.add(2f);
     fixValue_remixer_item.setPossibleValues(fixValue_variable_list);
-    fixValue_remixer_item.setDefaultValue(1);
+    fixValue_remixer_item.setDefaultValue(1f);
     remixer.addItem(fixValue_remixer_item.build());
   }
 
-  static class Generated_fixValue implements Callback<Integer> {
+  static class Generated_fixValue implements Callback<Float> {
     private final FixesDefaultValue activity;
 
     Generated_fixValue(FixesDefaultValue activity) {
@@ -55,7 +55,7 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     }
 
     @Override
-    public void onValueSet(Variable<Integer> variable) {
+    public void onValueSet(Variable<Float> variable) {
       activity.fixValue(variable.getSelectedValue());
     }
   }

@@ -24,5 +24,5 @@ public class FixesDefaultValue {
    * Default value is implicitly 0, this has to move to 15 with minValue.
    */
   @RangeVariableMethod(minValue = 15)
-  public void fixValue(Integer i){}
+  public void fixValue(Float i){}
 }

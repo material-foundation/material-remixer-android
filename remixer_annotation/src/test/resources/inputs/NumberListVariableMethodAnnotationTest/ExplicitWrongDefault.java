@@ -16,13 +16,13 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
+import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
 
 public class ExplicitWrongDefault {
 
   /**
    * Default value is explicitly out of range, should fail.
    */
-  @RangeVariableMethod(defaultValue = -15)
-  public void fixValue(Float i){}
+  @NumberListVariableMethod(defaultValue = 5, possibleValues = {2, 3})
+  public void wrongDefault(Float i){}
 }

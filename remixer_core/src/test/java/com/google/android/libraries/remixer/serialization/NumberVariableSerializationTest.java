@@ -30,12 +30,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class IntegerVariableSerializationTest {
+public class NumberVariableSerializationTest {
 
   private static String KEY = "key";
 
-  private Variable<Integer> integerVariable;
-  private ItemListVariable<Integer> integerListVariable;
+  private Variable<Float> floatVariable;
+  private ItemListVariable<Float> floatListVariable;
   private RangeVariable rangeVariable;
   private Gson gson = GsonProvider.getInstance();
 
@@ -46,24 +46,24 @@ public class IntegerVariableSerializationTest {
 
   @Before
   public void setUp() {
-    integerVariable  = new Variable.Builder<Integer>()
-        .setDefaultValue(0)
+    floatVariable = new Variable.Builder<Float>()
+        .setDefaultValue(0f)
         .setKey(KEY)
         .setContext(this)
         .setDataType(DataType.NUMBER)
         .build();
-    integerListVariable = new ItemListVariable.Builder<Integer>()
-        .setPossibleValues(new Integer[]{12, 154})
-        .setDefaultValue(12)
+    floatListVariable = new ItemListVariable.Builder<Float>()
+        .setPossibleValues(new Float[]{12f, 154f})
+        .setDefaultValue(12f)
         .setContext(this)
         .setKey(KEY)
         .setDataType(DataType.NUMBER)
         .build();
     rangeVariable = new RangeVariable.Builder()
-        .setMinValue(0)
-        .setMaxValue(100)
-        .setIncrement(10)
-        .setDefaultValue(10)
+        .setMinValue(0f)
+        .setMaxValue(100f)
+        .setIncrement(10f)
+        .setDefaultValue(10f)
         .setContext(this)
         .setKey(KEY)
         .setDataType(DataType.NUMBER)
@@ -72,20 +72,20 @@ public class IntegerVariableSerializationTest {
 
   @Test
   public void integerListVariableConvertsToStorageTest() {
-    StoredVariable<Integer> result = StoredVariable.fromVariable(integerListVariable);
+    StoredVariable<Float> result = StoredVariable.fromVariable(floatListVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
-    CompareHelper.assertEqualsItemListVariable(result, integerListVariable);
+    CompareHelper.assertEqualsItemListVariable(result, floatListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
 
   }
 
   @Test
-  public void modifiedIntegerListVariableConvertsToStorageTest() {
-    integerListVariable.setValue(154);
-    StoredVariable<Integer> result = StoredVariable.fromVariable(integerListVariable);
+  public void modifiedFloatListVariableConvertsToStorageTest() {
+    floatListVariable.setValue(154f);
+    StoredVariable<Float> result = StoredVariable.fromVariable(floatListVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
-    CompareHelper.assertEqualsItemListVariable(result, integerListVariable);
+    CompareHelper.assertEqualsItemListVariable(result, floatListVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
 
@@ -93,20 +93,20 @@ public class IntegerVariableSerializationTest {
 
   @Test
   public void integerVariableConvertsToStorageTest() {
-    StoredVariable<Integer> result = StoredVariable.fromVariable(integerVariable);
+    StoredVariable<Float> result = StoredVariable.fromVariable(floatVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
-    CompareHelper.assertEqualsVariable(result, integerVariable);
+    CompareHelper.assertEqualsVariable(result, floatVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
 
   }
 
   @Test
-  public void modifiedIntegerVariableConvertsToStorageTest() {
-    integerListVariable.setValue(154);
-    StoredVariable<Integer> result = StoredVariable.fromVariable(integerVariable);
+  public void modifiedFloatVariableConvertsToStorageTest() {
+    floatListVariable.setValue(154f);
+    StoredVariable<Float> result = StoredVariable.fromVariable(floatVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
-    CompareHelper.assertEqualsVariable(result, integerVariable);
+    CompareHelper.assertEqualsVariable(result, floatVariable);
     // Check that it converts to Json and back with no data loss.
     Assert.assertEquals(result, gson.fromJson(gson.toJsonTree(result), StoredVariable.class));
 
@@ -114,7 +114,7 @@ public class IntegerVariableSerializationTest {
 
   @Test
   public void rangeVariableConvertsToStorageTest() {
-    StoredVariable<Integer> result = StoredVariable.fromVariable(rangeVariable);
+    StoredVariable<Float> result = StoredVariable.fromVariable(rangeVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsRangeVariable(result, rangeVariable);
     // Check that it converts to Json and back with no data loss.
@@ -124,8 +124,8 @@ public class IntegerVariableSerializationTest {
 
   @Test
   public void modifiedRangeVariableConvertsToStorageTest() {
-    rangeVariable.setValue(20);
-    StoredVariable<Integer> result = StoredVariable.fromVariable(rangeVariable);
+    rangeVariable.setValue(20f);
+    StoredVariable<Float> result = StoredVariable.fromVariable(rangeVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsRangeVariable(result, rangeVariable);
     // Check that it converts to Json and back with no data loss.

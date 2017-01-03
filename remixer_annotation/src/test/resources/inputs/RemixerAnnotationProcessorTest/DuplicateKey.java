@@ -28,6 +28,6 @@ public class DuplicateKey {
   public void setBoolean(Boolean i) {}
 
   @RangeVariableMethod(key="key")
-  public void setInt(Integer i) {}
+  public void setFloat(Float i) {}
 
 }

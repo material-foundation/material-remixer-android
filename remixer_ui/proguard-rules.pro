@@ -17,7 +17,7 @@
    @com.google.android.libraries.remixer.annotation.BooleanVariableMethod <methods>;
 }
 -keepnames class * {
-   @com.google.android.libraries.remixer.annotation.IntegerListVariableMethod <methods>;
+   @com.google.android.libraries.remixer.annotation.ColorListVariableMethod <methods>;
 }
 -keepnames class * {
    @com.google.android.libraries.remixer.annotation.RangeVariableMethod <methods>;
