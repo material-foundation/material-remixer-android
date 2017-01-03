@@ -211,7 +211,9 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
       return STRING_JAVAPOET_ESCAPING;
     if (dataType.getName().equals(DataType.COLOR.getName()))
       return INTEGER_JAVAPOET_ESCAPING;
-    // assume number
+    // If it is an item list it can only be either String, Color or a number, since it's neither
+    // color nor number at this point, just assume that it's a number so return
+    // FLOAT_JAVAPOET_ESCAPING.
     return FLOAT_JAVAPOET_ESCAPING;
   }
 }
