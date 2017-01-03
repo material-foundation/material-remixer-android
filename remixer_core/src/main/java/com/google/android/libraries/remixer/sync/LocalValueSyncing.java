@@ -57,4 +57,14 @@ public class LocalValueSyncing implements SynchronizationMechanism {
       }
     }
   }
+
+  @Override
+  public void onContextChanged(Object currentContext) {
+    // Nothing to do here, this class does not care which is the current context.
+  }
+
+  @Override
+  public void onContextRemoved(Object currentContext) {
+    // Nothing to do here, this class does not care which is the current context.
+  }
 }
