@@ -35,27 +35,27 @@ import java.util.List;
 public class StoredVariable<T> {
 
   /**
-   * The serializable string to represent the constraints on values for variables of the
+   * The serializable string to represent the constraintType on values for variables of the
    * {@link Variable} class.
    */
-  public final static String VARIABLE_CONSTRAINT = "none";
+  public final static String VARIABLE_CONSTRAINT = "__ConstraintTypeNone__";
 
   /**
-   * The serializable string to represent the constraints on values for variables of the
+   * The serializable string to represent the constraintType on values for variables of the
    * {@link ItemListVariable} class.
    */
-  public final static String ITEM_LIST_VARIABLE_CONSTRAINT = "list";
+  public final static String ITEM_LIST_VARIABLE_CONSTRAINT = "__ConstraintTypeList__";
 
   /**
-   * The serializable string to represent the constraints on values for variables of the
+   * The serializable string to represent the constraintType on values for variables of the
    * {@link RangeVariable} class.
    */
-  public final static String RANGE_VARIABLE_CONSTRAINT = "range";
+  public final static String RANGE_VARIABLE_CONSTRAINT = "__ConstraintTypeRange__";
 
   // Json dictionary keys to serialize this object
   static final String KEY = "key";
   static final String TITLE = "title";
-  static final String CONSTRAINTS = "constraints";
+  static final String CONSTRAINT_TYPE = "constraintType";
   static final String DATA_TYPE = "dataType";
   static final String SELECTED_VALUE = "selectedValue";
   static final String POSSIBLE_VALUES = "possibleValues";
@@ -77,12 +77,12 @@ public class StoredVariable<T> {
    */
   String dataType;
   /**
-   * The constraints on this variable.
+   * The constraintType on this variable.
    *
    * <p>If this is a regular {@link Variable} it's "none", if it's an {@link ItemListVariable} it's
    * "list", and if it is a {@link RangeVariable} it's "range".
    */
-  String constraints;
+  String constraintType;
 
   /**
    * The currently selected value for the variable.
@@ -125,12 +125,12 @@ public class StoredVariable<T> {
     this.title = title;
   }
 
-  public String getConstraints() {
-    return constraints;
+  public String getConstraintType() {
+    return constraintType;
   }
 
-  public void setConstraints(String constraints) {
-    this.constraints = constraints;
+  public void setConstraintType(String constraintType) {
+    this.constraintType = constraintType;
   }
 
   public String getDataType() {
@@ -262,7 +262,7 @@ public class StoredVariable<T> {
     }
     storedVariable.key = item.getKey();
     storedVariable.title = item.getTitle();
-    storedVariable.constraints = item.getSerializableConstraints();
+    storedVariable.constraintType = item.getSerializableConstraints();
     return storedVariable;
   }
 }
