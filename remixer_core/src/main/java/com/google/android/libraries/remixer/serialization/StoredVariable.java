@@ -17,8 +17,11 @@
 package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.Variable;
+
 import java.util.List;
 
 /**
@@ -34,6 +37,7 @@ public class StoredVariable<T> {
   // Json dictionary keys to serialize this object
   static final String KEY = "key";
   static final String TITLE = "title";
+  static final String CONSTRAINTS = "constraints";
   static final String DATA_TYPE = "dataType";
   static final String SELECTED_VALUE = "selectedValue";
   static final String POSSIBLE_VALUES = "possibleValues";
@@ -54,6 +58,13 @@ public class StoredVariable<T> {
    * DataType}.
    */
   String dataType;
+  /**
+   * The constraints on this variable.
+   *
+   * <p>If this is a regular {@link Variable} it's "none", if it's an {@link ItemListVariable} it's
+   * "list", and if it is a {@link RangeVariable} it's "range".
+   */
+  String constraints;
 
   /**
    * The currently selected value for the variable.
@@ -94,6 +105,14 @@ public class StoredVariable<T> {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getConstraints() {
+    return constraints;
+  }
+
+  public void setConstraints(String constraints) {
+    this.constraints = constraints;
   }
 
   public String getDataType() {
@@ -225,6 +244,7 @@ public class StoredVariable<T> {
     }
     storedVariable.key = item.getKey();
     storedVariable.title = item.getTitle();
+    storedVariable.constraints = item.getSerializableConstraints();
     return storedVariable;
   }
 }

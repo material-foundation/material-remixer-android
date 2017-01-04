@@ -26,6 +26,11 @@ import java.util.List;
  */
 public class ItemListVariable<T> extends Variable<T> {
 
+  /**
+   * The serializable string to represent the constraints on values for variables of this class.
+   */
+  public final static String SERIALIZABLE_CONSTRAINTS = ";ost";
+
   private final List<T> valueList;
 
   /**
@@ -64,6 +69,13 @@ public class ItemListVariable<T> extends Variable<T> {
 
   public List<T> getValueList() {
     return valueList;
+  }
+
+  /**
+   * Gets the serializable constraints string for this variable.
+   */
+  public String getSerializableConstraints() {
+    return SERIALIZABLE_CONSTRAINTS;
   }
 
   /**

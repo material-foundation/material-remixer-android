@@ -27,6 +27,11 @@ import java.lang.ref.WeakReference;
 public class Variable<T> {
 
   /**
+   * The serializable string to represent the constraints on values for variables of this class.
+   */
+  public final static String SERIALIZABLE_CONSTRAINTS = "none";
+
+  /**
    * The name to display in the UI for this variable.
    */
   private final String title;
@@ -182,6 +187,13 @@ public class Variable<T> {
     checkValue(newValue);
     selectedValue = newValue;
     runCallback();
+  }
+
+  /**
+   * Gets the serializable constraints string for this variable.
+   */
+  public String getSerializableConstraints() {
+    return SERIALIZABLE_CONSTRAINTS;
   }
 
   /**

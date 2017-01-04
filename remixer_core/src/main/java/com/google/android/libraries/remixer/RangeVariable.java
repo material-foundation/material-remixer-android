@@ -27,6 +27,12 @@ import java.util.Locale;
  */
 public class RangeVariable extends Variable<Float> {
 
+  /**
+   * The serializable string to represent the constraints on values for variables of this class.
+   */
+  public final static String SERIALIZABLE_CONSTRAINTS = "range";
+
+
   private static final String INVALID_RANGE_ERROR_FORMAT =
       "Invalid range for Variable %s min: %d, max: %d";
   private static final String NEGATIVE_STEPPING_ERROR_FORMAT =
@@ -141,6 +147,13 @@ public class RangeVariable extends Variable<Float> {
 
   public float getIncrement() {
     return increment;
+  }
+
+  /**
+   * Gets the serializable constraints string for this variable.
+   */
+  public String getSerializableConstraints() {
+    return SERIALIZABLE_CONSTRAINTS;
   }
 
   /**
