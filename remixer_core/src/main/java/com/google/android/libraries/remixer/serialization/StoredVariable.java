@@ -34,6 +34,24 @@ import java.util.List;
  */
 public class StoredVariable<T> {
 
+  /**
+   * The serializable string to represent the constraints on values for variables of the
+   * {@link Variable} class.
+   */
+  public final static String VARIABLE_CONSTRAINT = "none";
+
+  /**
+   * The serializable string to represent the constraints on values for variables of the
+   * {@link ItemListVariable} class.
+   */
+  public final static String ITEM_LIST_VARIABLE_CONSTRAINT = "list";
+
+  /**
+   * The serializable string to represent the constraints on values for variables of the
+   * {@link RangeVariable} class.
+   */
+  public final static String RANGE_VARIABLE_CONSTRAINT = "range";
+
   // Json dictionary keys to serialize this object
   static final String KEY = "key";
   static final String TITLE = "title";

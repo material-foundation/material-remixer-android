@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import java.util.Locale;
 
 /**
@@ -26,12 +27,6 @@ import java.util.Locale;
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
 public class RangeVariable extends Variable<Float> {
-
-  /**
-   * The serializable string to represent the constraints on values for variables of this class.
-   */
-  public final static String SERIALIZABLE_CONSTRAINTS = "range";
-
 
   private static final String INVALID_RANGE_ERROR_FORMAT =
       "Invalid range for Variable %s min: %d, max: %d";
@@ -153,7 +148,7 @@ public class RangeVariable extends Variable<Float> {
    * Gets the serializable constraints string for this variable.
    */
   public String getSerializableConstraints() {
-    return SERIALIZABLE_CONSTRAINTS;
+    return StoredVariable.RANGE_VARIABLE_CONSTRAINT;
   }
 
   /**

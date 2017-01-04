@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,11 +26,6 @@ import java.util.List;
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
 public class ItemListVariable<T> extends Variable<T> {
-
-  /**
-   * The serializable string to represent the constraints on values for variables of this class.
-   */
-  public final static String SERIALIZABLE_CONSTRAINTS = "list";
 
   private final List<T> valueList;
 
@@ -75,7 +71,7 @@ public class ItemListVariable<T> extends Variable<T> {
    * Gets the serializable constraints string for this variable.
    */
   public String getSerializableConstraints() {
-    return SERIALIZABLE_CONSTRAINTS;
+    return StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT;
   }
 
   /**

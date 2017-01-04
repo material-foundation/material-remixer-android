@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import java.lang.ref.WeakReference;
 
 /**
@@ -25,11 +26,6 @@ import java.lang.ref.WeakReference;
  * <p><b>This class is not thread-safe and should only be used from the main thread.</b>
  */
 public class Variable<T> {
-
-  /**
-   * The serializable string to represent the constraints on values for variables of this class.
-   */
-  public final static String SERIALIZABLE_CONSTRAINTS = "none";
 
   /**
    * The name to display in the UI for this variable.
@@ -193,7 +189,7 @@ public class Variable<T> {
    * Gets the serializable constraints string for this variable.
    */
   public String getSerializableConstraints() {
-    return SERIALIZABLE_CONSTRAINTS;
+    return StoredVariable.VARIABLE_CONSTRAINT;
   }
 
   /**

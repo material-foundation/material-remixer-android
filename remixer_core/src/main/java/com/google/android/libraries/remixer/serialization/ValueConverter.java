@@ -17,7 +17,6 @@
 package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Variable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -74,9 +73,9 @@ public abstract class ValueConverter<T> {
     result.selectedValue = parseValue(object.get(StoredVariable.SELECTED_VALUE));
     result.constraints = object.get(StoredVariable.CONSTRAINTS).getAsString();
 
-    if (ItemListVariable.SERIALIZABLE_CONSTRAINTS.equals(result.constraints)) {
+    if (StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT.equals(result.constraints)) {
       deserializePossibleValues(result, object.get(StoredVariable.POSSIBLE_VALUES));
-    } else if (RangeVariable.SERIALIZABLE_CONSTRAINTS.equals(result.constraints)) {
+    } else if (StoredVariable.RANGE_VARIABLE_CONSTRAINT.equals(result.constraints)) {
       deserializeRangeProperties(result, object);
     }
     result.dataType = dataType;
@@ -111,14 +110,14 @@ public abstract class ValueConverter<T> {
     object.add(StoredVariable.DATA_TYPE, new JsonPrimitive(src.dataType));
     object.add(StoredVariable.SELECTED_VALUE, valueToJson(src.selectedValue));
     object.add(StoredVariable.CONSTRAINTS, new JsonPrimitive(src.constraints));
-    if (ItemListVariable.SERIALIZABLE_CONSTRAINTS.equals(src.constraints)) {
+    if (StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT.equals(src.constraints)) {
       JsonArray possibleValues = new JsonArray();
       for (T item : src.possibleValues) {
         possibleValues.add(valueToJson(item));
       }
       object.add(StoredVariable.POSSIBLE_VALUES, possibleValues);
     }
-    if (RangeVariable.SERIALIZABLE_CONSTRAINTS.equals(src.constraints)) {
+    if (StoredVariable.RANGE_VARIABLE_CONSTRAINT.equals(src.constraints)) {
       object.add(StoredVariable.MIN_VALUE, valueToJson(src.minValue));
       object.add(StoredVariable.MAX_VALUE, valueToJson(src.maxValue));
       object.add(StoredVariable.INCREMENT, valueToJson(src.increment));
