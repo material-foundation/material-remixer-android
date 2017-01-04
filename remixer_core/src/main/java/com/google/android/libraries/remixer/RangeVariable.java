@@ -92,7 +92,7 @@ public class RangeVariable extends Variable<Float> {
   }
 
   private void checkStepIncrement() {
-    if (increment < 1) {
+    if (increment <= 0) {
       throw new IllegalArgumentException(
           String.format(
               Locale.getDefault(),
