@@ -31,7 +31,7 @@ public class RangeVariable extends Variable<Float> {
   private static final String INVALID_RANGE_ERROR_FORMAT =
       "Invalid range for Variable %s min: %f, max: %f";
   private static final String NEGATIVE_STEPPING_ERROR_FORMAT =
-      "Stepping must be >= 1, Variable %s has increment %f";
+      "Stepping must be > 0, Variable %s has increment %f";
   private static final String STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT =
       "Variable %s: incorrect increment, can't get to %s %f from minValue %f using"
           + " increment %f";
