@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import java.lang.ref.WeakReference;
 
 /**
@@ -182,6 +183,13 @@ public class Variable<T> {
     checkValue(newValue);
     selectedValue = newValue;
     runCallback();
+  }
+
+  /**
+   * Gets the serializable constraints string for this variable.
+   */
+  public String getSerializableConstraints() {
+    return StoredVariable.VARIABLE_CONSTRAINT;
   }
 
   /**

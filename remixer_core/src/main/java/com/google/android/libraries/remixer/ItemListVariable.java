@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,6 +65,13 @@ public class ItemListVariable<T> extends Variable<T> {
 
   public List<T> getValueList() {
     return valueList;
+  }
+
+  /**
+   * Gets the serializable constraints string for this variable.
+   */
+  public String getSerializableConstraints() {
+    return StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT;
   }
 
   /**

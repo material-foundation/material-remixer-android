@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.remixer;
 
+import com.google.android.libraries.remixer.serialization.StoredVariable;
 import java.util.Locale;
 
 /**
@@ -141,6 +142,13 @@ public class RangeVariable extends Variable<Float> {
 
   public float getIncrement() {
     return increment;
+  }
+
+  /**
+   * Gets the serializable constraints string for this variable.
+   */
+  public String getSerializableConstraints() {
+    return StoredVariable.RANGE_VARIABLE_CONSTRAINT;
   }
 
   /**
