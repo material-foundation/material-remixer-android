@@ -245,7 +245,7 @@ public class StoredVariable<T> {
   /**
    * Creates a Stored variable from a existing RemixerItem.
    */
-  static StoredVariable fromVariable(Variable item) {
+  public static StoredVariable fromVariable(Variable item) {
     StoredVariable storedVariable = null;
     for (DataType type : Remixer.getRegisteredDataTypes()) {
       try {
