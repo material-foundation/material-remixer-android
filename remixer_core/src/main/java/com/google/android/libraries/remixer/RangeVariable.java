@@ -29,14 +29,14 @@ import java.util.Locale;
 public class RangeVariable extends Variable<Float> {
 
   private static final String INVALID_RANGE_ERROR_FORMAT =
-      "Invalid range for Variable %s min: %d, max: %d";
+      "Invalid range for Variable %s min: %f, max: %f";
   private static final String NEGATIVE_STEPPING_ERROR_FORMAT =
-      "Stepping must be >= 1, Variable %s has increment %d";
+      "Stepping must be > 0, Variable %s has increment %f";
   private static final String STEP_INCREMENT_INVALID_FOR_RANGE_ERROR_FORMAT =
-      "Variable %s: incorrect increment, can't get to %s %d from minValue %d using"
-          + " increment %d";
+      "Variable %s: incorrect increment, can't get to %s %f from minValue %f using"
+          + " increment %f";
   private static final String NEW_VALUE_OUT_OF_BOUNDS_ERROR_FORMAT =
-      "%d is out of bounds for Variable %s: min: %d, max: %d";
+      "%f is out of bounds for Variable %s: min: %f, max: %f";
   private final float minValue;
   private final float maxValue;
   private final float increment;
@@ -92,7 +92,7 @@ public class RangeVariable extends Variable<Float> {
   }
 
   private void checkStepIncrement() {
-    if (increment < 1) {
+    if (increment <= 0) {
       throw new IllegalArgumentException(
           String.format(
               Locale.getDefault(),
