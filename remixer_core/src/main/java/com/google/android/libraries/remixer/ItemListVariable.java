@@ -29,7 +29,7 @@ public class ItemListVariable<T> extends Variable<T> {
   /**
    * The serializable string to represent the constraints on values for variables of this class.
    */
-  public final static String SERIALIZABLE_CONSTRAINTS = ";ost";
+  public final static String SERIALIZABLE_CONSTRAINTS = "list";
 
   private final List<T> valueList;
 
