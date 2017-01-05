@@ -65,13 +65,6 @@ subprojects {
           classpathForJavadoc = sourceSets.main.compileClasspath
         }
       }
-
-      // Add an autoJavadoc target to each subproject.
-      project.task([type: Javadoc], "autoJavadoc") {
-        failOnError false
-        source = project.ext.sourceSetForJavadoc
-        classpath += project.ext.classpathForJavadoc
-      }
     }
   }
 
@@ -110,9 +103,6 @@ task alljavadoc(type: Javadoc) {
 
 task javadocJar(type: Jar, dependsOn: alljavadoc) {
   classifier = 'javadoc'
+  destinationDir = file("${buildDir}/docs/")
   from alljavadoc.destinationDir
-}
-
-artifacts {
-  archives javadocJar
 }
