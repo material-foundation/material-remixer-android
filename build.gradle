@@ -45,6 +45,36 @@ subprojects {
     configFile = rootProject.file('checkstyle.xml')
     toolVersion = '7.1'
   }
+
+  ext {
+    sourceSetForJavadoc = null
+    classpathForJavadoc = null
+  }
+
+  afterEvaluate { project ->
+    if (project.name != ":remixer") {
+      // Create the sourceset and classpath variables.
+      if (project.hasProperty('android')) {
+        project.ext {
+          sourceSetForJavadoc = project.android.sourceSets.main.java.sourceFiles
+          classpathForJavadoc = files(project.android.getBootClasspath().join(File.pathSeparator)) + project.configurations.compile
+        }
+      } else {
+        project.ext {
+          sourceSetForJavadoc = sourceSets.main.allJava
+          classpathForJavadoc = sourceSets.main.compileClasspath
+        }
+      }
+
+      // Add an autoJavadoc target to each subproject.
+      project.task([type: Javadoc], "autoJavadoc") {
+        failOnError false
+        source = project.ext.sourceSetForJavadoc
+        classpath += project.ext.classpathForJavadoc
+      }
+    }
+  }
+
 }
 
 task clean(type: Delete) {
@@ -58,4 +88,31 @@ ext {
   compileSdkVersion = 25
   buildToolsVersion = '25.0.0'
   supportLibraryVersion = '25.0.0'
+}
+
+// Necessary to depend on the ext properties defined in afterEvaluate
+evaluationDependsOnChildren()
+
+def javadocProjects = [
+  ":remixer_core",
+  ":remixer_annotation",
+  ":remixer_ui",
+  ":remixer_storage"
+]
+
+// Task that generates javadoc scoped across all subprojects in javadocProjects.
+task alljavadoc(type: Javadoc) {
+  failOnError false
+  source javadocProjects.collect { project(it).ext.sourceSetForJavadoc }
+  classpath = files(javadocProjects.collect { project(it).ext.classpathForJavadoc })
+  destinationDir = file("${buildDir}/docs/javadoc")
+}
+
+task javadocJar(type: Jar, dependsOn: alljavadoc) {
+  classifier = 'javadoc'
+  from alljavadoc.destinationDir
+}
+
+artifacts {
+  archives javadocJar
 }
