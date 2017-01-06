@@ -66,7 +66,7 @@ javadocProjects.each {
 }
 
 // Task that generates javadoc scoped across all subprojects in javadocProjects.
-task alljavadoc(type: Javadoc) {
+task allJavadoc(type: Javadoc) {
   failOnError false
   options.showAll()
   source javadocProjects.collect { project(it).ext.sourceSetForJavadoc }
@@ -79,10 +79,10 @@ task sourcesJar(type: Jar) {
   classifier = 'sources'
 }
 
-task javadocJar(type: Jar, dependsOn: alljavadoc) {
+task javadocJar(type: Jar, dependsOn: allJavadoc) {
   classifier = 'javadoc'
   destinationDir = file("${buildDir}/docs/")
-  from alljavadoc.destinationDir
+  from allJavadoc.destinationDir
 }
 
 artifacts {
