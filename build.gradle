@@ -82,35 +82,3 @@ ext {
   buildToolsVersion = '25.0.0'
   supportLibraryVersion = '25.0.0'
 }
-
-// Necessary to depend on the ext properties defined in afterEvaluate
-evaluationDependsOnChildren()
-
-def javadocProjects = [
-  ":remixer_core",
-  ":remixer_annotation",
-  ":remixer_ui",
-  ":remixer_storage"
-]
-
-// Task that generates javadoc scoped across all subprojects in javadocProjects.
-task alljavadoc(type: Javadoc) {
-  failOnError false
-  source javadocProjects.collect { project(it).ext.sourceSetForJavadoc }
-  classpath = files(javadocProjects.collect { project(it).ext.classpathForJavadoc })
-  destinationDir = file("${buildDir}/docs/javadoc")
-}
-
-task javadocJar(type: Jar, dependsOn: alljavadoc) {
-  classifier = 'javadoc'
-  destinationDir = file("${buildDir}/docs/")
-  from alljavadoc.destinationDir
-}
-
-configurations {
-  javadoc
-}
-
-artifacts {
-  javadoc javadocJar
-}

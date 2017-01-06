@@ -51,3 +51,41 @@ dependencies {
   compile project(':remixer_storage')
   compile project(':remixer_ui')
 }
+
+def javadocProjects = [
+  ":remixer_core",
+  ":remixer_annotation",
+  ":remixer_ui",
+  ":remixer_storage"
+]
+
+// Make this project depend on complete evaluation of all the javadoc-generating projects.
+// This lets us use the ext variables generated in afterEvaluate.
+javadocProjects.each {
+  evaluationDependsOn(it)
+}
+
+// Task that generates javadoc scoped across all subprojects in javadocProjects.
+task alljavadoc(type: Javadoc) {
+  failOnError false
+  source javadocProjects.collect { project(it).ext.sourceSetForJavadoc }
+  classpath = files(javadocProjects.collect { project(it).ext.classpathForJavadoc })
+  destinationDir = file("${buildDir}/docs/javadoc")
+}
+
+task sourcesJar(type: Jar) {
+  from android.sourceSets.main.java.srcDirs
+  classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: alljavadoc) {
+  classifier = 'javadoc'
+  destinationDir = file("${buildDir}/docs/")
+  from alljavadoc.destinationDir
+}
+
+artifacts {
+  archives sourcesJar
+  archives javadocJar
+}
+
