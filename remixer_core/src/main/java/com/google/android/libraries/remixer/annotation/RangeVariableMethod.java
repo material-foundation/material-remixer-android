@@ -53,17 +53,17 @@ public @interface RangeVariableMethod {
    * <p>If left unspecified (0) and it is out of bounds, it will default to minValue, for
    * convenience.
    */
-  int defaultValue() default 0;
+  float defaultValue() default 0;
 
   /**
    * The minimum value for this RangeVariable. It is 0 by default.
    */
-  int minValue() default 0;
+  float minValue() default 0;
 
   /**
    * The maximum value for this RangeVariable. It is 100 by default.
    */
-  int maxValue() default 100;
+  float maxValue() default 100;
 
   /**
    * The number to step between value, can only be a positive integer.
@@ -71,7 +71,7 @@ public @interface RangeVariableMethod {
    * <p>If, for example, {@code minValue = 0 && maxValue = 12 && increment = 4} the only valid
    * values for this variable would be {@code 0, 4, 8, 12}.
    */
-  int increment() default 1;
+  float increment() default 1;
 
   /**
    * The layout id to inflate when displaying this Variable. If not specified a default will be

@@ -19,7 +19,6 @@ package com.google.android.libraries.remixer.serialization;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.InitializationHelper;
 import com.google.android.libraries.remixer.ItemListVariable;
-import com.google.android.libraries.remixer.Remixer;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,7 +55,7 @@ public class ColorVariableSerializationTest {
 
   @Test
   public void colorListVariableConvertsToStorageTest() {
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(colorListVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(colorListVariable);
     Assert.assertEquals(DataType.COLOR.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, colorListVariable);
     // Check that it converts to Json and back with no data loss.
@@ -66,7 +65,7 @@ public class ColorVariableSerializationTest {
   @Test
   public void modifiedColorListVariableConvertsToStorageTest() {
     colorListVariable.setValue(BLUE);
-    StoredVariable<Integer> result = StoredVariable.fromRemixerItem(colorListVariable);
+    StoredVariable<Integer> result = StoredVariable.fromVariable(colorListVariable);
     Assert.assertEquals(DataType.COLOR.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, colorListVariable);
     // Check that it converts to Json and back with no data loss.

@@ -21,11 +21,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import android.view.LayoutInflater;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.android.libraries.remixer.Callback;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.ui.R;
+import com.google.android.libraries.remixer.ui.widget.number.FloatSeekBar;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,19 +43,19 @@ import org.robolectric.annotation.Config;
 public class SeekBarRangeVariableWidgetTest {
   private static final String TITLE = "Padding for buttons in dp";
   private static final String KEY = "button_padding";
-  private static final int MIN = 4;
-  private static final int MAX = 20;
-  private static final int DEFAULT_VALUE = 8;
-  private static final int INCREMENT = 1;
+  private static final float MIN = 4;
+  private static final float MAX = 20;
+  private static final float DEFAULT_VALUE = 8;
+  private static final float INCREMENT = 1;
 
   @Mock
-  Callback<Integer> mockCallback;
+  Callback<Float> mockCallback;
 
   private RangeVariable variable;
   private SeekBarRangeVariableWidget view;
   private TextView name;
   private TextView currentValue;
-  private SeekBar seekbar;
+  private FloatSeekBar seekbar;
 
   @Before
   public void setUp() {
@@ -72,8 +72,8 @@ public class SeekBarRangeVariableWidgetTest {
         .build();
     view = (SeekBarRangeVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.seekbar_range_variable_widget, null);
-    view.bindRemixerItem(variable);
-    seekbar = (SeekBar) view.findViewById(R.id.variableSeekBar);
+    view.bindVariable(variable);
+    seekbar = (FloatSeekBar) view.findViewById(R.id.variableSeekBar);
     currentValue = (TextView) view.findViewById(R.id.rangeVariableCurrentValue);
     name = (TextView) view.findViewById(R.id.variableName);
   }
@@ -81,8 +81,8 @@ public class SeekBarRangeVariableWidgetTest {
   @Test
   public void defaultIsShown() {
     assertEquals(TITLE, name.getText());
-    assertEquals(Integer.toString(DEFAULT_VALUE), currentValue.getText().toString());
-    assertEquals(DEFAULT_VALUE - MIN, seekbar.getProgress());
+    assertEquals(Float.toString(DEFAULT_VALUE), currentValue.getText().toString());
+    assertEquals(DEFAULT_VALUE, seekbar.getValue(), 0.01f);
   }
 
   @Test
@@ -91,7 +91,7 @@ public class SeekBarRangeVariableWidgetTest {
     verify(mockCallback, times(1)).onValueSet(variable);
     seekbar.setProgress(0);
     // Check the currentValue displayed changes on the UI
-    assertEquals(Integer.toString(MIN), currentValue.getText().toString());
+    assertEquals(Float.toString(MIN), currentValue.getText().toString());
     // After moving the slider, check that the callback was called once again
     verify(mockCallback, times(2)).onValueSet(variable);
   }

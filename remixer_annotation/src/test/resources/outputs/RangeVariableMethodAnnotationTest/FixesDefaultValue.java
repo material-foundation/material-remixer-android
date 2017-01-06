@@ -21,7 +21,7 @@ import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
-import java.lang.Integer;
+import java.lang.Float;
 import java.lang.Override;
 
 /**
@@ -32,20 +32,20 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     Remixer remixer = Remixer.getInstance();
     Generated_fixValue fixValue_callback = new Generated_fixValue(activity);
     RangeVariable.Builder fixValue_remixer_item = new RangeVariable.Builder();
-    fixValue_remixer_item.setDataType(Remixer.getInstance().getDataType("number"));
+    fixValue_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
     fixValue_remixer_item.setKey("fixValue");
     fixValue_remixer_item.setTitle("fixValue");
     fixValue_remixer_item.setLayoutId(0);
     fixValue_remixer_item.setContext(activity);
     fixValue_remixer_item.setCallback(fixValue_callback);
-    fixValue_remixer_item.setMinValue(15);
-    fixValue_remixer_item.setMaxValue(100);
-    fixValue_remixer_item.setDefaultValue(15);
-    fixValue_remixer_item.setIncrement(1);
+    fixValue_remixer_item.setMinValue(15f);
+    fixValue_remixer_item.setMaxValue(100f);
+    fixValue_remixer_item.setDefaultValue(15f);
+    fixValue_remixer_item.setIncrement(1f);
     remixer.addItem(fixValue_remixer_item.build());
   }
 
-  static class Generated_fixValue implements Callback<Integer> {
+  static class Generated_fixValue implements Callback<Float> {
     private final FixesDefaultValue activity;
 
     Generated_fixValue(FixesDefaultValue activity) {
@@ -53,7 +53,7 @@ public class FixesDefaultValue_RemixerBinder implements RemixerBinder.Binder<Fix
     }
 
     @Override
-    public void onValueSet(Variable<Integer> variable) {
+    public void onValueSet(Variable<Float> variable) {
       activity.fixValue(variable.getSelectedValue());
     }
   }

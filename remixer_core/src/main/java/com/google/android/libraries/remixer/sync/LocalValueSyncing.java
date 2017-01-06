@@ -16,10 +16,7 @@
 
 package com.google.android.libraries.remixer.sync;
 
-import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.serialization.SerializableRemixerContents;
 import com.google.android.libraries.remixer.serialization.StoredVariable;
@@ -31,7 +28,8 @@ import java.util.List;
  */
 public class LocalValueSyncing implements SynchronizationMechanism {
 
-  private SerializableRemixerContents serializableRemixerContents = new SerializableRemixerContents();
+  protected SerializableRemixerContents serializableRemixerContents =
+      new SerializableRemixerContents();
   private Remixer remixer;
 
   @Override
@@ -41,34 +39,21 @@ public class LocalValueSyncing implements SynchronizationMechanism {
 
   @Override
   @SuppressWarnings("unchecked")
-  public void onAddingRemixerItem(RemixerItem item) {
-    serializableRemixerContents.addItem(item);
-    StoredVariable storedVariable = serializableRemixerContents.getItem(item.getKey());
-    if (!storedVariable.getDataType().equals(DataType.TRIGGER.getName())) {
-      // Check the value for updates.
-      Variable variable = (Variable) item;
-      variable.setValueWithoutNotifyingOthers(storedVariable.getSelectedValue());
-    }
+  public void onAddingVariable(Variable variable) {
+    serializableRemixerContents.addItem(variable);
+    StoredVariable storedVariable = serializableRemixerContents.getItem(variable.getKey());
+    // Check the value for updates.
+    variable.setValueWithoutNotifyingOthers(storedVariable.getSelectedValue());
   }
 
   @Override
   @SuppressWarnings("unchecked")
   public void onValueChanged(Variable variable) {
     serializableRemixerContents.setValue(variable);
-    List<RemixerItem> itemList = remixer.getItemsWithKey(variable.getKey());
-    for (RemixerItem item : itemList) {
+    List<Variable> itemList = remixer.getVariablesWithKey(variable.getKey());
+    for (Variable item : itemList) {
       if (item != variable) {
         ((Variable) item).setValueWithoutNotifyingOthers(variable.getSelectedValue());
-      }
-    }
-  }
-
-  @Override
-  public void onTrigger(Trigger trigger) {
-    List<RemixerItem> itemList = remixer.getItemsWithKey(trigger.getKey());
-    for (RemixerItem item : itemList) {
-      if (item != trigger) {
-        ((Trigger) item).triggerWithoutTriggeringOthers();
       }
     }
   }

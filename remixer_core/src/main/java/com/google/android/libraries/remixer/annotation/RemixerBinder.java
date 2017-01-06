@@ -16,18 +16,29 @@
 
 package com.google.android.libraries.remixer.annotation;
 
+import com.google.android.libraries.remixer.Remixer;
+import java.util.Locale;
+
 /**
- * Used to bind activities to their implicitly generated variables and triggers.
+ * Used to bind activities to their implicitly generated variables.
  */
 public class RemixerBinder {
 
   /**
-   * Binds an activity's remixer to its generated variables and triggers.
+   * Binds an activity's remixer to its generated variables.
    *
    * @throws RemixerBindingException When there is an issue instantiating the Binder class
    */
   @SuppressWarnings("ClassNewInstance")
   public static <T> void bind(T activity) {
+    if (Remixer.getRegisteredDataTypes().isEmpty()) {
+      throw new IllegalStateException(
+          "There are no registered data types for remixer. This indicates that you have not "
+          + " initialized Remixer at all and it will fail in runtime. Please run "
+          + "RemixerInitialization.initRemixer in your application class. See the Remixer README "
+          + "for detailed instructions. ");
+    }
+
     try {
       Class<?> bindingClass =
           Class.forName(activity.getClass().getCanonicalName() + "_RemixerBinder");
@@ -59,7 +70,7 @@ public class RemixerBinder {
   public interface Binder<T> {
 
     /**
-     * Bind an activity's remixer instance to its generated variables and triggers.
+     * Bind an activity's remixer instance to its generated variables.
      */
     void bindInstance(T activity);
   }

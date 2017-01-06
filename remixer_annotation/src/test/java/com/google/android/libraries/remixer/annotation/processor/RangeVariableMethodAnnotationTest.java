@@ -46,7 +46,7 @@ public class RangeVariableMethodAnnotationTest {
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("Integer")
+        .withErrorContaining("Float")
         .in(file);
   }
 

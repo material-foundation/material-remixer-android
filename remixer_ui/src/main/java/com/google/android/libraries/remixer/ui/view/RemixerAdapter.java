@@ -22,8 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.libraries.remixer.Variable;
-import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.ui.widget.RemixerItemWidget;
+import com.google.android.libraries.remixer.ui.widget.RemixerWidget;
 import java.util.List;
 
 /**
@@ -32,10 +31,10 @@ import java.util.List;
  */
 class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
-  private final List<RemixerItem> remixerItems;
+  private final List<Variable> variables;
 
-  public RemixerAdapter(List<RemixerItem> items) {
-    remixerItems = items;
+  public RemixerAdapter(List<Variable> variables) {
+    this.variables = variables;
   }
 
   @Override
@@ -47,31 +46,31 @@ class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
-    holder.setRemixerItem(remixerItems.get(position));
+    holder.setVariable(variables.get(position));
   }
 
   @Override
   public int getItemViewType(int position) {
-    return RemixerItemWidgetHelper.getLayoutId(remixerItems.get(position));
+    return RemixerWidgetHelper.getLayoutId(variables.get(position));
   }
 
   @Override
   public int getItemCount() {
-    return remixerItems.size();
+    return variables.size();
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    private final RemixerItemWidget view;
+    private final RemixerWidget view;
 
     public ViewHolder(View view) {
       super(view);
 
-      this.view = (RemixerItemWidget) view;
+      this.view = (RemixerWidget) view;
     }
 
     @SuppressWarnings("unchecked")
-    public void setRemixerItem(RemixerItem remixerItem) {
-      view.bindRemixerItem(remixerItem);
+    public void setVariable(Variable variable) {
+      view.bindVariable(variable);
     }
   }
 }

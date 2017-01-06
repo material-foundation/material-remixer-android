@@ -3,9 +3,8 @@ package com.google.android.libraries.remixer;
 import com.google.android.libraries.remixer.serialization.ValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.BooleanValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.ColorValueConverter;
-import com.google.android.libraries.remixer.serialization.converters.IntegerValueConverter;
+import com.google.android.libraries.remixer.serialization.converters.FloatValueConverter;
 import com.google.android.libraries.remixer.serialization.converters.StringValueConverter;
-import com.google.android.libraries.remixer.serialization.converters.TriggerValueConverter;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class DataType<T> {
    * <p>The key for this map is the specific RemixerItem subclass, and the value is the default
    * layout to use when a RemixerItem of the specific subclass has this data type.
    */
-  private final Map<Class<? extends RemixerItem>, Integer> layoutIdForRemixerItemType =
+  private final Map<Class<? extends Variable>, Integer> layoutIdForVariableType =
       new HashMap<>();
 
   /**
@@ -81,12 +80,12 @@ public class DataType<T> {
     return result;
   }
 
-  public void setLayoutIdForRemixerItemType(Class<? extends RemixerItem> clazz, int layoutId) {
-    layoutIdForRemixerItemType.put(clazz, layoutId);
+  public void setLayoutIdForVariableType(Class<? extends Variable> clazz, int layoutId) {
+    layoutIdForVariableType.put(clazz, layoutId);
   }
 
-  public int getLayoutIdForRemixerItemType(Class<? extends RemixerItem> clazz) {
-    return layoutIdForRemixerItemType.get(clazz);
+  public int getLayoutIdForVariableType(Class<? extends Variable> clazz) {
+    return layoutIdForVariableType.get(clazz);
   }
 
   public String getName() {
@@ -103,18 +102,20 @@ public class DataType<T> {
 
   // ======= Default data types defined here.
 
+  private static final String KEY_BOOLEAN = "__DataTypeBoolean__";
+  private static final String KEY_COLOR = "__DataTypeColor__";
+  private static final String KEY_NUMBER = "__DataTypeNumber__";
+  private static final String KEY_STRING = "__DataTypeString__";
+
   public static final DataType<Boolean> BOOLEAN = new DataType<>(
-      "boolean", Boolean.class, new BooleanValueConverter("boolean"));
+      KEY_BOOLEAN, Boolean.class, new BooleanValueConverter(KEY_BOOLEAN));
 
   public static final DataType<Integer> COLOR = new DataType<>(
-      "color", Integer.class, new ColorValueConverter("color"));
+      KEY_COLOR, Integer.class, new ColorValueConverter(KEY_COLOR));
 
-  public static final DataType<Integer> NUMBER = new DataType<>(
-      "number", Integer.class, new IntegerValueConverter("number"));
+  public static final DataType<Float> NUMBER = new DataType<>(
+      KEY_NUMBER, Float.class, new FloatValueConverter(KEY_NUMBER));
 
   public static final DataType<String> STRING = new DataType<>(
-      "string", String.class, new StringValueConverter("string"));
-
-  public static final DataType<Void> TRIGGER = new DataType<>(
-      "trigger", Void.class, new TriggerValueConverter("trigger"));
+      KEY_STRING, String.class, new StringValueConverter(KEY_STRING));
 }

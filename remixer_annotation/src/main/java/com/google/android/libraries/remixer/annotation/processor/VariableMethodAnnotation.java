@@ -36,32 +36,8 @@ import javax.lang.model.element.TypeElement;
  * RangeVariableMethodAnnotation nor ItemListVariableMethodAnnotation extend this class), since
  * these classes handle mostly the Variable objects' initialization and those are fairly different
  * for each of those classes.
- *
- * <p>Most of what can be shared is shared in MethodAnnotation and also applies to @TriggerMethod
- * annotations as well.
  */
 class VariableMethodAnnotation<T> extends MethodAnnotation {
-
-  /**
-   * Statement to create a new Variable&lt;T&gt;
-   *
-   * <p>Would expand to {@code Variable&lt;T&gt; variableName = new Variable&lt;&gt;(
-   * title, key, defaultValue, activity, callback, layoutId)}.
-   */
-  private static final String NEW_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $L, $L, $L, $L)";
-
-  /**
-   * Statement to create a new Variable&lt;String&gt;
-   *
-   * <p>Would expand to {@code Variable&lt;String&gt; variableName = new Variable&lt;&gt;(
-   * title, key, "defaultValue", activity, callback, layoutId)}.
-   *
-   * <p>The difference lays in that the defaultValue is treated as a string and quoted, instead of
-   * being treated like a literal
-   */
-  private static final String NEW_STRING_VARIABLE_STATEMENT =
-      "$T $L = new $T($S, $S, $S, $L, $L, $L)";
 
   private final T defaultValue;
 

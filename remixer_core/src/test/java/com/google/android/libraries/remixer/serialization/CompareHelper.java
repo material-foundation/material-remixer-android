@@ -18,22 +18,10 @@ package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
-import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
-import com.google.android.libraries.remixer.serialization.StoredVariable;
 import org.junit.Assert;
 
 public class CompareHelper {
-
-  public static void assertEqualsTrigger(StoredVariable storage, Trigger trigger) {
-    assertConsistent(storage, trigger);
-    Assert.assertNull(storage.selectedValue);
-    Assert.assertNull(storage.possibleValues);
-    Assert.assertNull(storage.minValue);
-    Assert.assertNull(storage.maxValue);
-    Assert.assertNull(storage.increment);
-  }
 
   public static <T> void assertEqualsVariable(StoredVariable<T> storage, Variable<T> variable) {
     assertConsistent(storage, variable);
@@ -64,8 +52,9 @@ public class CompareHelper {
     Assert.assertEquals(variable.getIncrement(), storage.increment);
   }
 
-  private static void assertConsistent(StoredVariable storage, RemixerItem item) {
+  private static void assertConsistent(StoredVariable storage, Variable item) {
     Assert.assertEquals(item.getKey(), storage.key);
     Assert.assertEquals(item.getTitle(), storage.title);
+    Assert.assertEquals(item.getSerializableConstraints(), storage.constraintType);
   }
 }

@@ -17,7 +17,6 @@ class InitializationHelper {
       instance.registerDataType(DataType.COLOR);
       instance.registerDataType(DataType.NUMBER);
       instance.registerDataType(DataType.STRING);
-      instance.registerDataType(DataType.TRIGGER);
       initializedRemixerInstances.add(instance);
     }
   }

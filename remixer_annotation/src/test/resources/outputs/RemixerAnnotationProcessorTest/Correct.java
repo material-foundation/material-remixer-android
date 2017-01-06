@@ -22,13 +22,12 @@ import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.StringVariableBuilder;
-import com.google.android.libraries.remixer.Trigger;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import java.lang.Boolean;
+import java.lang.Float;
 import java.lang.Integer;
 import java.lang.Override;
-import java.lang.Runnable;
 import java.lang.String;
 import java.util.ArrayList;
 
@@ -40,7 +39,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     Remixer remixer = Remixer.getInstance();
     Generated_setBoolean setBoolean_callback = new Generated_setBoolean(activity);
     BooleanVariableBuilder setBoolean_remixer_item = new BooleanVariableBuilder();
-    setBoolean_remixer_item.setDataType(Remixer.getInstance().getDataType("boolean"));
+    setBoolean_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeBoolean__"));
     setBoolean_remixer_item.setKey("setBoolean");
     setBoolean_remixer_item.setTitle("setBoolean");
     setBoolean_remixer_item.setLayoutId(0);
@@ -48,37 +47,52 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setBoolean_remixer_item.setCallback(setBoolean_callback);
     setBoolean_remixer_item.setDefaultValue(false);
     remixer.addItem(setBoolean_remixer_item.build());
-    Generated_setIntegerList setIntegerList_callback = new Generated_setIntegerList(activity);
-    ItemListVariable.Builder<Integer> setIntegerList_remixer_item = new ItemListVariable.Builder<Integer>();
-    setIntegerList_remixer_item.setDataType(Remixer.getInstance().getDataType("number"));
-    setIntegerList_remixer_item.setKey("setIntegerList");
-    setIntegerList_remixer_item.setTitle("setIntegerList");
-    setIntegerList_remixer_item.setLayoutId(0);
-    setIntegerList_remixer_item.setContext(activity);
-    setIntegerList_remixer_item.setCallback(setIntegerList_callback);
-    ArrayList<Integer> setIntegerList_variable_list = new ArrayList<Integer>();
-    setIntegerList_variable_list.add(1);
-    setIntegerList_variable_list.add(2);
-    setIntegerList_variable_list.add(3);
-    setIntegerList_remixer_item.setPossibleValues(setIntegerList_variable_list);
-    setIntegerList_remixer_item.setDefaultValue(1);
-    remixer.addItem(setIntegerList_remixer_item.build());
-    Generated_setInt setInt_callback = new Generated_setInt(activity);
-    RangeVariable.Builder setInt_remixer_item = new RangeVariable.Builder();
-    setInt_remixer_item.setDataType(Remixer.getInstance().getDataType("number"));
-    setInt_remixer_item.setKey("setInt");
-    setInt_remixer_item.setTitle("setInt");
-    setInt_remixer_item.setLayoutId(0);
-    setInt_remixer_item.setContext(activity);
-    setInt_remixer_item.setCallback(setInt_callback);
-    setInt_remixer_item.setMinValue(0);
-    setInt_remixer_item.setMaxValue(100);
-    setInt_remixer_item.setDefaultValue(0);
-    setInt_remixer_item.setIncrement(1);
-    remixer.addItem(setInt_remixer_item.build());
+    Generated_setFloatList setFloatList_callback = new Generated_setFloatList(activity);
+    ItemListVariable.Builder<Float> setFloatList_remixer_item = new ItemListVariable.Builder<Float>();
+    setFloatList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
+    setFloatList_remixer_item.setKey("setFloatList");
+    setFloatList_remixer_item.setTitle("setFloatList");
+    setFloatList_remixer_item.setLayoutId(0);
+    setFloatList_remixer_item.setContext(activity);
+    setFloatList_remixer_item.setCallback(setFloatList_callback);
+    ArrayList<Float> setFloatList_variable_list = new ArrayList<Float>();
+    setFloatList_variable_list.add(1f);
+    setFloatList_variable_list.add(2f);
+    setFloatList_variable_list.add(3f);
+    setFloatList_remixer_item.setPossibleValues(setFloatList_variable_list);
+    setFloatList_remixer_item.setDefaultValue(1f);
+    remixer.addItem(setFloatList_remixer_item.build());
+    Generated_setColorList setColorList_callback = new Generated_setColorList(activity);
+    ItemListVariable.Builder<Integer> setColorList_remixer_item = new ItemListVariable.Builder<Integer>();
+    setColorList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeColor__"));
+    setColorList_remixer_item.setKey("setColorList");
+    setColorList_remixer_item.setTitle("setColorList");
+    setColorList_remixer_item.setLayoutId(0);
+    setColorList_remixer_item.setContext(activity);
+    setColorList_remixer_item.setCallback(setColorList_callback);
+    ArrayList<Integer> setColorList_variable_list = new ArrayList<Integer>();
+    setColorList_variable_list.add(1);
+    setColorList_variable_list.add(2);
+    setColorList_variable_list.add(3);
+    setColorList_remixer_item.setPossibleValues(setColorList_variable_list);
+    setColorList_remixer_item.setDefaultValue(1);
+    remixer.addItem(setColorList_remixer_item.build());
+    Generated_setFloat setFloat_callback = new Generated_setFloat(activity);
+    RangeVariable.Builder setFloat_remixer_item = new RangeVariable.Builder();
+    setFloat_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeNumber__"));
+    setFloat_remixer_item.setKey("setFloat");
+    setFloat_remixer_item.setTitle("setFloat");
+    setFloat_remixer_item.setLayoutId(0);
+    setFloat_remixer_item.setContext(activity);
+    setFloat_remixer_item.setCallback(setFloat_callback);
+    setFloat_remixer_item.setMinValue(0f);
+    setFloat_remixer_item.setMaxValue(100f);
+    setFloat_remixer_item.setDefaultValue(0f);
+    setFloat_remixer_item.setIncrement(1f);
+    remixer.addItem(setFloat_remixer_item.build());
     Generated_setString setString_callback = new Generated_setString(activity);
     StringVariableBuilder setString_remixer_item = new StringVariableBuilder();
-    setString_remixer_item.setDataType(Remixer.getInstance().getDataType("string"));
+    setString_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeString__"));
     setString_remixer_item.setKey("setString");
     setString_remixer_item.setTitle("setString");
     setString_remixer_item.setLayoutId(0);
@@ -88,7 +102,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     remixer.addItem(setString_remixer_item.build());
     Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
     ItemListVariable.Builder<String> setStringList_remixer_item = new ItemListVariable.Builder<String>();
-    setStringList_remixer_item.setDataType(Remixer.getInstance().getDataType("string"));
+    setStringList_remixer_item.setDataType(Remixer.getInstance().getDataType("__DataTypeString__"));
     setStringList_remixer_item.setKey("setStringList");
     setStringList_remixer_item.setTitle("setStringList");
     setStringList_remixer_item.setLayoutId(0);
@@ -100,15 +114,6 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setStringList_remixer_item.setPossibleValues(setStringList_variable_list);
     setStringList_remixer_item.setDefaultValue("hello");
     remixer.addItem(setStringList_remixer_item.build());
-    Generated_pullTrigger pullTrigger_callback = new Generated_pullTrigger(activity);
-    Trigger.Builder pullTrigger_remixer_item = new Trigger.Builder();
-    pullTrigger_remixer_item.setDataType(Remixer.getInstance().getDataType("trigger"));
-    pullTrigger_remixer_item.setKey("pullTrigger");
-    pullTrigger_remixer_item.setTitle("pullTrigger");
-    pullTrigger_remixer_item.setLayoutId(0);
-    pullTrigger_remixer_item.setContext(activity);
-    pullTrigger_remixer_item.setCallback(pullTrigger_callback);
-    remixer.addItem(pullTrigger_remixer_item.build());
   }
 
   static class Generated_setBoolean implements Callback<Boolean> {
@@ -124,29 +129,42 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     }
   }
 
-  static class Generated_setIntegerList implements Callback<Integer> {
+  static class Generated_setFloatList implements Callback<Float> {
     private final Correct activity;
 
-    Generated_setIntegerList(Correct activity) {
+    Generated_setFloatList(Correct activity) {
       this.activity = activity;
     }
 
     @Override
-    public void onValueSet(Variable<Integer> variable) {
-      activity.setIntegerList(variable.getSelectedValue());
+    public void onValueSet(Variable<Float> variable) {
+      activity.setFloatList(variable.getSelectedValue());
     }
   }
 
-  static class Generated_setInt implements Callback<Integer> {
+  static class Generated_setColorList implements Callback<Integer> {
     private final Correct activity;
 
-    Generated_setInt(Correct activity) {
+    Generated_setColorList(Correct activity) {
       this.activity = activity;
     }
 
     @Override
     public void onValueSet(Variable<Integer> variable) {
-      activity.setInt(variable.getSelectedValue());
+      activity.setColorList(variable.getSelectedValue());
+    }
+  }
+
+  static class Generated_setFloat implements Callback<Float> {
+    private final Correct activity;
+
+    Generated_setFloat(Correct activity) {
+      this.activity = activity;
+    }
+
+    @Override
+    public void onValueSet(Variable<Float> variable) {
+      activity.setFloat(variable.getSelectedValue());
     }
   }
 
@@ -173,19 +191,6 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     @Override
     public void onValueSet(Variable<String> variable) {
       activity.setStringList(variable.getSelectedValue());
-    }
-  }
-
-  static class Generated_pullTrigger implements Runnable {
-    private final Correct activity;
-
-    Generated_pullTrigger(Correct activity) {
-      this.activity = activity;
-    }
-
-    @Override
-    public void run() {
-      activity.pullTrigger();
     }
   }
 }

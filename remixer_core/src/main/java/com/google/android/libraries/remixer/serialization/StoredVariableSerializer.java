@@ -46,7 +46,7 @@ class StoredVariableSerializer
     JsonPrimitive jsonDataType = object.getAsJsonPrimitive(StoredVariable.DATA_TYPE);
     String dataType = jsonDataType.getAsString();
     StoredVariable variable = null;
-    for (DataType type : Remixer.getInstance().getRegisteredDataType()) {
+    for (DataType type : Remixer.getInstance().getRegisteredDataTypes()) {
       if (dataType.equals(type.getName())) {
         variable = type.getConverter().deserialize(json);
         break;
@@ -54,7 +54,7 @@ class StoredVariableSerializer
     }
     if (variable == null) {
       // Unknown data type! Throw an exception!
-      throw new JsonParseException("Unknown data type for variable/trigger, cannot parse.");
+      throw new JsonParseException("Unknown data type for variable, cannot parse.");
     }
     return variable;
   }
@@ -64,7 +64,7 @@ class StoredVariableSerializer
   public JsonElement serialize(
       StoredVariable src, Type typeOfSrc, JsonSerializationContext context) {
     ValueConverter converter = null;
-    for (DataType type : Remixer.getInstance().getRegisteredDataType()) {
+    for (DataType type : Remixer.getInstance().getRegisteredDataTypes()) {
       if (src.dataType.equals(type.getName())) {
         converter = type.getConverter();
         break;

@@ -25,15 +25,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.ui.R;
+import com.google.android.libraries.remixer.ui.widget.number.FloatSeekBar;
 
 /**
  * Displays a {@link RangeVariable} as a SeekBar.
  */
 @Keep
 public class SeekBarRangeVariableWidget
-    extends RelativeLayout implements RemixerItemWidget<RangeVariable> {
+    extends RelativeLayout implements RemixerWidget<RangeVariable> {
 
-  private SeekBar seekBar;
+  private FloatSeekBar seekBar;
   private TextView nameText;
   private TextView currentValueText;
   private RangeVariable variable;
@@ -53,27 +54,23 @@ public class SeekBarRangeVariableWidget
   @Override
   protected void onFinishInflate() {
     super.onFinishInflate();
-    seekBar = (SeekBar) findViewById(R.id.variableSeekBar);
+    seekBar = (FloatSeekBar) findViewById(R.id.variableSeekBar);
     nameText = (TextView) findViewById(R.id.variableName);
     currentValueText = (TextView) findViewById(R.id.rangeVariableCurrentValue);
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final RangeVariable variable) {
+  public void bindVariable(@NonNull final RangeVariable variable) {
     this.variable = variable;
     nameText.setText(variable.getTitle());
-    int maxProgress = variable.getMaxValue() - variable.getMinValue();
-    maxProgress /= variable.getIncrement();
-    seekBar.setMax(maxProgress);
-    int progress = variable.getSelectedValue() - variable.getMinValue();
-    progress /= variable.getIncrement();
-    seekBar.setProgress(progress);
-    updateCurrentValue(progress);
+    seekBar.setBoundaries(variable.getMinValue(), variable.getMaxValue(), variable.getIncrement());
+    seekBar.setValue(variable.getSelectedValue());
+    updateCurrentValue(seekBar.getValue());
     seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
       @Override
       public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        updateCurrentValue(progress);
+        updateCurrentValue(SeekBarRangeVariableWidget.this.seekBar.getValue());
       }
 
       @Override
@@ -86,8 +83,7 @@ public class SeekBarRangeVariableWidget
     });
   }
 
-  private void updateCurrentValue(int progress) {
-    int value = variable.getMinValue() + progress * variable.getIncrement();
+  private void updateCurrentValue(float value) {
     currentValueText.setText(String.valueOf(value));
     if (variable.getSelectedValue() != value) {
       variable.setValue(value);

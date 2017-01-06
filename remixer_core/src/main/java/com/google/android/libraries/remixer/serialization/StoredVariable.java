@@ -17,8 +17,11 @@
 package com.google.android.libraries.remixer.serialization;
 
 import com.google.android.libraries.remixer.DataType;
+import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Remixer;
-import com.google.android.libraries.remixer.RemixerItem;
+import com.google.android.libraries.remixer.Variable;
+
 import java.util.List;
 
 /**
@@ -26,14 +29,33 @@ import java.util.List;
  * protocol.
  *
  * <p>This is never used for anything other than storage and syncing and is meant to be converted to
- * a regular {@link com.google.android.libraries.remixer.RemixerItem} as soon as it's completely
+ * a regular {@link com.google.android.libraries.remixer.Variable} as soon as it's completely
  * parsed.
  */
 public class StoredVariable<T> {
 
+  /**
+   * The serializable string to represent the constraintType on values for variables of the
+   * {@link Variable} class.
+   */
+  public final static String VARIABLE_CONSTRAINT = "__ConstraintTypeNone__";
+
+  /**
+   * The serializable string to represent the constraintType on values for variables of the
+   * {@link ItemListVariable} class.
+   */
+  public final static String ITEM_LIST_VARIABLE_CONSTRAINT = "__ConstraintTypeList__";
+
+  /**
+   * The serializable string to represent the constraintType on values for variables of the
+   * {@link RangeVariable} class.
+   */
+  public final static String RANGE_VARIABLE_CONSTRAINT = "__ConstraintTypeRange__";
+
   // Json dictionary keys to serialize this object
   static final String KEY = "key";
   static final String TITLE = "title";
+  static final String CONSTRAINT_TYPE = "constraintType";
   static final String DATA_TYPE = "dataType";
   static final String SELECTED_VALUE = "selectedValue";
   static final String POSSIBLE_VALUES = "possibleValues";
@@ -41,7 +63,6 @@ public class StoredVariable<T> {
   static final String MAX_VALUE = "maxValue";
   static final String INCREMENT = "increment";
 
-  // This first section applies to every Remixer item.
   /**
    * The RemixerItem's key.
    */
@@ -55,8 +76,14 @@ public class StoredVariable<T> {
    * DataType}.
    */
   String dataType;
+  /**
+   * The constraintType on this variable.
+   *
+   * <p>If this is a regular {@link Variable} it's "none", if it's an {@link ItemListVariable} it's
+   * "list", and if it is a {@link RangeVariable} it's "range".
+   */
+  String constraintType;
 
-  // From here, this only applies to Variables, not triggers.
   /**
    * The currently selected value for the variable.
    */
@@ -96,6 +123,14 @@ public class StoredVariable<T> {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getConstraintType() {
+    return constraintType;
+  }
+
+  public void setConstraintType(String constraintType) {
+    this.constraintType = constraintType;
   }
 
   public String getDataType() {
@@ -210,11 +245,11 @@ public class StoredVariable<T> {
   /**
    * Creates a Stored variable from a existing RemixerItem.
    */
-  static StoredVariable fromRemixerItem(RemixerItem item) {
+  public static StoredVariable fromVariable(Variable item) {
     StoredVariable storedVariable = null;
-    for (DataType type : Remixer.getRegisteredDataType()) {
+    for (DataType type : Remixer.getRegisteredDataTypes()) {
       try {
-        storedVariable = type.getConverter().fromRemixerItem(item);
+        storedVariable = type.getConverter().fromVariable(item);
         break;
       } catch (IllegalArgumentException ex) {
         // Don't do anything, this just wasn't the right data type.
@@ -227,6 +262,7 @@ public class StoredVariable<T> {
     }
     storedVariable.key = item.getKey();
     storedVariable.title = item.getTitle();
+    storedVariable.constraintType = item.getSerializableConstraints();
     return storedVariable;
   }
 }

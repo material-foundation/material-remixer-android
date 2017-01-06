@@ -24,7 +24,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.2.2'
+    classpath 'com.android.tools.build:gradle:2.2.3'
     classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.5.0'
@@ -45,6 +45,29 @@ subprojects {
     configFile = rootProject.file('checkstyle.xml')
     toolVersion = '7.1'
   }
+
+  ext {
+    sourceSetForJavadoc = null
+    classpathForJavadoc = null
+  }
+
+  afterEvaluate { project ->
+    if (project.name != ":remixer") {
+      // Create the sourceset and classpath variables.
+      if (project.hasProperty('android')) {
+        project.ext {
+          sourceSetForJavadoc = project.android.sourceSets.main.java.sourceFiles
+          classpathForJavadoc = files(project.android.getBootClasspath().join(File.pathSeparator)) + project.configurations.compile
+        }
+      } else {
+        project.ext {
+          sourceSetForJavadoc = sourceSets.main.allJava
+          classpathForJavadoc = sourceSets.main.compileClasspath
+        }
+      }
+    }
+  }
+
 }
 
 task clean(type: Delete) {

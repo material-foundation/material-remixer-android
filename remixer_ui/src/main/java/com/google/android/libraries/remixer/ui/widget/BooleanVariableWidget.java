@@ -20,6 +20,7 @@ import android.content.Context;
 import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -32,7 +33,7 @@ import com.google.android.libraries.remixer.ui.R;
  */
 @Keep
 public class BooleanVariableWidget extends RelativeLayout
-    implements RemixerItemWidget<Variable<Boolean>> {
+    implements RemixerWidget<Variable<Boolean>> {
 
   private TextView nameText;
   private Switch variableSwitch;
@@ -54,10 +55,16 @@ public class BooleanVariableWidget extends RelativeLayout
     super.onFinishInflate();
     variableSwitch = (Switch) findViewById(R.id.variableSwitch);
     nameText = (TextView) findViewById(R.id.variableName);
+    nameText.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        variableSwitch.toggle();
+      }
+    });
   }
 
   @Override
-  public void bindRemixerItem(@NonNull final Variable<Boolean> variable) {
+  public void bindVariable(@NonNull final Variable<Boolean> variable) {
     nameText.setText(variable.getTitle());
     variableSwitch.setChecked(variable.getSelectedValue());
     variableSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

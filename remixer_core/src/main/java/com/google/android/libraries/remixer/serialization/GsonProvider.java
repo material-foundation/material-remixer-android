@@ -16,16 +16,13 @@
 
 package com.google.android.libraries.remixer.serialization;
 
-import com.google.android.libraries.remixer.serialization.SerializableRemixerContents;
-import com.google.android.libraries.remixer.serialization.StoredVariable;
-import com.google.android.libraries.remixer.serialization.StoredVariableSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
  * Provides a configured Gson instance.
  */
-final class GsonProvider {
+public final class GsonProvider {
 
   private static final Gson instance;
 
@@ -37,7 +34,7 @@ final class GsonProvider {
         .create();
   }
 
-  static Gson getInstance() {
+  public static Gson getInstance() {
     return instance;
   }
 }

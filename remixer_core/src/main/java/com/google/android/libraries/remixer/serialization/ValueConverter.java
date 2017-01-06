@@ -16,8 +16,7 @@
 
 package com.google.android.libraries.remixer.serialization;
 
-import com.google.android.libraries.remixer.RemixerItem;
-import com.google.android.libraries.remixer.serialization.StoredVariable;
+import com.google.android.libraries.remixer.Variable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -58,11 +57,11 @@ public abstract class ValueConverter<T> {
   public abstract JsonElement valueToJson(T value);
 
   /**
-   * Creates a StoredVariable that represents the data in {@code item} if {@code item} is of this
-   * type. Returns null otherwise.
+   * Creates a StoredVariable that represents the data in {@code variable} if {@code item} is of
+   * this type.
    * @throws IllegalArgumentException if {@code item} does not match this type.
    */
-  public abstract StoredVariable<T> fromRemixerItem(RemixerItem item);
+  public abstract StoredVariable<T> fromVariable(Variable<?> variable);
 
   /**
    * Deserializes a JsonElement that contains a StoredVariable.
@@ -70,27 +69,34 @@ public abstract class ValueConverter<T> {
   public StoredVariable<T> deserialize(JsonElement json) {
     StoredVariable<T> result = new StoredVariable<>();
     JsonObject object = json.getAsJsonObject();
-    if (object.has(StoredVariable.SELECTED_VALUE)) {
-      result.selectedValue = parseValue(object.get(StoredVariable.SELECTED_VALUE));
+    result.selectedValue = parseValue(object.get(StoredVariable.SELECTED_VALUE));
+    result.constraintType = object.get(StoredVariable.CONSTRAINT_TYPE).getAsString();
+
+    if (StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT.equals(result.constraintType)) {
+      deserializePossibleValues(result, object.get(StoredVariable.POSSIBLE_VALUES));
+    } else if (StoredVariable.RANGE_VARIABLE_CONSTRAINT.equals(result.constraintType)) {
+      deserializeRangeProperties(result, object);
     }
-    JsonElement possibleValuesElement = object.get(StoredVariable.POSSIBLE_VALUES);
+    result.dataType = dataType;
+    result.key = object.getAsJsonPrimitive(StoredVariable.KEY).getAsString();
+    result.title = object.getAsJsonPrimitive(StoredVariable.TITLE).getAsString();
+    return result;
+  }
+
+  private void deserializeRangeProperties(StoredVariable<T> result, JsonObject object) {
+    result.minValue = parseValue(object.getAsJsonPrimitive(StoredVariable.MIN_VALUE));
+    result.maxValue = parseValue(object.getAsJsonPrimitive(StoredVariable.MAX_VALUE));
+    result.increment = parseValue(object.getAsJsonPrimitive(StoredVariable.INCREMENT));
+  }
+
+  private void deserializePossibleValues(StoredVariable<T> result, JsonElement possibleValuesElement) {
     if (possibleValuesElement != null) {
       JsonArray array = possibleValuesElement.getAsJsonArray();
       result.possibleValues = new ArrayList<>();
       for (JsonElement arrayElement : array) {
         result.possibleValues.add(parseValue(arrayElement));
       }
-    } else if (object.has(StoredVariable.MIN_VALUE) && object.has(StoredVariable.MAX_VALUE)
-        && object.has(StoredVariable.INCREMENT)) {
-      // we have a complete RangeVariable here, let's export it.
-      result.minValue = parseValue(object.getAsJsonPrimitive(StoredVariable.MIN_VALUE));
-      result.maxValue = parseValue(object.getAsJsonPrimitive(StoredVariable.MAX_VALUE));
-      result.increment = parseValue(object.getAsJsonPrimitive(StoredVariable.INCREMENT));
     }
-    result.dataType = dataType;
-    result.key = object.getAsJsonPrimitive(StoredVariable.KEY).getAsString();
-    result.title = object.getAsJsonPrimitive(StoredVariable.TITLE).getAsString();
-    return result;
   }
 
   /**
@@ -101,18 +107,16 @@ public abstract class ValueConverter<T> {
     object.add(StoredVariable.KEY, new JsonPrimitive(src.key));
     object.add(StoredVariable.TITLE, new JsonPrimitive(src.title));
     object.add(StoredVariable.DATA_TYPE, new JsonPrimitive(src.dataType));
-    if (src.selectedValue != null) {
-      object.add(StoredVariable.SELECTED_VALUE, valueToJson(src.selectedValue));
-    }
-    if (src.possibleValues != null && src.possibleValues.size() > 0) {
+    object.add(StoredVariable.SELECTED_VALUE, valueToJson(src.selectedValue));
+    object.add(StoredVariable.CONSTRAINT_TYPE, new JsonPrimitive(src.constraintType));
+    if (StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT.equals(src.constraintType)) {
       JsonArray possibleValues = new JsonArray();
       for (T item : src.possibleValues) {
         possibleValues.add(valueToJson(item));
       }
       object.add(StoredVariable.POSSIBLE_VALUES, possibleValues);
     }
-    if (src.minValue != null && src.maxValue != null && src.increment != null) {
-      // We have a complete RangeVariable here. let's export it.
+    if (StoredVariable.RANGE_VARIABLE_CONSTRAINT.equals(src.constraintType)) {
       object.add(StoredVariable.MIN_VALUE, valueToJson(src.minValue));
       object.add(StoredVariable.MAX_VALUE, valueToJson(src.maxValue));
       object.add(StoredVariable.INCREMENT, valueToJson(src.increment));

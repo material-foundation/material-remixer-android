@@ -20,12 +20,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 import com.google.android.libraries.remixer.annotation.StringVariableMethod;
-import com.google.android.libraries.remixer.annotation.TriggerMethod;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
 
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
   @RangeVariableMethod(
       key = "titleTextSize",
       minValue = 16, maxValue = 72, increment = 4, title = "(Shared) Title font size")
-  void setTitleTextSize(Integer size) {
+  void setTitleTextSize(Float size) {
     titleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
   }
 
@@ -70,10 +68,5 @@ public class MainActivity extends AppCompatActivity {
   @StringVariableMethod(defaultValue = "Change me!")
   void setFreeformText(String text) {
     freeformText.setText(text);
-  }
-
-  @TriggerMethod
-  void toast() {
-    Toast.makeText(this, freeformText.getText(), Toast.LENGTH_SHORT).show();
   }
 }

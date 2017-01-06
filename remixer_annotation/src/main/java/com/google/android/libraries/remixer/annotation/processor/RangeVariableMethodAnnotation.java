@@ -19,10 +19,8 @@ package com.google.android.libraries.remixer.annotation.processor;
 import com.google.android.libraries.remixer.DataType;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
-import com.google.common.collect.Range;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeName;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
@@ -31,10 +29,10 @@ import javax.lang.model.element.TypeElement;
  */
 class RangeVariableMethodAnnotation extends MethodAnnotation {
 
-  private final int minValue;
-  private int defaultValue;
-  private final int increment;
-  private final int maxValue;
+  private final float minValue;
+  private float defaultValue;
+  private final float increment;
+  private final float maxValue;
 
   RangeVariableMethodAnnotation(
       TypeElement sourceClass, ExecutableElement sourceMethod, RangeVariableMethod annotation)
@@ -67,9 +65,9 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
 
   @Override
   protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
-    methodBuilder.addStatement("$L.setMinValue($L)", remixerItemName, minValue);
-    methodBuilder.addStatement("$L.setMaxValue($L)", remixerItemName, maxValue);
-    methodBuilder.addStatement("$L.setDefaultValue($L)", remixerItemName, defaultValue);
-    methodBuilder.addStatement("$L.setIncrement($L)", remixerItemName, increment);
+    methodBuilder.addStatement("$L.setMinValue($Lf)", remixerItemName, minValue);
+    methodBuilder.addStatement("$L.setMaxValue($Lf)", remixerItemName, maxValue);
+    methodBuilder.addStatement("$L.setDefaultValue($Lf)", remixerItemName, defaultValue);
+    methodBuilder.addStatement("$L.setIncrement($Lf)", remixerItemName, increment);
   }
 }

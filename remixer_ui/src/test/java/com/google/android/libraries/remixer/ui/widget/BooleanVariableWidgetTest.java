@@ -66,7 +66,7 @@ public class BooleanVariableWidgetTest {
         .build();
     view = (BooleanVariableWidget) LayoutInflater.from(RuntimeEnvironment.application)
         .inflate(R.layout.boolean_variable_widget, null);
-    view.bindRemixerItem(variable);
+    view.bindVariable(variable);
     variableSwitch = (Switch) view.findViewById(R.id.variableSwitch);
     name = (TextView) view.findViewById(R.id.variableName);
   }
@@ -82,6 +82,15 @@ public class BooleanVariableWidgetTest {
     // Check that the callback  was called. This should've happened during setUp()
     verify(mockCallback, times(1)).onValueSet(variable);
     variableSwitch.toggle();
+    // After changing the text, check that the callback was called once again
+    verify(mockCallback, times(2)).onValueSet(variable);
+  }
+
+  @Test
+  public void callbackIsCalledOnNameClick() {
+    // Check that the callback  was called. This should've happened during setUp()
+    verify(mockCallback, times(1)).onValueSet(variable);
+    name.performClick();
     // After changing the text, check that the callback was called once again
     verify(mockCallback, times(2)).onValueSet(variable);
   }
