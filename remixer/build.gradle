@@ -68,6 +68,7 @@ javadocProjects.each {
 // Task that generates javadoc scoped across all subprojects in javadocProjects.
 task alljavadoc(type: Javadoc) {
   failOnError false
+  options.showAll()
   source javadocProjects.collect { project(it).ext.sourceSetForJavadoc }
   classpath = files(javadocProjects.collect { project(it).ext.classpathForJavadoc })
   destinationDir = file("${buildDir}/docs/javadoc")
