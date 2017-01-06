@@ -106,3 +106,11 @@ task javadocJar(type: Jar, dependsOn: alljavadoc) {
   destinationDir = file("${buildDir}/docs/")
   from alljavadoc.destinationDir
 }
+
+configurations {
+  javadoc
+}
+
+artifacts {
+  javadoc javadocJar
+}
