@@ -55,6 +55,6 @@ public class CompareHelper {
   private static void assertConsistent(StoredVariable storage, Variable item) {
     Assert.assertEquals(item.getKey(), storage.key);
     Assert.assertEquals(item.getTitle(), storage.title);
-    Assert.assertEquals(item.getSerializableConstraints(), storage.constraints);
+    Assert.assertEquals(item.getSerializableConstraints(), storage.constraintType);
   }
 }

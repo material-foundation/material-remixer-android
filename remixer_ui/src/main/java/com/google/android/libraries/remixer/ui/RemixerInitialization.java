@@ -29,6 +29,8 @@ import com.google.android.libraries.remixer.Variable;
  */
 public class RemixerInitialization {
 
+  private static boolean initialized;
+
   /**
    * Initializes a Remixer instance (usually {@link Remixer#getInstance()}) by registering data
    * types for it, and registers for ActivityLifecycleCallbacks with the Application {@code app}.
@@ -36,6 +38,11 @@ public class RemixerInitialization {
    * <p>{@code app} can be null in case this is called from tests.
    */
   public static void initRemixer(Application app) {
+    if (initialized) {
+      // Guarantee that this is just called once.
+      return;
+    }
+    initialized = true;
     if (app != null) {
       app.registerActivityLifecycleCallbacks(RemixerActivityLifecycleCallbacks.getInstance());
     }
