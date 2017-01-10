@@ -34,7 +34,7 @@ public class FirebaseRemoteControllerSyncer extends LocalValueSyncing {
   WeakReference<Object> context;
 
   public FirebaseRemoteControllerSyncer(Context context) {
-    super(context);
+    super();
   }
 
   /**
