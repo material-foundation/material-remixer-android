@@ -28,24 +28,33 @@ import java.lang.ref.WeakReference;
  *
  * <p>This synchronization mechanism assumes that the local host is the source of truth, so it does
  * very little in terms of conflict resolution.
+ *
+ * <p>This implementation currently ignores bringing new values in from the remote controller, that
+ * will be done in firebase callbacks in a future PR, so it is a different one that introduces said
+ * dependency.
  */
 public class FirebaseRemoteControllerSyncer extends LocalValueSyncing {
 
   WeakReference<Object> context;
 
-  public FirebaseRemoteControllerSyncer(Context context) {
+  public FirebaseRemoteControllerSyncer() {
     super();
   }
 
   /**
    * Syncs a variable up to the remote controller.
+   *
+   * <p>Since the local app is the source of truth, this ignores any differences there may be
+   * between the local data and the remote data and just rewrites any remote data. This should not
+   * happen in practice though, since variables in remote controllers are tied to a single instance
+   * of the app (one specific device running the app).
    */
   private void syncVariableToRemoteController (Variable variable) {
     // TODO(miguely): write controller sync logic
   }
 
   /**
-   * Clears all the data in a remote
+   * Clears all the data in a remote.
    */
   private void clearVariablesInRemoteController() {
     // TODO(miguely): write controller sync logic
