@@ -52,4 +52,20 @@ public interface SynchronizationMechanism {
    * cache/save/sync the new value.
    */
   void onValueChanged(Variable variable);
+
+  /**
+   * Called when a new activity has been made the current context.
+   *
+   * <p>This may be needed to update context-dependent state.
+   */
+  void onContextChanged(Object currentContext);
+
+  /**
+   * Called when an activity is stopped and reclaimed, the context is no longer valid.
+   *
+   * <p>This may be needed to update context-dependent state. Notice this may be called for a
+   * context which is no longer the current context (the one passed in the last call to
+   * {@link #onContextChanged(Object)}); it is up to the implementation what to do in this case.
+   */
+  void onContextRemoved(Object currentContext);
 }
