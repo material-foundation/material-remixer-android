@@ -24,11 +24,13 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
@@ -67,6 +69,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   }
 
   private SensorEventListener sensorEventListener;
+
   /**
    * Attach this instance to {@code button}'s OnClick, so that clicking the button shows this
    * fragment.
@@ -84,6 +87,19 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   }
 
   /**
+   *
+   * @param manager
+   * @param tag
+   * @return whether the fragment was shown or not.
+   */
+
+  @Override
+  public void show(FragmentManager manager, String tag) {
+    if (!isAdded() && !isVisible() && !isRemoving()) {
+      super.show(manager.beginTransaction(), tag);
+    }
+  }
+
   /**
    * Attach this instance to a shake gesture using {@code sensorManager } and show fragment when magnitude exceeds {@code threshold}
    */
