@@ -23,7 +23,7 @@ package com.google.android.libraries.remixer;
 public class StringVariableBuilder extends Variable.Builder<String> {
 
   public StringVariableBuilder() {
-    setDefaultValue("");
+    setInitialValue("");
     setDataType(DataType.STRING);
   }
 

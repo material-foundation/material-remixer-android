@@ -64,8 +64,8 @@ public class ColorListVariableWidgetTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     variable = new ItemListVariable.Builder<Integer>()
-        .setPossibleValues(ITEM_LIST)
-        .setDefaultValue(ITEM_LIST[DEFAULT_VALUE_INDEX])
+        .setLimitedToValues(ITEM_LIST)
+        .setInitialValue(ITEM_LIST[DEFAULT_VALUE_INDEX])
         .setTitle(TITLE)
         .setKey(KEY)
         .setContext(this)

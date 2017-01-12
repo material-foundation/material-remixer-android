@@ -47,14 +47,14 @@ public class NumberVariableSerializationTest {
   @Before
   public void setUp() {
     floatVariable = new Variable.Builder<Float>()
-        .setDefaultValue(0f)
+        .setInitialValue(0f)
         .setKey(KEY)
         .setContext(this)
         .setDataType(DataType.NUMBER)
         .build();
     floatListVariable = new ItemListVariable.Builder<Float>()
-        .setPossibleValues(new Float[]{12f, 154f})
-        .setDefaultValue(12f)
+        .setLimitedToValues(new Float[]{12f, 154f})
+        .setInitialValue(12f)
         .setContext(this)
         .setKey(KEY)
         .setDataType(DataType.NUMBER)
@@ -63,7 +63,7 @@ public class NumberVariableSerializationTest {
         .setMinValue(0f)
         .setMaxValue(100f)
         .setIncrement(10f)
-        .setDefaultValue(10f)
+        .setInitialValue(10f)
         .setContext(this)
         .setKey(KEY)
         .setDataType(DataType.NUMBER)

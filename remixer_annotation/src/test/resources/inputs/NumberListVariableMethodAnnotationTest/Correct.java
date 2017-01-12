@@ -21,8 +21,8 @@ import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
 public class Correct {
 
   /**
-   * Default value is implicitly 0, this has to move to 1
+   * Initial value is implicitly 0, this has to move to 1
    */
-  @NumberListVariableMethod(possibleValues = {1, 2}, defaultValue = 1)
+  @NumberListVariableMethod(limitedToValues = {1, 2}, initialValues = 1)
   public void setNumber(Float i){}
 }

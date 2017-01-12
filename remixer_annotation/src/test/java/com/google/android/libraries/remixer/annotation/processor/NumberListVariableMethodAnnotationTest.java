@@ -60,7 +60,7 @@ public class NumberListVariableMethodAnnotationTest {
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("Default value explicitly set to unknown value")
+        .withErrorContaining("Initial value explicitly set to unknown value")
         .in(file);
   }
 
@@ -72,7 +72,7 @@ public class NumberListVariableMethodAnnotationTest {
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("List of possible values cannot be empty")
+        .withErrorContaining("List of limited to values cannot be empty")
         .in(file);
   }
 
@@ -90,15 +90,15 @@ public class NumberListVariableMethodAnnotationTest {
   }
 
   @Test
-  public void buildsAndFixesDefaultValue() {
+  public void buildsAndFixesInitialValue() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/NumberListVariableMethodAnnotationTest/FixesDefaultValue.java");
+        .forResource("inputs/NumberListVariableMethodAnnotationTest/FixesInitialValue.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/NumberListVariableMethodAnnotationTest/FixesDefaultValue.java"));
+            .forResource("outputs/NumberListVariableMethodAnnotationTest/FixesInitialValue.java"));
   }
 }

@@ -42,12 +42,12 @@ public class RangeVariable extends Variable<Float> {
   private final float increment;
 
   /**
-   * Constructor that checks correctness of the range, validates {@code defaultValue} and runs
+   * Constructor that checks correctness of the range, validates {@code initialValue} and runs
    * {@code callback}.
    *
    * @param title The name of this variable to be displayed in the UI.
    * @param key The key to store in SharedPreferences.
-   * @param defaultValue The default value in case there is none in SharedPreferences.
+   * @param initialValue The initial value for this variable.
    * @param minValue The minimum value for this variable.
    * @param maxValue The maximum value for this variable.
    * @param increment A value that defines each step. Must be a positive integer. So if you have
@@ -64,14 +64,14 @@ public class RangeVariable extends Variable<Float> {
   private RangeVariable(
       String title,
       String key,
-      float defaultValue,
+      float initialValue,
       float minValue,
       float maxValue,
       float increment,
       Object context,
       Callback<Float> callback,
       int layoutId) {
-    super(title, key, defaultValue, context, callback, layoutId, DataType.NUMBER);
+    super(title, key, initialValue, context, callback, layoutId, DataType.NUMBER);
     this.minValue = minValue;
     this.maxValue = maxValue;
     this.increment = increment;
@@ -202,12 +202,12 @@ public class RangeVariable extends Variable<Float> {
       if (minValue == null || maxValue == null) {
         throw new IllegalArgumentException("minValue and maxValue must not be null");
       }
-      if (defaultValue == null) {
-        defaultValue = minValue;
+      if (initialValue == null) {
+        initialValue = minValue;
       }
       checkBaseFields();
       RangeVariable variable = new RangeVariable(
-          title, key, defaultValue, minValue, maxValue, increment, context, callback,
+          title, key, initialValue, minValue, maxValue, increment, context, callback,
           layoutId);
       variable.init();
       return variable;

@@ -31,10 +31,10 @@ public class Correct {
   @BooleanVariableMethod
   public void setBoolean(Boolean i) {}
 
-  @NumberListVariableMethod(possibleValues = {1, 2, 3})
+  @NumberListVariableMethod(limitedToValues = {1, 2, 3})
   public void setFloatList(Float i) {}
 
-  @ColorListVariableMethod(possibleValues = {1, 2, 3})
+  @ColorListVariableMethod(limitedToValues = {1, 2, 3})
   public void setColorList(Integer i) {}
 
   @RangeVariableMethod
@@ -43,6 +43,6 @@ public class Correct {
   @StringVariableMethod
   public void setString(String i) {}
 
-  @StringListVariableMethod(possibleValues = {"hello", "world"})
+  @StringListVariableMethod(limitedToValues = {"hello", "world"})
   public void setStringList(String i) {}
 }

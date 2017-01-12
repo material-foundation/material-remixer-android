@@ -36,7 +36,7 @@ public class CompareHelper {
       StoredVariable<T> storage, ItemListVariable<T> variable) {
     assertConsistent(storage, variable);
     Assert.assertEquals(variable.getSelectedValue(), storage.selectedValue);
-    Assert.assertEquals(variable.getValueList(), storage.possibleValues);
+    Assert.assertEquals(variable.getLimitedToValues(), storage.possibleValues);
     Assert.assertNull(storage.minValue);
     Assert.assertNull(storage.maxValue);
     Assert.assertNull(storage.increment);

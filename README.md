@@ -130,7 +130,7 @@ They support the following properties:
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
-- `defaultValue` the initial value, if not set assumes 0 or `minValue` if 0 is out of range.
+- `initialValue` the initial value, if not set assumes 0 or `minValue` if 0 is out of range.
 - `minValue` the minimum value, if not set assumes 0
 - `maxValue` the maximum value, if not set assumes 100
 - `increment` the increment between two steps of the range, 1 by default.
@@ -139,7 +139,7 @@ They support the following properties:
 A Range variable that goes from 15 to 70 and starts at 20 by default:
 ```java
 @RangeVariableMethod(
-    minValue = 15, maxValue = 70, defaultValue = 20)
+    minValue = 15, maxValue = 70, initialValue = 20)
 public void setFontSize(Integer fontSize) {
 }
 ```
@@ -151,12 +151,12 @@ They support the following properties:
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
-- `defaultValue` the initial value, if not set assumes `false`
+- `initialValue` the initial value, if not set assumes `false`
 - `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
-A Boolean variable that has true as a default value:
+A Boolean variable that has true as its initial value:
 ```java
-@BooleanVariableMethod(defaultValue = true, key = "someRemixerKey")
+@BooleanVariableMethod(initialValue = true, key = "someRemixerKey")
 public void setUseNewDialog(Boolean useNewDialog) {
 }
 ```
@@ -168,7 +168,7 @@ They support the following properties:
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
-- `defaultValue` the initial value, if not set assumes the first in the `possibleValues` list
+- `initialValue` the initial value, if not set assumes the first in the `possibleValues` list
 - `possibleValues` the list of possible values.
 - `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
@@ -185,7 +185,7 @@ public void setTitleFont(String fontName) {
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
-- `defaultValue` the initial value, if not set assumes the empty string.
+- `initialValue` the initial value, if not set assumes the empty string.
 - `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A String variable that sets freeform example text:
@@ -199,7 +199,7 @@ public void setExampleText(String exampleText) {
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
-- `defaultValue` the initial value, if not set assumes the first in the `possibleValues` list
+- `initialValue` the initial value, if not set assumes the first in the `possibleValues` list
 - `possibleValues` the list of possible values.
 - `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 

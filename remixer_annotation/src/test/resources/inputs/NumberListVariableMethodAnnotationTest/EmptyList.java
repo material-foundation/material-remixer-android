@@ -22,6 +22,6 @@ public class EmptyList {
   /**
    * List is empty explicitly! Fail
    */
-  @NumberListVariableMethod(possibleValues = {})
+  @NumberListVariableMethod(limitedToValues = {})
   public void fail(Float i){}
 }

@@ -49,17 +49,17 @@ public @interface NumberListVariableMethod {
   String title() default "";
 
   /**
-   * The default value for this variable, assumes 0 as default.
+   * The initial value for this variable, assumes 0 as default.
    *
    * <p>If left unspecified and the empty string is not part of the possible values, then the first
    * value in the list of possible values is assumed as default.
    */
-  float defaultValue() default 0;
+  float initialValues() default 0;
 
   /**
    * List of possible values for this ItemListVariable&lt;String&gt;.
    */
-  float[] possibleValues() default {0};
+  float[] limitedToValues() default {0};
 
   /**
    * The layout id to inflate when displaying this Variable. If not specified a default will be

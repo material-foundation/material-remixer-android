@@ -48,12 +48,12 @@ public @interface RangeVariableMethod {
   String title() default "";
 
   /**
-   * The default value for this variable.
+   * The initial value for this variable.
    *
    * <p>If left unspecified (0) and it is out of bounds, it will default to minValue, for
    * convenience.
    */
-  float defaultValue() default 0;
+  float initialValue() default 0;
 
   /**
    * The minimum value for this RangeVariable. It is 0 by default.

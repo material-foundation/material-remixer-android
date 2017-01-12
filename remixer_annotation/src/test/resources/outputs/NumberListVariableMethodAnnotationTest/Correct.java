@@ -42,8 +42,8 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     ArrayList<Float> setNumber_variable_list = new ArrayList<Float>();
     setNumber_variable_list.add(1f);
     setNumber_variable_list.add(2f);
-    setNumber_remixer_item.setPossibleValues(setNumber_variable_list);
-    setNumber_remixer_item.setDefaultValue(1f);
+    setNumber_remixer_item.setLimitedToValues(setNumber_variable_list);
+    setNumber_remixer_item.setInitialValue(1f);
     remixer.addItem(setNumber_remixer_item.build());
   }
 

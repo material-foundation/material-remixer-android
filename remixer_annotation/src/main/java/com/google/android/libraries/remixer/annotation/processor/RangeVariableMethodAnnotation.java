@@ -30,7 +30,7 @@ import javax.lang.model.element.TypeElement;
 class RangeVariableMethodAnnotation extends MethodAnnotation {
 
   private final float minValue;
-  private float defaultValue;
+  private float initialValue;
   private final float increment;
   private final float maxValue;
 
@@ -48,17 +48,17 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
     minValue = annotation.minValue();
     maxValue = annotation.maxValue();
     increment = annotation.increment();
-    defaultValue = annotation.defaultValue();
+    initialValue = annotation.initialValue();
     if (minValue > maxValue) {
       throw new RemixerAnnotationException(sourceMethod,
           "minValue cannot be greater than maxValue");
     }
-    if (minValue > annotation.defaultValue() || maxValue < annotation.defaultValue()) {
-      if (annotation.defaultValue() == 0) {
-        defaultValue = minValue;
+    if (minValue > annotation.initialValue() || maxValue < annotation.initialValue()) {
+      if (annotation.initialValue() == 0) {
+        initialValue = minValue;
       } else {
         throw new RemixerAnnotationException(sourceMethod,
-            "defaultValue was explicitly set out of bounds.");
+            "initialValue was explicitly set out of bounds.");
       }
     }
   }
@@ -67,7 +67,7 @@ class RangeVariableMethodAnnotation extends MethodAnnotation {
   protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
     methodBuilder.addStatement("$L.setMinValue($Lf)", remixerItemName, minValue);
     methodBuilder.addStatement("$L.setMaxValue($Lf)", remixerItemName, maxValue);
-    methodBuilder.addStatement("$L.setDefaultValue($Lf)", remixerItemName, defaultValue);
+    methodBuilder.addStatement("$L.setInitialValue($Lf)", remixerItemName, initialValue);
     methodBuilder.addStatement("$L.setIncrement($Lf)", remixerItemName, increment);
   }
 }

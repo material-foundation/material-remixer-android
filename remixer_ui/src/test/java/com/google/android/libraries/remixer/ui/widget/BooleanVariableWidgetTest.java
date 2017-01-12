@@ -58,7 +58,7 @@ public class BooleanVariableWidgetTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     variable = new BooleanVariableBuilder()
-        .setDefaultValue(DEFAULT_VALUE)
+        .setInitialValue(DEFAULT_VALUE)
         .setTitle(TITLE)
         .setKey(KEY)
         .setContext(this)

@@ -58,7 +58,7 @@ public class StoredVariable<T> {
   static final String CONSTRAINT_TYPE = "constraintType";
   static final String DATA_TYPE = "dataType";
   static final String SELECTED_VALUE = "selectedValue";
-  static final String POSSIBLE_VALUES = "possibleValues";
+  static final String POSSIBLE_VALUES = "limitedToValues";
   static final String MIN_VALUE = "minValue";
   static final String MAX_VALUE = "maxValue";
   static final String INCREMENT = "increment";
