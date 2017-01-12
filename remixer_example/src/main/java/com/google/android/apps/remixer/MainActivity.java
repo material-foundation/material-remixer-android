@@ -51,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
     RemixerFragment remixerFragment = RemixerFragment.newInstance();
     remixerFragment.attachToGesture(this, Direction.UP, 3);
     remixerFragment.attachToButton(this, remixerButton);
-
-    SensorManager sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-    remixerFragment.attachToShake(this, sensorManager, 20.0);
+    remixerFragment.attachToShake(this, 20.0);
   }
 
   @RangeVariableMethod(

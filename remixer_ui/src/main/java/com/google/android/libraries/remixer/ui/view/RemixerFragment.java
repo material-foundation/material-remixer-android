@@ -35,6 +35,7 @@ import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.gesture.GestureListener;
+import com.google.android.libraries.remixer.ui.gesture.ShakeListener;
 
 /**
  * A fragment that shows all Remixes for the current activity. It's very easy to use:
@@ -103,29 +104,8 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   /**
    * Attach this instance to a shake gesture using {@code sensorManager } and show fragment when magnitude exceeds {@code threshold}
    */
-  public void attachToShake(final FragmentActivity activity, SensorManager sensorManager, final double threshold) {
-    this.sensorEventListener = new SensorEventListener() {
-      double lastMagnitude;
-      /* Temporary delay until `show` bug is fixed */
-      long lastSpike = 0;
-
-      @Override
-      public void onSensorChanged(SensorEvent event) {
-        double currentMagnitude = Math.sqrt(event.values[0] * event.values[0] + event.values[1] * event.values[1] + event.values[2] * event.values[2]);
-
-        if ((currentMagnitude - lastMagnitude) > threshold && System.currentTimeMillis() - lastSpike > 500) {
-          show(activity.getSupportFragmentManager(), REMIXER_TAG);
-          lastSpike = System.currentTimeMillis();
-        }
-
-        this.lastMagnitude = currentMagnitude;
-      }
-
-      @Override
-      public void onAccuracyChanged(Sensor sensor, int accuracy) { }
-    };
-
-    sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
+  public void attachToShake(final FragmentActivity activity, final double threshold) {
+    ShakeListener.attach(activity, threshold, this);
   }
 
   /**
