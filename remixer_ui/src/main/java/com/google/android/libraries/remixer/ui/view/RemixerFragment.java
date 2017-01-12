@@ -82,7 +82,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
 
       @Override
       public void onClick(View view) {
-        show(activity.getSupportFragmentManager(), REMIXER_TAG);
+        showRemixer(activity.getSupportFragmentManager(), REMIXER_TAG);
       }
     });
   }
@@ -94,10 +94,9 @@ public class RemixerFragment extends BottomSheetDialogFragment {
    * @return whether the fragment was shown or not.
    */
 
-  @Override
-  public void show(FragmentManager manager, String tag) {
+  public void showRemixer(FragmentManager manager, String tag) {
     if (!isAdded() && !isVisible() && !isRemoving()) {
-      super.show(manager.beginTransaction(), tag);
+      show(manager, tag);
     }
   }
 

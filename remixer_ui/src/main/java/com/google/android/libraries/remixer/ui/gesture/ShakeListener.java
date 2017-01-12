@@ -33,7 +33,7 @@ public class ShakeListener implements SensorEventListener {
             + event.values[2] * event.values[2]);
 
         if ((currentMagnitude - lastMagnitude) > threshold && System.currentTimeMillis() - lastSpike > 500) {
-            remixerFragment.show(activity.getSupportFragmentManager(), RemixerFragment.REMIXER_TAG);
+            remixerFragment.showRemixer(activity.getSupportFragmentManager(), RemixerFragment.REMIXER_TAG);
             lastSpike = System.currentTimeMillis();
         }
 
