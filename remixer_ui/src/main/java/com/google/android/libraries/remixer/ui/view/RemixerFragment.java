@@ -17,6 +17,10 @@
 package com.google.android.libraries.remixer.ui.view;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -62,6 +66,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
     return new RemixerFragment();
   }
 
+  private SensorEventListener sensorEventListener;
   /**
    * Attach this instance to {@code button}'s OnClick, so that clicking the button shows this
    * fragment.
@@ -76,6 +81,35 @@ public class RemixerFragment extends BottomSheetDialogFragment {
         show(activity.getSupportFragmentManager(), REMIXER_TAG);
       }
     });
+  }
+
+  /**
+  /**
+   * Attach this instance to a shake gesture using {@code sensorManager } and show fragment when magnitude exceeds {@code threshold}
+   */
+  public void attachToShake(final FragmentActivity activity, SensorManager sensorManager, final double threshold) {
+    this.sensorEventListener = new SensorEventListener() {
+      double lastMagnitude;
+      /* Temporary delay until `show` bug is fixed */
+      long lastSpike = 0;
+
+      @Override
+      public void onSensorChanged(SensorEvent event) {
+        double currentMagnitude = Math.sqrt(event.values[0] * event.values[0] + event.values[1] * event.values[1] + event.values[2] * event.values[2]);
+
+        if ((currentMagnitude - lastMagnitude) > threshold && System.currentTimeMillis() - lastSpike > 500) {
+          show(activity.getSupportFragmentManager(), REMIXER_TAG);
+          lastSpike = System.currentTimeMillis();
+        }
+
+        this.lastMagnitude = currentMagnitude;
+      }
+
+      @Override
+      public void onAccuracyChanged(Sensor sensor, int accuracy) { }
+    };
+
+    sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
   }
 
   /**

@@ -15,11 +15,13 @@
  */
 package com.google.android.apps.remixer;
 
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     RemixerFragment remixerFragment = RemixerFragment.newInstance();
     remixerFragment.attachToGesture(this, Direction.UP, 3);
     remixerFragment.attachToButton(this, remixerButton);
+
+    SensorManager sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+    remixerFragment.attachToShake(this, sensorManager, 20.0);
   }
 
   @RangeVariableMethod(
