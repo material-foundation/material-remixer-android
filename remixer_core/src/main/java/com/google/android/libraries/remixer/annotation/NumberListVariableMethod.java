@@ -54,7 +54,7 @@ public @interface NumberListVariableMethod {
    * <p>If left unspecified and the empty string is not part of the possible values, then the first
    * value in the list of possible values is assumed as default.
    */
-  float initialValues() default 0;
+  float initialValue() default 0;
 
   /**
    * List of possible values for this ItemListVariable&lt;String&gt;.

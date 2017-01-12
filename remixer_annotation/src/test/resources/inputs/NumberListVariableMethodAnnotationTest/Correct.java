@@ -23,6 +23,6 @@ public class Correct {
   /**
    * Initial value is implicitly 0, this has to move to 1
    */
-  @NumberListVariableMethod(limitedToValues = {1, 2}, initialValues = 1)
+  @NumberListVariableMethod(limitedToValues = {1, 2}, initialValue = 1)
   public void setNumber(Float i){}
 }

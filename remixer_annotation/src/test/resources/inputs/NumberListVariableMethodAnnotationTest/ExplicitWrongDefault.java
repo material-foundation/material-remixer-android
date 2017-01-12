@@ -23,6 +23,6 @@ public class ExplicitWrongDefault {
   /**
    * Initial value is explicitly out of range, should fail.
    */
-  @NumberListVariableMethod(initialValues = 5, limitedToValues = {2, 3})
+  @NumberListVariableMethod(initialValue = 5, limitedToValues = {2, 3})
   public void wrongDefault(Float i){}
 }

@@ -195,16 +195,17 @@ public void setExampleText(String exampleText) {
 }
 ```
 
-##### Integer List Variable
+##### Number List Variable
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
 - `initialValue` the initial value, if not set assumes the first in the `limitedToValues` list
-- `limitedToValues` the list of values this variable is limited to take.- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
+- `limitedToValues` the list of values this variable is limited to take.
+- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A variable that lets you pick colors from a list, this example uses a custom layout id to guarantee that it's treated as a Color:
 ```java
-@IntegerListVariableMethod(
+@NumberListVariableMethod(
     title = "Title Color",
     limitedToValues = {Color.parseColor("#000000"), Color.parseColor("#DCDCDC")},
     layoutId = R.layout.color_list_variable_widget)

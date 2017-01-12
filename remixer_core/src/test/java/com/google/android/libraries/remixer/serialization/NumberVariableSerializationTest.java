@@ -71,7 +71,7 @@ public class NumberVariableSerializationTest {
   }
 
   @Test
-  public void integerListVariableConvertsToStorageTest() {
+  public void numberListVariableConvertsToStorageTest() {
     StoredVariable<Float> result = StoredVariable.fromVariable(floatListVariable);
     Assert.assertEquals(DataType.NUMBER.getName(), result.dataType);
     CompareHelper.assertEqualsItemListVariable(result, floatListVariable);

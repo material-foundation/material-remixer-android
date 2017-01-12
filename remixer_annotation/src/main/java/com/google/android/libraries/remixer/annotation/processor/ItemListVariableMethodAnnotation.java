@@ -37,7 +37,7 @@ import javax.lang.model.element.TypeElement;
 class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
 
   /**
-   * Suffix to add to the name of a list holding the limited to values for this variable.
+   * Suffix to add to the name of a list holding the set of values this variable can take.
    */
   private static final String LIST_SUFFIX = "_variable_list";
 
@@ -133,7 +133,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         annotation.title(),
         annotation.layoutId(),
         limitedToValues,
-        annotation.initialValues(),
+        annotation.initialValue(),
         0f);
   }
 
@@ -142,7 +142,8 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
    * annotations are met.
    *
    * <p>If the default is unset and the zero value (0 for numbers, empty string for Strings) is not
-   * amongst the limited to values then it falls back to the first value in the list.
+   * amongst the values this variable is limited to then it falls back to the first value in the
+   * list.
    *
    * @throws RemixerAnnotationException if the constraints are not met:
    *     - The list of limited to values is empty.
