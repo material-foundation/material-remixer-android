@@ -8,7 +8,12 @@ import android.hardware.SensorManager;
 import android.support.v4.app.FragmentActivity;
 
 import com.google.android.libraries.remixer.ui.view.RemixerFragment;
-
+/**
+ * A Gesture Listener that listens for magnitude of 3D acceleration to exceed a given threshold, triggering the display of a
+ * RemixerFragment.
+ *
+ * <p>It can be set up by calling {@link #attach(FragmentActivity, double threshold)}
+ */
 public class ShakeListener implements SensorEventListener {
     private double lastMagnitude;
     // TODO(nicksahler): Remove `lastSpike` once `show` bug is fixed
@@ -43,9 +48,12 @@ public class ShakeListener implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) { }
 
+    /**
+     * Attaches a ShakeListener to {@code activity} that listens for acceleration change that exceeds {@code threshold}
+     * and shows {@code remixerFragment} when satisfied.
+     */
     public static void attach(final FragmentActivity activity, final double threshold, RemixerFragment remixerFragment) {
         SensorManager sensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE);
-
         sensorManager.registerListener(new ShakeListener(activity, threshold, remixerFragment), sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
     }
 

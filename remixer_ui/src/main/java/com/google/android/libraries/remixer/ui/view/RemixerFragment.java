@@ -99,9 +99,10 @@ public class RemixerFragment extends BottomSheetDialogFragment {
       show(manager, tag);
     }
   }
-
+  
   /**
-   * Attach this instance to a shake gesture using {@code sensorManager } and show fragment when magnitude exceeds {@code threshold}
+   * Attach this instance to a shake gesture and show fragment when magnitude exceeds {@code threshold}
+   *
    */
   public void attachToShake(final FragmentActivity activity, final double threshold) {
     ShakeListener.attach(activity, threshold, this);
