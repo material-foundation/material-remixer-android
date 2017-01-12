@@ -19,6 +19,7 @@ package com.google.android.libraries.remixer.serialization;
 import com.google.android.libraries.remixer.ItemListVariable;
 import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Variable;
+import java.util.List;
 import org.junit.Assert;
 
 public class CompareHelper {
@@ -32,11 +33,20 @@ public class CompareHelper {
     Assert.assertNull(storage.increment);
   }
 
-  public static <T> void assertEqualsItemListVariable(
-      StoredVariable<T> storage, ItemListVariable<T> variable) {
+  public static <SerializableType, RuntimeType> void assertEqualsItemListVariable(
+      StoredVariable<SerializableType> storage, ItemListVariable<RuntimeType> variable) {
     assertConsistent(storage, variable);
-    Assert.assertEquals(variable.getSelectedValue(), storage.selectedValue);
-    Assert.assertEquals(variable.getLimitedToValues(), storage.limitedToValues);
+    List<RuntimeType> runtimeList = variable.getLimitedToValues();
+    List<SerializableType> serializableList = storage.getLimitedToValues();
+    Assert.assertNotNull(runtimeList);
+    Assert.assertNotNull(serializableList);
+    Assert.assertEquals(runtimeList.size(), serializableList.size());
+    ValueConverter<RuntimeType, SerializableType> converter = variable.getDataType().getConverter();
+    for (int i = 0; i < runtimeList.size(); i++) {
+      Assert.assertEquals(converter.fromRuntimeType(runtimeList.get(i)), serializableList.get(i));
+    }
+    Assert.assertEquals(
+        variable.getSelectedValue(), converter.toRuntimeType(storage.selectedValue));
     Assert.assertNull(storage.minValue);
     Assert.assertNull(storage.maxValue);
     Assert.assertNull(storage.increment);

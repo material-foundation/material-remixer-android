@@ -11,7 +11,7 @@ import com.google.gson.JsonPrimitive;
 /**
  * A value converter for integer values.
  */
-public class FloatValueConverter extends ValueConverter<Float> {
+public class FloatValueConverter extends ValueConverter<Float, Float> {
 
   public FloatValueConverter(String dataType) {
     super(dataType);
@@ -30,21 +30,23 @@ public class FloatValueConverter extends ValueConverter<Float> {
   @Override
   @SuppressWarnings("unchecked")
   public StoredVariable<Float> fromVariable(Variable<?> var) {
-    if (var.getDataType().getName().equals(dataType)) {
-      StoredVariable<Float> storage = new StoredVariable<>();
-      storage.setDataType(dataType);
-      storage.setSelectedValue((Float) var.getSelectedValue());
-      if (var instanceof RangeVariable) {
-        RangeVariable range = (RangeVariable) var;
-        storage.setMinValue(range.getMinValue());
-        storage.setMaxValue(range.getMaxValue());
-        storage.setIncrement(range.getIncrement());
-      } else if (var instanceof ItemListVariable) {
-        storage.setLimitedToValues(((ItemListVariable<Float>) var).getLimitedToValues());
-      }
-      return storage;
+    StoredVariable<Float> storage = super.fromVariable(var);
+    if (var instanceof RangeVariable) {
+      RangeVariable range = (RangeVariable) var;
+      storage.setMinValue(range.getMinValue());
+      storage.setMaxValue(range.getMaxValue());
+      storage.setIncrement(range.getIncrement());
     }
-    throw new IllegalArgumentException(
-        "Passed an incompatible object to convert to StoredVariable<Float>");
+    return storage;
+  }
+
+  @Override
+  public Float fromRuntimeType(Float value) {
+    return value;
+  }
+
+  @Override
+  public Float toRuntimeType(Float value) {
+    return value;
   }
 }

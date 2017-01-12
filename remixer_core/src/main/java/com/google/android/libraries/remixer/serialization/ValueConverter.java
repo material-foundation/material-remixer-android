@@ -16,6 +16,8 @@
 
 package com.google.android.libraries.remixer.serialization;
 
+import com.google.android.libraries.remixer.ItemListVariable;
+import com.google.android.libraries.remixer.RangeVariable;
 import com.google.android.libraries.remixer.Variable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,9 +28,10 @@ import java.util.ArrayList;
 /**
  * Helper object that abstracts the type-dependent parts of parsing a Variable from Json and
  * converting it from a java object into its JSON representation.
- * @param <T> the data type stored in the variable.
+ * @param <RuntimeType> the data type that the remixer core framework uses.
+ * @param <SerializableType> the data type to use during serialization.
  */
-public abstract class ValueConverter<T> {
+public abstract class ValueConverter<RuntimeType, SerializableType> {
 
   /**
    * The data type this converter is used for.
@@ -47,27 +50,30 @@ public abstract class ValueConverter<T> {
   }
 
   /**
-   * Returns an object of type T that holds the value in the current Json Element.
+   * Returns an object of type SerializableType that holds the value in the current Json Element.
    */
-  public abstract T parseValue(JsonElement element);
+  public abstract SerializableType parseValue(JsonElement element);
 
   /**
    * Returns a JsonElement that represents the value passed in.
    */
-  public abstract JsonElement valueToJson(T value);
+  public abstract JsonElement valueToJson(SerializableType value);
 
   /**
-   * Creates a StoredVariable that represents the data in {@code variable} if {@code item} is of
-   * this type.
-   * @throws IllegalArgumentException if {@code item} does not match this type.
+   * Converts values from the runtime type to the serializable type.
    */
-  public abstract StoredVariable<T> fromVariable(Variable<?> variable);
+  public abstract SerializableType fromRuntimeType(RuntimeType value);
+
+  /**
+   * Converts values from the serializable type to the runtime type.
+   */
+  public abstract RuntimeType toRuntimeType(SerializableType value);
 
   /**
    * Deserializes a JsonElement that contains a StoredVariable.
    */
-  public StoredVariable<T> deserialize(JsonElement json) {
-    StoredVariable<T> result = new StoredVariable<>();
+  public StoredVariable<SerializableType> deserialize(JsonElement json) {
+    StoredVariable<SerializableType> result = new StoredVariable<>();
     JsonObject object = json.getAsJsonObject();
     result.selectedValue = parseValue(object.get(StoredVariable.SELECTED_VALUE));
     result.constraintType = object.get(StoredVariable.CONSTRAINT_TYPE).getAsString();
@@ -83,14 +89,14 @@ public abstract class ValueConverter<T> {
     return result;
   }
 
-  private void deserializeRangeProperties(StoredVariable<T> result, JsonObject object) {
+  private void deserializeRangeProperties(StoredVariable<SerializableType> result, JsonObject object) {
     result.minValue = parseValue(object.getAsJsonPrimitive(StoredVariable.MIN_VALUE));
     result.maxValue = parseValue(object.getAsJsonPrimitive(StoredVariable.MAX_VALUE));
     result.increment = parseValue(object.getAsJsonPrimitive(StoredVariable.INCREMENT));
   }
 
   private void deserializeLimitedToValues(
-      StoredVariable<T> result, JsonElement limitedToValuesElement) {
+      StoredVariable<SerializableType> result, JsonElement limitedToValuesElement) {
     if (limitedToValuesElement != null) {
       JsonArray array = limitedToValuesElement.getAsJsonArray();
       result.limitedToValues = new ArrayList<>();
@@ -103,7 +109,7 @@ public abstract class ValueConverter<T> {
   /**
    * Serializes a StoredVariable into a JsonElement.
    */
-  public JsonElement serialize(StoredVariable<T> src) {
+  public JsonElement serialize(StoredVariable<SerializableType> src) {
     JsonObject object = new JsonObject();
     object.add(StoredVariable.KEY, new JsonPrimitive(src.key));
     object.add(StoredVariable.TITLE, new JsonPrimitive(src.title));
@@ -112,7 +118,7 @@ public abstract class ValueConverter<T> {
     object.add(StoredVariable.CONSTRAINT_TYPE, new JsonPrimitive(src.constraintType));
     if (StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT.equals(src.constraintType)) {
       JsonArray limitedToValues = new JsonArray();
-      for (T item : src.limitedToValues) {
+      for (SerializableType item : src.limitedToValues) {
         limitedToValues.add(valueToJson(item));
       }
       object.add(StoredVariable.LIMITED_TO_VALUES, limitedToValues);
@@ -123,5 +129,29 @@ public abstract class ValueConverter<T> {
       object.add(StoredVariable.INCREMENT, valueToJson(src.increment));
     }
     return object;
+  }
+
+  /**
+   * Creates a StoredVariable that represents the data in {@code variable} if {@code item} is of
+   * this type.
+   * @throws IllegalArgumentException if {@code item} does not match this type.
+   */
+  @SuppressWarnings("unchecked")
+  public StoredVariable<SerializableType> fromVariable(Variable<?> var) {
+    if (var.getDataType().getName().equals(dataType)) {
+      StoredVariable<SerializableType> storage = new StoredVariable<>();
+      storage.setDataType(dataType);
+      storage.setSelectedValue(fromRuntimeType((RuntimeType) var.getSelectedValue()));
+      if (var instanceof ItemListVariable) {
+        ArrayList<SerializableType> possibleValues = new ArrayList<>();
+        for (RuntimeType value : ((ItemListVariable<RuntimeType>) var).getLimitedToValues()) {
+          possibleValues.add(fromRuntimeType(value));
+        }
+        storage.setLimitedToValues(possibleValues);
+      }
+      return storage;
+    }
+    throw new IllegalArgumentException(
+        "Passed an incompatible object to convert to StoredVariable for type " + dataType);
   }
 }

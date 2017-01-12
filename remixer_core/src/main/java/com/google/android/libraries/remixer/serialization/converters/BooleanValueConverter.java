@@ -9,7 +9,7 @@ import com.google.gson.JsonPrimitive;
 /**
  * A value converter for boolean values.
  */
-public class BooleanValueConverter extends ValueConverter<Boolean> {
+public class BooleanValueConverter extends ValueConverter<Boolean, Boolean> {
 
   public BooleanValueConverter(String dataType) {
     super(dataType);
@@ -26,14 +26,12 @@ public class BooleanValueConverter extends ValueConverter<Boolean> {
   }
 
   @Override
-  public StoredVariable<Boolean> fromVariable(Variable<?> var) {
-    if (var.getDataType().getName().equals(dataType)) {
-      StoredVariable<Boolean> storage = new StoredVariable<>();
-      storage.setDataType(dataType);
-      storage.setSelectedValue((Boolean) var.getSelectedValue());
-      return storage;
-    }
-    throw new IllegalArgumentException(
-        "Passed an incompatible object to convert to StoredVariable<Boolean>");
+  public Boolean fromRuntimeType(Boolean value) {
+    return value;
+  }
+
+  @Override
+  public Boolean toRuntimeType(Boolean value) {
+    return value;
   }
 }

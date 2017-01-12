@@ -194,7 +194,7 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
     String listName = key + LIST_SUFFIX;
     TypeName listType =
         ParameterizedTypeName.get(ClassName.get(ArrayList.class),
-            ClassName.get(dataType.getValueClass()));
+            ClassName.get(dataType.getRuntimeType()));
     methodBuilder.addStatement(CREATE_NEW_OBJECT, listType, listName, listType);
     String addValueStatement =
         String.format(Locale.getDefault(), ADD_ITEM_FORMAT, getJavaPoetEscaping());
