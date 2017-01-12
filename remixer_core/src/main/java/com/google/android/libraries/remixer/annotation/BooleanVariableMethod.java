@@ -44,9 +44,9 @@ public @interface BooleanVariableMethod {
   String title() default "";
 
   /**
-   * The default value for this variable, assumes false as default.
+   * The initial value for this variable, assumes false as if unset.
    */
-  boolean defaultValue() default false;
+  boolean initialValue() default false;
 
   /**
    * The layout id to inflate when displaying this Variable. If not specified a default will be

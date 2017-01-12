@@ -40,7 +40,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     correct_remixer_item.setCallback(correct_callback);
     correct_remixer_item.setMinValue(15f);
     correct_remixer_item.setMaxValue(20f);
-    correct_remixer_item.setDefaultValue(17f);
+    correct_remixer_item.setInitialValue(17f);
     correct_remixer_item.setIncrement(1f);
     remixer.addItem(correct_remixer_item.build());
   }

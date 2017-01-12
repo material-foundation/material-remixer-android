@@ -46,7 +46,7 @@ public class RangeVariableTest {
             .setMinValue(0f)
             .setMaxValue(20f)
             .setIncrement(1f)
-            .setDefaultValue(15f)
+            .setInitialValue(15f)
             .setCallback(singleIncrementsCallback)
             .setKey("key")
             .setContext(this)
@@ -56,7 +56,7 @@ public class RangeVariableTest {
             .setMinValue(0f)
             .setMaxValue(20f)
             .setIncrement(5f)
-            .setDefaultValue(15f)
+            .setInitialValue(15f)
             .setCallback(increments5Callback)
             .setKey("key")
             .setContext(this)
@@ -64,24 +64,24 @@ public class RangeVariableTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void initDoesNotAcceptDefaultValueGreaterThanMax() {
+  public void initDoesNotAcceptInitialValueGreaterThanMax() {
     new RangeVariable.Builder()
         .setMinValue(0f)
         .setMaxValue(10f)
         .setIncrement(5f)
-        .setDefaultValue(15f)
+        .setInitialValue(15f)
         .setKey("key")
         .setContext(this)
         .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void initDoesNotAcceptDefaultValueLessThanMin() {
+  public void initDoesNotAcceptInitialValueLessThanMin() {
     new RangeVariable.Builder()
         .setMinValue(10f)
         .setMaxValue(20f)
         .setIncrement(5f)
-        .setDefaultValue(5f)
+        .setInitialValue(5f)
         .setKey("key")
         .setContext(this)
         .build();
@@ -93,7 +93,7 @@ public class RangeVariableTest {
         .setMinValue(50f)
         .setMaxValue(20f)
         .setIncrement(1f)
-        .setDefaultValue(15f)
+        .setInitialValue(15f)
         .setKey("key")
         .setContext(this)
         .build();
@@ -105,7 +105,7 @@ public class RangeVariableTest {
         .setMinValue(0f)
         .setMaxValue(20f)
         .setIncrement(-1f)
-        .setDefaultValue(15f)
+        .setInitialValue(15f)
         .setKey("key")
         .setContext(this)
         .build();
@@ -118,20 +118,20 @@ public class RangeVariableTest {
         .setMinValue(0f)
         .setMaxValue(52f)
         .setIncrement(5f)
-        .setDefaultValue(15f)
+        .setInitialValue(15f)
         .setKey("key")
         .setContext(this)
         .build();
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void initDoesNotAcceptInvalidSteppingToDefaultValue() {
-    // Stepping is invalid because defaultValue 22 cannot be reached from 15 in steps of 5
+  public void initDoesNotAcceptInvalidSteppingToInitialValue() {
+    // Stepping is invalid because initialValue 22 cannot be reached from 15 in steps of 5
     new RangeVariable.Builder()
         .setMinValue(0f)
         .setMaxValue(50f)
         .setIncrement(5f)
-        .setDefaultValue(22f)
+        .setInitialValue(22f)
         .setKey("key")
         .setContext(this)
         .build();
@@ -172,7 +172,7 @@ public class RangeVariableTest {
             .setMinValue(0f)
             .setMaxValue(20f)
             .setIncrement(1f)
-            .setDefaultValue(15f)
+            .setInitialValue(15f)
             .setKey("key")
             .setContext(this)
             .build();

@@ -37,18 +37,18 @@ import javax.lang.model.element.TypeElement;
 class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
 
   /**
-   * Suffix to add to the name of a list holding the possible values for this variable.
+   * Suffix to add to the name of a list holding the set of values this variable can take.
    */
   private static final String LIST_SUFFIX = "_variable_list";
 
   /**
-   * Statement format for String.format to add a value to the list of possible values.
+   * Statement format for String.format to add a value to the list of limited to values.
    */
   private static final String ADD_ITEM_FORMAT = "$L.add(%s)";
   /**
-   * Statement format for String.format to set the default value.
+   * Statement format for String.format to set the initial value.
    */
-  private static final String SET_DEFAULT_FORMAT = "$L.setDefaultValue(%s)";
+  private static final String SET_INITIAL_VALUE_FORMAT = "$L.setInitialValue(%s)";
   /**
    * Javapoet format escaping for float values
    */
@@ -64,13 +64,13 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   /**
    * Statement to create an object through a no-parameter constructor.
    *
-   * <p>This is used to create the list of possible values ({@code ArrayList&lt;T&gt; list =
+   * <p>This is used to create the list of limited to values ({@code ArrayList&lt;T&gt; list =
    * new ArrayList&lt;T&gt;()}.
    */
   private static final String CREATE_NEW_OBJECT = "$T $L = new $T()";
 
-  private final T defaultValue;
-  private T[] possibleValues;
+  private final T initialValue;
+  private T[] limitedToValues;
 
   static ItemListVariableMethodAnnotation<String> forStringListVariableMethod(
       TypeElement sourceClass,
@@ -86,8 +86,8 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
-        annotation.possibleValues(),
-        annotation.defaultValue(),
+        annotation.limitedToValues(),
+        annotation.initialValue(),
         "");
   }
 
@@ -96,9 +96,9 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
       ExecutableElement sourceMethod,
       ColorListVariableMethod annotation)
       throws RemixerAnnotationException {
-    Integer[] possibleValues = new Integer[annotation.possibleValues().length];
-    for (int i = 0; i < annotation.possibleValues().length; i++) {
-      possibleValues[i] = annotation.possibleValues()[i];
+    Integer[] limitedToValues = new Integer[annotation.limitedToValues().length];
+    for (int i = 0; i < annotation.limitedToValues().length; i++) {
+      limitedToValues[i] = annotation.limitedToValues()[i];
     }
     return new ItemListVariableMethodAnnotation<>(
         sourceClass,
@@ -109,8 +109,8 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
-        possibleValues,
-        annotation.defaultValue(),
+        limitedToValues,
+        annotation.initialValue(),
         0);
   }
 
@@ -119,9 +119,9 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
       ExecutableElement sourceMethod,
       NumberListVariableMethod annotation)
       throws RemixerAnnotationException {
-    Float[] possibleValues = new Float[annotation.possibleValues().length];
-    for (int i = 0; i < annotation.possibleValues().length; i++) {
-      possibleValues[i] = annotation.possibleValues()[i];
+    Float[] limitedToValues = new Float[annotation.limitedToValues().length];
+    for (int i = 0; i < annotation.limitedToValues().length; i++) {
+      limitedToValues[i] = annotation.limitedToValues()[i];
     }
     return new ItemListVariableMethodAnnotation<>(
         sourceClass,
@@ -132,8 +132,8 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
-        possibleValues,
-        annotation.defaultValue(),
+        limitedToValues,
+        annotation.initialValue(),
         0f);
   }
 
@@ -142,10 +142,11 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
    * annotations are met.
    *
    * <p>If the default is unset and the zero value (0 for numbers, empty string for Strings) is not
-   * amongst the possible values then it falls back to the first value in the list.
+   * amongst the values this variable is limited to then it falls back to the first value in the
+   * list.
    *
    * @throws RemixerAnnotationException if the constraints are not met:
-   *     - The list of possible values is empty.
+   *     - The list of limited to values is empty.
    *     - The default is explicitly set to an unknown value.
    */
   private ItemListVariableMethodAnnotation(
@@ -156,34 +157,35 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
       String key,
       String title,
       int layoutId,
-      T[] possibleValues,
-      T defaultValue,
+      T[] limitedToValues,
+      T initialValue,
       T zeroValue)
       throws RemixerAnnotationException {
     super(sourceClass, sourceMethod, dataType, builderTypeName, key, title, layoutId);
-    this.possibleValues = possibleValues;
-    if (possibleValues.length == 0) {
-      throw new RemixerAnnotationException(sourceMethod, "List of possible values cannot be empty");
+    this.limitedToValues = limitedToValues;
+    if (limitedToValues.length == 0) {
+      throw new RemixerAnnotationException(
+          sourceMethod, "List of limited to values cannot be empty");
     }
     boolean containsDefault = false;
-    for (T s : possibleValues) {
-      if (s.equals(defaultValue)) {
+    for (T s : limitedToValues) {
+      if (s.equals(initialValue)) {
         containsDefault = true;
         break;
       }
     }
     if (!containsDefault) {
-      if (defaultValue.equals(zeroValue)) {
-        // If no default value was set (empty) and the list of possible values doesn't contain the
+      if (initialValue.equals(zeroValue)) {
+        // If no initial value was set (empty) and the list of limited to values doesn't contain the
         // zero-value (empty string in case of string, 0 in case of numbers) then assume the first
-        // value in the list to be the default value.
-        this.defaultValue = possibleValues[0];
+        // value in the list to be the initial value.
+        this.initialValue = limitedToValues[0];
       } else {
         throw new RemixerAnnotationException(sourceMethod,
-            "Default value explicitly set to unknown value");
+            "Initial value explicitly set to unknown value");
       }
     } else {
-      this.defaultValue = defaultValue;
+      this.initialValue = initialValue;
     }
   }
 
@@ -196,14 +198,14 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
     methodBuilder.addStatement(CREATE_NEW_OBJECT, listType, listName, listType);
     String addValueStatement =
         String.format(Locale.getDefault(), ADD_ITEM_FORMAT, getJavaPoetEscaping());
-    for (T value : possibleValues) {
+    for (T value : limitedToValues) {
       methodBuilder.addStatement(addValueStatement, listName, value);
     }
-    methodBuilder.addStatement("$L.setPossibleValues($L)", remixerItemName, listName);
+    methodBuilder.addStatement("$L.setLimitedToValues($L)", remixerItemName, listName);
 
-    String setDefaultValueStatement =
-        String.format(Locale.getDefault(), SET_DEFAULT_FORMAT, getJavaPoetEscaping());
-    methodBuilder.addStatement(setDefaultValueStatement, remixerItemName, defaultValue);
+    String setInitialValueStatement =
+        String.format(Locale.getDefault(), SET_INITIAL_VALUE_FORMAT, getJavaPoetEscaping());
+    methodBuilder.addStatement(setInitialValueStatement, remixerItemName, initialValue);
   }
 
   private String getJavaPoetEscaping() {

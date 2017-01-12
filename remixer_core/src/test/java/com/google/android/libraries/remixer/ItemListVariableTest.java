@@ -38,8 +38,8 @@ public class ItemListVariableTest {
     MockitoAnnotations.initMocks(this);
     correctVariableWithCallback =
         new ItemListVariable.Builder<String>()
-            .setPossibleValues(Arrays.asList("A", "B"))
-            .setDefaultValue("A")
+            .setLimitedToValues(Arrays.asList("A", "B"))
+            .setInitialValue("A")
             .setKey("key")
             .setContext(this)
             .setCallback(mockCallback)
@@ -48,11 +48,11 @@ public class ItemListVariableTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void initFailsOnDefaultValueNotInList() {
+  public void initFailsOnInitialValueNotInList() {
     Variable<String> variable =
         new ItemListVariable.Builder<String>()
-            .setPossibleValues(Arrays.asList("Some", "possible", "values"))
-            .setDefaultValue("Something else")
+            .setLimitedToValues(Arrays.asList("Some", "possible", "values"))
+            .setInitialValue("Something else")
             .setKey("key")
             .setContext(this)
             .setDataType(DataType.STRING)
@@ -79,8 +79,8 @@ public class ItemListVariableTest {
   public void doesNotCrashOnNullCallback() {
     Variable<String> variable =
         new ItemListVariable.Builder<String>()
-            .setPossibleValues(Arrays.asList("A", "B"))
-            .setDefaultValue("A")
+            .setLimitedToValues(Arrays.asList("A", "B"))
+            .setInitialValue("A")
             .setKey("key")
             .setContext(this)
             .setDataType(DataType.STRING)

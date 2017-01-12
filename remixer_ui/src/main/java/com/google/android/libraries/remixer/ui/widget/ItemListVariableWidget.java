@@ -62,7 +62,7 @@ public class ItemListVariableWidget extends RelativeLayout
 
   @Override
   public void bindVariable(@NonNull final ItemListVariable variable) {
-    values = variable.getValueList();
+    values = variable.getLimitedToValues();
     int position = values.indexOf(variable.getSelectedValue());
     nameText.setText(variable.getTitle());
     spinner.setAdapter(

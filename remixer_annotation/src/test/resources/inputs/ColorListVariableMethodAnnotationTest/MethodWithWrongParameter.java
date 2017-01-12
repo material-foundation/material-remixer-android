@@ -22,6 +22,6 @@ public class MethodWithWrongParameter {
   /**
    * This method should take a string parameter, fail
    */
-  @ColorListVariableMethod(possibleValues = {1, 2})
+  @ColorListVariableMethod(limitedToValues = {1, 2})
   public void fail(String i){}
 }

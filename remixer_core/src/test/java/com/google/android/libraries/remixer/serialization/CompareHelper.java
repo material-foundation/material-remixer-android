@@ -27,7 +27,7 @@ public class CompareHelper {
   public static <T> void assertEqualsVariable(StoredVariable<T> storage, Variable<T> variable) {
     assertConsistent(storage, variable);
     Assert.assertEquals(variable.getSelectedValue(), storage.selectedValue);
-    Assert.assertNull(storage.possibleValues);
+    Assert.assertNull(storage.limitedToValues);
     Assert.assertNull(storage.minValue);
     Assert.assertNull(storage.maxValue);
     Assert.assertNull(storage.increment);
@@ -36,8 +36,8 @@ public class CompareHelper {
   public static <SerializableType, RuntimeType> void assertEqualsItemListVariable(
       StoredVariable<SerializableType> storage, ItemListVariable<RuntimeType> variable) {
     assertConsistent(storage, variable);
-    List<RuntimeType> runtimeList = variable.getValueList();
-    List<SerializableType> serializableList = storage.getPossibleValues();
+    List<RuntimeType> runtimeList = variable.getLimitedToValues();
+    List<SerializableType> serializableList = storage.getLimitedToValues();
     Assert.assertNotNull(runtimeList);
     Assert.assertNotNull(serializableList);
     Assert.assertEquals(runtimeList.size(), serializableList.size());
@@ -56,7 +56,7 @@ public class CompareHelper {
       StoredVariable<T> storage, RangeVariable variable) {
     assertConsistent(storage, variable);
     Assert.assertEquals(variable.getSelectedValue(), storage.selectedValue);
-    Assert.assertNull(storage.possibleValues);
+    Assert.assertNull(storage.limitedToValues);
     Assert.assertEquals(variable.getMinValue(), storage.minValue);
     Assert.assertEquals(variable.getMaxValue(), storage.maxValue);
     Assert.assertEquals(variable.getIncrement(), storage.increment);

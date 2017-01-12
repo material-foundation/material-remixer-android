@@ -58,7 +58,7 @@ public class StringVariableWidgetTest {
   public void setUp() {
     MockitoAnnotations.initMocks(this);
     variable = new StringVariableBuilder()
-        .setDefaultValue(DEFAULT_VALUE)
+        .setInitialValue(DEFAULT_VALUE)
         .setTitle(TITLE)
         .setKey(KEY)
         .setContext(this)

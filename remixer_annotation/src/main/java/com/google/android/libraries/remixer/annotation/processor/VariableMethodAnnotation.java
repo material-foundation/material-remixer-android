@@ -39,7 +39,7 @@ import javax.lang.model.element.TypeElement;
  */
 class VariableMethodAnnotation<T> extends MethodAnnotation {
 
-  private final T defaultValue;
+  private final T initalValue;
 
   static VariableMethodAnnotation<Boolean> forBooleanVariableMethod(
       TypeElement sourceClass, ExecutableElement sourceMethod, BooleanVariableMethod annotation)
@@ -52,7 +52,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
-        annotation.defaultValue());
+        annotation.initialValue());
   }
 
   static VariableMethodAnnotation<String> forStringVariableMethod(
@@ -66,7 +66,7 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
         annotation.key(),
         annotation.title(),
         annotation.layoutId(),
-        annotation.defaultValue());
+        annotation.initialValue());
   }
 
   private VariableMethodAnnotation(
@@ -77,17 +77,17 @@ class VariableMethodAnnotation<T> extends MethodAnnotation {
       String key,
       String title,
       int layoutId,
-      T defaultValue)
+      T initialValue)
       throws RemixerAnnotationException {
     super(sourceClass, sourceMethod, dataType, builderType, key, title, layoutId);
-    this.defaultValue = defaultValue;
+    this.initalValue = initialValue;
   }
 
   @Override
   protected void addSpecificSetupStatements(MethodSpec.Builder methodBuilder) {
     methodBuilder.addStatement(
-        defaultValue.getClass().equals(String.class)
-            ? "$L.setDefaultValue($S)" : "$L.setDefaultValue($L)",
-        remixerItemName, defaultValue);
+        initalValue.getClass().equals(String.class)
+            ? "$L.setInitialValue($S)" : "$L.setInitialValue($L)",
+        remixerItemName, initalValue);
   }
 }

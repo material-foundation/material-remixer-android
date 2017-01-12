@@ -68,19 +68,16 @@ public class Variable<T> {
    * @param key The key to use to save to SharedPreferences. This needs to be unique across all
    *     Remixes.
    * @param title The name to display in the UI.
-   * @param defaultValue The default value for this Variable.
+   * @param initialValue The initial value for this Variable.
    * @param context the object which created this variable, should be an activity.
    * @param callback A callback to execute when the value is updated. Can be {@code null}.
    * @param layoutId A layout to inflate when displaying this Variable in the UI.
    * @param dataType The data type this variable contains.
    */
-  // TODO(miguely): Add default value semantics to the defaultValue, currently it behaves mostly
-  // as an initial value. It should be used in cases when the value is set to an invalid value from
-  // SharedPreferences or Firebase.
   protected Variable(
       String title,
       String key,
-      T defaultValue,
+      T initialValue,
       Object context,
       Callback<T> callback,
       int layoutId,
@@ -90,15 +87,15 @@ public class Variable<T> {
     this.context = new WeakReference<>(context);
     this.layoutId = layoutId;
     this.dataType = dataType;
-    this.selectedValue = defaultValue;
+    this.selectedValue = initialValue;
     this.callback = callback;
   }
 
   /**
-   * Makes sure the default value is valid for this variable and runs the callback if so. This must
+   * Makes sure the initial value is valid for this variable and runs the callback if so. This must
    * be called as soon as the Variable is created.
    *
-   * @throws IllegalArgumentException The currently selected value (or default value) is invalid for
+   * @throws IllegalArgumentException The currently selected value (or initial value) is invalid for
    *     this Variable. See {@link #checkValue(Object)}.
    */
   public final void init() {
@@ -228,7 +225,7 @@ public class Variable<T> {
     public Variable<T> build() {
       checkBaseFields();
       Variable<T> variable =
-          new Variable<T>(title, key, defaultValue, context, callback, layoutId, dataType);
+          new Variable<T>(title, key, initialValue, context, callback, layoutId, dataType);
       variable.init();
       return variable;
     }

@@ -58,7 +58,7 @@ public class StringListVariableMethodAnnotationTest {
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("Default value explicitly set to unknown value")
+        .withErrorContaining("Initial value explicitly set to unknown value")
         .in(file);
   }
 
@@ -70,20 +70,20 @@ public class StringListVariableMethodAnnotationTest {
         .that(file)
         .processedWith(allProcessors)
         .failsToCompile()
-        .withErrorContaining("List of possible values cannot be empty")
+        .withErrorContaining("List of limited to values cannot be empty")
         .in(file);
   }
 
   @Test
-  public void buildsAndFixesDefaultValue() {
+  public void buildsAndFixesInitialValue() {
     JavaFileObject file = JavaFileObjects
-        .forResource("inputs/StringListVariableMethodAnnotationTest/FixesDefaultValue.java");
+        .forResource("inputs/StringListVariableMethodAnnotationTest/FixesInitialValue.java");
     Truth.assert_().about(JavaSourceSubjectFactory.javaSource())
         .that(file)
         .processedWith(allProcessors)
         .compilesWithoutError()
         .and()
         .generatesSources(JavaFileObjects
-            .forResource("outputs/StringListVariableMethodAnnotationTest/FixesDefaultValue.java"));
+            .forResource("outputs/StringListVariableMethodAnnotationTest/FixesInitialValue.java"));
   }
 }

@@ -60,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
   @StringListVariableMethod(
       title = "Title text",
-      possibleValues = {"Hello World", "Alohomora", "Foo", "Bar", "May the force be with you"})
+      limitedToValues = {"Hello World", "Alohomora", "Foo", "Bar", "May the force be with you"})
   void setTitleText(String text) {
     titleText.setText(text);
   }
 
-  @StringVariableMethod(defaultValue = "Change me!")
+  @StringVariableMethod(initialValue = "Change me!")
   void setFreeformText(String text) {
     freeformText.setText(text);
   }

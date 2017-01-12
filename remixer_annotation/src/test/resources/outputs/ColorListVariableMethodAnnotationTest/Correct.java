@@ -42,8 +42,8 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     ArrayList<Integer> setColor_variable_list = new ArrayList<Integer>();
     setColor_variable_list.add(1);
     setColor_variable_list.add(2);
-    setColor_remixer_item.setPossibleValues(setColor_variable_list);
-    setColor_remixer_item.setDefaultValue(1);
+    setColor_remixer_item.setLimitedToValues(setColor_variable_list);
+    setColor_remixer_item.setInitialValue(1);
     remixer.addItem(setColor_remixer_item.build());
   }
 
