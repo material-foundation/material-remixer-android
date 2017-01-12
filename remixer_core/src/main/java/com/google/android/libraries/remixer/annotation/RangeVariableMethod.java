@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * Annotation to apply to a method to turn it into a RangeVariable.
  *
  * <p>This is set up in a way that if no values are specified it will be a range from 0 to 100, with
- * the default value as 0. Furthermore if you only move the range so that 0 is not included it will
+ * the initial value as 0. Furthermore if you only move the range so that 0 is not included it will
  * set the default to be minValue.
  *
  * <p>Note: It has to be used on a public or default-access method.

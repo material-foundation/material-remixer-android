@@ -157,7 +157,7 @@ public class RangeVariable extends Variable<Float> {
    *
    * <p>This builder assumes a few things for your convenience:
    * <ul>
-   * <li>If the default value is not set, minValue will be used as the default value.
+   * <li>If the initial value is not set, minValue will be used as the initial value.
    * <li>If the increment is not set, 1 will be used.
    * <li>If the layout id is not set, the default layout will be used.
    * <li>If the title is not set, the key will be used as title

@@ -30,12 +30,12 @@ public class ItemListVariable<T> extends Variable<T> {
   private final List<T> limitedToValues;
 
   /**
-   * Creates a new ItemListVariable, checks its default value and runs the callback if the value is
+   * Creates a new ItemListVariable, checks its initial value and runs the callback if the value is
    * valid.
    *
    * @param title Displayable name for this Variable.
    * @param key The key used to store this Variable.
-   * @param initialValue The default value to use if none has been set.
+   * @param initialValue The initial value to use if none has been set.
    * @param limitedToValues List of valid values that this variable is limited to take.
    * @param context the object which created this variable, should be an activity.
    * @param callback Callback to run once the value is set. Can be null.
@@ -77,10 +77,13 @@ public class ItemListVariable<T> extends Variable<T> {
   /**
    * Convenience builder for ItemListVariable.
    *
-   * <p>This builder assumes a few things for your convenience: <ul> <li>If the default value is not
-   * set, the first value of the list will be used as the default value. <li>If the layout id is not
-   * set, the default layout will be used. <li>If the title is not set, the key will be used as
-   * title </ul>
+   * <p>This builder assumes a few things for your convenience:
+   * <ul>
+   *   <li>If the initial value is not set, the first value of the list will be used as the default
+   *   value.
+   *   <li>If the layout id is not set, the default layout will be used.
+   *   <li>If the title is not set, the key will be used as title
+   * </ul>
    *
    * <p>On the other hand: key, dataType, context, and limitedToValues are mandatory. If either is
    * missing, an {@link IllegalArgumentException} will be thrown.

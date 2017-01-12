@@ -65,7 +65,7 @@ public class ColorValueConverter extends ValueConverter<Integer> {
       storage.setDataType(dataType);
       storage.setSelectedValue((Integer) var.getSelectedValue());
       if (var instanceof ItemListVariable) {
-        storage.setPossibleValues(((ItemListVariable<Integer>) var).getLimitedToValues());
+        storage.setLimitedToValues(((ItemListVariable<Integer>) var).getLimitedToValues());
       }
       return storage;
     }

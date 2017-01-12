@@ -168,15 +168,15 @@ They support the following properties:
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
-- `initialValue` the initial value, if not set assumes the first in the `possibleValues` list
-- `possibleValues` the list of possible values.
+- `initialValue` the initial value, if not set assumes the first in the `limitedToValues` list
+- `limitedToValues` the list of values this variable is limited to take.
 - `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A String List variable that sets fonts from a list and defaults to the first in the list:
 ```java
 @StringListVariableMethod(
     title = "Title font",
-    possibleValues = {"Roboto", "Roboto Mono", "Comic Sans MS"})
+    limitedToValues = {"Roboto", "Roboto Mono", "Comic Sans MS"})
 public void setTitleFont(String fontName) {
 }
 ```
@@ -199,15 +199,14 @@ public void setExampleText(String exampleText) {
 
 - `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
 - `title` the displayable name of the variable, if not set assumes `key`
-- `initialValue` the initial value, if not set assumes the first in the `possibleValues` list
-- `possibleValues` the list of possible values.
-- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
+- `initialValue` the initial value, if not set assumes the first in the `limitedToValues` list
+- `limitedToValues` the list of values this variable is limited to take.- `layoutId` a layoutId to display this, must implement RemixerWidget. It assumes a sensible default if unset.
 
 A variable that lets you pick colors from a list, this example uses a custom layout id to guarantee that it's treated as a Color:
 ```java
 @IntegerListVariableMethod(
     title = "Title Color",
-    possibleValues = {Color.parseColor("#000000"), Color.parseColor("#DCDCDC")},
+    limitedToValues = {Color.parseColor("#000000"), Color.parseColor("#DCDCDC")},
     layoutId = R.layout.color_list_variable_widget)
 public void setTitleColor(Integer color) {
 }

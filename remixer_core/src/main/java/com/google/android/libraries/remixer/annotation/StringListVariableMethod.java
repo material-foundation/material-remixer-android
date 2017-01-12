@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation to apply to a method to turn it into a {@code ItemListVariable&lt;String&gt;}.
  *
- * <p>It is set up in a way that you don't need to explicitly set the default value, if it is left
+ * <p>It is set up in a way that you don't need to explicitly set the initial value, if it is left
  * unspecified and the empty string is not part of the possible values, then the first value in the
  * list of possible values is assumed as default.
  *

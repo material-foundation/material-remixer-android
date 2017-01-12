@@ -92,10 +92,10 @@ public class Variable<T> {
   }
 
   /**
-   * Makes sure the default value is valid for this variable and runs the callback if so. This must
+   * Makes sure the initial value is valid for this variable and runs the callback if so. This must
    * be called as soon as the Variable is created.
    *
-   * @throws IllegalArgumentException The currently selected value (or default value) is invalid for
+   * @throws IllegalArgumentException The currently selected value (or initial value) is invalid for
    *     this Variable. See {@link #checkValue(Object)}.
    */
   public final void init() {

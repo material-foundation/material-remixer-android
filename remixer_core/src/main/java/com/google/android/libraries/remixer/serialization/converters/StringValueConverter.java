@@ -34,7 +34,7 @@ public class StringValueConverter extends ValueConverter<String> {
       storage.setDataType(dataType);
       storage.setSelectedValue((String) var.getSelectedValue());
       if (var instanceof ItemListVariable) {
-        storage.setPossibleValues(((ItemListVariable<String>) var).getLimitedToValues());
+        storage.setLimitedToValues(((ItemListVariable<String>) var).getLimitedToValues());
       }
       return storage;
     }
