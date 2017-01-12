@@ -17,18 +17,25 @@
 package com.google.android.libraries.remixer.ui.view;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.gesture.GestureListener;
+import com.google.android.libraries.remixer.ui.gesture.ShakeListener;
 
 /**
  * A fragment that shows all Remixes for the current activity. It's very easy to use:
@@ -62,6 +69,8 @@ public class RemixerFragment extends BottomSheetDialogFragment {
     return new RemixerFragment();
   }
 
+  private SensorEventListener sensorEventListener;
+
   /**
    * Attach this instance to {@code button}'s OnClick, so that clicking the button shows this
    * fragment.
@@ -73,9 +82,30 @@ public class RemixerFragment extends BottomSheetDialogFragment {
 
       @Override
       public void onClick(View view) {
-        show(activity.getSupportFragmentManager(), REMIXER_TAG);
+        showRemixer(activity.getSupportFragmentManager(), REMIXER_TAG);
       }
     });
+  }
+
+  /**
+   *
+   * @param manager
+   * @param tag
+   * @return whether the fragment was shown or not.
+   */
+
+  public void showRemixer(FragmentManager manager, String tag) {
+    if (!isAdded() && !isVisible() && !isRemoving()) {
+      show(manager, tag);
+    }
+  }
+  
+  /**
+   * Attach this instance to a shake gesture and show fragment when magnitude exceeds {@code threshold}
+   *
+   */
+  public void attachToShake(final FragmentActivity activity, final double threshold) {
+    ShakeListener.attach(activity, threshold, this);
   }
 
   /**
