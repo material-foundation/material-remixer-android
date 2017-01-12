@@ -10,7 +10,7 @@ import com.google.gson.JsonPrimitive;
 /**
  * A value converter for string values.
  */
-public class StringValueConverter extends ValueConverter<String> {
+public class StringValueConverter extends ValueConverter<String, String> {
 
   public StringValueConverter(String dataType) {
     super(dataType);
@@ -27,18 +27,12 @@ public class StringValueConverter extends ValueConverter<String> {
   }
 
   @Override
-  @SuppressWarnings("unchecked")
-  public StoredVariable<String> fromVariable(Variable<?> var) {
-    if (var.getDataType().getName().equals(dataType)) {
-      StoredVariable<String> storage = new StoredVariable<>();
-      storage.setDataType(dataType);
-      storage.setSelectedValue((String) var.getSelectedValue());
-      if (var instanceof ItemListVariable) {
-        storage.setPossibleValues(((ItemListVariable<String>) var).getValueList());
-      }
-      return storage;
-    }
-    throw new IllegalArgumentException(
-        "Passed an incompatible object to convert to StoredVariable<String>");
+  public String fromRuntimeType(String value) {
+    return value;
+  }
+
+  @Override
+  public String toRuntimeType(String value) {
+    return value;
   }
 }
