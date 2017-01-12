@@ -16,12 +16,13 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
+import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 
-public class FixesDefaultValue {
+public class FixesInitialValue {
+
   /**
-   * Default value is implicitly "", this has to move to "hello"
+   * Initial value is implicitly 0, this has to move to 1
    */
-  @StringListVariableMethod(possibleValues = {"hello", "world"})
-  public void fixValue(String i){}
+  @ColorListVariableMethod(limitedToValues = {1, 2})
+  public void fixValue(Integer i){}
 }

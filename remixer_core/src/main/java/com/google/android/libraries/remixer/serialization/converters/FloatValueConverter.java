@@ -40,7 +40,7 @@ public class FloatValueConverter extends ValueConverter<Float> {
         storage.setMaxValue(range.getMaxValue());
         storage.setIncrement(range.getIncrement());
       } else if (var instanceof ItemListVariable) {
-        storage.setPossibleValues(((ItemListVariable<Float>) var).getValueList());
+        storage.setLimitedToValues(((ItemListVariable<Float>) var).getLimitedToValues());
       }
       return storage;
     }

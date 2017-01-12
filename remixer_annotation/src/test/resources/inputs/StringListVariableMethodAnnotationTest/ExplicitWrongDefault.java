@@ -20,8 +20,8 @@ import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
 public class ExplicitWrongDefault {
   /**
-   * Default value is explicitly out of range, should fail.
+   * Initial value is explicitly out of range, should fail.
    */
-  @StringListVariableMethod(defaultValue = "adfjuh", possibleValues = {"hello", "world"})
+  @StringListVariableMethod(initialValue = "adfjuh", limitedToValues = {"hello", "world"})
   public void wrongDefault(String i){}
 }

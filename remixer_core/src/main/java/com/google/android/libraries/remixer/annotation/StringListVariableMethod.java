@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation to apply to a method to turn it into a {@code ItemListVariable&lt;String&gt;}.
  *
- * <p>It is set up in a way that you don't need to explicitly set the default value, if it is left
+ * <p>It is set up in a way that you don't need to explicitly set the initial value, if it is left
  * unspecified and the empty string is not part of the possible values, then the first value in the
  * list of possible values is assumed as default.
  *
@@ -48,17 +48,17 @@ public @interface StringListVariableMethod {
   String title() default "";
 
   /**
-   * The default value for this variable, assumes "" as default.
+   * The initial value for this variable, assumes "" as default.
    *
    * <p>If left unspecified and the empty string is not part of the possible values, then the first
    * value in the list of possible values is assumed as default.
    */
-  String defaultValue() default "";
+  String initialValue() default "";
 
   /**
    * List of possible values for this ItemListVariable&lt;String&gt;.
    */
-  String[] possibleValues() default {""};
+  String[] limitedToValues() default {""};
 
   /**
    * The layout id to inflate when displaying this Variable. If not specified a default will be

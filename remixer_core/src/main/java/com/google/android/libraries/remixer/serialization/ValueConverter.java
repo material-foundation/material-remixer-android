@@ -73,7 +73,7 @@ public abstract class ValueConverter<T> {
     result.constraintType = object.get(StoredVariable.CONSTRAINT_TYPE).getAsString();
 
     if (StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT.equals(result.constraintType)) {
-      deserializePossibleValues(result, object.get(StoredVariable.POSSIBLE_VALUES));
+      deserializeLimitedToValues(result, object.get(StoredVariable.LIMITED_TO_VALUES));
     } else if (StoredVariable.RANGE_VARIABLE_CONSTRAINT.equals(result.constraintType)) {
       deserializeRangeProperties(result, object);
     }
@@ -89,12 +89,13 @@ public abstract class ValueConverter<T> {
     result.increment = parseValue(object.getAsJsonPrimitive(StoredVariable.INCREMENT));
   }
 
-  private void deserializePossibleValues(StoredVariable<T> result, JsonElement possibleValuesElement) {
-    if (possibleValuesElement != null) {
-      JsonArray array = possibleValuesElement.getAsJsonArray();
-      result.possibleValues = new ArrayList<>();
+  private void deserializeLimitedToValues(
+      StoredVariable<T> result, JsonElement limitedToValuesElement) {
+    if (limitedToValuesElement != null) {
+      JsonArray array = limitedToValuesElement.getAsJsonArray();
+      result.limitedToValues = new ArrayList<>();
       for (JsonElement arrayElement : array) {
-        result.possibleValues.add(parseValue(arrayElement));
+        result.limitedToValues.add(parseValue(arrayElement));
       }
     }
   }
@@ -110,11 +111,11 @@ public abstract class ValueConverter<T> {
     object.add(StoredVariable.SELECTED_VALUE, valueToJson(src.selectedValue));
     object.add(StoredVariable.CONSTRAINT_TYPE, new JsonPrimitive(src.constraintType));
     if (StoredVariable.ITEM_LIST_VARIABLE_CONSTRAINT.equals(src.constraintType)) {
-      JsonArray possibleValues = new JsonArray();
-      for (T item : src.possibleValues) {
-        possibleValues.add(valueToJson(item));
+      JsonArray limitedToValues = new JsonArray();
+      for (T item : src.limitedToValues) {
+        limitedToValues.add(valueToJson(item));
       }
-      object.add(StoredVariable.POSSIBLE_VALUES, possibleValues);
+      object.add(StoredVariable.LIMITED_TO_VALUES, limitedToValues);
     }
     if (StoredVariable.RANGE_VARIABLE_CONSTRAINT.equals(src.constraintType)) {
       object.add(StoredVariable.MIN_VALUE, valueToJson(src.minValue));

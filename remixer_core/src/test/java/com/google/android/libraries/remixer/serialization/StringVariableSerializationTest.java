@@ -50,8 +50,8 @@ public class StringVariableSerializationTest {
         .setKey(KEY)
         .build();
     stringListVariable = new ItemListVariable.Builder<String>()
-        .setPossibleValues(new String[]{"a", "b", "c"})
-        .setDefaultValue("a")
+        .setLimitedToValues(new String[]{"a", "b", "c"})
+        .setInitialValue("a")
         .setContext(this)
         .setKey(KEY)
         .setDataType(DataType.STRING)

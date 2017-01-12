@@ -22,6 +22,6 @@ public class EmptyList {
   /**
    * List is empty explicitly! Fail
    */
-  @StringListVariableMethod(possibleValues = {})
+  @StringListVariableMethod(limitedToValues = {})
   public void fail(String i){}
 }
