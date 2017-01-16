@@ -267,6 +267,6 @@ abstract class MethodAnnotation {
    * Returns the type to use to parametrize the Variable objects when generating code.
    */
   private final TypeName getVariableType() {
-    return ClassName.get(dataType.getValueClass());
+    return ClassName.get(dataType.getRuntimeType());
   }
 }

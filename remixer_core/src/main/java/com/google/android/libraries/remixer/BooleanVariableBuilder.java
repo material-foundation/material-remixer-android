@@ -17,12 +17,12 @@
 package com.google.android.libraries.remixer;
 
 /**
- * Convenience builder for Variable&lt;Boolean&gt; that assumes false to be the default value.
+ * Convenience builder for Variable&lt;Boolean&gt; that assumes false to be the initial value.
  */
 public class BooleanVariableBuilder extends Variable.Builder<Boolean> {
 
   public BooleanVariableBuilder() {
-    setDefaultValue(false);
+    setInitialValue(false);
     setDataType(DataType.BOOLEAN);
   }
 

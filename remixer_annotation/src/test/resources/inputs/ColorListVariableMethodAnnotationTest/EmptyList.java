@@ -22,6 +22,6 @@ public class EmptyList {
   /**
    * List is empty explicitly! Fail
    */
-  @ColorListVariableMethod(possibleValues = {})
+  @ColorListVariableMethod(limitedToValues = {})
   public void fail(Integer i){}
 }

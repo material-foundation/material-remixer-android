@@ -21,8 +21,8 @@ import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
 public class ExplicitWrongDefault {
 
   /**
-   * Default value is explicitly out of range, should fail.
+   * Initial value is explicitly out of range, should fail.
    */
-  @NumberListVariableMethod(defaultValue = 5, possibleValues = {2, 3})
+  @NumberListVariableMethod(initialValue = 5, limitedToValues = {2, 3})
   public void wrongDefault(Float i){}
 }

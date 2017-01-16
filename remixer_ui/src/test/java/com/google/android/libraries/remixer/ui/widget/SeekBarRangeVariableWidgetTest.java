@@ -64,7 +64,7 @@ public class SeekBarRangeVariableWidgetTest {
         .setMinValue(MIN)
         .setMaxValue(MAX)
         .setIncrement(INCREMENT)
-        .setDefaultValue(DEFAULT_VALUE)
+        .setInitialValue(DEFAULT_VALUE)
         .setTitle(TITLE)
         .setKey(KEY)
         .setContext(this)

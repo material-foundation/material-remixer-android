@@ -21,8 +21,8 @@ import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 public class ExplicitWrongDefault {
 
   /**
-   * Default value is explicitly out of range, should fail.
+   * Initial value is explicitly out of range, should fail.
    */
-  @RangeVariableMethod(defaultValue = -15)
+  @RangeVariableMethod(initialValue = -15)
   public void fixValue(Float i){}
 }

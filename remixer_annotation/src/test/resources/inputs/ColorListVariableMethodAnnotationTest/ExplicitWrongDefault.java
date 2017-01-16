@@ -21,8 +21,8 @@ import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 public class ExplicitWrongDefault {
 
   /**
-   * Default value is explicitly out of range, should fail.
+   * Initial value is explicitly out of range, should fail.
    */
-  @ColorListVariableMethod(defaultValue = 5, possibleValues = {2, 3})
+  @ColorListVariableMethod(initialValue = 5, limitedToValues = {2, 3})
   public void wrongDefault(Integer i){}
 }

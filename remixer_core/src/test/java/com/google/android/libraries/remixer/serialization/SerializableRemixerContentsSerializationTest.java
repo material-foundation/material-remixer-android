@@ -61,23 +61,23 @@ public class SerializableRemixerContentsSerializationTest {
         .build();
     serializableRemixerContents.addItem(booleanVariable);
     colorListVariable = new ItemListVariable.Builder<Integer>()
-        .setPossibleValues(new Integer[]{BLACK, BLUE})
-        .setDefaultValue(BLACK)
+        .setLimitedToValues(new Integer[]{BLACK, BLUE})
+        .setInitialValue(BLACK)
         .setContext(this)
         .setKey("colorList")
         .setDataType(DataType.COLOR)
         .build();
     serializableRemixerContents.addItem(colorListVariable);
     floatVariable  = new Variable.Builder<Float>()
-        .setDefaultValue(0f)
+        .setInitialValue(0f)
         .setKey("float")
         .setContext(this)
         .setDataType(DataType.NUMBER)
         .build();
     serializableRemixerContents.addItem(floatVariable);
     floatListVariable = new ItemListVariable.Builder<Float>()
-        .setPossibleValues(new Float[]{12f, 24f})
-        .setDefaultValue(12f)
+        .setLimitedToValues(new Float[]{12f, 24f})
+        .setInitialValue(12f)
         .setContext(this)
         .setKey("floatList")
         .setDataType(DataType.NUMBER)
@@ -87,7 +87,7 @@ public class SerializableRemixerContentsSerializationTest {
         .setMinValue(0f)
         .setIncrement(10f)
         .setMaxValue(100f)
-        .setDefaultValue(10f)
+        .setInitialValue(10f)
         .setContext(this)
         .setKey("range")
         .build();
@@ -98,8 +98,8 @@ public class SerializableRemixerContentsSerializationTest {
         .build();
     serializableRemixerContents.addItem(stringVariable);
     stringListVariable = new ItemListVariable.Builder<String>()
-        .setPossibleValues(new String[]{"a", "b", "c"})
-        .setDefaultValue("a")
+        .setLimitedToValues(new String[]{"a", "b", "c"})
+        .setInitialValue("a")
         .setContext(this)
         .setKey("stringList")
         .setDataType(DataType.STRING)

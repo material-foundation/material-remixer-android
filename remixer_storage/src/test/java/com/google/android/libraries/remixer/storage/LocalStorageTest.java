@@ -65,7 +65,7 @@ public class LocalStorageTest {
 
     colorListVariable =
         new ItemListVariable.Builder<Integer>()
-            .setPossibleValues(new Integer[]{Color.BLACK, Color.BLUE}).setDataType(DataType.COLOR)
+            .setLimitedToValues(new Integer[]{Color.BLACK, Color.BLUE}).setDataType(DataType.COLOR)
             .setContext(this).setKey("colors").build();
 
     rangeVariable = new RangeVariable.Builder()
@@ -117,7 +117,7 @@ public class LocalStorageTest {
         "This is a new value that has to remain when adding stringVariable to the other remixer";
     Variable<String> stringWithDifferentValue =
         new StringVariableBuilder()
-            .setKey("string").setContext(differentValue).setDefaultValue(differentValue).build();
+            .setKey("string").setContext(differentValue).setInitialValue(differentValue).build();
     helperInstance.addItem(stringWithDifferentValue);
     // After this there should be a string variable with key string stored.
     remixer.setSynchronizationMechanism(new LocalStorage(RuntimeEnvironment.application));
