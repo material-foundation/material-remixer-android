@@ -18,6 +18,7 @@ public class ShakeListener implements SensorEventListener {
     private double lastMagnitude;
     // TODO(nicksahler): Remove `lastSpike` once `show` bug is fixed
     private long lastSpike = 0;
+    private final int SHAKE_TIMEOUT = 500;
 
     private double threshold;
     private final FragmentActivity activity;
@@ -37,7 +38,7 @@ public class ShakeListener implements SensorEventListener {
             + event.values[1] * event.values[1]
             + event.values[2] * event.values[2]);
 
-        if ((currentMagnitude - lastMagnitude) > threshold && System.currentTimeMillis() - lastSpike > 500) {
+        if ((currentMagnitude - lastMagnitude) > threshold && System.currentTimeMillis() - lastSpike > SHAKE_TIMEOUT) {
             remixerFragment.showRemixer(activity.getSupportFragmentManager(), RemixerFragment.REMIXER_TAG);
             lastSpike = System.currentTimeMillis();
         }
