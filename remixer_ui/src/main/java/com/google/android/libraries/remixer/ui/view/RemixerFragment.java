@@ -60,6 +60,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   public static final String REMIXER_TAG = "Remixer";
 
   private Remixer remixer;
+  private ShakeListener shakeListener;
 
   public RemixerFragment() {
     remixer = Remixer.getInstance();
@@ -68,6 +69,9 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   public static RemixerFragment newInstance() {
     return new RemixerFragment();
   }
+
+  private boolean isAddingFragment = false;
+  private final Object syncLock = new Object();
 
   private SensorEventListener sensorEventListener;
 
@@ -95,17 +99,31 @@ public class RemixerFragment extends BottomSheetDialogFragment {
    */
 
   public void showRemixer(FragmentManager manager, String tag) {
-    if (!isAdded() && !isVisible() && !isRemoving()) {
-      show(manager, tag);
+    synchronized(syncLock) {
+      if (!isAddingFragment && !isAdded()) {
+        isAddingFragment = true;
+        show(manager, tag);
+      }
     }
   }
-  
+
+  // TODO(nicksahler): Generalize to attaching to any SensorEventListener
+
   /**
    * Attach this instance to a shake gesture and show fragment when magnitude exceeds {@code threshold}
    *
    */
   public void attachToShake(final FragmentActivity activity, final double threshold) {
-    ShakeListener.attach(activity, threshold, this);
+    shakeListener = new ShakeListener(activity, threshold, this);
+    shakeListener.attach();
+  }
+
+  /**
+   * Detach from a shake gesture
+   *
+   */
+  public void detachFromShake(final FragmentActivity activity) {
+    shakeListener.detach();
   }
 
   /**
@@ -138,8 +156,9 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   }
 
   @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
+  public void onResume() {
+    isAddingFragment = false;
+    super.onResume();
   }
 
   @Override

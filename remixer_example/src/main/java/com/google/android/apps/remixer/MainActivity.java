@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
   private TextView titleText;
   private TextView freeformText;
   private Button remixerButton;
+  private RemixerFragment remixerFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,21 @@ public class MainActivity extends AppCompatActivity {
     remixerButton = (Button) findViewById(R.id.button);
     RemixerBinder.bind(this);
 
-    RemixerFragment remixerFragment = RemixerFragment.newInstance();
+    remixerFragment = RemixerFragment.newInstance();
     remixerFragment.attachToGesture(this, Direction.UP, 3);
     remixerFragment.attachToButton(this, remixerButton);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
     remixerFragment.attachToShake(this, 20.0);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    remixerFragment.detachFromShake(this);
   }
 
   @RangeVariableMethod(
