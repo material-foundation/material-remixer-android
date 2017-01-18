@@ -108,10 +108,8 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   }
 
   // TODO(nicksahler): Generalize to attaching to any SensorEventListener
-
   /**
    * Attach this instance to a shake gesture and show fragment when magnitude exceeds {@code threshold}
-   *
    */
   public void attachToShake(final FragmentActivity activity, final double threshold) {
     shakeListener = new ShakeListener(activity, threshold, this);
@@ -120,10 +118,10 @@ public class RemixerFragment extends BottomSheetDialogFragment {
 
   /**
    * Detach from a shake gesture
-   *
    */
-  public void detachFromShake(final FragmentActivity activity) {
+  public void detachFromShake() {
     shakeListener.detach();
+    shakeListener = null;
   }
 
   /**
