@@ -112,11 +112,21 @@ public class SerializableRemixerContents {
 
   /**
    * Sets the value for the StoredVariable with key {@code variable.getKey()}. Must be called only
-   * after calling {@link #addItem(RemixerItem)} for a variable with this key.
+   * after calling {@link #addItem(Variable)} or {@link #addItem(StoredVariable)} for a variable
+   * with this key.
    */
   @SuppressWarnings("unchecked")
   public void setValue(Variable variable) {
     StoredVariable storedVariable = StoredVariable.fromVariable(variable);
+    setValue(storedVariable);
+  }
+
+  /**
+   * Sets the value for the StoredVariable with key {@code storedVariable.key}. Must be called only
+   * after calling {@link #addItem(Variable)} or {@link #addItem(StoredVariable)} for a variable
+   * with this key.
+   */
+  public void setValue(StoredVariable storedVariable) {
     StoredVariable existingStoredVariable = keyToDataMap.get(storedVariable.key);
     if (!existingStoredVariable.isCompatibleWith(storedVariable)) {
       throw new IncompatibleRemixerItemsWithSameKeyException(

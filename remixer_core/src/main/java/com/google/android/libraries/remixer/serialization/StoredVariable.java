@@ -53,15 +53,15 @@ public class StoredVariable<T> {
   public final static String RANGE_VARIABLE_CONSTRAINT = "__ConstraintTypeRange__";
 
   // Json dictionary keys to serialize this object
-  static final String KEY = "key";
-  static final String TITLE = "title";
-  static final String CONSTRAINT_TYPE = "constraintType";
-  static final String DATA_TYPE = "dataType";
-  static final String SELECTED_VALUE = "selectedValue";
-  static final String LIMITED_TO_VALUES = "limitedToValues";
-  static final String MIN_VALUE = "minValue";
-  static final String MAX_VALUE = "maxValue";
-  static final String INCREMENT = "increment";
+  public static final String KEY = "key";
+  public static final String TITLE = "title";
+  public static final String CONSTRAINT_TYPE = "constraintType";
+  public static final String DATA_TYPE = "dataType";
+  public static final String SELECTED_VALUE = "selectedValue";
+  public static final String LIMITED_TO_VALUES = "limitedToValues";
+  public static final String MIN_VALUE = "minValue";
+  public static final String MAX_VALUE = "maxValue";
+  public static final String INCREMENT = "increment";
 
   /**
    * The RemixerItem's key.

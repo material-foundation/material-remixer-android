@@ -30,9 +30,15 @@ public class DataType<RuntimeType, SerializableType> {
   private final Class<RuntimeType> runtimeType;
 
   /**
+   * The serializable class of the values contained by this variable.
+   */
+  private final Class<SerializableType> serializableType;
+
+  /**
    * The value converter that aids in the serialization process.
    */
   private final ValueConverter<RuntimeType, SerializableType> converter;
+
   /**
    * Map of default layout ids for this datatype when used with a specific RemixerItem class.
    *
@@ -52,9 +58,11 @@ public class DataType<RuntimeType, SerializableType> {
   public DataType(
       String name,
       Class<RuntimeType> runtimeType,
+      Class<SerializableType> serializableType,
       ValueConverter<RuntimeType, SerializableType> converter) {
     this.name = name;
     this.runtimeType = runtimeType;
+    this.serializableType = serializableType;
     this.converter = converter;
     if (!name.equals(converter.getDataType())) {
       throw new AssertionError(String.format(
@@ -103,26 +111,29 @@ public class DataType<RuntimeType, SerializableType> {
     return runtimeType;
   }
 
+  public Class<SerializableType> getSerializableType() {
+    return serializableType;
+  }
+
   public ValueConverter<RuntimeType, SerializableType> getConverter() {
     return converter;
   }
 
   // ======= Default data types defined here.
-
   private static final String KEY_BOOLEAN = "__DataTypeBoolean__";
   private static final String KEY_COLOR = "__DataTypeColor__";
   private static final String KEY_NUMBER = "__DataTypeNumber__";
   private static final String KEY_STRING = "__DataTypeString__";
 
   public static final DataType<Boolean, Boolean> BOOLEAN = new DataType<>(
-      KEY_BOOLEAN, Boolean.class, new BooleanValueConverter(KEY_BOOLEAN));
+      KEY_BOOLEAN, Boolean.class, Boolean.class, new BooleanValueConverter(KEY_BOOLEAN));
 
   public static final DataType<Integer, SerializedColor> COLOR = new DataType<>(
-      KEY_COLOR, Integer.class, new ColorValueConverter(KEY_COLOR));
+      KEY_COLOR, Integer.class, SerializedColor.class, new ColorValueConverter(KEY_COLOR));
 
   public static final DataType<Float, Float> NUMBER = new DataType<>(
-      KEY_NUMBER, Float.class, new FloatValueConverter(KEY_NUMBER));
+      KEY_NUMBER, Float.class, Float.class, new FloatValueConverter(KEY_NUMBER));
 
   public static final DataType<String, String> STRING = new DataType<>(
-      KEY_STRING, String.class, new StringValueConverter(KEY_STRING));
+      KEY_STRING, String.class, String.class, new StringValueConverter(KEY_STRING));
 }
