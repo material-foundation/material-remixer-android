@@ -15,7 +15,10 @@ android:
     - platform-tools #latest
     - build-tools-25.0.0
     - android-25
+    - extra-android-support
     - extra-android-m2repository
+    - extra-google-google_play_services
+
 
 before_install:
   - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
