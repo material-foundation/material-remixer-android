@@ -69,7 +69,8 @@ public class FirebaseRemoteControllerSyncer
   /**
    * Initializes a {@code FirebaseRemoteControllerSyncer} instance.
    *
-   * <p>Uses {@code context} to get
+   * <p>Uses {@code context} to get the Remote ID from shared preferences (or persist a generated
+   * one if it does not yet exist).
    */
   public FirebaseRemoteControllerSyncer(Context context) {
     super();
@@ -96,7 +97,6 @@ public class FirebaseRemoteControllerSyncer
     reference = FirebaseDatabase.getInstance().getReference(
         String.format(Locale.getDefault(), REFERENCE_FORMAT, remoteId));
     reference.removeValue();
-    clearVariablesInRemoteController();
     syncing = true;
     if (context != null && context.get() != null) {
       for (Variable variable : Remixer.getInstance().getVariablesWithContext(context.get())) {
@@ -114,7 +114,7 @@ public class FirebaseRemoteControllerSyncer
     if (syncing) {
       syncing = false;
       reference.removeEventListener(this);
-      clearVariablesInRemoteController();
+      reference.removeValue();
     }
   }
 
@@ -130,13 +130,6 @@ public class FirebaseRemoteControllerSyncer
     if (syncing) {
       reference.child(variable.getKey()).setValue(variable);
     }
-  }
-
-  /**
-   * Clears all the data in a remote.
-   */
-  private void clearVariablesInRemoteController() {
-    reference.removeValue();
   }
 
   // Overrides from LocalValueSyncing
@@ -158,7 +151,9 @@ public class FirebaseRemoteControllerSyncer
     if ((context == null && currentContext != null) ||
         (context != null && currentContext != context.get())) {
       context = new WeakReference<Object>(context);
-      clearVariablesInRemoteController();
+      if (reference != null) {
+        reference.removeValue();
+      }
       List<Variable> variables = Remixer.getInstance().getVariablesWithContext(currentContext);
       if (variables != null) {
         for (Variable<?> var : variables) {
@@ -172,17 +167,19 @@ public class FirebaseRemoteControllerSyncer
   public void onContextRemoved(Object currentContext) {
     super.onContextRemoved(currentContext);
     if (context != null && context.get() == currentContext) {
-      clearVariablesInRemoteController();
+      if (reference != null) {
+        reference.removeValue();
+      }
       context = null;
     }
   }
 
   // Implementation of ChildEventListener
   @Override
-  public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+  public void onChildAdded(DataSnapshot dataSnapshot, String childKey) {
     // Add it to serializableRemixerContents if it does not exist. If it does exist let the local
     // value take precedence and ignore the one coming from firebase.
-    if (!serializableRemixerContents.keySet().contains(s)) {
+    if (!serializableRemixerContents.keySet().contains(childKey)) {
       serializableRemixerContents.addItem(FirebaseSerializationHelper.deserializeStoredVariable(dataSnapshot));
     }
   }
@@ -191,7 +188,7 @@ public class FirebaseRemoteControllerSyncer
    *
    */
   @Override
-  public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+  public void onChildChanged(DataSnapshot dataSnapshot, String childKey) {
     StoredVariable storedVariable = FirebaseSerializationHelper.deserializeStoredVariable(dataSnapshot);
     serializableRemixerContents.setValue(storedVariable);
     Object valueFromFirebase = Remixer.getDataType(storedVariable.getDataType())
@@ -207,7 +204,7 @@ public class FirebaseRemoteControllerSyncer
   }
 
   @Override
-  public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+  public void onChildMoved(DataSnapshot dataSnapshot, String childKey) {
     // This shouldn't happen.
   }
 

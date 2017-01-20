@@ -1,9 +1,7 @@
 # Add this global rule
 -keepattributes Signature
 
-# This rule will properly ProGuard all the model classes in
-# the package com.yourcompany.models. Modify to fit the structure
-# of your app.
+# keep all the serialization-related classes.
 -keepclassmembers class com.google.android.libraries.remixer.serialization.** {
   *;
 }
