@@ -20,12 +20,14 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:layout_marginBottom="@dimen/secondaryPadding"
+  android:layout_marginTop="@dimen/secondaryPadding"
   android:orientation="vertical"
-  android:padding="@dimen/defaultPadding"
   tools:ignore="UnusedResources">
 
   <TextView
     android:id="@+id/variableName"
+    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
 

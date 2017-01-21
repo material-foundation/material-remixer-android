@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2016 Google Inc.
+  ~ Copyright 2017 Google Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,26 +15,26 @@
   ~ limitations under the License.
   -->
 
-<com.google.android.libraries.remixer.ui.widget.BooleanVariableWidget
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:layout_marginBottom="@dimen/secondaryPadding"
-  android:layout_marginTop="@dimen/secondaryPadding"
-  android:gravity="center">
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
   <TextView
-    android:id="@+id/variableName"
-    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
+    android:padding="@dimen/defaultPadding"
     android:layout_weight="1"
-    android:layout_centerVertical="true"/>
+    android:text="@string/remixer_framework_name"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    />
 
-  <Switch
-    android:id="@+id/variableSwitch"
+  <ImageView
+    android:id="@+id/closeButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/secondaryPadding"/>
+    android:padding="12dp"
+    android:src="@drawable/ic_close_black_24dp"
+    />
 
-</com.google.android.libraries.remixer.ui.widget.BooleanVariableWidget>
+</LinearLayout>

@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ import com.google.android.libraries.remixer.ui.R;
  * Displays an {@link Variable &lt;Boolean&gt;} as a switch.
  */
 @Keep
-public class BooleanVariableWidget extends RelativeLayout
+public class BooleanVariableWidget extends LinearLayout
     implements RemixerWidget<Variable<Boolean>> {
 
   private TextView nameText;

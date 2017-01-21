@@ -26,19 +26,14 @@
   android:theme="@style/AppTheme"
   tools:context="com.google.android.libraries.remixer.ui.view.RemixerFragment">
 
-  <TextView
-    android:id="@+id/remixerHeader"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/defaultPadding"
-    android:text="@string/remixer_framework_name"
-    style="@style/TextAppearance.AppCompat.Medium"/>
+  <include android:id="@+id/remixerHeader" layout="@layout/remixer_header"/>
 
   <android.support.v7.widget.RecyclerView
     android:id="@+id/remixerList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/remixerHeader"
+    android:padding="@dimen/defaultPadding"
     app:layoutManager="LinearLayoutManager"/>
 
 </RelativeLayout>
