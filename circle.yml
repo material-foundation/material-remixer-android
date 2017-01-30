@@ -1,0 +1,14 @@
+
+test:
+  pre:
+    - echo y | android update sdk --no-ui --all --filter extra-android-m2repository,extra-android-support
+    - echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+
+  override:
+    - ./gradlew lint build test check jacocoTestReport -PdisablePreDex;
+
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+    - find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+    - bash <(curl -s https://codecov.io/bash)
