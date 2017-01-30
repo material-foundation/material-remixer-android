@@ -16,21 +16,18 @@
 
 package com.google.android.libraries.remixer.ui.view;
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
+import android.widget.ImageView;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
@@ -146,7 +143,13 @@ public class RemixerFragment extends BottomSheetDialogFragment {
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_remixer_list, container, false);
-
+    ImageView closeButton = (ImageView) view.findViewById(R.id.closeButton);
+    closeButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        RemixerFragment.this.getFragmentManager().beginTransaction().remove(RemixerFragment.this).commit();
+      }
+    });
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.remixerList);
     recyclerView.setAdapter(
         new RemixerAdapter(remixer.getVariablesWithContext(getActivity())));

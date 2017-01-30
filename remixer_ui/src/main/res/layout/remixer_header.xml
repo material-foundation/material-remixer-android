@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2016 Google Inc.
+  ~ Copyright 2017 Google Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,24 +15,28 @@
   ~ limitations under the License.
   -->
 
-<com.google.android.libraries.remixer.ui.widget.ColorListVariableWidget
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:layout_marginBottom="@dimen/secondaryPadding"
-  android:layout_marginTop="@dimen/secondaryPadding"
-  android:orientation="vertical">
+  android:gravity="center"
+  android:orientation="horizontal">
 
   <TextView
-    android:id="@+id/variableName"
-    style="@style/RemixerVariableText"
+    style="@style/RemixerHeaderText"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:padding="@dimen/defaultPadding"
+    android:text="@string/remixer_framework_name"
+    />
+
+  <ImageView
+    android:id="@+id/closeButton"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:src="@drawable/ic_close_black_24dp"
+    />
 
-  <android.support.v7.widget.RecyclerView
-    android:id="@+id/colorList"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
-
-</com.google.android.libraries.remixer.ui.widget.ColorListVariableWidget>
+</LinearLayout>
