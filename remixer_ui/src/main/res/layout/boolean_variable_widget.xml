@@ -21,15 +21,16 @@
   android:layout_height="wrap_content"
   android:layout_marginBottom="@dimen/secondaryPadding"
   android:layout_marginTop="@dimen/secondaryPadding"
-  android:gravity="center">
+  android:gravity="center"
+  android:orientation="horizontal">
 
   <TextView
     android:id="@+id/variableName"
-    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+    style="@style/RemixerVariableText"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:layout_centerVertical="true"/>
+    android:layout_centerVertical="true"
+    android:layout_weight="1"/>
 
   <Switch
     android:id="@+id/variableSwitch"

@@ -23,10 +23,12 @@
   android:name="com.google.android.libraries.remixer.view.RemixerFragment"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:theme="@style/AppTheme"
+  android:theme="@style/RemixerTheme"
   tools:context="com.google.android.libraries.remixer.ui.view.RemixerFragment">
 
-  <include android:id="@+id/remixerHeader" layout="@layout/remixer_header"/>
+  <include
+    android:id="@+id/remixerHeader"
+    layout="@layout/remixer_header"/>
 
   <android.support.v7.widget.RecyclerView
     android:id="@+id/remixerList"

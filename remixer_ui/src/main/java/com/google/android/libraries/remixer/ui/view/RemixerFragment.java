@@ -147,10 +147,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
     closeButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.remove(RemixerFragment.this);
-        transaction.commit();
+        RemixerFragment.this.getFragmentManager().beginTransaction().remove(RemixerFragment.this).commit();
       }
     });
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.remixerList);
