@@ -1,6 +1,11 @@
 # #develop#
 
- TODO: Enumerate changes.
+- Test improvements for Robolectric, styles are now supported
+- First attempt at styling (for tests, not final version).
+- Paddings are standardized now.
+- Close button added.
+- Sync to remote controller implemented. Still not fully ready or supported. Documentation incoming.
+
 
 
 # 0.6.0
