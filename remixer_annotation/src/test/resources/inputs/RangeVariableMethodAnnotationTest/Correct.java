@@ -21,8 +21,8 @@ import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 public class Correct {
 
   /**
-   * Default value is implicitly 0, this has to move to 15 with minValue.
+   * Initial value is implicitly 0, this has to move to 15 with minValue.
    */
-  @RangeVariableMethod(minValue = 15, maxValue = 20, defaultValue = 17)
+  @RangeVariableMethod(minValue = 15, maxValue = 20, initialValue = 17)
   public void correct(Float i){}
 }

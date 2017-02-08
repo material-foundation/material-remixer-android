@@ -18,6 +18,7 @@ package com.google.android.apps.remixer;
 
 import android.app.Application;
 import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.storage.FirebaseRemoteControllerSyncer;
 import com.google.android.libraries.remixer.storage.LocalStorage;
 import com.google.android.libraries.remixer.ui.RemixerInitialization;
 
@@ -31,10 +32,21 @@ import com.google.android.libraries.remixer.ui.RemixerInitialization;
  */
 public class RemixerApplication extends Application {
 
+  // Keep this off so there is no need for proper Firebase credentials for the example app out of
+  // the box. You can change it to true if you update the google-services.json file.
+  private static final boolean USE_FIREBASE_REMOTE_CONTROLLER = false;
+
   @Override
   public void onCreate() {
     super.onCreate();
     RemixerInitialization.initRemixer(this);
-    Remixer.getInstance().setSynchronizationMechanism(new LocalStorage(getApplicationContext()));
+    if (USE_FIREBASE_REMOTE_CONTROLLER) {
+      FirebaseRemoteControllerSyncer syncer =
+          new FirebaseRemoteControllerSyncer(this);
+      Remixer.getInstance().setSynchronizationMechanism(syncer);
+      syncer.startSyncing();
+    } else {
+      Remixer.getInstance().setSynchronizationMechanism(new LocalStorage(this));
+    }
   }
 }

@@ -16,13 +16,12 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.NumberListVariableMethod;
+import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
 
-public class FixesDefaultValue {
-
+public class FixesInitialValue {
   /**
-   * Default value is implicitly 0, this has to move to 1
+   * Initial value is implicitly "", this has to move to "hello"
    */
-  @NumberListVariableMethod(possibleValues = {1, 2})
-  public void fixValue(Float i){}
+  @StringListVariableMethod(limitedToValues = {"hello", "world"})
+  public void fixValue(String i){}
 }

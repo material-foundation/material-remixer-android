@@ -53,15 +53,15 @@ public class StoredVariable<T> {
   public final static String RANGE_VARIABLE_CONSTRAINT = "__ConstraintTypeRange__";
 
   // Json dictionary keys to serialize this object
-  static final String KEY = "key";
-  static final String TITLE = "title";
-  static final String CONSTRAINT_TYPE = "constraintType";
-  static final String DATA_TYPE = "dataType";
-  static final String SELECTED_VALUE = "selectedValue";
-  static final String POSSIBLE_VALUES = "possibleValues";
-  static final String MIN_VALUE = "minValue";
-  static final String MAX_VALUE = "maxValue";
-  static final String INCREMENT = "increment";
+  public static final String KEY = "key";
+  public static final String TITLE = "title";
+  public static final String CONSTRAINT_TYPE = "constraintType";
+  public static final String DATA_TYPE = "dataType";
+  public static final String SELECTED_VALUE = "selectedValue";
+  public static final String LIMITED_TO_VALUES = "limitedToValues";
+  public static final String MIN_VALUE = "minValue";
+  public static final String MAX_VALUE = "maxValue";
+  public static final String INCREMENT = "increment";
 
   /**
    * The RemixerItem's key.
@@ -92,7 +92,7 @@ public class StoredVariable<T> {
    * The list of possible values, if this is not null then this StoredVariable represents a {@link
    * com.google.android.libraries.remixer.ItemListVariable}.
    */
-  List<T> possibleValues;
+  List<T> limitedToValues;
 
   // These are only used in case it T is a number and it is a range variable, otherwise they are
   // ignored.
@@ -149,12 +149,12 @@ public class StoredVariable<T> {
     this.selectedValue = selectedValue;
   }
 
-  public List<T> getPossibleValues() {
-    return possibleValues;
+  public List<T> getLimitedToValues() {
+    return limitedToValues;
   }
 
-  public void setPossibleValues(List<T> possibleValues) {
-    this.possibleValues = possibleValues;
+  public void setLimitedToValues(List<T> limitedToValues) {
+    this.limitedToValues = limitedToValues;
   }
 
   public T getMinValue() {
@@ -216,8 +216,8 @@ public class StoredVariable<T> {
     if (!dataType.equals(variable.dataType)) {
       return false;
     }
-    if (possibleValues != null
-        ? !possibleValues.equals(variable.possibleValues) : variable.possibleValues != null) {
+    if (limitedToValues != null
+        ? !limitedToValues.equals(variable.limitedToValues) : variable.limitedToValues != null) {
       return false;
     }
     if (minValue != null ? !minValue.equals(variable.minValue) : variable.minValue != null) {
@@ -235,7 +235,7 @@ public class StoredVariable<T> {
     result = 31 * result + (title != null ? title.hashCode() : 0);
     result = 31 * result + dataType.hashCode();
     result = 31 * result + (selectedValue != null ? selectedValue.hashCode() : 0);
-    result = 31 * result + (possibleValues != null ? possibleValues.hashCode() : 0);
+    result = 31 * result + (limitedToValues != null ? limitedToValues.hashCode() : 0);
     result = 31 * result + (minValue != null ? minValue.hashCode() : 0);
     result = 31 * result + (maxValue != null ? maxValue.hashCode() : 0);
     result = 31 * result + (increment != null ? increment.hashCode() : 0);

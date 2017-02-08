@@ -16,19 +16,23 @@
 
 package com.google.android.libraries.remixer.ui.view;
 
-import android.content.Context;
+import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import com.google.android.libraries.remixer.Remixer;
 import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.gesture.GestureListener;
+import com.google.android.libraries.remixer.ui.gesture.ShakeListener;
 
 /**
  * A fragment that shows all Remixes for the current activity. It's very easy to use:
@@ -53,6 +57,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   public static final String REMIXER_TAG = "Remixer";
 
   private Remixer remixer;
+  private ShakeListener shakeListener;
 
   public RemixerFragment() {
     remixer = Remixer.getInstance();
@@ -61,6 +66,11 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   public static RemixerFragment newInstance() {
     return new RemixerFragment();
   }
+
+  private boolean isAddingFragment = false;
+  private final Object syncLock = new Object();
+
+  private SensorEventListener sensorEventListener;
 
   /**
    * Attach this instance to {@code button}'s OnClick, so that clicking the button shows this
@@ -73,9 +83,42 @@ public class RemixerFragment extends BottomSheetDialogFragment {
 
       @Override
       public void onClick(View view) {
-        show(activity.getSupportFragmentManager(), REMIXER_TAG);
+        showRemixer(activity.getSupportFragmentManager(), REMIXER_TAG);
       }
     });
+  }
+
+  /**
+   *
+   * @param manager
+   * @param tag
+   * @return whether the fragment was shown or not.
+   */
+
+  public void showRemixer(FragmentManager manager, String tag) {
+    synchronized(syncLock) {
+      if (!isAddingFragment && !isAdded()) {
+        isAddingFragment = true;
+        show(manager, tag);
+      }
+    }
+  }
+
+  // TODO(nicksahler): Generalize to attaching to any SensorEventListener
+  /**
+   * Attach this instance to a shake gesture and show fragment when magnitude exceeds {@code threshold}
+   */
+  public void attachToShake(final FragmentActivity activity, final double threshold) {
+    shakeListener = new ShakeListener(activity, threshold, this);
+    shakeListener.attach();
+  }
+
+  /**
+   * Detach from a shake gesture
+   */
+  public void detachFromShake() {
+    shakeListener.detach();
+    shakeListener = null;
   }
 
   /**
@@ -100,7 +143,13 @@ public class RemixerFragment extends BottomSheetDialogFragment {
                            ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_remixer_list, container, false);
-
+    ImageView closeButton = (ImageView) view.findViewById(R.id.closeButton);
+    closeButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        RemixerFragment.this.getFragmentManager().beginTransaction().remove(RemixerFragment.this).commit();
+      }
+    });
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.remixerList);
     recyclerView.setAdapter(
         new RemixerAdapter(remixer.getVariablesWithContext(getActivity())));
@@ -108,8 +157,9 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   }
 
   @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
+  public void onResume() {
+    isAddingFragment = false;
+    super.onResume();
   }
 
   @Override

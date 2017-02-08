@@ -122,7 +122,7 @@ public class GestureListener implements View.OnTouchListener {
           }
         }
         if (correctlySwiped) {
-          remixerFragment.show(fragmentManager, RemixerFragment.REMIXER_TAG);
+          remixerFragment.showRemixer(fragmentManager, RemixerFragment.REMIXER_TAG);
         }
         // fall-through
       case MotionEvent.ACTION_CANCEL:

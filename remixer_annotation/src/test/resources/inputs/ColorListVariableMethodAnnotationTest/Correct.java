@@ -21,8 +21,8 @@ import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
 public class Correct {
 
   /**
-   * Default value is implicitly 0, this has to move to 1
+   * Initial value is implicitly 0, this has to move to 1
    */
-  @ColorListVariableMethod(possibleValues = {1, 2}, defaultValue = 1)
+  @ColorListVariableMethod(limitedToValues = {1, 2}, initialValue = 1)
   public void setColor(Integer i){}
 }

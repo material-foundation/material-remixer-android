@@ -45,7 +45,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setBoolean_remixer_item.setLayoutId(0);
     setBoolean_remixer_item.setContext(activity);
     setBoolean_remixer_item.setCallback(setBoolean_callback);
-    setBoolean_remixer_item.setDefaultValue(false);
+    setBoolean_remixer_item.setInitialValue(false);
     remixer.addItem(setBoolean_remixer_item.build());
     Generated_setFloatList setFloatList_callback = new Generated_setFloatList(activity);
     ItemListVariable.Builder<Float> setFloatList_remixer_item = new ItemListVariable.Builder<Float>();
@@ -59,8 +59,8 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setFloatList_variable_list.add(1f);
     setFloatList_variable_list.add(2f);
     setFloatList_variable_list.add(3f);
-    setFloatList_remixer_item.setPossibleValues(setFloatList_variable_list);
-    setFloatList_remixer_item.setDefaultValue(1f);
+    setFloatList_remixer_item.setLimitedToValues(setFloatList_variable_list);
+    setFloatList_remixer_item.setInitialValue(1f);
     remixer.addItem(setFloatList_remixer_item.build());
     Generated_setColorList setColorList_callback = new Generated_setColorList(activity);
     ItemListVariable.Builder<Integer> setColorList_remixer_item = new ItemListVariable.Builder<Integer>();
@@ -74,8 +74,8 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setColorList_variable_list.add(1);
     setColorList_variable_list.add(2);
     setColorList_variable_list.add(3);
-    setColorList_remixer_item.setPossibleValues(setColorList_variable_list);
-    setColorList_remixer_item.setDefaultValue(1);
+    setColorList_remixer_item.setLimitedToValues(setColorList_variable_list);
+    setColorList_remixer_item.setInitialValue(1);
     remixer.addItem(setColorList_remixer_item.build());
     Generated_setFloat setFloat_callback = new Generated_setFloat(activity);
     RangeVariable.Builder setFloat_remixer_item = new RangeVariable.Builder();
@@ -87,7 +87,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setFloat_remixer_item.setCallback(setFloat_callback);
     setFloat_remixer_item.setMinValue(0f);
     setFloat_remixer_item.setMaxValue(100f);
-    setFloat_remixer_item.setDefaultValue(0f);
+    setFloat_remixer_item.setInitialValue(0f);
     setFloat_remixer_item.setIncrement(1f);
     remixer.addItem(setFloat_remixer_item.build());
     Generated_setString setString_callback = new Generated_setString(activity);
@@ -98,7 +98,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     setString_remixer_item.setLayoutId(0);
     setString_remixer_item.setContext(activity);
     setString_remixer_item.setCallback(setString_callback);
-    setString_remixer_item.setDefaultValue("");
+    setString_remixer_item.setInitialValue("");
     remixer.addItem(setString_remixer_item.build());
     Generated_setStringList setStringList_callback = new Generated_setStringList(activity);
     ItemListVariable.Builder<String> setStringList_remixer_item = new ItemListVariable.Builder<String>();
@@ -111,8 +111,8 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     ArrayList<String> setStringList_variable_list = new ArrayList<String>();
     setStringList_variable_list.add("hello");
     setStringList_variable_list.add("world");
-    setStringList_remixer_item.setPossibleValues(setStringList_variable_list);
-    setStringList_remixer_item.setDefaultValue("hello");
+    setStringList_remixer_item.setLimitedToValues(setStringList_variable_list);
+    setStringList_remixer_item.setInitialValue("hello");
     remixer.addItem(setStringList_remixer_item.build());
   }
 

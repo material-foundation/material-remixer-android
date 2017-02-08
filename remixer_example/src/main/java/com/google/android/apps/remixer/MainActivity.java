@@ -15,11 +15,13 @@
  */
 package com.google.android.apps.remixer;
 
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 import com.google.android.libraries.remixer.annotation.RemixerBinder;
 import com.google.android.libraries.remixer.annotation.StringListVariableMethod;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
   private TextView titleText;
   private TextView freeformText;
   private Button remixerButton;
+  private RemixerFragment remixerFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +49,21 @@ public class MainActivity extends AppCompatActivity {
     remixerButton = (Button) findViewById(R.id.button);
     RemixerBinder.bind(this);
 
-    RemixerFragment remixerFragment = RemixerFragment.newInstance();
+    remixerFragment = RemixerFragment.newInstance();
     remixerFragment.attachToGesture(this, Direction.UP, 3);
     remixerFragment.attachToButton(this, remixerButton);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    remixerFragment.attachToShake(this, 20.0);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    remixerFragment.detachFromShake();
   }
 
   @RangeVariableMethod(
@@ -60,12 +75,12 @@ public class MainActivity extends AppCompatActivity {
 
   @StringListVariableMethod(
       title = "Title text",
-      possibleValues = {"Hello World", "Alohomora", "Foo", "Bar", "May the force be with you"})
+      limitedToValues = {"Hello World", "Alohomora", "Foo", "Bar", "May the force be with you"})
   void setTitleText(String text) {
     titleText.setText(text);
   }
 
-  @StringVariableMethod(defaultValue = "Change me!")
+  @StringVariableMethod(initialValue = "Change me!")
   void setFreeformText(String text) {
     freeformText.setText(text);
   }

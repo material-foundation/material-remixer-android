@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "12345",
+    "firebase_url": "https://myproject.firebaseio.com",
+    "project_id": "myproject",
+    "storage_bucket": "myproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "appid",
+        "android_client_info": {
+          "package_name": "com.google.android.apps.remixer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "clientid",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "yourkey"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

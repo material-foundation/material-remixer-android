@@ -132,6 +132,10 @@ public class Remixer {
     }
   }
 
+  public SynchronizationMechanism getSynchronizationMechanism() {
+    return synchronizationMechanism;
+  }
+
   /**
    * This adds a {@link Variable} to be tracked and displayed.
    * Checks that the variable is compatible with the existing variables with the same key.

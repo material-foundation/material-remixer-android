@@ -19,10 +19,12 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:padding="@dimen/defaultPadding">
+  android:layout_marginBottom="@dimen/secondaryPadding"
+  android:layout_marginTop="@dimen/secondaryPadding">
 
   <TextView
     android:id="@+id/variableName"
+    style="@style/RemixerVariableText"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"

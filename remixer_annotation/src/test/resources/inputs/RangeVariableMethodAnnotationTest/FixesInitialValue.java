@@ -16,13 +16,13 @@
 
 package somepackage;
 
-import com.google.android.libraries.remixer.annotation.ColorListVariableMethod;
+import com.google.android.libraries.remixer.annotation.RangeVariableMethod;
 
-public class FixesDefaultValue {
+public class FixesInitialValue {
 
   /**
-   * Default value is implicitly 0, this has to move to 1
+   * Initial value is implicitly 0, this has to move to 15 with minValue.
    */
-  @ColorListVariableMethod(possibleValues = {1, 2})
-  public void fixValue(Integer i){}
+  @RangeVariableMethod(minValue = 15)
+  public void fixValue(Float i){}
 }

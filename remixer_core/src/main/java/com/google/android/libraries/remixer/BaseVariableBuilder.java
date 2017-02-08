@@ -22,7 +22,7 @@ package com.google.android.libraries.remixer;
  * @param <T> The type of data stored in the variable.
  */
 public abstract class BaseVariableBuilder<V, T> {
-  protected T defaultValue;
+  protected T initialValue;
   protected String key;
   protected String title;
   protected Object context;
@@ -60,8 +60,8 @@ public abstract class BaseVariableBuilder<V, T> {
     return this;
   }
 
-  public BaseVariableBuilder<V, T> setDefaultValue(T defaultValue) {
-    this.defaultValue = defaultValue;
+  public BaseVariableBuilder<V, T> setInitialValue(T initialValue) {
+    this.initialValue = initialValue;
     return this;
   }
 

@@ -39,7 +39,7 @@ public class Correct_RemixerBinder implements RemixerBinder.Binder<Correct> {
     correct_remixer_item.setLayoutId(0);
     correct_remixer_item.setContext(activity);
     correct_remixer_item.setCallback(correct_callback);
-    correct_remixer_item.setDefaultValue(false);
+    correct_remixer_item.setInitialValue(false);
     remixer.addItem(correct_remixer_item.build());
   }
 

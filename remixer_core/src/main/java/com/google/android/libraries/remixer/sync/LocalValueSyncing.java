@@ -43,7 +43,8 @@ public class LocalValueSyncing implements SynchronizationMechanism {
     serializableRemixerContents.addItem(variable);
     StoredVariable storedVariable = serializableRemixerContents.getItem(variable.getKey());
     // Check the value for updates.
-    variable.setValueWithoutNotifyingOthers(storedVariable.getSelectedValue());
+    variable.setValueWithoutNotifyingOthers(
+        variable.getDataType().getConverter().toRuntimeType(storedVariable.getSelectedValue()));
   }
 
   @Override
@@ -53,8 +54,19 @@ public class LocalValueSyncing implements SynchronizationMechanism {
     List<Variable> itemList = remixer.getVariablesWithKey(variable.getKey());
     for (Variable item : itemList) {
       if (item != variable) {
-        ((Variable) item).setValueWithoutNotifyingOthers(variable.getSelectedValue());
+        item.setValueWithoutNotifyingOthers(
+            variable.getDataType().getConverter().toRuntimeType(variable.getSelectedValue()));
       }
     }
+  }
+
+  @Override
+  public void onContextChanged(Object currentContext) {
+    // Nothing to do here, this class does not care which is the current context.
+  }
+
+  @Override
+  public void onContextRemoved(Object currentContext) {
+    // Nothing to do here, this class does not care which is the current context.
   }
 }

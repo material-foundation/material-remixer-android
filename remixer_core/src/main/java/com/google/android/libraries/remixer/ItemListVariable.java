@@ -27,16 +27,16 @@ import java.util.List;
  */
 public class ItemListVariable<T> extends Variable<T> {
 
-  private final List<T> valueList;
+  private final List<T> limitedToValues;
 
   /**
-   * Creates a new ItemListVariable, checks its default value and runs the callback if the value is
+   * Creates a new ItemListVariable, checks its initial value and runs the callback if the value is
    * valid.
    *
    * @param title Displayable name for this Variable.
    * @param key The key used to store this Variable.
-   * @param defaultValue The default value to use if none has been set.
-   * @param values List of valid values.
+   * @param initialValue The initial value to use if none has been set.
+   * @param limitedToValues List of valid values that this variable is limited to take.
    * @param context the object which created this variable, should be an activity.
    * @param callback Callback to run once the value is set. Can be null.
    * @param layoutId A layout id that renders this control on screen.
@@ -45,26 +45,26 @@ public class ItemListVariable<T> extends Variable<T> {
   private ItemListVariable(
       String title,
       String key,
-      T defaultValue,
-      List<T> values,
+      T initialValue,
+      List<T> limitedToValues,
       Object context,
       Callback<T> callback,
       int layoutId,
       DataType dataType) {
-    super(title, key, defaultValue, context, callback, layoutId, dataType);
-    this.valueList = values;
+    super(title, key, initialValue, context, callback, layoutId, dataType);
+    this.limitedToValues = limitedToValues;
   }
 
   @Override
   protected void checkValue(T value) {
-    if (!valueList.contains(value)) {
+    if (!limitedToValues.contains(value)) {
       throw new IllegalArgumentException(
           String.format("%s is not a valid value for Variable %s", value, getKey()));
     }
   }
 
-  public List<T> getValueList() {
-    return valueList;
+  public List<T> getLimitedToValues() {
+    return limitedToValues;
   }
 
   /**
@@ -77,25 +77,28 @@ public class ItemListVariable<T> extends Variable<T> {
   /**
    * Convenience builder for ItemListVariable.
    *
-   * <p>This builder assumes a few things for your convenience: <ul> <li>If the default value is not
-   * set, the first value of the list will be used as the default value. <li>If the layout id is not
-   * set, the default layout will be used. <li>If the title is not set, the key will be used as
-   * title </ul>
+   * <p>This builder assumes a few things for your convenience:
+   * <ul>
+   *   <li>If the initial value is not set, the first value of the list will be used as the default
+   *   value.
+   *   <li>If the layout id is not set, the default layout will be used.
+   *   <li>If the title is not set, the key will be used as title
+   * </ul>
    *
-   * <p>On the other hand: key, dataType, context, and possibleValues are mandatory. If either is
+   * <p>On the other hand: key, dataType, context, and limitedToValues are mandatory. If either is
    * missing, an {@link IllegalArgumentException} will be thrown.
    */
   public static class Builder<T> extends BaseVariableBuilder<ItemListVariable<T>, T> {
 
-    private List<T> possibleValues;
+    private List<T> limitedToValues;
 
-    public Builder<T> setPossibleValues(List<T> possibleValues) {
-      this.possibleValues = possibleValues;
+    public Builder<T> setLimitedToValues(List<T> limitedToValues) {
+      this.limitedToValues = limitedToValues;
       return this;
     }
 
-    public Builder<T> setPossibleValues(T[] possibleValues) {
-      this.possibleValues = Arrays.asList(possibleValues);
+    public Builder<T> setLimitedToValues(T[] limitedToValues) {
+      this.limitedToValues = Arrays.asList(limitedToValues);
       return this;
     }
 
@@ -103,21 +106,21 @@ public class ItemListVariable<T> extends Variable<T> {
      * Returns a new ItemListVariable created with the configuration stored in this builder
      * instance.
      *
-     * @throws IllegalArgumentException If key or possibleValues are missing or if the configuration
+     * @throws IllegalArgumentException If key or limitedToValues are missing or if the configuration
      *     is invalid for ItemListVariable.
      */
     @Override
     public ItemListVariable<T> build() {
       checkBaseFields();
-      if (possibleValues == null || possibleValues.isEmpty()) {
+      if (limitedToValues == null || limitedToValues.isEmpty()) {
         throw new IllegalArgumentException(
-            "possibleValues cannot be unset or empty for ItemListVariable");
+            "limitedToValues cannot be unset or empty for ItemListVariable");
       }
-      if (defaultValue == null) {
-        defaultValue = possibleValues.get(0);
+      if (initialValue == null) {
+        initialValue = limitedToValues.get(0);
       }
       ItemListVariable<T> variable = new ItemListVariable<T>(
-          title, key, defaultValue, possibleValues, context, callback, layoutId, dataType);
+          title, key, initialValue, limitedToValues, context, callback, layoutId, dataType);
       variable.init();
       return variable;
     }

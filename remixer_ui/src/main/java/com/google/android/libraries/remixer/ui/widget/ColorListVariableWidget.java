@@ -108,7 +108,7 @@ public class ColorListVariableWidget extends LinearLayout
     public void setVariable(ItemListVariable<Integer> variable) {
       this.variable = variable;
       values.clear();
-      for (Integer color : variable.getValueList()) {
+      for (Integer color : variable.getLimitedToValues()) {
         ColorItem colorItem = new ColorItem(color, color.equals(variable.getSelectedValue()));
         values.add(colorItem);
       }

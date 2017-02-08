@@ -52,3 +52,6 @@ dependencies {
   compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
   compile project(':remixer')
 }
+
+// Depend on gms google services for Firebase Support, keep at the bottom.
+apply plugin: 'com.google.gms.google-services'

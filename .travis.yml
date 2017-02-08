@@ -15,13 +15,27 @@ android:
     - platform-tools #latest
     - build-tools-25.0.0
     - android-25
+    - extra-android-support
     - extra-android-m2repository
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - addon-google_apis-google-25
+
 
 before_install:
   - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
 licenses:
   - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 script:
   - ./gradlew check jacocoTestReport
