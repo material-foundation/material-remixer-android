@@ -1,4 +1,4 @@
-# #develop#
+# 0.6.5
 
 - Test improvements for Robolectric, styles are now supported
 - First attempt at styling (for tests, not final version).
