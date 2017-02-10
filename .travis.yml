@@ -3,8 +3,7 @@ language: android
 jdk: oraclejdk8
 
 env:
-  - ANDROID_TARGET=25
-  - BUILD_TOOLS=25.0.0
+  - ANDROID_TARGET=25 BUILD_TOOLS=25.0.0
 
 android:
   components:
