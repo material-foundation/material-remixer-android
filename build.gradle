@@ -76,6 +76,8 @@ task clean(type: Delete) {
 }
 
 ext {
+  // Force release proguard when running on a Continuous Integration environment (like TravisCI).
+  forceReleaseProguard = System.getenv("CI").equals("true");
   // Sdk and tools
   minSdkVersion = 15
   targetSdkVersion = 25

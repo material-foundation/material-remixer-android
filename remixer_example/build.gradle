@@ -31,7 +31,7 @@ android {
 
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled rootProject.ext.forceReleaseProguard
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
@@ -51,6 +51,12 @@ android {
 dependencies {
   compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
   compile project(':remixer')
+  /*
+  compile project(':remixer_ui')
+  compile project(':remixer_core')
+  compile project(':remixer_storage')
+  provided project(':remixer_annotation')
+  */
 }
 
 // Depend on gms google services for Firebase Support, keep at the bottom.
