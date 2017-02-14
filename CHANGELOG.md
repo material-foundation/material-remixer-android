@@ -1,3 +1,7 @@
+# 0.6.6
+
+- Fix Proguarding issue with bad instructions for onboarding.
+
 # 0.6.5
 
 - Test improvements for Robolectric, styles are now supported

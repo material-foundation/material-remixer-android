@@ -51,7 +51,6 @@ android {
 }
 
 dependencies {
-  compile project(':remixer_annotation')
   compile project(':remixer_core')
   compile project(':remixer_storage')
   compile project(':remixer_ui')
