@@ -84,4 +84,4 @@ Even if not using the Remixer UI directly, this submodule is necessary for the g
 
 <b id="f2">2</b>TODO, need to investigate whether these can be successfully moved to `remixer_core` where they rightfully belong. They are located in the UI project since that one is an Android library instead of a plain Java library. [↩](#a2)
 
-<b id="f2">2</b> Since this imports Firebase, you need to have a `google-services.json` file on your app module even if you're not using firebase. An empty file will do, or the example one we keep on `remixer_example/src/main/google-services.json`. We are investigating how to make this easier. [↩](#a2)
+<b id="f3">3</b> Since this imports Firebase, you need to have a `google-services.json` file on your app module even if you're not using firebase. An empty file will do, or the example one we keep on `remixer_example/src/main/google-services.json`. We are investigating how to make this easier. [↩](#a3)
