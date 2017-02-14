@@ -33,7 +33,7 @@ All the annotation processor classes are in the `com.google.android.libraries.re
 
 The entry point to the Remixer Annotation Processor is the `RemixerAnnotationProcessor` class. This class finds all annotations in your code that are registered in `SupportedMethodAnnotation` and creates a `MethodAnnotation` object for each annotation found and an `AnnotatedClass` object for each class that has at least one of the supported annotations.
 
-`AnnotatedClass` is responsible for writing out a helper class that contains all generated callbacks for annotations in the corresponding source class, and `bind(SourceClass activity)` method that generates all the remixer variable instances. This generated class is deterministically named `<SourceClass>_RemixerBinder` and implements `com.google.android.libraries.remixer.annotation.RemixerBinder.Binder`. The generated class is found at runtime through reflection and it depends on the names for the source class and the generated class to be kept intact by proguard, which is why the following proguard rules are present in `remixer_ui` [1]:
+`AnnotatedClass` is responsible for writing out a helper class that contains all generated callbacks for annotations in the corresponding source class, and `bind(SourceClass activity)` method that generates all the remixer variable instances. This generated class is deterministically named `<SourceClass>_RemixerBinder` and implements `com.google.android.libraries.remixer.annotation.RemixerBinder.Binder`. The generated class is found at runtime through reflection and it depends on the names for the source class and the generated class to be kept intact by proguard, which is why the following proguard rules are present in `remixer_ui` <sup id="a1">[1](#f1)</sup>:
   
 ```
   -keep interface com.google.android.libraries.remixer.annotation.RemixerBinder$Binder
@@ -63,15 +63,16 @@ The entry point to the Remixer Annotation Processor is the `RemixerAnnotationPro
 
 The annotation processor uses [Javapoet](https://github.com/square/javapoet) to generate the code which  offers an easy to read and maintain syntax for code generation.
 
-[1]: TODO, need to investigate whether these can be successfully moved to `remixer_core` where they rightfully belong. They are located in the UI project since that one is an Android library instead of a plain Java library.
+<b id="f1">1</b> TODO, need to investigate whether these can be successfully moved to `remixer_core` where they rightfully belong. They are located in the UI project since that one is an Android library instead of a plain Java library. [↩](#a1)
 
 ## Storage submodule.
 
 The `remixer_storage` submodule currently contains two implementations of `remixer_core`'s `com.google.android.libraries.remixer.sync.SynchronizationMechanism`:
 - `com.google.android.libraries.remixer.storage.LocalStorage` writes to a shared preferences file each time a value is modified. It uses `SharedPreferences.Editor#apply()` to commit the changes, which means that if there are many changes one after the other it would (probably) hit the disk only once, after all of them complete, and it doesn't block the UI thread at all.
-- `com.google.android.libraries.remixer.storage.FirebaseRemoteController`: [2] Uses firebase for storage and synchronization back to the device. This is necessary for the upcoming firebase Remote Controller functionality.
+- `com.google.android.libraries.remixer.storage.FirebaseRemoteController`: <sup id="a2">[2](#f2)</sup> Uses firebase for storage and synchronization back to the device. This is necessary for the upcoming firebase Remote Controller functionality.
 
-[2]: Since this imports Firebase, you need to have a `google-services.json` file on your app module even if you're not using firebase. An empty file will do, or the example one we keep on `remixer_example/src/main/google-services.json`. We are investigating how to make this easier.
+
+<b id="f2">2</b> Since this imports Firebase, you need to have a `google-services.json` file on your app module even if you're not using firebase. An empty file will do, or the example one we keep on `remixer_example/src/main/google-services.json`. We are investigating how to make this easier. [↩](#a2)
 
 ## UI submodule
 
