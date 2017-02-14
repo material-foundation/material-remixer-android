@@ -7,27 +7,8 @@ Remixer helps teams use and refine design specs by providing an abstraction for 
 This SDK for Android is currently in development.
 
 **New to Remixer?** Visit our [main repo](https://github.com/material-foundation/material-remixer) to get a full description of what it is and how it works.
+
 - - -
-
-## Project structure
-
-The project is defined as a gradle project with submodules.
-
-* remixer_core: The core framework code, has no dependencies on the android framework and contains the core logic to run callbacks on changes to a Variable, etc. Most of the base classes are here
-  * main: The code for the core framework
-  * tests: JUnit tests for the Remixer code.
-* remixer_ui: The code that shows remixes in the UI.
-  * main
-    * `com.google.android.libraries.remixer.ui.view` is  the code to display the UI as a BottomSheetFragmentDialog
-    * `com.google.android.libraries.remixer.ui.widget` is a family of widgets that can display each individual Remixer items (variables).
-    * `com.google.android.libraries.remixer.ui.widget.RemixerWidget` is an Interface to implement such widgets. Necessary if you want to provide different widgets.
-    * `com.google.android.libraries.remixer.ui.RemixerCallbacks` is an implementation of `Application.ActivityLifecycleCallbacks` that clears up callbacks once the corresponding activity is destroyed so it doesn't leak. It needs to be registered in the `Application.onCreate()` method.
-  * tests: JUnit/Robolectric tests.
-* remixer_annotation: An annotation processor to make it easier to add remixes to your code.
-  * main: The annotation processing code.
-  * tests: JUnit tests based on actual classes to compile.
-* remixer_example: This is an example app.
-  * main: the code for the example app
 
 ## Try it in your app!
 
@@ -252,7 +233,7 @@ Yes, the [material-foundation](https://github.com/material-foundation) organizat
 
 ## Contributing
 
-We gladly welcome contributions! If you have found a bug, have questions, or wish to contribute, please follow our [Contributing Guidelines](https://github.com/material-foundation/material-remixer-android/blob/develop/CONTRIBUTING.md).
+We gladly welcome contributions! If you have found a bug, have questions, or wish to contribute, please follow our [Contributing Guidelines](CONTRIBUTING.md) and read the [High-level Project Structure](PROJECT_STRUCTURE.md).
 
 ## License
 
