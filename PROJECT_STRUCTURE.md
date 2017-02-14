@@ -71,9 +71,6 @@ The `remixer_storage` submodule currently contains two implementations of `remix
 - `com.google.android.libraries.remixer.storage.LocalStorage` writes to a shared preferences file each time a value is modified. It uses `SharedPreferences.Editor#apply()` to commit the changes, which means that if there are many changes one after the other it would (probably) hit the disk only once, after all of them complete, and it doesn't block the UI thread at all.
 - `com.google.android.libraries.remixer.storage.FirebaseRemoteController`: <sup id="a2">[2](#f2)</sup> Uses firebase for storage and synchronization back to the device. This is necessary for the upcoming firebase Remote Controller functionality.
 
-
-<b id="f2">2</b> Since this imports Firebase, you need to have a `google-services.json` file on your app module even if you're not using firebase. An empty file will do, or the example one we keep on `remixer_example/src/main/google-services.json`. We are investigating how to make this easier. [↩](#a2)
-
 ## UI submodule
 
 The `remixer_ui` submodule contains the actual Remixer visible UI and a little of the "glue code" that makes everything seamless.
@@ -83,3 +80,9 @@ The `remixer_ui` submodule contains the actual Remixer visible UI and a little o
 - `com.google.android.libraries.remixer.ui.RemixerInitialization` provides a handy `initRemixer(Application)` method that correctly initializes remixer (registers the basic supported data types and their corresponding mappings to widgets, and registers for lifecycle events to avoid memory leaks).
 
 Even if not using the Remixer UI directly, this submodule is necessary for the glue code (registering data types and avoiding memory leaks). These are kept in the UI module instead of the core module because they need access to both the Android SDK classes and specific classes from this module.
+
+- - -
+
+<b id="f1">1</b> TODO, need to investigate whether these can be successfully moved to `remixer_core` where they rightfully belong. They are located in the UI project since that one is an Android library instead of a plain Java library. [↩](#a1)
+
+<b id="f2">2</b> Since this imports Firebase, you need to have a `google-services.json` file on your app module even if you're not using firebase. An empty file will do, or the example one we keep on `remixer_example/src/main/google-services.json`. We are investigating how to make this easier. [↩](#a2)
