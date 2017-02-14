@@ -27,7 +27,7 @@ This means that the annotation processing code (in `remixer_annotation`) is unab
 
 [^generatingtestedcode]: Okay, technically it could generate code that used those classes, but since the tests for annotation-processors generally need compilation of sample code, generated code that uses those classes would not pass the tests since the classes wouldn't be in the classpath
 
-## How the annotation processor works
+### How the annotation processor works
 
 All the annotation processor classes are in the `com.google.android.libraries.remixer.annotation.processor` package.
 
