@@ -63,8 +63,6 @@ The entry point to the Remixer Annotation Processor is the `RemixerAnnotationPro
 
 The annotation processor uses [Javapoet](https://github.com/square/javapoet) to generate the code which  offers an easy to read and maintain syntax for code generation.
 
-<b id="f1">1</b> TODO, need to investigate whether these can be successfully moved to `remixer_core` where they rightfully belong. They are located in the UI project since that one is an Android library instead of a plain Java library. [↩](#a1)
-
 ## Storage submodule.
 
 The `remixer_storage` submodule currently contains two implementations of `remixer_core`'s `com.google.android.libraries.remixer.sync.SynchronizationMechanism`:
