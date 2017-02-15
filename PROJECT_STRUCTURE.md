@@ -78,6 +78,31 @@ The `remixer_ui` submodule contains the actual Remixer visible UI and a little o
 
 Even if not using the Remixer UI directly, this submodule is necessary for the glue code (registering data types and avoiding memory leaks). These are kept in the UI module instead of the core module because they need access to both the Android SDK classes and specific classes from this module.
 
+## Build system
+
+Remixer uses gradle as its build system and it is a regular gradle project with several submodules, so the process to build it from scratch is the same as any other regular Gradle project. 
+
+As an end user of remixer you can just add Remixer to your gradle dependencies as explained in [Getting Started](GETTING_STARTED.md).
+
+1. Clone the repository
+   ```git clone https://github.com/material-foundation/material-remixer-android.git```
+2. You have two options here:
+  1. Open it on Android Studio and build from there.
+  2. run `./gradlew build`  on your terminal (`gradlew.bat build` on Windows).
+    * This assumes that you have a copy of the android SDK and,
+    * That you have exported a `ANDROID_HOME` environment variable that points to your SDK install (the directory that contains subdirectories such as `tools`, `platform-tools`, etc.)
+      * If you use Android Studio on a mac that defaults to `/Users/<yourusername>/Library/Android/sdk`
+      * In this case you can put `export ANDROID_HOME=/Users/<yourusername>/Library/Android/sdk` in your `~/.profile` or `~/.bash_profile` as appropriate.)
+        
+**Notice:** These instructions are not comprehensive for all platforms and configurations. We develop Remixer on Mac and Linux using Android Studio and there are nearly infinite development environment configurations. However, a variation of this should work on your platform. Let us know if you find any issues.
+
+Windows has some [issues with long paths](https://msdn.microsoft.com/en-us/library/aa365247.aspx#maxpath) that can cause [issues while building Remixer](https://github.com/material-foundation/material-remixer-android/issues/43) if you use a deeply nested folder. It is out of scope for the Remixer project to address these, so work around them by moving the root of the project closer to the root of your filesystem.
+
+### Installing the example app
+
+If you're reading this you're probably installing the app from the terminal as opposed to Android Studio.
+```adb install -r remixer_example/build/outputs/apk/remixer_example-debug.apk```
+
 - - -
 
 <b id="f1">1</b> Okay, technically it could generate code that used those classes, but since the tests for annotation-processors generally need compilation of sample code, generated code that uses those classes would not pass the tests since the classes wouldn't be in the classpath. [↩](#a1)
