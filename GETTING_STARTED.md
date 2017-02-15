@@ -99,7 +99,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
 ## Display the Remixer Fragment
 
-You can configuree the `RemixerFragment` in the `Activity`'s `onCreate(Bundle)` method, after the call to `RemixerBinder.bind(this)`. You have 3 (not mutually-exclusive) options:
+You can configure the `RemixerFragment` in the `Activity`'s `onCreate(Bundle)` method, after the call to `RemixerBinder.bind(this)`. You have 3 (not mutually-exclusive) options:
 
 1. [Attach the RemixerFragment to a button click](CONFIGURE_UI.md#attach-the-remixer-fragment-to-a-button), `RemixerFragment#attachToButton(FragmentActivity, Button)`
 2. [Attach the RemixerFragment to a multi-touch gesture](CONFIGURE_UI.md#attach-the-remixer-fragment-to-a-multi-touch-gesture), `RemixerFragment#attachToButton(FragmentActivity, Button)`
