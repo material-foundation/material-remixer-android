@@ -4,6 +4,8 @@
 
 You can configure the `RemixerFragment` in the `Activity`'s `onCreate(Bundle)` method, after the call to `RemixerBinder.bind(this)`. You have 3 (not mutually-exclusive) options. You can see examples of how to do it below.
 
+*Note, however, that configuring the UI is optional if you want to exclusively use the Firebase Remote Controller functionality.*
+
 ## Attach the Remixer Fragment to a Button
 You need to call `RemixerFragment#attachToButton(FragmentActivity, Button)`
 
