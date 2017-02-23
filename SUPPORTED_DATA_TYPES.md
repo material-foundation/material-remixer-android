@@ -1,3 +1,17 @@
+
+Table of Contents
+=================
+* [API Flavors](#api-flavors)
+* [Constraints](#constraints)
+   * [Unconstrained variables](#unconstrained-variables)
+   * [Item-list variables](#item-list-variables)
+   * [Range variables](#range-variables)
+* [Data Types](#data-types)
+   * [Boolean](#boolean)
+   * [Color](#color)
+   * [Number](#number)
+   * [String](#string)
+
 # Variables in Remixer
 
 Variables are the cornerstone of Remixer, a change on a variable's _value_ (by the Remixer UI, remote controller or any other means) triggers the _callback_ (your code). Variables have a _data type_ and (optionally) a _constraint_ (which on Android are represented by subclasses of `com.google.android.libraries.remixer`).
@@ -26,12 +40,14 @@ This is the base variable, it takes any possible value for the data type.
 
 #### Properties
 
-- `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
-- `title` the displayable name of the variable, if not set assumes `key`
-- `context` an activity where the variable is defined. Used to avoid memory leaks.
-- `initialValue` the initial value.
-- `callback` is the method to call once the variable value changes.
-- `layoutId` a layoutId to display this, must implement RemixerWidget. It can remain unset and it will use a sensible default in each **supported** case.
+| Name | Description |
+| ------------- | ----------- |
+| `key` | the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name. |
+| `title` | the displayable name of the variable, if not set assumes `key` |
+| `context` | an activity where the variable is defined. Used to avoid memory leaks. |
+| `initialValue` | the initial value. |
+| `callback` | is the method to call once the variable value changes. |
+| `layoutId` | a layoutId to display this, must implement RemixerWidget. It can remain unset and it will use a sensible default in each **supported** case. |
 
 #### Builder classes
 
