@@ -3,8 +3,7 @@ language: android
 jdk: oraclejdk8
 
 env:
-  matrix:
-    - ANDROID_TARGET=android-25
+  - ANDROID_TARGET=25 BUILD_TOOLS=25.0.0
 
 android:
   components:
@@ -13,13 +12,13 @@ android:
     # See https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943 for more
     # details.
     - platform-tools #latest
-    - build-tools-25.0.0
-    - android-25
+    - "build-tools-$BUILD_TOOLS"
+    - "android-$ANDROID_TARGET"
     - extra-android-support
     - extra-android-m2repository
     - extra-google-google_play_services
     - extra-google-m2repository
-    - addon-google_apis-google-25
+    - "addon-google_apis-google-$ANDROID_TARGET"
 
 
 before_install:
@@ -27,18 +26,20 @@ before_install:
 
 licenses:
   - 'android-sdk-license-.+'
-  - 'google-gdk-license-.+'
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
 script:
-  - ./gradlew check jacocoTestReport
+  - ./gradlew lint check jacocoTestReport
+  # building remixer_example:assembleRelease will fail explicitly if proguarding is broken.
+  - ./gradlew remixer_example:assembleRelease
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

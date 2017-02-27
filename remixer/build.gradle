@@ -19,6 +19,11 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.material-foundation'
 
+/* While this library is no longer used directly (since it makes proguard fail), we keep it mostly
+ * for javadoc aggregation (:allJavadoc and :javadocJar). This allows jitpack to automatically
+ * generate aggregated javadoc.
+ */
+
 android {
   compileSdkVersion rootProject.ext.compileSdkVersion
   buildToolsVersion rootProject.ext.buildToolsVersion
@@ -46,7 +51,6 @@ android {
 }
 
 dependencies {
-  compile project(':remixer_annotation')
   compile project(':remixer_core')
   compile project(':remixer_storage')
   compile project(':remixer_ui')
