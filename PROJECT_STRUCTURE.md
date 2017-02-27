@@ -1,5 +1,3 @@
-![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
-
 # Project structure
 
 Remixer is built as a gradle project with several submodules. If you are interested in contributing you should know the roles of each submodule to be able to put things in the right place.

@@ -1,5 +1,3 @@
-![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
-
 # Getting started
 
 __Disclaimer:__ Remixer still hasn't reached a stage that we consider is stable enough to commit to the current status of the API, it will be evolving quickly and we may commit breaking changes every once in a while. _That being said_, we would love to have you try it out and tell us what you think is missing and what you'd like us to focus on.
