@@ -69,4 +69,19 @@ public class LocalValueSyncing implements SynchronizationMechanism {
   public void onContextRemoved(Object currentContext) {
     // Nothing to do here, this class does not care which is the current context.
   }
+
+  @Override
+  public boolean isNetworkBasedSynchronization() {
+    return false;
+  }
+
+  @Override
+  public void startSyncing() {
+    // NOP when !isNetworkBasedSynchronization()
+  }
+
+  @Override
+  public void stopSyncing() {
+    // NOP when !isNetworkBasedSynchronization()
+  }
 }

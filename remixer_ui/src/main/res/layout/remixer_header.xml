@@ -22,6 +22,14 @@
   android:gravity="center"
   android:orientation="horizontal">
 
+  <ImageView
+    android:id="@+id/closeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:src="@drawable/ic_close_black_24dp"
+    />
+
   <TextView
     style="@style/RemixerHeaderText"
     android:layout_width="0dp"
@@ -32,11 +40,11 @@
     />
 
   <ImageView
-    android:id="@+id/closeButton"
+    android:id="@+id/expandSharingOptionsButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="12dp"
-    android:src="@drawable/ic_close_black_24dp"
+    android:src="@drawable/ic_expand_more_black_24dp"
+    android:visibility="gone"
     />
-
 </LinearLayout>

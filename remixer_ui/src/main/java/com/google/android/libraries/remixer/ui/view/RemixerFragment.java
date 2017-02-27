@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +57,8 @@ public class RemixerFragment extends BottomSheetDialogFragment {
 
   private Remixer remixer;
   private ShakeListener shakeListener;
+  private boolean isNetworkBasedSync;
+  private ImageView expandSharingOptionsButton;
 
   public RemixerFragment() {
     remixer = Remixer.getInstance();
@@ -144,6 +145,7 @@ public class RemixerFragment extends BottomSheetDialogFragment {
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_remixer_list, container, false);
     ImageView closeButton = (ImageView) view.findViewById(R.id.closeButton);
+    expandSharingOptionsButton = (ImageView) view.findViewById(R.id.expandSharingOptionsButton);
     closeButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -159,6 +161,10 @@ public class RemixerFragment extends BottomSheetDialogFragment {
   @Override
   public void onResume() {
     isAddingFragment = false;
+    // Temporarily negated so it's easy to test.
+    isNetworkBasedSync =
+        !Remixer.getInstance().getSynchronizationMechanism().isNetworkBasedSynchronization();
+    expandSharingOptionsButton.setVisibility(isNetworkBasedSync ? View.VISIBLE : View.GONE);
     super.onResume();
   }
 

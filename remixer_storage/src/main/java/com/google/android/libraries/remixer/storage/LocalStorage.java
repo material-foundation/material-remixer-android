@@ -61,4 +61,19 @@ public class LocalStorage extends LocalValueSyncing {
     super.onValueChanged(variable);
     writeVariable(variable.getKey());
   }
+
+  @Override
+  public boolean isNetworkBasedSynchronization() {
+    return false;
+  }
+
+  @Override
+  public void startSyncing() {
+    // NOP when !isNetworkBasedSynchronization()
+  }
+
+  @Override
+  public void stopSyncing() {
+    // NOP when !isNetworkBasedSynchronization()
+  }
 }

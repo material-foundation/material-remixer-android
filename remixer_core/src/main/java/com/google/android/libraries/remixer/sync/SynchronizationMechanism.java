@@ -68,4 +68,19 @@ public interface SynchronizationMechanism {
    * {@link #onContextChanged(Object)}); it is up to the implementation what to do in this case.
    */
   void onContextRemoved(Object currentContext);
+
+  /**
+   * Returns true if it is a network-based sync that can be started/stopped.
+   */
+  boolean isNetworkBasedSynchronization();
+
+  /**
+   * Starts syncing if it is a network-based sync that can be started/stopped. Otherwise it's a NOP.
+   */
+  void startSyncing();
+
+  /**
+   * Stops syncing if it is a network-based sync that can be started/stopped. Otherwise it's a NOP.
+   */
+  void stopSyncing();
 }

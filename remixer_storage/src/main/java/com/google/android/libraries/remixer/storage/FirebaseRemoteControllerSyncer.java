@@ -84,6 +84,11 @@ public class FirebaseRemoteControllerSyncer
     startSyncing();
   }
 
+  @Override
+  public boolean isNetworkBasedSynchronization() {
+    return true;
+  }
+
   /**
    * Starts syncing up to Firebase.
    *
@@ -93,6 +98,7 @@ public class FirebaseRemoteControllerSyncer
    * <p>That way we get notified of changes to children (individual variables) after the initial
    * sync.
    */
+  @Override
   public synchronized void startSyncing() {
     reference = FirebaseDatabase.getInstance().getReference(
         String.format(Locale.getDefault(), REFERENCE_FORMAT, remoteId));
@@ -110,6 +116,7 @@ public class FirebaseRemoteControllerSyncer
    * Stops syncing to firebase, removes this instance as listener for changes and clears the
    * values in Firebase.
    */
+  @Override
   public synchronized void stopSyncing() {
     if (syncing) {
       syncing = false;
