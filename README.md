@@ -2,6 +2,8 @@
 
 [![TravisCI Build Status](https://travis-ci.org/material-foundation/material-remixer-android.svg?branch=develop)](https://travis-ci.org/material-foundation/material-remixer-android) [![CircleCI Build Status](https://circleci.com/gh/material-foundation/material-remixer-android.svg?style=svg)](https://circleci.com/gh/material-foundation/material-remixer-android) [![codecov](https://codecov.io/gh/material-foundation/material-remixer-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-foundation/material-remixer-android)
 
+# Remixer Android
+
 Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.
 
 This SDK for Android is currently in development.
