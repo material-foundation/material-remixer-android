@@ -44,7 +44,7 @@ public class RemixerApplication extends Application {
       FirebaseRemoteControllerSyncer syncer =
           new FirebaseRemoteControllerSyncer(this);
       Remixer.getInstance().setSynchronizationMechanism(syncer);
-      syncer.startSyncing();
+      //syncer.startSharing();
     } else {
       Remixer.getInstance().setSynchronizationMechanism(new LocalStorage(this));
     }
