@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.google.android.libraries.remixer.Remixer;
+import com.google.android.libraries.remixer.storage.FirebaseRemoteControllerSyncer;
 import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.gesture.Direction;
 import com.google.android.libraries.remixer.ui.gesture.GestureListener;
@@ -52,12 +52,18 @@ import com.google.android.libraries.remixer.ui.gesture.ShakeListener;
  * }
  * </code></pre>
  */
-public class RemixerFragment extends BottomSheetDialogFragment {
+public class RemixerFragment
+    extends BottomSheetDialogFragment
+    implements FirebaseRemoteControllerSyncer.SharingStatusListener {
 
   public static final String REMIXER_TAG = "Remixer";
 
   private Remixer remixer;
   private ShakeListener shakeListener;
+  private boolean isNetworkBasedSync;
+  private ImageView expandSharingOptionsButton;
+  private Button sharedStatusButton;
+  private RemixerAdapter adapter;
 
   public RemixerFragment() {
     remixer = Remixer.getInstance();
@@ -144,6 +150,11 @@ public class RemixerFragment extends BottomSheetDialogFragment {
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_remixer_list, container, false);
     ImageView closeButton = (ImageView) view.findViewById(R.id.closeButton);
+    ShareDrawerOnClickListener listener = new ShareDrawerOnClickListener();
+    expandSharingOptionsButton = (ImageView) view.findViewById(R.id.expandSharingOptionsButton);
+    sharedStatusButton = (Button) view.findViewById(R.id.shareLinkButton);
+    expandSharingOptionsButton.setOnClickListener(listener);
+    sharedStatusButton.setOnClickListener(listener);
     closeButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -151,19 +162,43 @@ public class RemixerFragment extends BottomSheetDialogFragment {
       }
     });
     RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.remixerList);
-    recyclerView.setAdapter(
-        new RemixerAdapter(remixer.getVariablesWithContext(getActivity())));
+    adapter = new RemixerAdapter(remixer.getVariablesWithContext(getActivity()));
+    recyclerView.setAdapter(adapter);
     return view;
   }
 
   @Override
   public void onResume() {
     isAddingFragment = false;
+    isNetworkBasedSync =
+        Remixer.getInstance().getSynchronizationMechanism()
+            instanceof FirebaseRemoteControllerSyncer;
+    if (isNetworkBasedSync) {
+      expandSharingOptionsButton.setVisibility(View.VISIBLE);
+      ((FirebaseRemoteControllerSyncer) Remixer.getInstance().getSynchronizationMechanism())
+          .addSharingStatusListener(this);
+    }
     super.onResume();
   }
 
   @Override
   public void onDetach() {
     super.onDetach();
+  }
+
+  @Override
+  public void updateSharingStatus(boolean sharing) {
+    sharedStatusButton.setVisibility(sharing ? View.VISIBLE : View.GONE);
+  }
+
+  private class ShareDrawerOnClickListener implements View.OnClickListener {
+
+    @Override
+    public void onClick(View view) {
+      boolean isShowingShareDrawer = adapter.toggleShareDrawer();
+      expandSharingOptionsButton.setImageResource(
+          isShowingShareDrawer ?
+              R.drawable.ic_expand_less_black_24dp : R.drawable.ic_expand_more_black_24dp);
+    }
   }
 }

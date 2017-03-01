@@ -52,7 +52,6 @@ android {
 
 dependencies {
   compile project(':remixer_core')
-  compile project(':remixer_ui')
   compile 'com.google.code.gson:gson:2.7'
   compile 'com.google.firebase:firebase-core:10.0.1'
   compile 'com.google.firebase:firebase-database:10.0.1'
