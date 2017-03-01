@@ -16,7 +16,7 @@ This SDK for Android is currently in development.
 2. [Configure the UI](CONFIGURE_UI.md)
 3. [Project structure](PROJECT_STRUCTURE.md)
 4. [Supported Data Types](SUPPORTED_DATA_TYPES.md)
-5. [Extending Remixer](EXTENDING_REMIXER.md) (TODO)
+5. [Extending Remixer](EXTENDING_REMIXER.md)
 6. API Reference (_notice this includes internal APIs_):
   - [Current Version 0.6.6](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/0.6.6/javadoc/index.html)
   - [Develop Snapshot](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/develop-SNAPSHOT/javadoc/index.html)
