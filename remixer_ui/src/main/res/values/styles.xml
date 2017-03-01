@@ -24,6 +24,8 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="RemixerConfigText" parent="@style/TextAppearance.AppCompat.Medium" >
+  </style>
   <style name="RemixerHeaderText" parent="@style/TextAppearance.AppCompat.Large" >
   </style>
   <style name="RemixerVariableText" parent="@style/TextAppearance.AppCompat.Small">

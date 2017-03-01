@@ -39,6 +39,14 @@
     android:text="@string/remixer_framework_name"
     />
 
+  <Button
+    android:text="@string/sharedStatusText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/shareLinkButton"
+    android:visibility="gone"
+    style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
   <ImageView
     android:id="@+id/expandSharingOptionsButton"
     android:layout_width="wrap_content"

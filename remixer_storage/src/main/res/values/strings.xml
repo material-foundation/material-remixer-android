@@ -16,4 +16,5 @@
 
 <resources>
   <string name="app_name">Remixer Storage</string>
+  <string name="shareLinkFormat">Join me in tweaking my application on remixer, %1$s</string>
 </resources>
