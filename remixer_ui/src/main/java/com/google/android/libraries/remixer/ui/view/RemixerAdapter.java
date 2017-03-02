@@ -22,18 +22,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.google.android.libraries.remixer.Variable;
-import com.google.android.libraries.remixer.ui.R;
 import com.google.android.libraries.remixer.ui.widget.RemixerWidget;
 import java.util.List;
 
 /**
- * An adapter that takes care of displaying a list of {@link Variable}es using their corresponding
+ * An adapter that takes care of displaying a list of {@link Variable}s using their corresponding
  * {@link RemixerWidget}.
  */
 class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
   private final List<Variable> variables;
-  private boolean isShowingShareDrawer = false;
 
   public RemixerAdapter(List<Variable> variables) {
     this.variables = variables;
@@ -48,70 +46,31 @@ class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
-    if (!isShowingShareDrawer) {
-      holder.setVariable(variables.get(position));
-    } else if (position > 0) {
-      holder.setVariable(variables.get(position - 1));
-    } else {
-      holder.initShareDrawer();
-    }
+    holder.setVariable(variables.get(position));
   }
 
   @Override
   public int getItemViewType(int position) {
-    if (isShowingShareDrawer && position == 0) {
-      return R.layout.remixer_share_drawer;
-    } else if (isShowingShareDrawer) {
-      return RemixerWidgetHelper.getLayoutId(variables.get(position - 1));
-    } else {
-      return RemixerWidgetHelper.getLayoutId(variables.get(position));
-    }
+    return RemixerWidgetHelper.getLayoutId(variables.get(position));
   }
 
   @Override
   public int getItemCount() {
-    if (isShowingShareDrawer) {
-      return variables.size() + 1;
-    } else {
-      return variables.size();
-    }
+    return variables.size();
   }
 
-  boolean toggleShareDrawer() {
-    isShowingShareDrawer = !isShowingShareDrawer;
-    // Notifying single item changes makes RecyclerView animate correctly.
-    if (isShowingShareDrawer) {
-      notifyItemInserted(0);
-    } else {
-      notifyItemRemoved(0);
-    }
-    return isShowingShareDrawer;
-  }
+  public class ViewHolder extends RecyclerView.ViewHolder {
+    private final RemixerWidget view;
 
-  /**
-   * A view holder that can contain either
-   */
-  class ViewHolder extends RecyclerView.ViewHolder {
-    private RemixerWidget remixerWidget = null;
-    private RemixerShareDrawer shareDrawer = null;
-
-    ViewHolder(View view) {
+    public ViewHolder(View view) {
       super(view);
-      if (view instanceof RemixerWidget) {
-        this.remixerWidget = (RemixerWidget) view;
-      } else {
-        this.shareDrawer = (RemixerShareDrawer) view;
-      }
+
+      this.view = (RemixerWidget) view;
     }
 
     @SuppressWarnings("unchecked")
-    void setVariable(Variable variable) {
-      // Assume its a RemixerWidget if we're setting a Variable
-      remixerWidget.bindVariable(variable);
-    }
-
-    void initShareDrawer() {
-      shareDrawer.init();
+    public void setVariable(Variable variable) {
+      view.bindVariable(variable);
     }
   }
 }

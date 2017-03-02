@@ -110,8 +110,11 @@ public class FirebaseRemoteControllerSyncer
     reference.removeValue();
     sharing = true;
     if (context != null && context.get() != null) {
-      for (Variable variable : Remixer.getInstance().getVariablesWithContext(context.get())) {
-        syncVariableToRemoteController(StoredVariable.fromVariable(variable));
+      List<Variable> variableList =  Remixer.getInstance().getVariablesWithContext(context.get());
+      if (variableList != null) {
+        for (Variable variable : variableList) {
+          syncVariableToRemoteController(StoredVariable.fromVariable(variable));
+        }
       }
     }
     reference.addChildEventListener(this);
@@ -189,7 +192,7 @@ public class FirebaseRemoteControllerSyncer
     super.onContextChanged(currentContext);
     if ((context == null && currentContext != null) ||
         (context != null && currentContext != context.get())) {
-      context = new WeakReference<Object>(context);
+      context = new WeakReference<Object>(currentContext);
       if (reference != null) {
         reference.removeValue();
       }
