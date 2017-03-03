@@ -40,7 +40,7 @@ import java.util.UUID;
  * very little in terms of conflict resolution.
  */
 public class FirebaseRemoteControllerSyncer
-    extends LocalValueSyncing implements ChildEventListener {
+    extends LocalStorage implements ChildEventListener {
 
   /**
    * The reference to the root element for this Remixer Instance in the database
@@ -73,7 +73,7 @@ public class FirebaseRemoteControllerSyncer
    * one if it does not yet exist).
    */
   public FirebaseRemoteControllerSyncer(Context context) {
-    super();
+    super(context);
     SharedPreferences preferences =
         context.getSharedPreferences(PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
     remoteId = preferences.getString(REMOTE_ID, null);
