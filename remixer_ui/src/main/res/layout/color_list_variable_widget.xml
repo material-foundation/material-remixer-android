@@ -22,7 +22,8 @@
   android:layout_height="wrap_content"
   android:layout_marginBottom="@dimen/secondaryPadding"
   android:layout_marginTop="@dimen/secondaryPadding"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  tools:ignore="UnusedResources">
 
   <TextView
     android:id="@+id/variableName"

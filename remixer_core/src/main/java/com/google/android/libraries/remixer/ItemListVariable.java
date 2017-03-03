@@ -106,8 +106,8 @@ public class ItemListVariable<T> extends Variable<T> {
      * Returns a new ItemListVariable created with the configuration stored in this builder
      * instance.
      *
-     * @throws IllegalArgumentException If key or limitedToValues are missing or if the configuration
-     *     is invalid for ItemListVariable.
+     * @throws IllegalArgumentException If key or limitedToValues are missing or if the
+     *     configuration is invalid for ItemListVariable.
      */
     @Override
     public ItemListVariable<T> build() {

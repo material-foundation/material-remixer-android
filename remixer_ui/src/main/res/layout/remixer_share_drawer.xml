@@ -17,13 +17,13 @@
 
 <com.google.android.libraries.remixer.ui.view.RemixerShareDrawer
   xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:background="@color/headerBackground"
-  android:elevation="6dp"
+  android:elevation="4dp"
   android:orientation="vertical"
-  android:padding="@dimen/defaultPadding">
+  android:padding="@dimen/defaultPadding"
+  tools:ignore="UnusedAttribute">
 
   <Switch
     android:id="@+id/sharingSwitch"
