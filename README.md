@@ -35,7 +35,7 @@ The main Remixer GitHub repo for documentation, project tracking, and general in
 Platform specific libraries and tools can be found in the following GitHub repos:
 
 - [iOS](https://github.com/material-foundation/material-remixer-ios) - Remixer for iOS.
-- [Web](https://github.com/material-foundation/material-remixer-web) - Remixer for Web.
+- [JavaScript](https://github.com/material-foundation/material-remixer-js) - Remixer for JavaScript.
 - [Web Remote](https://github.com/material-foundation/material-remixer-remote-web) - Remixer web remote controller for all platforms.
 
 ## Is material-foundation affiliated with Google?
