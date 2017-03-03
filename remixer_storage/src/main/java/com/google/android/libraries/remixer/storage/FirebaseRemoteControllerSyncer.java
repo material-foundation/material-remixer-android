@@ -264,7 +264,7 @@ public class FirebaseRemoteControllerSyncer
   public Intent getShareLinkIntent() {
     Intent intent = new Intent();
     intent.setAction(Intent.ACTION_SEND);
-    String url =String.format(
+    String url = String.format(
         Locale.getDefault(),
         "https://%s.firebaseapp.com/%s",
         getUrlPrefix(),
@@ -285,7 +285,8 @@ public class FirebaseRemoteControllerSyncer
   }
 
   /**
-   * Implementors are objects who are listening to changes to whether we stop/start sharing.
+   * Implement this to register as a listener for changes in the sharing status using
+   * {@link #addSharingStatusListener(SharingStatusListener)}.
    */
   public interface SharingStatusListener {
 

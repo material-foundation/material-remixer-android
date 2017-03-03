@@ -61,6 +61,13 @@ public class RemixerFragment
     implements FirebaseRemoteControllerSyncer.SharingStatusListener {
 
   public static final String REMIXER_TAG = "Remixer";
+  // 195ms is a good time for elements leaving the screen.
+  // https://material.io/guidelines/motion/duration-easing.html#duration-easing-common-durations
+  protected static final int COLLAPSE_DRAWER_DURATION = 195;
+
+  // 225ms is a good time for elements entering the screen.
+  // https://material.io/guidelines/motion/duration-easing.html#duration-easing-common-durations
+  protected static final int EXPAND_DRAWER_DURATION = 225;
 
   private Remixer remixer;
   private ShakeListener shakeListener;
@@ -235,9 +242,7 @@ public class RemixerFragment
         return true;
       }
     };
-    // 225 ms is a good time for elements entering the screen.
-    // https://material.io/guidelines/motion/duration-easing.html#duration-easing-common-durations
-    a.setDuration(225);
+    a.setDuration(COLLAPSE_DRAWER_DURATION);
     shareDrawer.startAnimation(a);
   }
 
@@ -264,9 +269,7 @@ public class RemixerFragment
         return true;
       }
     };
-    // 195ms is a good time for elements leaving the screen.
-    // https://material.io/guidelines/motion/duration-easing.html#duration-easing-common-durations
-    a.setDuration(195);
+    a.setDuration(EXPAND_DRAWER_DURATION);
     shareDrawer.startAnimation(a);
   }
 }
