@@ -16,7 +16,7 @@
 
 <manifest
   xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.google.android.remixer.examples.remixerstorage"
+  package="com.google.android.libraries.remixer.storage"
   xmlns:tools="http://schemas.android.com/tools">
 
   <!--

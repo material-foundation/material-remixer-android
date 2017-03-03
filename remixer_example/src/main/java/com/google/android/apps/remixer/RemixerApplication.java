@@ -41,10 +41,8 @@ public class RemixerApplication extends Application {
     super.onCreate();
     RemixerInitialization.initRemixer(this);
     if (USE_FIREBASE_REMOTE_CONTROLLER) {
-      FirebaseRemoteControllerSyncer syncer =
-          new FirebaseRemoteControllerSyncer(this);
+      FirebaseRemoteControllerSyncer syncer = new FirebaseRemoteControllerSyncer(this);
       Remixer.getInstance().setSynchronizationMechanism(syncer);
-      syncer.startSyncing();
     } else {
       Remixer.getInstance().setSynchronizationMechanism(new LocalStorage(this));
     }

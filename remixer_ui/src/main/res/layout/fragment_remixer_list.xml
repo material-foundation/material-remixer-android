@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 
-<RelativeLayout
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
@@ -23,6 +23,7 @@
   android:name="com.google.android.libraries.remixer.view.RemixerFragment"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:orientation="vertical"
   android:theme="@style/RemixerTheme"
   tools:context="com.google.android.libraries.remixer.ui.view.RemixerFragment">
 
@@ -30,12 +31,17 @@
     android:id="@+id/remixerHeader"
     layout="@layout/remixer_header"/>
 
+  <include
+    android:id="@+id/shareDrawer"
+    layout="@layout/remixer_share_drawer"
+    android:visibility="gone"/>
+
   <android.support.v7.widget.RecyclerView
     android:id="@+id/remixerList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/remixerHeader"
+    android:background="@color/variableListBackground"
     android:padding="@dimen/defaultPadding"
     app:layoutManager="LinearLayoutManager"/>
 
-</RelativeLayout>
+</LinearLayout>
