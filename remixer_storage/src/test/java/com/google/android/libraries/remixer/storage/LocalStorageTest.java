@@ -28,10 +28,10 @@ import com.google.android.libraries.remixer.StringVariableBuilder;
 import com.google.android.libraries.remixer.Variable;
 import com.google.android.libraries.remixer.serialization.GsonProvider;
 import com.google.android.libraries.remixer.serialization.StoredVariable;
-import com.google.android.libraries.remixer.ui.RemixerInitialization;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -52,9 +52,16 @@ public class LocalStorageTest {
   private RangeVariable rangeVariable;
   private Gson gson;
 
+  @BeforeClass
+  public static void initRemixer() {
+    Remixer.registerDataType(DataType.BOOLEAN);
+    Remixer.registerDataType(DataType.COLOR);
+    Remixer.registerDataType(DataType.NUMBER);
+    Remixer.registerDataType(DataType.STRING);
+  }
+
   @Before
   public void setUp() {
-    RemixerInitialization.initRemixer(RuntimeEnvironment.application);
     gson = GsonProvider.getInstance();
     remixer = new Remixer();
     booleanVariable =
