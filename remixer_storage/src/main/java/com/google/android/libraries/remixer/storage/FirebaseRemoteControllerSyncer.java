@@ -45,7 +45,7 @@ import java.util.UUID;
  * very little in terms of conflict resolution.
  */
 public class FirebaseRemoteControllerSyncer
-    extends LocalValueSyncing implements ChildEventListener {
+    extends LocalStorage implements ChildEventListener {
 
   private final Context applicationContext;
   /**
@@ -83,7 +83,7 @@ public class FirebaseRemoteControllerSyncer
    * one if it does not yet exist).
    */
   public FirebaseRemoteControllerSyncer(Context applicationContext) {
-    super();
+    super(applicationContext);
     SharedPreferences preferences =
         applicationContext.getSharedPreferences(PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
     remoteId = preferences.getString(REMOTE_ID, null);
