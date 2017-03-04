@@ -253,7 +253,7 @@ public class FirebaseRemoteControllerSyncer
 
   @Override
   public void onCancelled(DatabaseError databaseError) {
-
+    // Ignoring errors for the time being
   }
 
   public void addSharingStatusListener(@NonNull SharingStatusListener listener) {

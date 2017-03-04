@@ -22,7 +22,7 @@ package com.google.android.libraries.remixer.serialization;
  * <p>This is the agreed-upon representation of colors in Remixer. Sadly there is no uniform color
  * representation across platforms.
  */
-
+@SuppressWarnings("checkstyle:membername")
 public class SerializedColor {
 
   /**
@@ -66,6 +66,7 @@ public class SerializedColor {
     return a;
   }
 
+  @SuppressWarnings("checkstyle:parametername")
   public void setA(int a) {
     this.a = a;
   }
@@ -74,6 +75,7 @@ public class SerializedColor {
     return r;
   }
 
+  @SuppressWarnings("checkstyle:parametername")
   public void setR(int r) {
     this.r = r;
   }
@@ -82,6 +84,7 @@ public class SerializedColor {
     return g;
   }
 
+  @SuppressWarnings("checkstyle:parametername")
   public void setG(int g) {
     this.g = g;
   }
@@ -90,6 +93,7 @@ public class SerializedColor {
     return b;
   }
 
+  @SuppressWarnings("checkstyle:parametername")
   public void setB(int b) {
     this.b = b;
   }

@@ -167,7 +167,7 @@ public class RemixerFragment
     isShowingDrawer = false;
     ShareDrawerOnClickListener listener = new ShareDrawerOnClickListener();
     expandSharingOptionsButton = (ImageView) view.findViewById(R.id.expandSharingOptionsButton);
-    sharedStatusButton = (Button) view.findViewById(R.id.shareLinkButton);
+    sharedStatusButton = (Button) view.findViewById(R.id.sharedStatusButton);
     expandSharingOptionsButton.setOnClickListener(listener);
     sharedStatusButton.setOnClickListener(listener);
     closeButton.setOnClickListener(new View.OnClickListener() {
@@ -214,9 +214,13 @@ public class RemixerFragment
       isShowingDrawer = !isShowingDrawer;
       if (isShowingDrawer) {
         expandSharingOptionsButton.setImageResource(R.drawable.ic_expand_less_black_24dp);
+        expandSharingOptionsButton.setContentDescription(
+            getResources().getString(R.string.collapse_sharing_options_drawer));
         expandShareDrawer();
       } else {
         expandSharingOptionsButton.setImageResource(R.drawable.ic_expand_more_black_24dp);
+        expandSharingOptionsButton.setContentDescription(
+            getResources().getString(R.string.expand_sharing_options_drawer));
         collapseShareDrawer();
       }
     }

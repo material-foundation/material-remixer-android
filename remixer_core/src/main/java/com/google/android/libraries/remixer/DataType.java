@@ -14,10 +14,10 @@ import java.util.Map;
  * The data type for each RemixerItem. The data type is used to determine default layoutIDs and to
  * help serialization.
  *
- * @param <RuntimeType> The type to use during runtime to represent variables of this DataType
- * @param <SerializableType> The type to use to serialize variables of this type.
+ * @param <RuntimeT> The type to use during runtime to represent variables of this DataType
+ * @param <SerializableT> The type to use to serialize variables of this type.
  */
-public class DataType<RuntimeType, SerializableType> {
+public class DataType<RuntimeT, SerializableT> {
 
   /**
    * The serializable, unique name for this data type.
@@ -27,17 +27,17 @@ public class DataType<RuntimeType, SerializableType> {
   /**
    * The runtime class of the values contained by this variable.
    */
-  private final Class<RuntimeType> runtimeType;
+  private final Class<RuntimeT> runtimeType;
 
   /**
    * The serializable class of the values contained by this variable.
    */
-  private final Class<SerializableType> serializableType;
+  private final Class<SerializableT> serializableType;
 
   /**
    * The value converter that aids in the serialization process.
    */
-  private final ValueConverter<RuntimeType, SerializableType> converter;
+  private final ValueConverter<RuntimeT, SerializableT> converter;
 
   /**
    * Map of default layout ids for this datatype when used with a specific RemixerItem class.
@@ -49,17 +49,17 @@ public class DataType<RuntimeType, SerializableType> {
       new HashMap<>();
 
   /**
-   * Constructs a datatype with the given {@code name}, that takes values of type {@code runtimeType}
-   * and uses {@code converter} to serialize.
+   * Constructs a datatype with the given {@code name}, that takes values of type
+   * {@code runtimeType} and uses {@code converter} to serialize.
    *
    * <p>Note {@code converter} has a {@link ValueConverter#dataType} field that must be initialized
    * to the same as {@code name}.
    */
   public DataType(
       String name,
-      Class<RuntimeType> runtimeType,
-      Class<SerializableType> serializableType,
-      ValueConverter<RuntimeType, SerializableType> converter) {
+      Class<RuntimeT> runtimeType,
+      Class<SerializableT> serializableType,
+      ValueConverter<RuntimeT, SerializableT> converter) {
     this.name = name;
     this.runtimeType = runtimeType;
     this.serializableType = serializableType;
@@ -107,15 +107,15 @@ public class DataType<RuntimeType, SerializableType> {
     return name;
   }
 
-  public Class<RuntimeType> getRuntimeType() {
+  public Class<RuntimeT> getRuntimeType() {
     return runtimeType;
   }
 
-  public Class<SerializableType> getSerializableType() {
+  public Class<SerializableT> getSerializableType() {
     return serializableType;
   }
 
-  public ValueConverter<RuntimeType, SerializableType> getConverter() {
+  public ValueConverter<RuntimeT, SerializableT> getConverter() {
     return converter;
   }
 
