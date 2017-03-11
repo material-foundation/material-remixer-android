@@ -69,11 +69,11 @@ class MyApplication extends Application {
 
 ## Define Variables
 
-You can define variables in an activty by writing methods that take one argument of the correct type and annotate them. The methods contain your logic to handle changes to these variables (update the UI accordingly). 
+You can define variables in an activty by writing methods that take one argument of the correct type and annotate them. The methods contain your logic to handle changes to these variables (update the UI accordingly).
 
 You can rest assured those methods will run in the main UI thread.
 
-There are a few very simple examples here, but you should look at the [example](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/MainActivity.java) [activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/BoxActivity.java) and [documentation for these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
+There are a few very simple examples here, but you should look at the [example activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/TransactionListActivity.java) and [documentation for these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
 
 For example:
 

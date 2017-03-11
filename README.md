@@ -6,9 +6,7 @@
 
 Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.
 
-This SDK for Android is currently in development.
-
-**New to Remixer?** Visit our [main repo](https://github.com/material-foundation/material-remixer) to get a full description of what it is and how it works.
+**New to Remixer?** Visit our [main repo](https://github.com/material-foundation/material-remixer) to get a full description of what it is and how it works. You can also build the Demo App and play with it. FABs are used to trigger remixer.
 
 - - -
 
