@@ -20,6 +20,7 @@ import android.app.ActionBar;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -205,6 +206,15 @@ public class RemixerFragment
   @Override
   public void updateSharingStatus(boolean sharing) {
     sharedStatusButton.setVisibility(sharing ? View.VISIBLE : View.GONE);
+  }
+
+  public void attachToFab(final FragmentActivity activity, FloatingActionButton fab) {
+    fab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        showRemixer(activity.getSupportFragmentManager(), REMIXER_TAG);
+      }
+    });
   }
 
   private class ShareDrawerOnClickListener implements View.OnClickListener {
