@@ -55,7 +55,7 @@ public class RemixerInitialization {
     // Color values are currently only supported in ItemListVariable. Support should be coming for
     // Variables. RangeVariable doesn't make sense for Color.
     DataType.COLOR.setLayoutIdForVariableType(
-        ItemListVariable.class, R.layout.boolean_variable_widget);
+        ItemListVariable.class, R.layout.color_list_variable_widget);
     Remixer.registerDataType(DataType.COLOR);
 
     // Number values are only supported in ItemListVariable or RangeVariable
