@@ -18,7 +18,7 @@ The following docs explain how to get Remixer up and running in your app, and de
 
 ## Contributing to Remixer
 
-We're excited you want to contribute to the project! Please read these docs if you're interested so we can get your contributions submitted quickly.
+We're excited you want to contribute to the project! Please read these docs so we can get your contributions submitted quickly.
 
 - [Contribution policy and guidelines](CONTRIBUTING.md)
 - [Project structure](PROJECT_STRUCTURE.md)
