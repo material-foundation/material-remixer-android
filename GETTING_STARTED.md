@@ -69,7 +69,7 @@ class MyApplication extends Application {
 
 ## Define Variables
 
-You can define variables in an activty by writing methods that take one argument of the correct type and annotate them. The methods contain your logic to handle changes to these variables (update the UI accordingly).
+You can define variables in an activity by writing methods that take one argument of the correct type and annotate them. The methods contain your logic to handle changes to these variables (update the UI accordingly).
 
 You can rest assured those methods will run in the main UI thread.
 

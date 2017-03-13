@@ -22,7 +22,7 @@ Remixer guarantees that your callbacks are always called on the Main UI Thread f
 
 ## API Flavors
 
-First of all you need to know that there are two ways to use variables, either directly through a explicit API in the form of Builders (all in package `com.google.android.libraries.remixer`) or through a convenient set of annotations found in `com.google.android.libraries.remixer.annotations`.
+First of all you need to know that there are two ways to use variables, either directly through an explicit API in the form of Builders (all in package `com.google.android.libraries.remixer`) or through a convenient set of annotations found in `com.google.android.libraries.remixer.annotations`.
 
 **It is recommended you consistently use annotations unless you are extending Remixer**.
 
