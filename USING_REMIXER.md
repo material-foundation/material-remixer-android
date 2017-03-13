@@ -107,4 +107,4 @@ You can configure the `RemixerFragment` in the `Activity`'s `onCreate(Bundle)` m
 Detailed examples can be found on the [Configure the UI](CONFIGURE_UI.md) page.
 
 
-_You may not want to use the `RemixerFragment` in case you only want to use a FirebaseRemoteController. Adding a RemixerFragment does affect the UI you may be playing with, so it may be desirable not to use it and tweak remotely instead._
+_You may not want to use the `RemixerFragment` in case you only want to use a FirebaseRemoteController. Adding a RemixerFragment does affect the UI you may be playing with, so it may be desirable not to use it and adjust values remotely instead._

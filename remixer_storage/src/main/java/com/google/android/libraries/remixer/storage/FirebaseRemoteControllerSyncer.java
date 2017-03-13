@@ -264,16 +264,23 @@ public class FirebaseRemoteControllerSyncer
   public Intent getShareLinkIntent() {
     Intent intent = new Intent();
     intent.setAction(Intent.ACTION_SEND);
-    String url = String.format(
-        Locale.getDefault(),
-        "https://%s.firebaseapp.com/%s",
-        getUrlPrefix(),
-        remoteId);
+    String url = getRemoteUrl();
     String message =
         applicationContext.getResources().getString(R.string.shareLinkFormat, url);
     intent.putExtra(Intent.EXTRA_TEXT, message);
     intent.setType("text/plain");
     return intent;
+  }
+
+  /**
+   * Returns the URL that points to the remote controller.
+   */
+  public String getRemoteUrl() {
+    return String.format(
+        Locale.getDefault(),
+        "https://%s.firebaseapp.com/%s",
+        getUrlPrefix(),
+        remoteId);
   }
 
   private String getUrlPrefix() {
