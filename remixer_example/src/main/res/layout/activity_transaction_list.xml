@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  ~
+  -->
+
+<android.support.design.widget.CoordinatorLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:fitsSystemWindows="true"
+  tools:context="com.google.android.apps.remixer.TransactionListActivity">
+
+  <android.support.design.widget.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.CollapsingToolbarLayout
+      android:id="@+id/collapsingToolbarLayout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:collapsedTitleTextAppearance="@style/TitleTextCollapsed"
+      app:contentScrim="?attr/colorPrimary"
+      app:expandedTitleGravity="top|center_horizontal"
+      app:expandedTitleTextAppearance="@style/TitleTextExpanded"
+      app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+      <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal">
+
+        <TextView
+          android:id="@+id/totalTransactions"
+          style="@style/TotalLarge"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_marginTop="80dp"
+          android:padding="4dp"
+          />
+
+        <TextView
+          android:id="@+id/timePeriod"
+          style="@style/TimePeriod"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/totalTransactions"
+          android:layout_centerHorizontal="true"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginBottom="@dimen/secondaryPadding"
+          android:text="@string/spent_this_month"
+          />
+      </RelativeLayout>
+
+      <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimaryDark"/>
+    </android.support.design.widget.CollapsingToolbarLayout>
+
+  </android.support.design.widget.AppBarLayout>
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/transactionList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layoutManager="LinearLayoutManager"/>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|right|end"
+    android:layout_margin="16dp"
+    android:src="@android:drawable/ic_menu_edit"
+    app:layout_anchor="@id/transactionList"
+    app:layout_anchorGravity="bottom|right|end" />
+</android.support.design.widget.CoordinatorLayout>

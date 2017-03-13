@@ -22,4 +22,6 @@
   <string name="boxContentDescription">A box which changes colors</string>
   <string name="defaultFreeformString">You can change this string</string>
   <string name="showRemixerLabel">Show Remixer</string>
+  <string name="title_activity_transaction_list">Transactions</string>
+  <string name="spent_this_month">Spent this month</string>
 </resources>

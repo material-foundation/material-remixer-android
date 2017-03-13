@@ -79,7 +79,7 @@ ext {
   // Force release proguard when running on a Continuous Integration environment (like TravisCI).
   forceReleaseProguard = System.getenv("CI").equals("true");
   // Sdk and tools
-  minSdkVersion = 15
+  minSdkVersion = 16
   targetSdkVersion = 25
   compileSdkVersion = 25
   buildToolsVersion = '25.0.0'

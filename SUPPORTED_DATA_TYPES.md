@@ -22,13 +22,13 @@ Remixer guarantees that your callbacks are always called on the Main UI Thread f
 
 ## API Flavors
 
-First of all you need to know that there are two ways to use variables, either directly through a explicit API in the form of Builders (all in package `com.google.android.libraries.remixer`) or through a convenient set of annotations found in `com.google.android.libraries.remixer.annotations`. 
+First of all you need to know that there are two ways to use variables, either directly through an explicit API in the form of Builders (all in package `com.google.android.libraries.remixer`) or through a convenient set of annotations found in `com.google.android.libraries.remixer.annotations`.
 
 **It is recommended you consistently use annotations unless you are extending Remixer**.
 
 In the explicit API you need to implement the `com.google.android.libraries.remixer.Callback<T>` interface to implement your callback and specify the DataType in the builder calls. In the annotation-based API you need to apply the annotation to a public method with one argument of the correct type and at the end of the activity's `onCreate` method you call `RemixerBinder.bind(this)`.
 
-There are a few very simple examples here of how to use both in the following sections, but you should look at the [example](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/MainActivity.java) [activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/BoxActivity.java) and documentation for [the explicit API](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer) and [these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
+There are a few very simple examples here of how to use both in the following sections, but you should look at the [example activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/TransactionListActivity.java) and documentation for [the explicit API](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer) and [these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
 
 ## Constraints
 
@@ -204,7 +204,7 @@ Remixer only supports `Float` numbers. These should work for most cases anyway.
 | Converter | `com.google.android.libraries.remixer.serialization.converters.NumberValueConverter` |
 | Supported constraint |  Item List Variables (via `com.google.android.libraries.remixer.ui.widget.ItemListVariableWidget`) |
 | Supported constraint |  Range Variables (via `com.google.android.libraries.remixer.ui.widget.SeekBarRangeVariableWidget`) |
-  
+
 Theoretically we could support Unconstrained Variables if we write a **usable** control that handles non-number values correctly. You're welcome to [contribute an implementation](CONTRIBUTING.md). |
 
 
