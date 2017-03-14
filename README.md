@@ -28,7 +28,7 @@ We're excited you want to contribute to the project! Please read these docs so w
 
 _Notice this includes internal APIs_:
 
-- [Current Version 0.6.6](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/0.6.6/javadoc/index.html)
+- [Current Version 1.0](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/1.0/javadoc/index.html)
 - [Develop Snapshot](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/develop-SNAPSHOT/javadoc/index.html)
 
 ## Is material-foundation affiliated with Google?
