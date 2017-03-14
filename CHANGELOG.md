@@ -1,4 +1,4 @@
-# #develop#
+# 1.0
 
 - First supported release, yay!
 - FirebaseRemoteControllerSync is now completely functional and documented
