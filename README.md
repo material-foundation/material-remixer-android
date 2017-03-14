@@ -1,5 +1,5 @@
-# ![Remixer](small_logo.png) Remixer Android
-<img align="right" src="remixer_screenshot.png" width="300px">
+# ![Remixer](docs/small_logo.png) Remixer Android
+<img align="right" src="docs/remixer_screenshot.png" width="300px">
 
 [![TravisCI Build Status](https://travis-ci.org/material-foundation/material-remixer-android.svg?branch=develop)](https://travis-ci.org/material-foundation/material-remixer-android) [![CircleCI Build Status](https://circleci.com/gh/material-foundation/material-remixer-android.svg?style=svg)](https://circleci.com/gh/material-foundation/material-remixer-android) [![codecov](https://codecov.io/gh/material-foundation/material-remixer-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-foundation/material-remixer-android)
 
@@ -11,18 +11,18 @@ If you are interested in using Remixer in another platform, you may want to chec
 
 The following docs explain how to get Remixer up and running in your app, and details on what Variable types are currently supported.
 
-- [Using Remixer](USING_REMIXER.md)
-- [Configure the UI](CONFIGURE_UI.md)
-- [Supported Data Types](SUPPORTED_DATA_TYPES.md)
-- (Optionally) [Configure the Firebase Remote Controller](CONFIGURE_FIREBASE.md)
+- [Using Remixer](docs/USING_REMIXER.md)
+- [Configure the UI](docs/CONFIGURE_UI.md)
+- [Supported Data Types](docs/SUPPORTED_DATA_TYPES.md)
+- (Optionally) [Configure the Firebase Remote Controller](docs/CONFIGURE_FIREBASE.md)
 
 ## Contributing to Remixer
 
 We're excited you want to contribute to the project! Please read these docs so we can get your contributions submitted quickly.
 
-- [Contribution policy and guidelines](CONTRIBUTING.md)
-- [Project structure](PROJECT_STRUCTURE.md)
-- [Extending Remixer](EXTENDING_REMIXER.md)
+- [Contribution policy and guidelines](docs/CONTRIBUTING.md)
+- [Project structure](docs/PROJECT_STRUCTURE.md)
+- [Extending Remixer](docs/EXTENDING_REMIXER.md)
 
 ## API Reference
 
