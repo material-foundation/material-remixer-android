@@ -14,7 +14,7 @@ The following docs explain how to get Remixer up and running in your app, and de
 - [Using Remixer](docs/USING_REMIXER.md)
 - [Configure the UI](docs/CONFIGURE_UI.md)
 - [Supported Data Types](docs/SUPPORTED_DATA_TYPES.md)
-- (Optionally) [Configure the Firebase Remote Controller](CONFIGURE_FIREBASE.md)
+- (Optionally) [Configure the Firebase Remote Controller](docs/CONFIGURE_FIREBASE.md)
 
 ## Contributing to Remixer
 
