@@ -1,7 +1,12 @@
 # #develop#
 
- TODO: Enumerate changes.
-
+- First supported release, yay!
+- FirebaseRemoteControllerSync is now completely functional and documented
+  - Fixed an issue with FirebaseRemoteControllerSync not persisting settings across restarts.
+- Added a sharing options drawer to the Remixer UI where the user can choose to share the Remote controller link or disable sharing altogether
+- Styling is done!
+- Added a more real-looking demo.
+- Added the ability to attach the Remixer Fragment to a FAB
 
 # 0.6.6
 
