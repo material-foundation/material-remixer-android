@@ -1,4 +1,8 @@
+# Contributing
+
 Want to contribute? Great! First, read this page (including the small print at the end).
+
+You will also be interested in the general [Project structure](PROJECT_STRUCTURE.md) and [How-to extend Remixer](EXTENDING_REMIXER.md)
 
 ## Pull requests
 

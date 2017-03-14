@@ -32,7 +32,6 @@ import com.google.android.libraries.remixer.serialization.StoredVariable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.GenericTypeIndicator;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

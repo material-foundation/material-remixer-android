@@ -1,5 +1,3 @@
-![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
-
 # Display the Remixer Fragment
 
 You can configure the `RemixerFragment` in the `Activity`'s `onCreate(Bundle)` method, after the call to `RemixerBinder.bind(this)`. You have 3 (not mutually-exclusive) options. You can see examples of how to do it below.
@@ -22,6 +20,22 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
+## Attach the Remixer Fragment to a FAB
+You need to call `RemixerFragment#attachToFab(FragmentActivity, FloatingActionButton)`
+
+Your `Activity.onCreate` may look like this:
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  //...
+  remixerFab = (FloatingActionButton) findViewById(R.id.fab);
+  RemixerBinder.bind(this);
+  RemixerFragment.newInstance().attachToFab(this, remixerFab);
+}
+```
+
 ## Attach the Remixer Fragment to a multi-touch gesture
 You need to call `RemixerFragment#attachToGesture(FragmentActivity, Direction, int)`
 
@@ -34,7 +48,7 @@ protected void onCreate(Bundle savedInstanceState) {
   //...
   RemixerBinder.bind(this);
   RemixerFragment.newInstance().attachToGesture(
-      this, 
+      this,
       Direction.UP,
       3 /* numberOfFingers */);
 }
@@ -75,11 +89,13 @@ protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(savedInstanceState);
   // ...
   remixerButton = (Button) findViewById(R.id.button);
+  remixerFab = (FloatingActionButton) findViewById(R.id.fab);
   RemixerBinder.bind(this);
 
   remixerFragment = RemixerFragment.newInstance();
   remixerFragment.attachToGesture(this, Direction.UP, 3);
   remixerFragment.attachToButton(this, remixerButton);
+  remixerFragment.attachToFab(this, remixerFab);
 }
 
 @Override

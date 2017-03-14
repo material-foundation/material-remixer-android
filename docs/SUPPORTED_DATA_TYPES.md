@@ -1,3 +1,17 @@
+
+Table of Contents
+=================
+* [API Flavors](#api-flavors)
+* [Constraints](#constraints)
+   * [Unconstrained variables](#unconstrained-variables)
+   * [Item-list variables](#item-list-variables)
+   * [Range variables](#range-variables)
+* [Data Types](#data-types)
+   * [Boolean](#boolean)
+   * [Color](#color)
+   * [Number](#number)
+   * [String](#string)
+
 # Variables in Remixer
 
 Variables are the cornerstone of Remixer, a change on a variable's _value_ (by the Remixer UI, remote controller or any other means) triggers the _callback_ (your code). Variables have a _data type_ and (optionally) a _constraint_ (which on Android are represented by subclasses of `com.google.android.libraries.remixer`).
@@ -8,13 +22,13 @@ Remixer guarantees that your callbacks are always called on the Main UI Thread f
 
 ## API Flavors
 
-First of all you need to know that there are two ways to use variables, either directly through a explicit API in the form of Builders (all in package `com.google.android.libraries.remixer`) or through a convenient set of annotations found in `com.google.android.libraries.remixer.annotations`. 
+First of all you need to know that there are two ways to use variables, either directly through an explicit API in the form of Builders (all in package `com.google.android.libraries.remixer`) or through a convenient set of annotations found in `com.google.android.libraries.remixer.annotations`.
 
 **It is recommended you consistently use annotations unless you are extending Remixer**.
 
 In the explicit API you need to implement the `com.google.android.libraries.remixer.Callback<T>` interface to implement your callback and specify the DataType in the builder calls. In the annotation-based API you need to apply the annotation to a public method with one argument of the correct type and at the end of the activity's `onCreate` method you call `RemixerBinder.bind(this)`.
 
-There are a few very simple examples here of how to use both in the following sections, but you should look at the [example](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/MainActivity.java) [activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/BoxActivity.java) and documentation for [the explicit API](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer) and [these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
+There are a few very simple examples here of how to use both in the following sections, but you should look at the [example activities](https://github.com/material-foundation/material-remixer-android/blob/develop/remixer_example/src/main/java/com/google/android/apps/remixer/TransactionListActivity.java) and documentation for [the explicit API](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer) and [these annotations](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_core/src/main/java/com/google/android/libraries/remixer/annotation) for more information.
 
 ## Constraints
 
@@ -26,18 +40,22 @@ This is the base variable, it takes any possible value for the data type.
 
 #### Properties
 
-- `key` the key for this variable, you can use it to share the same value across activities, if not set it assumes the method name.
-- `title` the displayable name of the variable, if not set assumes `key`
-- `context` an activity where the variable is defined. Used to avoid memory leaks.
-- `initialValue` the initial value.
-- `callback` is the method to call once the variable value changes.
-- `layoutId` a layoutId to display this, must implement RemixerWidget. It can remain unset and it will use a sensible default in each **supported** case.
+| Name | Description |
+| ---- | ----------- |
+| `key` | The key for this variable, you can use it to share the same value across activities, if not set it assumes the method name. |
+| `title` | The displayable name of the variable, if not set assumes `key` |
+| `context` | An activity where the variable is defined. Used to avoid memory leaks. |
+| `initialValue` | The initial value. |
+| `callback` | The method to call once the variable value changes. |
+| `layoutId` | A layoutId to display this, must implement RemixerWidget. It can remain unset and it will use a sensible default in each **supported** case. |
 
 #### Builder classes
 
-- `com.google.android.libraries.remixer.BaseVariableBuilder` can be used theoretically with any type.
-- `com.google.android.libraries.remixer.BooleanVariableBuilder` convenience Variable builder that assumes false to be the initial value if unset.
-- `com.google.android.libraries.remixer.StringVariableBuilder` convenience Variable builder that assumes the empty string to be the initial value if unset.
+| Class | Description |
+| ----- | ----------- |
+| `com.google.android.libraries.remixer.BaseVariableBuilder` | Can be used theoretically with any type. |
+| `com.google.android.libraries.remixer.BooleanVariableBuilder` | Convenience Variable builder that assumes false to be the initial value if unset. |
+| `com.google.android.libraries.remixer.StringVariableBuilder` | Convenience Variable builder that assumes the empty string to be the initial value if unset. |
 
 #### Annotations
 
@@ -54,11 +72,15 @@ These variables will throw an exception if the value is set to anything that isn
 
 This variable constraint has all of the properties of unconstrained variables in addition to:
 
-- `limitedToValues` the list of values this variable is limited to take.
+| Name | Description |
+| ---- | ----------- |
+| `limitedToValues` | The list of values this variable is limited to take. |
 
 #### Builder classes
 
-- `com.google.android.libraries.remixer.ItemListVariable.Builder` assumes the first value in the `limitedToValues` list to be the `initialValue` if it is unset.
+| Class | Description |
+| ----- | ----------- |
+| `com.google.android.libraries.remixer.ItemListVariable.Builder` | Assumes the first value in the `limitedToValues` list to be the `initialValue` if it is unset. |
 
 #### Annotations
 
@@ -76,13 +98,17 @@ These variables are designed to work with Numbers only, and will throw an except
 
 This variable constraint has all of the properties of unconstrained variables in addition to:
 
-- `minValue` the minimum value
-- `maxValue` the maximum value
-- `increment` the increment between two steps of the range, 1 by default.
+| Name | Description |
+| ---- | ----------- |
+| `minValue` | The minimum value |
+| `maxValue` | The maximum value |
+| `increment` | The increment between two steps of the range, 1 by default. |
 
 #### Builder classes
 
-- `com.google.android.libraries.remixer.RangeVariable.Builder`
+| Class | Description |
+| ----- | ----------- |
+| `com.google.android.libraries.remixer.RangeVariable.Builder` | No Description |
 
 #### Annotations
 
@@ -98,10 +124,12 @@ Furthermore, in order to display a Variable, there must be an appropriate widget
 
 The boolean data type is pretty self explanatory. Because the boolean data type has only two possible values, `true` and `false`, no constraints are supported.
 
-- Runtime type: `java.lang.Boolean`
-- Serializable type: `java.lang.Boolean`
-- Converter: `com.google.android.libraries.remixer.serialization.converters.BooleanValueConverter`
-- Supported constraints: Unconstrained variables (via `com.google.android.libraries.remixer.ui.widget.BooleanVariableWidget`)
+| Name | Value |
+| ---- | ----- |
+| Runtime type | `java.lang.Boolean` |
+| Serializable type | `java.lang.Boolean` |
+| Converter | `com.google.android.libraries.remixer.serialization.converters.BooleanValueConverter` |
+| Supported constraints | Unconstrained variables (via `com.google.android.libraries.remixer.ui.widget.BooleanVariableWidget`) |
 
 #### Explicit API Boolean Variable
 
@@ -131,12 +159,12 @@ public void setUseNewDialog(Boolean useNewDialog) {
 ### Color
 The Color data type lets you manipulate colors in the UI.
 
-- Runtime type: `java.lang.Integer` It uses integer as its runtime type as that is the android-native way to represent colors.
-- Serializable type: `com.google.android.libraries.remixer.serialization.SerializedColor` it uses an intermediate type to serialize to be cross-platform friendly.
-- Converter: `com.google.android.libraries.remixer.serialization.converters.ColorValueConverter`
-- Supported constraints: Item List Variables (via `com.google.android.libraries.remixer.ui.widget.ColorListVariableWidget`)
-  - Theoretically we could support unconstrained variables, but we haven't built a good color picker. You're welcome to [contribute one](CONTRIBUTING.md).
-
+| Name | Value |
+| ---- | ----- |
+| Runtime type | `java.lang.Integer` It uses integer as its runtime type as that is the android-native way to represent colors. |
+| Serializable type | `com.google.android.libraries.remixer.serialization.SerializedColor` it uses an intermediate type to serialize to be cross-platform friendly. |
+| Converter | `com.google.android.libraries.remixer.serialization.converters.ColorValueConverter` |
+| Supported constraint | Item List Variables (via `com.google.android.libraries.remixer.ui.widget.ColorListVariableWidget`) <br /> <br /> Theoretically we could support unconstrained variables, but we haven't built a good color picker. You're welcome to [contribute one](CONTRIBUTING.md).|
 
 #### Explicit API Color List Variable
 
@@ -169,13 +197,15 @@ public void setTitleColor(Integer color) {
 
 Remixer only supports `Float` numbers. These should work for most cases anyway.
 
-- Runtime type: `java.lang.Float`
-- Serializable type: `java.lang.Float`
-- Converter: `com.google.android.libraries.remixer.serialization.converters.NumberValueConverter`
-- Supported constraints:
-  - Item List Variables (via `com.google.android.libraries.remixer.ui.widget.ItemListVariableWidget`)
-  - Range Variables (via `com.google.android.libraries.remixer.ui.widget.SeekBarRangeVariableWidget`)
-  - Theoretically we could support Unconstrained Variables if we write a **usable** control that handles non-number values correctly. You're welcome to [contribute an implementation](CONTRIBUTING.md).
+| Name | Value |
+| ---- | ----- |
+| Runtime type | `java.lang.Float` |
+| Serializable type | `java.lang.Float` |
+| Converter | `com.google.android.libraries.remixer.serialization.converters.NumberValueConverter` |
+| Supported constraint |  Item List Variables (via `com.google.android.libraries.remixer.ui.widget.ItemListVariableWidget`) |
+| Supported constraint |  Range Variables (via `com.google.android.libraries.remixer.ui.widget.SeekBarRangeVariableWidget`) |
+
+Theoretically we could support Unconstrained Variables if we write a **usable** control that handles non-number values correctly. You're welcome to [contribute an implementation](CONTRIBUTING.md). |
 
 
 #### Explicit API Number List Variable
@@ -235,12 +265,13 @@ public void setFontSize(Integer fontSize) {
 
 The Color data type lets you manipulate colors in the UI.
 
-- Runtime type: `java.lang.String`
-- Serializable type: `java.lang.String`
-- Converter: `com.google.android.libraries.remixer.serialization.converters.StringValueConverter`
-- Supported constraints: 
-  - Item List Variables (via `com.google.android.libraries.remixer.ui.widget.ItemListVariableWidget`)
-  - Unconstrained Variables (via `com.google.android.libraries.remixer.ui.widget.StringVariableWidget`)
+| Name | Value |
+| ---- | ----- |
+| Runtime type | `java.lang.String` |
+| Serializable type | `java.lang.String` |
+| Converter | `com.google.android.libraries.remixer.serialization.converters.StringValueConverter` |
+| Supported constraints | Item List Variables (via `com.google.android.libraries.remixer.ui.widget.ItemListVariableWidget`) |
+| Supported constraints | Unconstrained Variables (via `com.google.android.libraries.remixer.ui.widget.StringVariableWidget`) |
 
 
 #### Explicit API String List Variable

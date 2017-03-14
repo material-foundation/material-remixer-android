@@ -26,8 +26,8 @@ import com.google.android.libraries.remixer.ui.widget.RemixerWidget;
 import java.util.List;
 
 /**
- * An adapter that takes care of displaying a list of {@link Variable}es using their corresponding
- * {@link RemixerItemWidget}.
+ * An adapter that takes care of displaying a list of {@link Variable}s using their corresponding
+ * {@link RemixerWidget}.
  */
 class RemixerAdapter extends RecyclerView.Adapter<RemixerAdapter.ViewHolder> {
 

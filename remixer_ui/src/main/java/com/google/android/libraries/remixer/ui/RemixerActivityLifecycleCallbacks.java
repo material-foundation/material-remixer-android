@@ -45,22 +45,21 @@ final class RemixerActivityLifecycleCallbacks
 
   @Override
   public void onActivityStarted(Activity activity) {
-    Remixer.getInstance().getSynchronizationMechanism().onContextChanged(activity);
+
   }
 
   @Override
   public void onActivityResumed(Activity activity) {
-
+    Remixer.getInstance().getSynchronizationMechanism().onContextChanged(activity);
   }
 
   @Override
   public void onActivityPaused(Activity activity) {
-
+    Remixer.getInstance().getSynchronizationMechanism().onContextRemoved(activity);
   }
 
   @Override
   public void onActivityStopped(Activity activity) {
-    Remixer.getInstance().getSynchronizationMechanism().onContextRemoved(activity);
   }
 
   @Override

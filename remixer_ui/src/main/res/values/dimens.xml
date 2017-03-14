@@ -21,4 +21,5 @@
   <dimen name="remixerColorCircleMinimumSize">40dp</dimen>
   <dimen name="remixerColorCirclePadding">4dp</dimen>
   <dimen name="remixerColorCircleBorder">1dp</dimen>
+  <dimen name="remixer_header_elevation">2dp</dimen>
 </resources>

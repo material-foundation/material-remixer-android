@@ -50,15 +50,15 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
    */
   private static final String SET_INITIAL_VALUE_FORMAT = "$L.setInitialValue(%s)";
   /**
-   * Javapoet format escaping for float values
+   * Javapoet format escaping for float values.
    */
   private static final String FLOAT_JAVAPOET_ESCAPING = "$Lf";
   /**
-   * Javapoet format escaping for integer values
+   * Javapoet format escaping for integer values.
    */
   private static final String INTEGER_JAVAPOET_ESCAPING = "$L";
   /**
-   * Javapoet format escaping for string values
+   * Javapoet format escaping for string values.
    */
   private static final String STRING_JAVAPOET_ESCAPING = "$S";
   /**
@@ -209,10 +209,11 @@ class ItemListVariableMethodAnnotation<T> extends MethodAnnotation {
   }
 
   private String getJavaPoetEscaping() {
-    if (dataType.getName().equals(DataType.STRING.getName()))
+    if (dataType.getName().equals(DataType.STRING.getName())) {
       return STRING_JAVAPOET_ESCAPING;
-    if (dataType.getName().equals(DataType.COLOR.getName()))
+    } else if (dataType.getName().equals(DataType.COLOR.getName())) {
       return INTEGER_JAVAPOET_ESCAPING;
+    }
     // If it is an item list it can only be either String, Color or a number, since it's neither
     // color nor number at this point, just assume that it's a number so return
     // FLOAT_JAVAPOET_ESCAPING.

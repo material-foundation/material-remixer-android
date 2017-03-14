@@ -17,4 +17,12 @@
 <resources>
   <string name="app_name">Remixer</string>
   <string name="remixer_framework_name">Remixer</string>
+  <string name="sharedStatusText">Shared</string>
+  <string name="sharingStatusOffText">Sharing is off</string>
+  <string name="sharingWarningText">Values can be adjusted by anyone with the link</string>
+  <string name="sharingStatusOnText">Sharing is on</string>
+  <string name="shareLink">Share link</string>
+  <string name="close_remixer_drawer">Close Remixer Drawer</string>
+  <string name="expand_sharing_options_drawer">Expand sharing options drawer</string>
+  <string name="collapse_sharing_options_drawer">Collapse sharing options drawer</string>
 </resources>

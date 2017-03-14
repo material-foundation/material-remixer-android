@@ -39,6 +39,7 @@ final class RemixerWidgetHelper {
    * @throws IllegalArgumentException if the Variable in question has no default layout associated
    *     with it and it is relying on a default.
    */
+  @SuppressWarnings("unchecked")
   static int getLayoutId(Variable instance) {
     int layoutId = instance.getLayoutId();
     if (layoutId != 0) {

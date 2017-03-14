@@ -16,7 +16,8 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#216EB3</color>
+    <color name="colorAccent">#0AD265</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+  <color name="textColorSmall">#ABABAB</color>
 </resources>

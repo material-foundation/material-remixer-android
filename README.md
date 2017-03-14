@@ -1,48 +1,39 @@
-![Remixer](https://cdn.rawgit.com/material-foundation/material-remixer/master/docs/assets/lockup_remixer_icon_horizontal_dark_small.svg)
+# ![Remixer](docs/small_logo.png) Remixer Android
+<img align="right" src="docs/remixer_screenshot.png" width="300px">
 
 [![TravisCI Build Status](https://travis-ci.org/material-foundation/material-remixer-android.svg?branch=develop)](https://travis-ci.org/material-foundation/material-remixer-android) [![CircleCI Build Status](https://circleci.com/gh/material-foundation/material-remixer-android.svg?style=svg)](https://circleci.com/gh/material-foundation/material-remixer-android) [![codecov](https://codecov.io/gh/material-foundation/material-remixer-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-foundation/material-remixer-android)
 
-Remixer helps teams use and refine design specs by providing an abstraction for these values that is accessible and configurable from both inside and outside the app itself.
+Remixer is a framework to iterate quickly on UI changes by allowing you to adjust UI variables without needing to rebuild (or even restart) your app. You can adjust Numbers, Colors, Booleans, and Strings. To see it in action check out the [example app](https://github.com/material-foundation/material-remixer-android/tree/develop/remixer_example).
 
-This SDK for Android is currently in development.
+If you are interested in using Remixer in another platform, you may want to check out the [iOS](https://github.com/material-foundation/material-remixer-ios) and [Javascript](https://github.com/material-foundation/material-remixer-js) repos. With any of the three platforms you can use the [Remote Controller](https://github.com/material-foundation/material-remixer-remote-web).
 
-**New to Remixer?** Visit our [main repo](https://github.com/material-foundation/material-remixer) to get a full description of what it is and how it works.
+## Using Remixer in your app
 
-- - -
+The following docs explain how to get Remixer up and running in your app, and details on what Variable types are currently supported.
 
-1. [Getting started](GETTING_STARTED.md)
-2. [Configure the UI](CONFIGURE_UI.md)
-3. [Project structure](PROJECT_STRUCTURE.md)
-4. [Supported Data Types](SUPPORTED_DATA_TYPES.md)
-5. [Extending Remixer](EXTENDING_REMIXER.md) (TODO)
-6. API Reference (_notice this includes internal APIs_):
-  - [Current Version 0.6.6](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/0.6.6/javadoc/index.html)
-  - [Develop Snapshot](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/develop-SNAPSHOT/javadoc/index.html)
+- [Using Remixer](docs/USING_REMIXER.md)
+- [Configure the UI](docs/CONFIGURE_UI.md)
+- [Supported Data Types](docs/SUPPORTED_DATA_TYPES.md)
+- (Optionally) [Configure the Firebase Remote Controller](docs/CONFIGURE_FIREBASE.md)
 
-- - -
+## Contributing to Remixer
 
-## State of development
+We're excited you want to contribute to the project! Please read these docs so we can get your contributions submitted quickly.
 
-Visit our [State of Development](https://github.com/material-foundation/material-remixer/wiki/State-of-Development) wiki for the current roadmap and status of development for each platform.
+- [Contribution policy and guidelines](docs/CONTRIBUTING.md)
+- [Project structure](docs/PROJECT_STRUCTURE.md)
+- [Extending Remixer](docs/EXTENDING_REMIXER.md)
 
-## Repositories
+## API Reference
 
-The main Remixer GitHub repo for documentation, project tracking, and general information:
-- [Remixer docs](https://github.com/material-foundation/material-remixer)
+_Notice this includes internal APIs_:
 
-Platform specific libraries and tools can be found in the following GitHub repos:
-
-- [iOS](https://github.com/material-foundation/material-remixer-ios) - Remixer for iOS.
-- [Web](https://github.com/material-foundation/material-remixer-web) - Remixer for Web.
-- [Web Remote](https://github.com/material-foundation/material-remixer-remote-web) - Remixer web remote controller for all platforms.
+- [Current Version 1.0](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/1.0/javadoc/index.html)
+- [Develop Snapshot](https://jitpack.io/com/github/material-foundation/material-remixer-android/remixer/develop-SNAPSHOT/javadoc/index.html)
 
 ## Is material-foundation affiliated with Google?
 
 Yes, the [material-foundation](https://github.com/material-foundation) organization is one of Google's new homes for tools and frameworks related to our [Material Design](https://material.io) system. Please check out our blog post [Design is Never Done](https://design.google.com/articles/design-is-never-done/) for more information regarding Material Design and how Remixer integrates with the system.
-
-## Contributing
-
-We gladly welcome contributions! If you have found a bug, have questions, or wish to contribute, please follow our [Contributing Guidelines](CONTRIBUTING.md) and read the [High-level Project Structure](PROJECT_STRUCTURE.md).
 
 ## License
 

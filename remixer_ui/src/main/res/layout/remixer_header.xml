@@ -17,10 +17,22 @@
 
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
+  android:elevation="@dimen/remixer_header_elevation"
   android:gravity="center"
-  android:orientation="horizontal">
+  android:orientation="horizontal"
+  tools:ignore="UnusedAttribute">
+
+  <ImageView
+    android:id="@+id/closeButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:contentDescription="@string/close_remixer_drawer"
+    android:src="@drawable/ic_close_black_24dp"
+    />
 
   <TextView
     style="@style/RemixerHeaderText"
@@ -31,12 +43,21 @@
     android:text="@string/remixer_framework_name"
     />
 
+  <Button
+    android:id="@+id/sharedStatusButton"
+    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/sharedStatusText"
+    android:visibility="gone"/>
+
   <ImageView
-    android:id="@+id/closeButton"
+    android:id="@+id/expandSharingOptionsButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="12dp"
-    android:src="@drawable/ic_close_black_24dp"
+    android:contentDescription="@string/expand_sharing_options_drawer"
+    android:src="@drawable/ic_expand_more_black_24dp"
+    android:visibility="gone"
     />
-
 </LinearLayout>
