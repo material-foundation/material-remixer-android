@@ -1,4 +1,5 @@
-# ![Remixer](docs/small_logo.png) Remixer for Android
+# <img align="center" src="docs/small_logo.png"> Remixer for Android
+
 <img align="right" src="docs/remixer_screenshot.png" width="300px">
 
 [![TravisCI Build Status](https://travis-ci.org/material-foundation/material-remixer-android.svg?branch=develop)](https://travis-ci.org/material-foundation/material-remixer-android) [![CircleCI Build Status](https://circleci.com/gh/material-foundation/material-remixer-android.svg?style=svg)](https://circleci.com/gh/material-foundation/material-remixer-android) [![codecov](https://codecov.io/gh/material-foundation/material-remixer-android/branch/develop/graph/badge.svg)](https://codecov.io/gh/material-foundation/material-remixer-android) [![Release](https://jitpack.io/v/material-foundation/material-remixer-android.svg )](https://jitpack.io/#material-foundation/material-remixer-android)
