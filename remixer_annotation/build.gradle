@@ -42,15 +42,15 @@ task copyTestResources(type: Copy) {
 processTestResources.dependsOn copyTestResources
 
 dependencies {
-  compile 'com.google.guava:guava:19.0'
+  compile 'com.google.guava:guava:20.0'
   compile 'com.google.auto:auto-common:0.6'
   compile 'com.google.auto.service:auto-service:1.0-rc2'
-  compile 'com.squareup:javapoet:1.7.0'
+  compile 'com.squareup:javapoet:1.8.0'
   compile project(':remixer_core')
 
   testCompile files(Jvm.current().getToolsJar())
   testRuntime files(Jvm.current().getToolsJar())
   testCompile 'com.google.testing.compile:compile-testing:0.7'
-  testCompile "com.google.truth:truth:0.28"
-  testCompile 'junit:junit:4.12'
+  testCompile "com.google.truth:truth:0.32"
+  testCompile "junit:junit:$junitVersion"
 }

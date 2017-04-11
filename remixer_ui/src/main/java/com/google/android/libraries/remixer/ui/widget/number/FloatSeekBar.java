@@ -17,6 +17,7 @@
 package com.google.android.libraries.remixer.ui.widget.number;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
@@ -27,7 +28,7 @@ import android.widget.SeekBar;
  * are all zero-based integers. We need a more versatile solution that supports float. To do this we
  * build on top of the existing seek bar, allowing us to set a minimum, maximum, and step sizes.
  */
-public class FloatSeekBar extends SeekBar {
+public class FloatSeekBar extends AppCompatSeekBar {
 
   private float min = 0f;
   private float max = 1f;
