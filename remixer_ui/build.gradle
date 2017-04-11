@@ -59,7 +59,7 @@ dependencies {
   compile "com.android.support:support-fragment:$rootProject.ext.supportLibraryVersion"
   compile project(':remixer_core')
   compile project(':remixer_storage')
-  testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-core:1.9.5'
-  testCompile 'org.robolectric:robolectric:3.1.1'
+  testCompile "junit:junit:$junitVersion"
+  testCompile "org.mockito:mockito-core:$mockitoVersion"
+  testCompile "org.robolectric:robolectric:$robolectricVersion"
 }

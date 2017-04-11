@@ -27,7 +27,6 @@ buildscript {
     classpath 'com.android.tools.build:gradle:2.2.3'
     classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
     classpath 'com.google.gms:google-services:3.0.0'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.5.0'
   }
 }
@@ -82,6 +81,11 @@ ext {
   minSdkVersion = 16
   targetSdkVersion = 25
   compileSdkVersion = 25
-  buildToolsVersion = '25.0.0'
-  supportLibraryVersion = '25.0.0'
+  buildToolsVersion = '25.0.2'
+  supportLibraryVersion = '25.3.1'
+  gsonVersion = '2.8.0'
+  junitVersion = '4.12'
+  mockitoVersion = '1.9.5'
+  robolectricVersion = '3.3.2'
+  firebaseVersion = '10.0.1'
 }
