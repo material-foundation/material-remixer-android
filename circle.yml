@@ -2,7 +2,7 @@
 test:
   pre:
     - echo y | android update sdk --no-ui --all --filter extra-android-m2repository,extra-android-support
-    - echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+    - echo y | android update sdk --no-ui --all --filter build-tools-25.0.2
 
   override:
     - ./gradlew lint build test check jacocoTestReport -PdisablePreDex;
