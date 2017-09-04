@@ -79,10 +79,10 @@ public class StringVariableWidgetTest {
 
   @Test
   public void callbackIsCalled() {
-    // Check that the callback  was called. This should've happened during setUp()
-    verify(mockCallback, times(1)).onValueSet(variable);
+    // Check that the callback  was called. This should've happened during setUp() twice
+    verify(mockCallback, times(2)).onValueSet(variable);
     text.setText("green");
     // After changing the text, check that the callback was called once again
-    verify(mockCallback, times(2)).onValueSet(variable);
+    verify(mockCallback, times(3)).onValueSet(variable);
   }
 }
